@@ -1347,6 +1347,10 @@
   .zr-radar-zombie{ background:#ef4444; top:15%; left:50%; box-shadow:0 0 8px #ef4444; }
   #zrBonusLine{ font-size:11.5px; font-weight:800; color:#facc15; margin-top:6px; }
   #zrBonusLine.hidden{ display:none; }
+  /* Huidige vereiste zombie-snelheid (km/u) — altijd zichtbaar zolang Zombie Run actief is, ook buiten een
+     achtervolging, want die drempel drijft geleidelijk op tijdens de hele run (zie rampKmh/rampIntervalMin). */
+  #zrThresholdLine{ font-size:10.5px; font-weight:700; color:rgba(246,244,238,0.6); margin-bottom:4px; letter-spacing:0.2px; }
+  #zrThresholdLine b{ color:rgba(246,244,238,0.9); }
   @keyframes zrFlashRed{ 0%{ background:transparent; } 40%{ background:rgba(220,40,30,0.35); } 100%{ background:transparent; } }
   @keyframes zrFlashGreen{ 0%{ background:transparent; } 40%{ background:rgba(30,180,90,0.3); } 100%{ background:transparent; } }
   .zr-bite-flash{ animation:zrFlashRed 0.6s ease; }
@@ -2169,8 +2173,9 @@
         <input type="range" class="zr-range" id="zombieMusicDuckVolInput" min="0" max="100" step="5" value="10">
       </div>
       <div class="zr-slider-wrap">
-        <div class="zr-slider-label"><span data-i18n="zrSoundAlarmMaxLabel">🚨 Alarm max. laten spelen (dan fade-out)</span><b id="zombieAlarmMaxVal">8s</b></div>
-        <input type="range" class="zr-range" id="zombieAlarmMaxInput" min="0" max="30" step="1" value="8">
+        <div class="zr-slider-label"><span data-i18n="zrSoundAlarmMaxLabel">📻 Verhaal/alarm inkorten (radio-ruis) na</span><b id="zombieAlarmMaxVal">20s</b></div>
+        <input type="range" class="zr-range" id="zombieAlarmMaxInput" min="0" max="60" step="5" value="20">
+        <div class="zr-slider-note" data-i18n="zrSoundAlarmMaxNote">0 = uit, altijd volledig laten spelen. Anders: het lopende verhaal/alarm valt na deze tijd weg alsof je op een slechte radiofrequentie zit (geen nette fade-out) — de zombies kunnen daardoor sneller/onvoorspelbaarder komen.</div>
       </div>
       <div class="zr-slider-wrap">
         <div class="zr-slider-label"><span data-i18n="zrSoundFadeInStartLabel">Fade-in bij start</span><b id="zombieFadeInStartVal">1.5s</b></div>
@@ -2203,6 +2208,22 @@
           <input type="range" id="zombieCreepyIntervalMinInput" min="1" max="60" step="1" value="4">
           <input type="range" id="zombieCreepyIntervalMaxInput" min="1" max="60" step="1" value="10">
         </div>
+      </div>
+
+      <label style="font-size:12px; font-weight:800; color:var(--cream); display:block; margin:16px 0 6px;" data-i18n="zrSoundAmbientLabel">🌲 Zombies in de verte (ook buiten de achtervolging)</label>
+      <div class="zr-slider-note" style="margin-top:0;" data-i18n="zrSoundAmbientNote">Tijdens het rustige lopen (verhaal, tussenstop, alarm) hoor je af en toe — zacht, alsof van ver — hetzelfde soort geluid als tijdens de achtervolging zelf. Schuif de rechterkant naar 0 om dit uit te schakelen.</div>
+      <div class="zr-slider-wrap">
+        <div class="zr-slider-label"><span data-i18n="zrSoundAmbientVolLabel">Volume</span><b id="zombieAmbientVolVal">18%</b></div>
+        <input type="range" class="zr-range" id="zombieAmbientVolInput" min="0" max="100" step="5" value="18">
+      </div>
+      <div class="zr-slider-wrap">
+        <div class="zr-slider-label"><span data-i18n="zrSoundAmbientIntervalLabel">Nieuw geluid om de</span><b id="zombieAmbientIntervalVal">25 tot 60 sec</b></div>
+        <div class="zr-dual-wrap">
+          <div class="zr-dual-track"></div><div class="zr-dual-fill" id="zombieAmbientIntervalFill"></div>
+          <input type="range" id="zombieAmbientIntervalMinInput" min="0" max="180" step="5" value="25">
+          <input type="range" id="zombieAmbientIntervalMaxInput" min="0" max="180" step="5" value="60">
+        </div>
+        <div class="zr-slider-note" id="zombieAmbientRateNote">≈ 1.4 per minuut gemiddeld</div>
       </div>
     </div>
 
@@ -3272,9 +3293,10 @@
       <div id="rsIntervalLabel">–</div>
       <div id="rsCountdown">0:00</div>
       <div id="rsNextLabel">–</div>
-      <div id="rsElapsedLine">Totaal: <span id="rsElapsed">0:00</span></div>
+      <div id="rsElapsedLine"><span data-i18n="rsTotaalLabel">Totaal:</span> <span id="rsElapsed">0:00</span></div>
     </div>
     <div id="zrRadarWrap" class="hidden">
+      <div id="zrThresholdLine">🐢 <b id="zrThresholdVal">–</b> km/u</div>
       <div id="zrRadarContainer">
         <div id="zrRadarPlayerBlip" class="zr-radar-blip zr-radar-player"></div>
         <div id="zrRadarZombieBlip" class="zr-radar-blip zr-radar-zombie hidden"></div>
@@ -3286,23 +3308,23 @@
   <div id="rsProgressRail"></div>
   <div id="rsKmSparkline"></div>
   <div id="rsStatsRow">
-    <div class="rs-stat"><b id="rsPace">–:–</b><span>gem. pace</span></div>
-    <div class="rs-stat"><b id="rsDistance">0.00</b><span>afstand</span></div>
-    <div class="rs-stat"><b id="rsSplitLabel">1 km</b><span>split</span></div>
+    <div class="rs-stat"><b id="rsPace">–:–</b><span data-i18n="rsPaceLabel">gem. pace</span></div>
+    <div class="rs-stat"><b id="rsDistance">0.00</b><span data-i18n="statsDistance">afstand</span></div>
+    <div class="rs-stat"><b id="rsSplitLabel">1 km</b><span data-i18n="rsSplitStatLabel">split</span></div>
   </div>
   <div id="rsSpeedRow" style="display:flex; justify-content:center; gap:24px; width:100%; flex-shrink:0; margin-top:8px;">
-    <div class="rs-stat"><b id="rsCurrentSpeed">–</b><span>snelheid</span></div>
-    <div class="rs-stat"><b id="rsAvgSpeed">–</b><span>gem. snelheid</span></div>
+    <div class="rs-stat"><b id="rsCurrentSpeed">–</b><span data-i18n="rsSnelheidLabel">snelheid</span></div>
+    <div class="rs-stat"><b id="rsAvgSpeed">–</b><span data-i18n="rsGemSnelheidLabel">gem. snelheid</span></div>
   </div>
   <div id="rsCalorieLine">🔥 <span id="rsCalories">–</span></div>
   <div id="rsRaceBadge" class="hidden">🏁 <span id="rsRaceBadgeText">–</span></div>
   <div id="rsHrLine"><span id="rsHrValue">❤️ verbind hartslagband</span></div>
   <div>
     <div id="rsControls">
-      <button id="rsPauseBtn"><span class="ic">⏸</span><span>Pauze</span></button>
-      <button id="rsSplitBtn"><span class="ic">🚩</span><span>Split</span></button>
-      <button id="rsShareLocationBtn"><span class="ic">📍</span><span>Deel</span></button>
-      <button id="rsStopBtn"><span class="ic">■</span><span>Stop</span></button>
+      <button id="rsPauseBtn"><span class="ic">⏸</span><span data-i18n="rsPauzeBtnLabel">Pauze</span></button>
+      <button id="rsSplitBtn"><span class="ic">🚩</span><span data-i18n="rsSplitBtnLabel">Split</span></button>
+      <button id="rsShareLocationBtn"><span class="ic">📍</span><span data-i18n="rsDeelBtnLabel">Deel</span></button>
+      <button id="rsStopBtn"><span class="ic">■</span><span data-i18n="rsStopBtnLabel">Stop</span></button>
     </div>
     <div id="rsGpsWarning">📍 Zwakke GPS-fix</div>
   </div>
@@ -6577,6 +6599,32 @@ const TRANSLATIONS = {
   statsYear: { nl:'Jaar', en:'Year' },
   statsAllTime: { nl:'Ooit', en:'All time' },
   statsDistance: { nl:'afstand', en:'distance' },
+  rsTotaalLabel: { nl:'Totaal:', en:'Total:' },
+  rsPaceLabel: { nl:'gem. pace', en:'avg pace' },
+  rsSplitStatLabel: { nl:'split', en:'split' },
+  rsSnelheidLabel: { nl:'snelheid', en:'speed' },
+  rsGemSnelheidLabel: { nl:'gem. snelheid', en:'avg speed' },
+  rsPauzeBtnLabel: { nl:'Pauze', en:'Pause' },
+  rsSplitBtnLabel: { nl:'Split', en:'Split' },
+  rsDeelBtnLabel: { nl:'Deel', en:'Share' },
+  rsStopBtnLabel: { nl:'Stop', en:'Stop' },
+  zrSoundTabNote: { nl:'Alle geluidsinstellingen hieronder — de rest van de app raakt hier niet aan. Gerust laten staan, dit zijn gewoon de standaardwaarden.', en:"All sound settings below — nothing else in the app is affected. Feel free to leave these alone, they're just the defaults." },
+  zrSoundMusicLabel: { nl:'🎵 Achtergrondmuziek', en:'🎵 Background music' },
+  zrSoundMusicVolLabel: { nl:'Volume (rustig)', en:'Volume (calm)' },
+  zrSoundMusicDuckVolLabel: { nl:'Volume tijdens alarm/achtervolging', en:'Volume during alarm/chase' },
+  zrSoundAlarmMaxLabel: { nl:'📻 Verhaal/alarm inkorten (radio-ruis) na', en:'📻 Cut story/alarm short (radio static) after' },
+  zrSoundAlarmMaxNote: { nl:'0 = uit, altijd volledig laten spelen. Anders: het lopende verhaal/alarm valt na deze tijd weg alsof je op een slechte radiofrequentie zit (geen nette fade-out) — de zombies kunnen daardoor sneller/onvoorspelbaarder komen.', en:'0 = off, always play in full. Otherwise: the current story/alarm cuts out after this long, as if you were on a bad radio frequency (no smooth fade-out) — the zombies can arrive sooner/more unpredictably as a result.' },
+  zrSoundFadeInStartLabel: { nl:'Fade-in bij start', en:'Fade-in at start' },
+  zrSoundFadeSwitchLabel: { nl:'Fade-out / fade-in bij wisselen', en:'Fade-out / fade-in when switching' },
+  zrSoundDuckFadeLabel: { nl:'Fade-duur dempen/herstellen', en:'Fade duration ducking/restoring' },
+  zrSoundStopFadeLabel: { nl:'Fade-out bij stoppen', en:'Fade-out on stop' },
+  zrSoundCreepyLabel: { nl:'😱 Enge geluiden tijdens de achtervolging', en:'😱 Creepy sounds during the chase' },
+  zrSoundCreepyVolLabel: { nl:'Volume: ver weg → vlakbij', en:'Volume: far away → close by' },
+  zrSoundCreepyIntervalLabel: { nl:'Nieuw geluid om de', en:'New sound every' },
+  zrSoundAmbientLabel: { nl:'🌲 Zombies in de verte (ook buiten de achtervolging)', en:'🌲 Zombies in the distance (also outside the chase)' },
+  zrSoundAmbientNote: { nl:'Tijdens het rustige lopen (verhaal, tussenstop, alarm) hoor je af en toe — zacht, alsof van ver — hetzelfde soort geluid als tijdens de achtervolging zelf. Schuif de rechterkant naar 0 om dit uit te schakelen.', en:'While walking calmly (story, break, alarm) you occasionally hear — softly, as if from far away — the same kind of sound as during the chase itself. Slide the right-hand handle to 0 to turn this off.' },
+  zrSoundAmbientVolLabel: { nl:'Volume', en:'Volume' },
+  zrSoundAmbientIntervalLabel: { nl:'Nieuw geluid om de', en:'New sound every' },
   statsRideCount: { nl:'ritten', en:'rides' },
   statsAscentLabel: { nl:'hoogtemeters', en:'elevation gain' },
   statsShowRecords: { nl:'🏆 Persoonlijke records tonen', en:'🏆 Show personal records' },
@@ -8248,10 +8296,17 @@ async function startZombieRun(opts){
 const ZOMBIE_AUDIO_DEFAULTS = {
   musicBaseVol:0.50, musicDuckVol:0.10,
   fadeInStartMs:1500, fadeOutSwitchMs:700, fadeInSwitchMs:900, duckFadeMs:800, stopFadeMs:1200,
-  // alarmMaxSec: 0 = uitgeschakeld (alarmbestand volledig laten spelen); anders wordt het na zoveel
-  // seconden afgekapt met een fade-out (alarmFadeOutMs) i.p.v. te wachten tot het bestand vanzelf eindigt.
-  alarmMaxSec:8, alarmFadeOutMs:700,
-  creepyVolMin:0.35, creepyVolMax:1.0, creepyIntervalMin:4, creepyIntervalMax:10
+  // narrationCutoffSec: 0 = uitgeschakeld (verhaal/alarm altijd volledig laten spelen); anders wordt het
+  // lopende verhaal- of alarmbestand na zoveel seconden afgekapt met een "slechte radio-ontvangst"-effect
+  // (zie cutZombieAudioWithStatic()) i.p.v. een nette fade-out — de zombies komen daardoor sneller/
+  // onvoorspelbaarder, zoals gevraagd.
+  narrationCutoffSec:20,
+  creepyVolMin:0.35, creepyVolMax:1.0, creepyIntervalMin:4, creepyIntervalMax:10,
+  // "Zombies in de verte": dezelfde Zombie-fx/zombieGeluiden-pool als de achtervolging-laag hierboven, maar
+  // dan ook tijdens rustig lopen (verhaal/tussenstop/alarm) — zacht en veel spaarzamer, puur sfeer. Alleen
+  // tijdens 'chase' zelf blijft dat exclusief aan de bestaande, dichtbij-schalende laag (scheduleZombieCreepyFx).
+  // ambientFxIntervalMax:0 = uitgeschakeld.
+  ambientFxVol:0.18, ambientFxIntervalMin:25, ambientFxIntervalMax:60
 };
 // Leest één geluidsparameter, met de lopende run z'n eigen (op de popup ingestelde) waarde als die er is,
 // anders de standaardwaarde — zo blijft alles werken ook als rsState.zombie(.audioParams) nog niet bestaat.
@@ -8273,6 +8328,7 @@ async function initZombieState(zombieConfig){
     // Leeg bij de start; wordt bij de eerste keer opvragen per categorie gevuld en geschud, en pas opnieuw
     // geschud zodra alle bestanden van die categorie één keer aan bod zijn geweest.
     audioBags: {},
+    queuedEffectFile: null, // een cue-geluidje dat wacht tot het hoofdkanaal vrijkomt — zie flushZombieQueuedEffect()
     phase: 'intro', // 'intro'|'story'|'interlude'|'alarm'|'startcue'|'chase'|'stopcue'
     interludeNext: null, interludeTimeoutId: null, chaseDurationSec: 0,
     score: 0, escapedCount: 0, caughtCount: 0,
@@ -8294,6 +8350,7 @@ async function initZombieState(zombieConfig){
   // Nu gewoon op de achtergrond laten lopen (niet awaiten) zodat muziek + intro meteen kunnen starten;
   // playZombieStoryPart() zelf wacht er (met een vangnet) alsnog netjes op als het dan nog niet klaar is.
   const storylinePromise = pickZombieStoryline().then(sl => { if (rsState && rsState.zombie) rsState.zombie.storyline = sl; }).catch(() => {});
+  scheduleZombieAmbientFx(); // "zombies in de verte" — loopt vanaf nu door, ook buiten de achtervolging
   await switchZombieMusic('low');
   const introFile = await zombieRandomFile('intro');
   if (introFile){
@@ -8338,7 +8395,7 @@ function tickZombieSprintReward(){
   if (ratio >= 1.2){
     if (!z.sprintActive || z.sprintPhase !== activePhase){
       z.sprintActive = true; z.sprintPhase = activePhase; z.sprintStartAt = Date.now(); z.sprintPeakRatio = ratio;
-      if (activePhase === 'story') speakForRun(curLang()==='en' ? 'Supplies nearby — sprint to reach them!' : 'Voorraad in de buurt — sprint ernaartoe!');
+      if (activePhase === 'story') zombieSpeak(curLang()==='en' ? 'Supplies nearby — sprint to reach them!' : 'Voorraad in de buurt — sprint ernaartoe!');
     } else {
       z.sprintPeakRatio = Math.max(z.sprintPeakRatio, ratio);
     }
@@ -8369,17 +8426,41 @@ function endZombieSprint(){
   const hit = tiers.find(t => peak >= t.ratio && durationSec >= t.dur);
   if (hit) awardZombieBonus({ icon:hit.icon, pts:hit.pts, label: ZOMBIE_REWARD_LABELS[hit.key][curLang()==='en' ? 'en' : 'nl'] });
 }
+// Zodra het hoofdkanaal (runMusicPlayer, de verteller/cue-speler) weer vrij is, dit eventueel wachtende
+// cue-geluidje alsnog afspelen i.p.v. het gewoon te laten verdwijnen. Wordt elke tick opnieuw geprobeerd
+// (zie tickZombieState()) tot het lukt.
+function flushZombieQueuedEffect(){
+  const z = rsState && rsState.zombie;
+  if (!z || !z.queuedEffectFile) return;
+  if (!$('runMusicPlayer').paused) return; // hoofdkanaal nog steeds bezig — nog even wachten
+  const player = $('zombieEffectsPlayer');
+  if (player.src && !player.paused) return; // dit kanaal zelf toevallig ook al bezig (bv. enge-geluiden-fx tijdens de jacht) — volgende tick opnieuw proberen
+  player.src = z.queuedEffectFile; player.volume = 1; player.play().catch(() => {});
+  z.queuedEffectFile = null;
+}
+// Gesproken coach-mededelingen (Web Speech, een heel andere audiobron dan de <audio>-elementen hierboven)
+// mogen tijdens Zombie Run nooit over het verhaal/alarm/cue-kanaal heen praten — dat kanaal heeft zelf ook
+// een stem, en 2 stemmen tegelijk klinkt rommelig ("verschillende audio tussen elkaar"). Dus: gewoon
+// overslaan als dat kanaal nu bezig is. De toast/visuele melding bij de aanroep (indien aanwezig) blijft
+// wél altijd gewoon verschijnen — enkel de gesproken versie valt hier soms weg.
+function zombieSpeak(text){
+  if (!$('runMusicPlayer').paused) return;
+  speakForRun(text);
+}
 async function awardZombieBonus(reward){
   const z = rsState.zombie;
   // Eerst een kort geluid uit Zombie-Story/powerups/ (indien aanwezig), dan pas de melding/toast/stem — dat korte
   // "iets gevonden"-cue-tje vlak vóór de boodschap zelf, zoals gevraagd. Maar: tijdens het verhaaldeel speelt
   // er op dat moment al een ander bestand (de vertellerstem) op het hoofdkanaal — samen met de doorlopende
   // achtergrondmuziek zou dat dan 2 andere bestanden tegelijk zijn i.p.v. de bedoelde "muziek + max. 1
-  // ander bestand". Dus: enkel de cue overslaan als het hoofdkanaal nu al bezig is (melding/punten/stem
-  // blijven wel altijd gewoon werken, dat is geen apart audiobestand).
+  // ander bestand". Dus: als het hoofdkanaal nu al bezig is, het geluidje even in de wachtrij zetten i.p.v.
+  // het te laten verdwijnen — het speelt alsnog, gewoon iets later (zie flushZombieQueuedEffect() hierboven).
+  // De melding/punten/stem blijven wel altijd meteen werken, dat is geen apart audiobestand.
   const narrationBusy = !$('runMusicPlayer').paused;
-  const powerupFile = narrationBusy ? null : await zombieRandomFile('powerup');
-  if (powerupFile){
+  const powerupFile = await zombieRandomFile('powerup');
+  if (powerupFile && narrationBusy){
+    z.queuedEffectFile = powerupFile;
+  } else if (powerupFile){
     const player = $('zombieEffectsPlayer');
     player.src = powerupFile; player.volume = 1; player.play().catch(() => {});
     await new Promise(resolve => setTimeout(resolve, 500));
@@ -8389,7 +8470,7 @@ async function awardZombieBonus(reward){
   z.totalBonusEarned = Math.round(((z.totalBonusEarned||0) + reward.pts) * 10) / 10;
   z.score += reward.pts;
   toast(`${reward.icon} ${reward.label}! +${reward.pts}`, 3500);
-  speakForRun(curLang()==='en' ? `${reward.label} secured!` : `${reward.label} veiliggesteld!`);
+  zombieSpeak(curLang()==='en' ? `${reward.label} secured!` : `${reward.label} veiliggesteld!`);
   triggerZombieFlash('reward');
   while (z.bonusAccum >= 1 && z.lives < z.livesStart){
     z.bonusAccum -= 1; z.lives += 1;
@@ -8478,11 +8559,15 @@ function triggerZombieLastHeartbeat(){
     el.classList.add('zr-heartbeat-hit');
     setTimeout(() => el.classList.remove('zr-heartbeat-hit'), 500);
   }
-  speakForRun(curLang()==='en' ? "They're right behind you!" : 'Ze zitten vlak achter je!');
+  zombieSpeak(curLang()==='en' ? "They're right behind you!" : 'Ze zitten vlak achter je!');
 }
 function updateZombieRadar(){
   const z = rsState && rsState.zombie;
   if (!z) return;
+  if ($('zrThresholdVal')){
+    const kmh = z.currentThresholdKmh != null ? z.currentThresholdKmh : z.baseSpeedKmh;
+    $('zrThresholdVal').textContent = kmh != null ? kmh.toFixed(1) : '–';
+  }
   const zBlip = $('zrRadarZombieBlip');
   const showBlip = z.phase === 'chase' || z.phase === 'alarm' || z.phase === 'startcue';
   if (showBlip){
@@ -8574,6 +8659,35 @@ async function playZombieCreepyFx(){
   const volMin = zombieAudioParam('creepyVolMin'), volMax = zombieAudioParam('creepyVolMax');
   player.volume = volMin + computeZombieChaseProximity() * (volMax - volMin);
 }
+// "Zombies in de verte": zelfde geluidenpool als hierboven, maar dan ook tijdens rustig lopen (verhaal/
+// tussenstop/alarm/cue) — zacht en veel spaarzamer, gewoon sfeer, geen dichtbij-schaling nodig (die is er
+// niet zonder actieve achtervolging). Blijft actief zolang de Zombie Run loopt; schakelt zichzelf simpelweg
+// over naar de bestaande, dichtbij-schalende laag zodra 'chase' begint (playZombieAmbientFx doet dan niets,
+// scheduleZombieCreepyFx neemt het over) en weer terug zodra de achtervolging voorbij is.
+let zombieAmbientTimeoutId = null;
+function scheduleZombieAmbientFx(){
+  clearTimeout(zombieAmbientTimeoutId);
+  const z = rsState && rsState.zombie;
+  if (!z || z.finished) return;
+  const intervalMin = zombieAudioParam('ambientFxIntervalMin'), intervalMax = zombieAudioParam('ambientFxIntervalMax');
+  if (!(intervalMax > 0)) return; // rechterkant op 0 = uitgeschakeld
+  const delayMs = randRange(intervalMin, intervalMax) * 1000;
+  zombieAmbientTimeoutId = setTimeout(async () => {
+    const zz = rsState && rsState.zombie;
+    if (zz && !zz.finished && zz.phase !== 'chase') await playZombieAmbientFx();
+    scheduleZombieAmbientFx();
+  }, delayMs);
+}
+async function playZombieAmbientFx(){
+  const player = $('zombieEffectsPlayer');
+  if (player.src && !player.paused) return; // fx-kanaal al bezig (powerup/wachtrij/outcome) — deze beurt overslaan
+  const file = await zombieRandomFile('creepy');
+  if (!file) return;
+  if (player.src && !player.paused) return; // na de (asynchrone) discovery hierboven nog eens checken
+  const intervalMin = zombieAudioParam('ambientFxIntervalMin'), intervalMax = zombieAudioParam('ambientFxIntervalMax');
+  playAudioRandomOffset(player, file, randRange(intervalMin, intervalMax));
+  player.volume = zombieAudioParam('ambientFxVol');
+}
 async function playZombieOutcomeAudio(kindKey){
   const file = await zombieRandomFile(kindKey);
   if (!file) return;
@@ -8600,6 +8714,7 @@ async function playZombieStoryPart(){
   player.play().catch(() => {});
   await switchZombieMusic('low');
   duckZombieMusic(false);
+  scheduleZombieNarrationCutoff('story');
   updateZombieBanner();
 }
 function handleZombieTrackEnded(){
@@ -8628,10 +8743,80 @@ function startZombieInterlude(nextPhase){
   z.interludeNext = nextPhase;
   z.interludeEndAt = Date.now() + durationSec*1000;
   $('runMusicPlayer').pause(); // geen verhaal/alarm/cue-geluid tijdens het rustige stuk, enkel de achtergrondmuziek
+  // Bug: de muziek werd bij het alarm gedempt (duckZombieMusic(true)) maar pas terug op volle sterkte gezet
+  // in playZombieStoryPart() — dus tijdens DEZE rustige tussenstop (na een veilig afgeronde jacht, vóór het
+  // verhaal verdergaat) bleef de muziek al die tijd stilletjes op het lage "tijdens alarm/achtervolging"-
+  // volume staan, terwijl er verder niets anders speelt. Nu meteen herstellen zodra de rust intreedt.
+  duckZombieMusic(false);
   updateZombieBanner();
   z.interludeTimeoutId = setTimeout(() => finishZombieInterlude(nextPhase), durationSec*1000);
 }
-let zombieAlarmCutoffTimeoutId = null;
+// ---------- "Slechte radio-ontvangst": verhaal/alarm afkappen zonder een nette fade-out ----------
+// Web Audio API i.p.v. een audiobestand: genereert zelf witte ruis (geen los ruis-bestand nodig) en laat
+// zowel die ruis als de lopende stem happerend/onvoorspelbaar wegvallen — alsof je op een slechte
+// frequentie zit — in plaats van rustig uit te faden. Daarna gaat de fase gewoon verder (net als wanneer
+// het bestand vanzelf geëindigd zou zijn), dus de zombies kunnen hierdoor sneller/onvoorspelbaarder komen.
+let zombieStaticAudioCtx = null;
+let zombieStaticNoiseBuffer = null;
+function getZombieStaticNoiseBuffer(ctx){
+  if (zombieStaticNoiseBuffer) return zombieStaticNoiseBuffer;
+  const buffer = ctx.createBuffer(1, Math.round(ctx.sampleRate * 2), ctx.sampleRate); // 2s witte ruis, geloopt
+  const data = buffer.getChannelData(0);
+  for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
+  zombieStaticNoiseBuffer = buffer;
+  return buffer;
+}
+async function cutZombieAudioWithStatic(player, onDone){
+  try{
+    if (!zombieStaticAudioCtx) zombieStaticAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const ctx = zombieStaticAudioCtx;
+    if (ctx.state === 'suspended') await ctx.resume();
+    const noiseSrc = ctx.createBufferSource();
+    noiseSrc.buffer = getZombieStaticNoiseBuffer(ctx);
+    noiseSrc.loop = true;
+    const noiseGain = ctx.createGain();
+    noiseGain.gain.value = 0;
+    noiseSrc.connect(noiseGain).connect(ctx.destination);
+    noiseSrc.start();
+    const STEP_MS = 90, STEPS = 16; // ~1.4s "wegvallend signaal" vóór de definitieve stilte
+    let i = 0;
+    const stutterInterval = setInterval(() => {
+      i++;
+      const progress = i / STEPS;
+      const dropout = Math.random() < 0.4 + progress * 0.4; // kans op een volledige "drop-out" neemt toe
+      player.volume = dropout ? 0 : Math.max(0, 1 - progress) * (0.3 + Math.random() * 0.5);
+      noiseGain.gain.value = Math.min(0.35, progress * 0.4) * (dropout ? 1 : 0.4 + Math.random() * 0.3);
+      if (i >= STEPS){
+        clearInterval(stutterInterval);
+        player.pause(); player.volume = 1;
+        noiseSrc.stop();
+        onDone();
+      }
+    }, STEP_MS);
+  }catch(e){
+    // Web Audio niet beschikbaar/geblokkeerd — gewoon direct stoppen zonder het ruis-effect, geen crash.
+    player.pause();
+    onDone();
+  }
+}
+let zombieNarrationCutoffTimeoutId = null;
+// Plant de afkap-timer voor de opgegeven fase ('story' of 'alarm') — geannuleerd/genegeerd zodra de fase
+// intussen al op een andere manier gewisseld is (bv. het bestand was toch al vanzelf geëindigd).
+function scheduleZombieNarrationCutoff(phase){
+  clearTimeout(zombieNarrationCutoffTimeoutId);
+  const z = rsState && rsState.zombie;
+  if (!z) return;
+  const maxSec = zombieAudioParam('narrationCutoffSec');
+  if (!(maxSec > 0)) return;
+  const player = $('runMusicPlayer');
+  zombieNarrationCutoffTimeoutId = setTimeout(() => {
+    if (!rsState || !rsState.zombie || rsState.zombie !== z || z.phase !== phase) return; // fase intussen al gewisseld, niets meer te doen
+    cutZombieAudioWithStatic(player, () => {
+      if (!rsState || !rsState.zombie || rsState.zombie !== z || z.phase !== phase) return;
+      handleZombieTrackEnded(); // zelfde overgang als wanneer het bestand vanzelf zou geëindigd zijn
+    });
+  }, maxSec*1000);
+}
 async function finishZombieInterlude(nextPhase){
   const z = rsState.zombie;
   if (!z || z.finished) return;
@@ -8641,24 +8826,7 @@ async function finishZombieInterlude(nextPhase){
     if (file){ const player = $('runMusicPlayer'); player.src = file; player.volume = 1; player.play().catch(() => {}); }
     else { playZombieStartCue(); return; } // geen alarmbestand gevonden — meteen door naar de startcue
     duckZombieMusic(true); // muziek lichtjes zachter zodra het alarm start
-    // Alarm-bestanden mogen lang zijn, maar hoeven niet volledig uitgespeeld te worden voor het "zombies
-    // komen eraan"-gevoel — na alarmMaxSec (0 = uitgeschakeld) kappen we het gewoon af met een fade-out
-    // i.p.v. te wachten tot het bestand zelf eindigt.
-    clearTimeout(zombieAlarmCutoffTimeoutId);
-    const maxSec = zombieAudioParam('alarmMaxSec');
-    if (maxSec > 0){
-      const player = $('runMusicPlayer');
-      zombieAlarmCutoffTimeoutId = setTimeout(() => {
-        if (!rsState || !rsState.zombie || rsState.zombie !== z || z.phase !== 'alarm') return; // fase intussen al gewisseld, niets meer te doen
-        const fadeMs = zombieAudioParam('alarmFadeOutMs');
-        fadeAudioVolume(player, 0, fadeMs);
-        setTimeout(() => {
-          if (!rsState || !rsState.zombie || rsState.zombie !== z || z.phase !== 'alarm') return;
-          player.pause();
-          handleZombieTrackEnded(); // zelfde overgang als wanneer het bestand vanzelf zou geëindigd zijn
-        }, fadeMs + 100);
-      }, maxSec*1000);
-    }
+    scheduleZombieNarrationCutoff('alarm');
     updateZombieBanner();
   } else {
     advanceZombieStory();
@@ -8701,6 +8869,8 @@ function tickZombieState(){
   const z = rsState.zombie;
   if (!z || z.finished) return;
   updateZombieCurrentSpeed(); // zombiesnelheid kan intussen zijn opgedreven, ook buiten een achtervolging
+  updateZombieRadar(); // de vereiste-snelheid-regel boven de radar elke seconde verversen, ongeacht de fase
+  flushZombieQueuedEffect(); // een eventueel wachtend cue-geluidje alsnog afspelen zodra het hoofdkanaal vrijkomt
   tickZombieSprintReward(); // beloningssysteem: sprint-detectie tijdens verhaal én achtervolging
   // "Doel op tijd": zelfde soort melding als het bestaande "Doel op afstand" (targetKm) — stopt niets
   // automatisch, laat je gewoon weten dat je doel bereikt is, net als bij een gewone doelrun.
@@ -8708,7 +8878,7 @@ function tickZombieState(){
     const elapsedMin = (Date.now() - rsState.startedAt - (rsState.pausedMs||0)) / 60000;
     if (elapsedMin >= z.targetMinutes){
       z.targetTimeReached = true;
-      speakForRun(curLang()==='en'
+      zombieSpeak(curLang()==='en'
         ? `Time goal of ${z.targetMinutes} minutes reached. Keep going or stop whenever you like.`
         : `Tijdsdoel van ${z.targetMinutes} minuten bereikt. Loop verder of stop wanneer je wil.`);
     }
@@ -8744,7 +8914,7 @@ function resolveZombieChase(escaped){
   const z = rsState.zombie;
   if (escaped){
     z.score += 10; z.escapedCount++;
-    speakForRun(curLang()==='en' ? 'You escaped!' : 'Ontsnapt!');
+    zombieSpeak(curLang()==='en' ? 'You escaped!' : 'Ontsnapt!');
     z.bestMarginKmh = Math.min(z.bestMarginKmh, z.chaseMinMarginKmh);
     awardZombieNipperBonus(z.chaseMinMarginKmh);
     endZombieChaseSafely();
@@ -8762,11 +8932,11 @@ function resolveZombieChase(escaped){
   }
   if (z.consequence === 'points'){
     z.score -= 10;
-    speakForRun(curLang()==='en' ? 'Caught! Keep going.' : 'Ingehaald! Loop door.');
+    zombieSpeak(curLang()==='en' ? 'Caught! Keep going.' : 'Ingehaald! Loop door.');
     endZombieChaseSafely();
   } else { // 'extend'
     z.score -= 5;
-    speakForRun(curLang()==='en' ? "Caught! They're still after you!" : 'Ingehaald! Ze zitten nog achter je aan!');
+    zombieSpeak(curLang()==='en' ? "Caught! They're still after you!" : 'Ingehaald! Ze zitten nog achter je aan!');
     z.chaseDurationSec = Math.round(randRange(z.chaseMin, z.chaseMax));
     z.chaseEndAt = Date.now() + z.chaseDurationSec*1000; // extra kans, zelfde drempel — de jacht gaat gewoon door
     z.belowThresholdStreak = 0;
@@ -8778,10 +8948,10 @@ function resolveZombieChase(escaped){
 function handleZombieDeath(){
   const z = rsState.zombie;
   z.finished = true; z.died = true;
-  clearTimeout(z.interludeTimeoutId); clearTimeout(zombieCreepyTimeoutId); clearTimeout(zombieAlarmCutoffTimeoutId);
+  clearTimeout(z.interludeTimeoutId); clearTimeout(zombieCreepyTimeoutId); clearTimeout(zombieNarrationCutoffTimeoutId); clearTimeout(zombieAmbientTimeoutId);
   updateZombieBanner();
   playZombieOutcomeAudio('looser');
-  speakForRun(curLang()==='en' ? 'They got you...' : 'Ze hebben je te pakken...');
+  zombieSpeak(curLang()==='en' ? 'They got you...' : 'Ze hebben je te pakken...');
   const name = (appSettings.userName && appSettings.userName.trim()) || (curLang()==='en' ? 'Runner' : 'Loper');
   $('zrTombstoneName').textContent = name;
   $('zrTombstoneDate').textContent = new Date().toLocaleDateString(curLang()==='en' ? 'en-GB' : 'nl-BE', { day:'numeric', month:'long', year:'numeric' });
@@ -10442,7 +10612,7 @@ async function finishRunSession(completed){
       raceDeltaSec: (rsState.raceRef && rsState.raceDeltaSec != null) ? rsState.raceDeltaSec : null
     };
   }catch(e){ lastFinishedRunSummary = null; /* deelkaart is puur cosmetisch, mag de sessie-afronding nooit breken */ }
-  if (rsState.zombie){ stopZombieBackgroundMusic(); clearTimeout(zombieCreepyTimeoutId); clearTimeout(rsState.zombie.interludeTimeoutId); clearTimeout(zombieAlarmCutoffTimeoutId); $('zrRadarWrap').classList.add('hidden'); document.body.classList.remove('zr-mode'); $('zrVignette').style.opacity = 0; }
+  if (rsState.zombie){ stopZombieBackgroundMusic(); clearTimeout(zombieCreepyTimeoutId); clearTimeout(rsState.zombie.interludeTimeoutId); clearTimeout(zombieNarrationCutoffTimeoutId); clearTimeout(zombieAmbientTimeoutId); $('zrRadarWrap').classList.add('hidden'); document.body.classList.remove('zr-mode'); $('zrVignette').style.opacity = 0; }
   rsState = null;
   lastFinishedRunBreadcrumbs = rsBreadcrumbsSnapshot;
   $('runSessionScreen').classList.add('hidden');
@@ -10589,6 +10759,21 @@ document.querySelectorAll('.zr-tab-btn').forEach(btn => {
 const renderZombieChaseSlider = setupZombieDualSlider($('zombieChaseMinInput'), $('zombieChaseMaxInput'), $('zombieChaseFill'), $('zombieChaseVal'), 'sec', v => Math.round(v));
 const renderZombieInterludeSlider = setupZombieDualSlider($('zombieInterludeMinInput'), $('zombieInterludeMaxInput'), $('zombieInterludeFill'), $('zombieInterludeVal'), 'sec', v => Math.round(v));
 const renderZombieCreepyIntervalSlider = setupZombieDualSlider($('zombieCreepyIntervalMinInput'), $('zombieCreepyIntervalMaxInput'), $('zombieCreepyIntervalFill'), $('zombieCreepyIntervalVal'), 'sec', v => Math.round(v));
+const renderZombieAmbientIntervalSlider = setupZombieDualSlider($('zombieAmbientIntervalMinInput'), $('zombieAmbientIntervalMaxInput'), $('zombieAmbientIntervalFill'), $('zombieAmbientIntervalVal'), 'sec', v => Math.round(v));
+// Naast de "X tot Y sec"-tekst van de dual-slider zelf ook even omrekenen naar "±N per minuut" — rechtstreeks
+// gevraagd i.p.v. enkel een intervalbereik in seconden, dat is voor de meeste mensen lastiger in te schatten.
+function renderZombieAmbientRateNote(){
+  const note = $('zombieAmbientRateNote');
+  if (!note) return;
+  const lo = parseFloat($('zombieAmbientIntervalMinInput').value), hi = parseFloat($('zombieAmbientIntervalMaxInput').value);
+  if (!(hi > 0)){ note.textContent = curLang()==='en' ? 'Off — no ambient zombie sounds outside the chase.' : 'Uit — geen zombiegeluiden op de achtergrond buiten de achtervolging.'; return; }
+  const perMin = 60 / (((lo + hi) / 2) || 1);
+  note.textContent = '≈ ' + perMin.toFixed(1) + (curLang()==='en' ? ' per minute on average.' : ' per minuut gemiddeld.');
+}
+$('zombieAmbientIntervalMinInput').addEventListener('input', renderZombieAmbientRateNote);
+$('zombieAmbientIntervalMaxInput').addEventListener('input', renderZombieAmbientRateNote);
+renderZombieAmbientRateNote();
+$('zombieAmbientVolInput').addEventListener('input', e => { $('zombieAmbientVolVal').textContent = e.target.value + '%'; });
 // ---------- Zombie Run: geluidsparameters-tabblad — "alles wat de app zelf aan geluid doet", vrij
 // instelbaar i.p.v. vaste constanten in de code. Alles wat je hier niet aanraakt blijft gewoon op de
 // standaardwaarde staan (zie ZOMBIE_AUDIO_DEFAULTS) — dit tabblad heeft dus geen invloed als je 'm negeert.
@@ -10618,7 +10803,7 @@ function resetZombieSoundTabDefaults(){
   const d = ZOMBIE_AUDIO_DEFAULTS;
   $('zombieMusicVolInput').value = Math.round(d.musicBaseVol*100); $('zombieMusicVolVal').textContent = Math.round(d.musicBaseVol*100) + '%';
   $('zombieMusicDuckVolInput').value = Math.round(d.musicDuckVol*100); $('zombieMusicDuckVolVal').textContent = Math.round(d.musicDuckVol*100) + '%';
-  $('zombieAlarmMaxInput').value = d.alarmMaxSec; renderZombieAlarmMaxLabel();
+  $('zombieAlarmMaxInput').value = d.narrationCutoffSec; renderZombieAlarmMaxLabel();
   $('zombieFadeInStartInput').value = d.fadeInStartMs/1000; $('zombieFadeInStartVal').textContent = (d.fadeInStartMs/1000).toFixed(1) + 's';
   $('zombieFadeOutSwitchInput').value = d.fadeOutSwitchMs/1000;
   $('zombieFadeInSwitchInput').value = d.fadeInSwitchMs/1000;
@@ -10631,6 +10816,11 @@ function resetZombieSoundTabDefaults(){
   $('zombieCreepyIntervalMinInput').value = d.creepyIntervalMin;
   $('zombieCreepyIntervalMaxInput').value = d.creepyIntervalMax;
   renderZombieCreepyIntervalSlider();
+  $('zombieAmbientVolInput').value = Math.round(d.ambientFxVol*100); $('zombieAmbientVolVal').textContent = Math.round(d.ambientFxVol*100) + '%';
+  $('zombieAmbientIntervalMinInput').value = d.ambientFxIntervalMin;
+  $('zombieAmbientIntervalMaxInput').value = d.ambientFxIntervalMax;
+  renderZombieAmbientIntervalSlider();
+  renderZombieAmbientRateNote();
 }
 $('zombieLivesInput').addEventListener('input', e => { $('zombieLivesVal').textContent = e.target.value; });
 $('zombieBaseSpeedInput').addEventListener('input', e => { $('zombieBaseSpeedVal').textContent = parseFloat(e.target.value).toFixed(1) + ' ' + zrKmhUnit(); });
@@ -10735,10 +10925,12 @@ $('zombieStartBtn').addEventListener('click', () => {
   // (de sliders zijn hierboven al met die standaardwaarden geïnitialiseerd) — zie ZOMBIE_AUDIO_DEFAULTS.
   let creepyIntMin = Math.max(1, parseInt($('zombieCreepyIntervalMinInput').value) || 4);
   let creepyIntMax = Math.max(creepyIntMin, parseInt($('zombieCreepyIntervalMaxInput').value) || creepyIntMin);
+  let ambientIntMin = Math.max(0, parseInt($('zombieAmbientIntervalMinInput').value) || 0);
+  let ambientIntMax = Math.max(ambientIntMin, parseInt($('zombieAmbientIntervalMaxInput').value) || ambientIntMin);
   const audioParams = {
     musicBaseVol: Math.max(0, parseInt($('zombieMusicVolInput').value) || 0) / 100,
     musicDuckVol: Math.max(0, parseInt($('zombieMusicDuckVolInput').value) || 0) / 100,
-    alarmMaxSec: Math.max(0, parseInt($('zombieAlarmMaxInput').value) || 0),
+    narrationCutoffSec: Math.max(0, parseInt($('zombieAlarmMaxInput').value) || 0),
     fadeInStartMs: Math.max(0, parseFloat($('zombieFadeInStartInput').value) || 0) * 1000,
     fadeOutSwitchMs: Math.max(0, parseFloat($('zombieFadeOutSwitchInput').value) || 0) * 1000,
     fadeInSwitchMs: Math.max(0, parseFloat($('zombieFadeInSwitchInput').value) || 0) * 1000,
@@ -10746,7 +10938,9 @@ $('zombieStartBtn').addEventListener('click', () => {
     stopFadeMs: Math.max(0, parseFloat($('zombieStopFadeInput').value) || 0) * 1000,
     creepyVolMin: Math.max(0, Math.min(100, parseInt($('zombieCreepyVolMinInput').value) || 0)) / 100,
     creepyVolMax: Math.max(0, Math.min(100, parseInt($('zombieCreepyVolMaxInput').value) || 100)) / 100,
-    creepyIntervalMin: creepyIntMin, creepyIntervalMax: creepyIntMax
+    creepyIntervalMin: creepyIntMin, creepyIntervalMax: creepyIntMax,
+    ambientFxVol: Math.max(0, Math.min(100, parseInt($('zombieAmbientVolInput').value) || 0)) / 100,
+    ambientFxIntervalMin: ambientIntMin, ambientFxIntervalMax: ambientIntMax
   };
   closeModal('zombieSetupModal');
   startZombieRun({ lives, baseSpeedKmh, rampKmh, rampIntervalMin, chaseMin, chaseMax, interludeMin, interludeMax, consequence, targetKm, targetMinutes, difficulty: zombieSelectedDifficulty, audioParams });
@@ -13365,7 +13559,10 @@ $('geminiKeyInput').addEventListener('change', (e) => { appSettings.geminiKey = 
 $('openWeatherMapKeyInput').addEventListener('change', (e) => { appSettings.openWeatherMapKey = e.target.value.trim(); saveSettings(); });
 $('graphhopperKeyInput').addEventListener('change', (e) => { appSettings.graphhopperKey = e.target.value.trim(); saveSettings(); rerouteCurrentRouteIfAny(); });
 document.querySelectorAll('input[name="language"]').forEach(radio => {
-  radio.addEventListener('change', () => { appSettings.language = radio.value; saveSettings(); });
+  // translatePage() ontbrak hier -- de taal werd wel opgeslagen, maar de al zichtbare tekst op het scherm
+  // bleef in de oude taal staan tot je toevallig naar een ander scherm navigeerde (wat translatePage() elders
+  // toevallig opnieuw aanriep). Nu meteen zichtbaar bij het omschakelen zelf.
+  radio.addEventListener('change', () => { appSettings.language = radio.value; saveSettings(); translatePage(); });
 });
 document.querySelectorAll('input[name="theme"]').forEach(radio => {
   radio.addEventListener('change', () => { appSettings.theme = radio.value; saveSettings(); });

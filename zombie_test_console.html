@@ -47,11 +47,30 @@
   <div class="panel">
     <h1>🧟 Zombie Run — testconsole</h1>
     <p class="note">
-      Dit bestand wijzigt <code>index.html</code> niet. Het laadt je echte app hiernaast in een frame en
+      Dit bestand wijzigt <code>index.html</code> niet. Het laadt je echte app hiernaast in een kader en
       bestuurt hem via dezelfde functies die de app zelf gebruikt — inclusief een nagemaakte GPS-beweging,
       zodat je een volledige Zombie Run (met je eigen audiobestanden) kan beluisteren zonder buiten te
       moeten lopen.
     </p>
+
+    <h2>0. Waar zet ik dit bestand?</h2>
+    <p class="note">
+      <b style="color:var(--txt)">Simpelste manier:</b> zet <code>zombie_test_console.html</code> gewoon
+      in dezelfde GitHub-map als je <code>index.html</code> en je map <code>audio/ZombieRun/…</code>
+      (met jouw eigen mp3/wav-bestanden erin), commit + push zoals je met elke andere wijziging doet.
+      Open 'm dan gewoon via je bestaande live adres, bv.
+      <code>https://spicy-crayon.github.io/zombie_test_console.html</code> — precies zoals je nu ook
+      <code>index.html</code> zelf opent. Geen lokale server nodig, want GitHub Pages ís al een echte server.
+    </p>
+    <p class="note">
+      <b style="color:var(--txt)">Alternatief (zonder te publiceren):</b> zet dit bestand op je eigen
+      computer in dezelfde map als een kopie van <code>index.html</code> + de map <code>audio/ZombieRun/…</code>,
+      en open die map via een lokale server, bv. <code>python3 -m http.server 8000</code> in die map, dan
+      naar <code>http://localhost:8000/zombie_test_console.html</code>. Rechtstreeks vanaf schijf openen
+      (dubbelklikken, <code>file://…</code> in de adresbalk) werkt <b>niet</b> — dan kan de app geen
+      audiobestanden ophalen en krijg je hiernaast een lege/404-pagina te zien.
+    </p>
+    <div id="setupWarning" class="note" style="display:none; color:#fca5a5; background:#2a1111; border:1px solid #5b1414; border-radius:8px; padding:8px 10px; margin-top:8px;"></div>
 
     <h2>1. Configuratie (test-instellingen)</h2>
     <p class="note">Standaard hieronder staan <b>korte</b> tijden zodat je snel door alle fases heen komt.
@@ -87,6 +106,22 @@
       <button id="btnReset">🔁 Reset (herlaad app)</button>
     </div>
 
+    <h2>1b. Geluid (optioneel — leeg = app-standaard)</h2>
+    <p class="note">Zelfde parameters als het Geluid-tabblad in de app zelf. Een veld leeg laten gebruikt
+      gewoon de standaardwaarde uit <code>ZOMBIE_AUDIO_DEFAULTS</code> — je hoeft hier dus niks in te vullen
+      tenzij je specifiek iets wil testen (bv. een heel korte radio-ruis-afkap, of vaker/harder achtergrondfx).</p>
+    <div class="cfg-grid">
+      <div><label>Muziekvolume (rustig, 0-1)</label><input type="number" id="cfgMusicVol" step="0.05" min="0" max="1" placeholder="0.5"></div>
+      <div><label>Muziekvolume (alarm/jacht, 0-1)</label><input type="number" id="cfgMusicDuckVol" step="0.05" min="0" max="1" placeholder="0.1"></div>
+      <div><label>Radio-ruis-afkap (sec, 0=uit)</label><input type="number" id="cfgNarrationCutoff" step="1" min="0" placeholder="20"></div>
+      <div></div>
+      <div><label>Enge geluiden (jacht) min sec</label><input type="number" id="cfgCreepyIntMin" step="1" min="0" placeholder="4"></div>
+      <div><label>Enge geluiden (jacht) max sec</label><input type="number" id="cfgCreepyIntMax" step="1" min="0" placeholder="10"></div>
+      <div><label>Zombies in de verte: min sec</label><input type="number" id="cfgAmbientIntMin" step="1" min="0" placeholder="25"></div>
+      <div><label>Zombies in de verte: max sec (0=uit)</label><input type="number" id="cfgAmbientIntMax" step="1" min="0" placeholder="60"></div>
+      <div><label>Zombies in de verte: volume (0-1)</label><input type="number" id="cfgAmbientVol" step="0.05" min="0" max="1" placeholder="0.18"></div>
+    </div>
+
     <h2>2. Simuleer je looptempo</h2>
     <p class="note">Geen GPS nodig — dit stuurt om de seconde een nagemaakte positie naar de app, alsof je
       echt aan het lopen bent op de gekozen snelheid.</p>
@@ -112,6 +147,9 @@
       <button id="btnBonus">🎒 Forceer Supply Drop-bonus</button>
     </div>
     <div class="row">
+      <button id="btnStaticCutoff">📻 Forceer radio-ruis afkap (huidige fase)</button>
+    </div>
+    <div class="row">
       <button class="primary" id="btnWinner">🏆 Forceer Winner-einde</button>
       <button class="danger" id="btnLooser">💀 Forceer Game Over</button>
     </div>
@@ -121,12 +159,9 @@
 
     <h2>Audiobestanden op de juiste plek?</h2>
     <p class="note">
-      Deze pagina moet naast <code>index.html</code> staan, met daarnaast een map
-      <code>audio/ZombieRun/…</code> met jouw eigen bestanden (zelfde structuur als beschreven onder
-      Instellingen → 🧟 Zombie Run — help in de app zelf). Open deze pagina via een lokale server
-      (bv. <code>python3 -m http.server</code> in die map, dan naar
-      <code>http://localhost:8000/zombie_test_console.html</code>) — rechtstreeks vanaf schijf openen
-      (<code>file://…</code>) werkt niet voor het ophalen van audio.
+      Zelfde map als <code>index.html</code>, zie stap 0 hierboven — de structuur van
+      <code>audio/ZombieRun/…</code> zelf staat beschreven onder Instellingen → 🧟 Zombie Run — help
+      in de app zelf.
     </p>
   </div>
   <div class="stage">
@@ -151,12 +186,36 @@ function waitForApp(tries){
   tries = tries || 0;
   if (win && typeof win.startRunSession === 'function'){
     console.log('App geladen, testconsole klaar.');
+    document.getElementById('setupWarning').style.display = 'none';
     return;
   }
-  if (tries > 100) { console.warn('App lijkt niet (volledig) geladen.'); return; }
+  if (tries > 50) { // ~5s -- daarna gaan we ervan uit dat index.html niet naast dit bestand gevonden werd
+    let hint = '';
+    try{ hint = ' (kreeg: "' + win.document.title + '")'; }catch(e){}
+    const box = document.getElementById('setupWarning');
+    box.style.display = 'block';
+    box.innerHTML = '⚠️ Kon <code>index.html</code> niet (correct) laden hiernaast' + hint +
+      '. Zie stap 0 hierboven — dit bestand moet in dezelfde map staan als je echte <code>index.html</code>.';
+    console.warn('App lijkt niet (volledig) geladen.');
+    return;
+  }
   setTimeout(() => waitForApp(tries+1), 100);
 }
 
+// Elk veld leeg = niet meegeven, dan valt de app terug op ZOMBIE_AUDIO_DEFAULTS voor precies dat veld
+// (zie zombieAudioParam() in de app) — audioParams wordt dus null als je geen enkel Geluid-veld invulde.
+function readAudioParams(){
+  const num = id => { const v = document.getElementById(id).value; return v === '' ? undefined : parseFloat(v); };
+  const ap = {
+    musicBaseVol: num('cfgMusicVol'), musicDuckVol: num('cfgMusicDuckVol'),
+    narrationCutoffSec: num('cfgNarrationCutoff'),
+    creepyIntervalMin: num('cfgCreepyIntMin'), creepyIntervalMax: num('cfgCreepyIntMax'),
+    ambientFxIntervalMin: num('cfgAmbientIntMin'), ambientFxIntervalMax: num('cfgAmbientIntMax'),
+    ambientFxVol: num('cfgAmbientVol')
+  };
+  Object.keys(ap).forEach(k => { if (ap[k] === undefined) delete ap[k]; });
+  return Object.keys(ap).length ? ap : null;
+}
 function readConfig(){
   return {
     lives: parseInt(document.getElementById('cfgLives').value, 10) || 3,
@@ -170,7 +229,7 @@ function readConfig(){
     consequence: document.getElementById('cfgConsequence').value,
     targetMinutes: null,
     difficulty: document.getElementById('cfgDifficulty').value,
-    audioParams: null
+    audioParams: readAudioParams()
   };
 }
 
@@ -267,6 +326,20 @@ document.getElementById('btnStartcue').addEventListener('click', withZombie(() =
 document.getElementById('btnEscape').addEventListener('click', withZombie(() => win.resolveZombieChase(true), 'Forceer ontsnapping'));
 document.getElementById('btnBite').addEventListener('click', withZombie(() => win.resolveZombieChase(false), 'Forceer beet'));
 document.getElementById('btnBonus').addEventListener('click', withZombie(() => win.awardZombieBonus({ icon:'🎒', pts:1, label:'Testbonus' }), 'Forceer bonus'));
+document.getElementById('btnStaticCutoff').addEventListener('click', withZombie(() => {
+  // Zelfde stappen als wat scheduleZombieNarrationCutoff() ná narrationCutoffSec seconden zelf zou doen —
+  // hier meteen uitgevoerd (los van de ingestelde afkaptijd) om het ruis-effect direct te horen/zien.
+  evalInApp(`
+    if (rsState && rsState.zombie && (rsState.zombie.phase === 'story' || rsState.zombie.phase === 'alarm')){
+      const ph = rsState.zombie.phase;
+      cutZombieAudioWithStatic(document.getElementById('runMusicPlayer'), () => {
+        if (rsState && rsState.zombie && rsState.zombie.phase === ph) handleZombieTrackEnded();
+      });
+    } else {
+      alert('Alleen tijdens de fase story of alarm — forceer eerst het alarm of wacht tot het verhaal weer aan de beurt is.');
+    }
+  `);
+}, 'Forceer radio-ruis afkap'));
 document.getElementById('btnWinner').addEventListener('click', withZombie(() => win.finishRunSession(true), 'Forceer Winner-einde'));
 document.getElementById('btnLooser').addEventListener('click', withZombie(() => win.handleZombieDeath(), 'Forceer Game Over'));
 
@@ -298,7 +371,8 @@ function renderStatus(){
     Ontsnapt: <b>${z.escapedCount}×</b> &nbsp; Gepakt: <b>${z.caughtCount}×</b> &nbsp; Verhaallijn: <b>#${z.storyline}</b><br>
     <span style="color:#8ba17e">verhaal/cue-speler:</span> ${musicSrc}<br>
     <span style="color:#8ba17e">achtergrondmuziek:</span> ${bgSrc}<br>
-    <span style="color:#8ba17e">fx/enge-geluiden:</span> ${fxSrc}
+    <span style="color:#8ba17e">fx-kanaal</span> <span style="color:#666; font-size:10.5px;">(powerup / enge geluiden dichtbij / zombies-in-de-verte / winner-looser delen dit ene kanaal, max 1 tegelijk)</span>: ${fxSrc}<br>
+    ${z.queuedEffectFile ? `<span style="color:#fbbf24">⏳ wachtrij (speelt zodra verhaal/alarm klaar is):</span> ${decodeURIComponent(z.queuedEffectFile.split('/').slice(-2).join('/'))}` : '<span style="color:#666">⏳ wachtrij: leeg</span>'}
   `;
 }
 </script>
