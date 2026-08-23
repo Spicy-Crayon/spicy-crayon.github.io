@@ -93,6 +93,12 @@
   .poi-marker span{ transform:rotate(45deg); font-size:15px; }
 
   .drop-pin{ font-size:32px; line-height:1; filter:drop-shadow(0 3px 4px rgba(0,0,0,0.45)); }
+  /* .settings-subnote (het "Niet helemaal op de juiste plek?"-tekstje erboven) heeft van zichzelf enkel
+     margin-top, geen margin-bottom — die klasse wordt op 39 andere plekken hergebruikt, dus i.p.v. die
+     algemene regel aan te passen (risico op ongewenste verschuivingen elders) krijgt de knoppenrij hier
+     specifiek wat lucht erboven, want als de fietstype-rij verborgen is (bv. bij wandelen) komt deze
+     knoppenrij direct na dat tekstje te staan en plakte die er tot nu toe tegenaan. */
+  #pinActionSheet .pin-popup{ margin-top:10px; }
   .pin-popup{ display:flex; flex-direction:column; gap:6px; min-width:190px; }
   .pin-biketype-label{ font-size:11.5px; color:#7a8c81; margin:2px 0 6px; }
   #pinBikeTypeRow{ display:flex; gap:6px; margin-bottom:14px; }
@@ -1389,7 +1395,12 @@
   .zr-bp-sub{ text-align:center; font-size:14px; color:rgba(255,255,255,0.75); margin-top:8px; }
   .simple-modal-card{
     background:var(--cream); border-radius:18px; padding:18px; width:100%; max-width:380px;
-    max-height:80vh; overflow-y:auto; box-shadow:var(--shadow);
+    max-height:80vh; overflow-y:auto; overflow-x:hidden; box-shadow:var(--shadow);
+    /* overflow-x:hidden is bewust expliciet: zet je enkel overflow-y op auto/scroll en laat overflow-x op
+       de standaard 'visible' staan, dan promoot de browser overflow-x zelf óók stilzwijgend naar 'auto'
+       (CSS-eigenaardigheid) zodra ergens binnenin toevallig iets net te breed is (bv. een lange code-regel) —
+       zo werd elke simple-modal-card ongewild horizontaal wegveegbaar. .zr-modal-card had dit al apart
+       gepatcht; nu geldt het meteen voor alle modals (o.a. Hulp, Technische werking). */
   }
   .simple-modal-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
   .simple-modal-head b{ font-size:16px; color:var(--green-900); }
@@ -1860,10 +1871,13 @@
       <button id="wandelLoopGenBtnStd" type="button" style="display:flex; align-items:center; gap:12px; width:100%; background:rgba(255,255,255,0.06); border:2px solid rgba(255,255,255,0.08); border-radius:16px; padding:14px 16px; cursor:pointer; text-align:left; margin-bottom:10px;">
         <span style="font-size:26px; flex-shrink:0;">🎲</span>
         <span style="text-align:left; flex:1;">
-          <b style="color:var(--cream); font-size:14.5px; display:block;">Wandel-Lus Generator</b>
-          <small style="color:rgba(246,244,238,0.65); font-size:11.5px; line-height:1.4;">Genereer 3 wandellussen rond een punt</small>
+          <b id="wandelLoopGenBtnStdTitle" style="color:var(--cream); font-size:14.5px; display:block;">Wandel-Lus Generator</b>
+          <small id="wandelLoopGenBtnStdSub" style="color:rgba(246,244,238,0.65); font-size:11.5px; line-height:1.4;">Genereer 3 wandellussen rond een punt</small>
         </span>
       </button>
+      <!-- Knooppunten-invoer: was hier vroeger enkel zichtbaar bij wandelen (deze hele #wandelToolsSection stond
+           enkel aan voor mode==='wandel'), terwijl deze functie (op knooppuntnummer een route bouwen) even goed
+           bij fietsen werkt — puur een gemis, geen bewuste beperking. Tekst hieronder is al mode-neutraal. */ -->
       <button id="wandelNodeListBtnStd" type="button" style="display:flex; align-items:center; gap:12px; width:100%; background:rgba(255,255,255,0.06); border:2px solid rgba(255,255,255,0.08); border-radius:16px; padding:14px 16px; cursor:pointer; text-align:left; margin-bottom:10px;">
         <span style="font-size:26px; flex-shrink:0;">🔢</span>
         <span style="text-align:left; flex:1;">
@@ -1875,7 +1889,7 @@
         <span style="font-size:26px; flex-shrink:0;">📂</span>
         <span style="text-align:left; flex:1;">
           <b style="color:var(--cream); font-size:14.5px; display:block;">Importeer GPX-bestand</b>
-          <small style="color:rgba(246,244,238,0.65); font-size:11.5px; line-height:1.4;">Laad een wandelroute van een site of app</small>
+          <small id="wandelGpxImportBtnStdSub" style="color:rgba(246,244,238,0.65); font-size:11.5px; line-height:1.4;">Laad een wandelroute van een site of app</small>
         </span>
       </button>
     </div>
@@ -1915,6 +1929,23 @@
         </span>
       </button>
       <div id="natureSpotterResult" style="display:none; margin-top:12px; background:rgba(255,255,255,0.06); border:2px solid var(--amber); border-radius:16px; padding:8px 16px;"></div>
+    </div>
+
+    <!-- Audio Gids: was voorheen een niet-klikbare "Binnenkort"-stub (enkel in Garmin-stijl) — nu een
+         echte, werkende functie: zoekt interessante Wikipedia-plekken in de buurt (parken, musea, kastelen, ...)
+         via dezelfde gratis geosearch-API als de bestaande "historische audio-fragmenten" tijdens navigatie,
+         maar dan als handmatig doorbladerbare lijst. Zelfde opmaak als Natuurspotter hierboven, maar met een
+         eigen paarse randkleur zodat de twee lijsten optisch te onderscheiden zijn. -->
+    <div id="audioGuideSection" style="display:none; margin-top:18px; text-align:left;">
+      <div class="bike-setup-title" style="text-align:left; margin-bottom:10px;" data-i18n="audioGuideTitle">🎧 Audio Gids</div>
+      <button id="audioGuideBtn" type="button" style="display:flex; align-items:center; gap:12px; width:100%; background:rgba(255,255,255,0.06); border:2px solid rgba(139,92,246,0.35); border-radius:16px; padding:14px 16px; cursor:pointer; text-align:left;">
+        <span style="font-size:26px; flex-shrink:0;">🎧</span>
+        <span style="text-align:left; flex:1;">
+          <b style="color:var(--cream); font-size:14.5px; display:block;" data-i18n="audioGuideBtnTitle">Wat is hier interessant?</b>
+          <small style="color:rgba(246,244,238,0.65); font-size:11.5px; line-height:1.4;" data-i18n="audioGuideBtnSub">Parken, musea, kastelen & meer — via Wikipedia, voorgelezen in het Nederlands of Engels.</small>
+        </span>
+      </button>
+      <div id="audioGuideResult" style="display:none; margin-top:12px; background:rgba(255,255,255,0.06); border:2px solid #8b5cf6; border-radius:16px; padding:8px 16px;"></div>
     </div>
 
     <div id="animalScannerSection" style="display:none; margin-top:18px; text-align:left;">
@@ -6922,6 +6953,9 @@ const TRANSLATIONS = {
   natureSpotterTitle: { nl:'🦉 Natuurspotter', en:'🦉 Nature spotter' },
   natureSpotterBtnTitle: { nl:'Wat is hier recent gespot?', en:'What has been spotted here recently?' },
   natureSpotterBtnSub: { nl:'Echte waarnemingen van andere natuurliefhebbers, via iNaturalist.', en:'Real sightings from other nature enthusiasts, via iNaturalist.' },
+  audioGuideTitle: { nl:'🎧 Audio Gids', en:'🎧 Audio guide' },
+  audioGuideBtnTitle: { nl:'Wat is hier interessant?', en:'What is interesting nearby?' },
+  audioGuideBtnSub: { nl:'Parken, musea, kastelen & meer — via Wikipedia, voorgelezen in het Nederlands of Engels.', en:'Parks, museums, castles & more — via Wikipedia, read aloud in Dutch or English.' },
   stopTrainingTitle: { nl:'Training stoppen?', en:'Stop training?' },
   stopTrainingText: { nl:'Je voortgang tot nu toe wordt bewaard.', en:'Your progress so far will be saved.' },
   stopTrainingCancel: { nl:'Doorgaan', en:'Continue' },
@@ -8715,11 +8749,14 @@ async function playZombieAmbientFx(){
   playAudioRandomOffset(player, file, randRange(intervalMin, intervalMax));
   player.volume = zombieAudioParam('ambientFxVol');
 }
+// Geeft terug of er effectief een bestand gevonden en gestart is (true/false) — handleZombieDeath()
+// gebruikt dat om te weten of de "Ze hebben je te pakken..."-stem nog nodig is als terugval, zie daar.
 async function playZombieOutcomeAudio(kindKey){
   const file = await zombieRandomFile(kindKey);
-  if (!file) return;
+  if (!file) return false;
   const player = $('zombieEffectsPlayer');
   player.src = file; player.volume = 1; player.play().catch(() => {});
+  return true;
 }
 async function playZombieStoryPart(){
   const z = rsState.zombie;
@@ -8733,6 +8770,12 @@ async function playZombieStoryPart(){
     updateZombieBanner();
     return;
   }
+  // Annuleer eerst een eventueel nog lopende coach-uitspraak (bv. "Ontsnapt!"/"Ingehaald! Loop door." van
+  // zombieSpeak() vlak vóór deze fase-overgang) — speechSynthesis en dit <audio>-element zijn twee
+  // volledig gescheiden geluidsbronnen die elkaar niet automatisch afbreken, dus zonder dit kon de oude
+  // stem nog doorlopen terwijl dit verhaaldeel al begint. Zelfde "2 stemmen tegelijk"-probleem als bij
+  // handleZombieDeath()/playZombieOutcomeAudio(), maar dan in omgekeerde volgorde (stem eerst, bestand ná).
+  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
   const player = $('runMusicPlayer');
   player.src = zombieStoryFilePath(z.storyline, z.storyPartIndex);
   z.storyPartIndex++;
@@ -8850,6 +8893,9 @@ async function finishZombieInterlude(nextPhase){
   if (nextPhase === 'alarm'){
     z.phase = 'alarm';
     const file = await zombieRandomFile('alarm');
+    // Zelfde reden als bij playZombieStoryPart() hierboven: eerst een eventueel nog lopende coach-stem afbreken
+    // vóór dit hoofdkanaal-bestand start, anders kunnen die twee even door elkaar klinken.
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
     if (file){ const player = $('runMusicPlayer'); player.src = file; player.volume = 1; player.play().catch(() => {}); }
     else { playZombieStartCue(); return; } // geen alarmbestand gevonden — meteen door naar de startcue
     duckZombieMusic(true); // muziek lichtjes zachter zodra het alarm start
@@ -8865,6 +8911,9 @@ async function playZombieStartCue(){
   z.phase = 'startcue';
   await switchZombieMusic('high');
   const file = await zombieRandomFile('startRun');
+  // Zelfde reden als bij playZombieStoryPart() hierboven: eerst een eventueel nog lopende coach-stem afbreken
+  // vóór dit hoofdkanaal-bestand start, anders kunnen die twee even door elkaar klinken.
+  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
   if (file){ const player = $('runMusicPlayer'); player.src = file; player.volume = 1; player.play().catch(() => {}); }
   else { beginZombieChase(); return; } // geen startRun-bestand — meteen de achtervolging in
   updateZombieBanner();
@@ -8887,6 +8936,12 @@ async function endZombieChaseSafely(){
   await switchZombieMusic('low');
   z.phase = 'stopcue';
   const file = await zombieRandomFile('stopRun');
+  // Dit is precies het scenario waar de gebruiker naar vroeg: bij een niet-fatale beet ('points') roept
+  // resolveZombieChase() eerst zombieSpeak('Ingehaald! Loop door.') aan en start dan (niet-geawait)
+  // endZombieChaseSafely() — die pas ná switchZombieMusic()+zombieRandomFile() (dus een tikje later) deze
+  // StopRun-cue op hetzelfde hoofdkanaal start. Zonder deze cancel() liep de coach-stem gewoon door terwijl
+  // de StopRun-cue er al overheen begon — hoorbaar als 2 stemmen door elkaar. Zelfde fix als hierboven.
+  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
   if (file){ const player = $('runMusicPlayer'); player.src = file; player.volume = 1; player.play().catch(() => {}); }
   else { startZombieInterlude('story'); return; }
   updateZombieBanner();
@@ -8972,13 +9027,21 @@ function resolveZombieChase(escaped){
   updateZombieBanner();
 }
 // Levenspunten op 0: de run stopt hier, met een grafsteen ter ere van de gevallen speler.
-function handleZombieDeath(){
+async function handleZombieDeath(){
   const z = rsState.zombie;
   z.finished = true; z.died = true;
   clearTimeout(z.interludeTimeoutId); clearTimeout(zombieCreepyTimeoutId); clearTimeout(zombieNarrationCutoffTimeoutId); clearTimeout(zombieAmbientTimeoutId);
   updateZombieBanner();
-  playZombieOutcomeAudio('looser');
-  zombieSpeak(curLang()==='en' ? 'They got you...' : 'Ze hebben je te pakken...');
+  // Bug: dit riep voorheen playZombieOutcomeAudio('looser') aan zónder erop te wachten (die is zelf async —
+  // zombieRandomFile() moet nog een HEAD-request-discovery afronden) en startte meteen daarna, volledig
+  // ongesynchroniseerd, ook nog de "Ze hebben je te pakken..."-stem. Daardoor kon je de stemregel horen
+  // starten vóór (of dwars door) het eigenlijke Looser-geluidsbestand — precies het "2 dingen tegelijk
+  // door elkaar" dat zombieSpeak() elders juist probeert te vermijden. Nu eerst netjes awaiten, en de
+  // stemregel enkel nog als terugval gebruiken wanneer er geen Looser-bestand gevonden werd (zelfde aanpak
+  // als de winnaars-kant hierboven in finishRunSession(), die om dezelfde reden geen extra afsluitzin meer spreekt
+  // zodra er al een eigen winnaars-/verliezers-geluid is).
+  const hadLooserAudio = await playZombieOutcomeAudio('looser');
+  if (!hadLooserAudio) zombieSpeak(curLang()==='en' ? 'They got you...' : 'Ze hebben je te pakken...');
   const name = (appSettings.userName && appSettings.userName.trim()) || (curLang()==='en' ? 'Runner' : 'Loper');
   $('zrTombstoneName').textContent = name;
   $('zrTombstoneDate').textContent = new Date().toLocaleDateString(curLang()==='en' ? 'en-GB' : 'nl-BE', { day:'numeric', month:'long', year:'numeric' });
@@ -11105,6 +11168,8 @@ window.addEventListener('message', (ev) => {
     case 'findrestpoints': garminFindRestPoints(); break;
     case 'showrestpoint': showRestPointOnMap(data.point); break;
     case 'findobservations': garminFindObservations(); break;
+    case 'findaudioguide': garminFindAudioGuide(); break;
+    case 'playaudioguide': playAudioGuideItem(data.item); break;
     case 'openwiki': openWikiInfoModal(data.sciName, data.commonName); break;
     case 'openspotify': openSpotifyModal(); break;
     case 'openzombiesetup': openZombieSetupModal(); break;
@@ -11126,6 +11191,13 @@ async function garminFindObservations(){
   const post = (payload) => { if (frame && frame.contentWindow) frame.contentWindow.postMessage(Object.assign({ source:'garminObservationsResult' }, payload), '*'); };
   const r = await findNearbyObservations();
   if (!r.ok){ post({ status:'error', message: observationsErrorMessage(r.reason) }); return; }
+  post({ status:'ok', items: r.items });
+}
+async function garminFindAudioGuide(){
+  const frame = $('garminSetupFrame');
+  const post = (payload) => { if (frame && frame.contentWindow) frame.contentWindow.postMessage(Object.assign({ source:'garminAudioGuideResult' }, payload), '*'); };
+  const r = await findNearbyWikiPlaces();
+  if (!r.ok){ post({ status:'error', message: wikiPlacesErrorMessage(r.reason) }); return; }
   post({ status:'ok', items: r.items });
 }
 async function garminFindRestPoints(){
@@ -11370,6 +11442,15 @@ function buildGarminSetupHtml(mode){
         </div>
         <span class="text-slate-500">→</span>
       </button>
+      <!-- Ontbrak hier voorheen (stond enkel bij de wandel-variant hieronder), terwijl knooppunten-invoer
+           evengoed bij fietsen werkt — puur een gemis, geen bewuste beperking. -->
+      <button id="nodeListBtn" class="w-full bg-slate-900/70 border border-slate-800 rounded-2xl p-3 flex justify-between items-center text-left">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-slate-800 rounded-xl flex items-center justify-center">🔢</div>
+          <div><div class="font-bold text-xs text-slate-200">Knooppunten-invoer</div><div class="text-[10px] text-slate-400">Typ een reeks nummers, app bouwt de route</div></div>
+        </div>
+        <span class="text-slate-500">→</span>
+      </button>
       <button id="gpxImportBtn" class="w-full bg-slate-900/70 border border-slate-800 rounded-2xl p-3 flex justify-between items-center text-left">
         <div class="flex items-center gap-3">
           <div class="w-8 h-8 bg-slate-800 rounded-xl flex items-center justify-center">📂</div>
@@ -11411,7 +11492,7 @@ function buildGarminSetupHtml(mode){
           <span class="text-xl block mb-0.5">📸</span><span class="text-xs font-bold text-emerald-400 block">Flora Scanner</span><span id="floraScannerSub" class="text-[9px] text-slate-500 block">Echte herkenning</span>
           <input type="file" id="floraScannerInput" accept="image/*" capture="environment" class="hidden" style="display:none;">
         </label>
-        <button class="stub-tile bg-slate-900/60 border border-slate-800 rounded-2xl p-2.5 text-center"><span class="text-xl block mb-0.5">🎧</span><span class="text-xs font-bold text-white block">Audio Gids</span><span class="text-[9px] text-slate-500 block">Binnenkort</span></button>
+        <button id="audioGuideTile" class="bg-slate-900/60 border border-violet-500/40 rounded-2xl p-2.5 text-center"><span class="text-xl block mb-0.5">🎧</span><span class="text-xs font-bold text-violet-400 block">Audio Gids</span><span class="text-[9px] text-slate-500 block">Via Wikipedia</span></button>
         <label for="animalScannerInput" class="col-span-2 bg-slate-900/60 border border-rose-500/40 rounded-2xl p-3 text-center cursor-pointer flex items-center justify-center gap-3 relative">
           <span class="text-2xl">🐾</span>
           <span class="text-left">
@@ -11423,6 +11504,7 @@ function buildGarminSetupHtml(mode){
       </div>
       <div id="restPointsResultGarmin" style="display:none; margin-top:10px; background:rgba(255,255,255,0.06); border:2px solid #38bdf8; border-radius:16px; padding:10px 14px; max-height:220px; overflow-y:auto;"></div>
       <div id="natureSpotterResultGarmin" style="display:none; margin-top:10px; background:rgba(255,255,255,0.06); border:2px solid #2dd4bf; border-radius:16px; padding:10px 14px; max-height:220px; overflow-y:auto;"></div>
+      <div id="audioGuideResultGarmin" style="display:none; margin-top:10px; background:rgba(255,255,255,0.06); border:2px solid #a78bfa; border-radius:16px; padding:10px 14px; max-height:220px; overflow-y:auto;"></div>
       <div id="floraScannerResult" style="display:none; margin-top:10px; background:rgba(255,255,255,0.06); border:2px solid #f59e0b; border-radius:16px; padding:12px 14px;"></div>
       <div id="animalScannerResultGarmin" style="display:none; margin-top:10px; background:rgba(255,255,255,0.06); border:2px solid #fb7185; border-radius:16px; padding:12px 14px;"></div>
     </div>`}
@@ -11524,6 +11606,42 @@ ${GARMIN_MENU_BTN_JS}
         parent.postMessage({ source:'garminSetup', action:'findobservations' }, '*');
       });
     }
+    const audioGuideTile = document.getElementById('audioGuideTile');
+    if (audioGuideTile){
+      audioGuideTile.addEventListener('click', () => {
+        const resultEl = document.getElementById('audioGuideResultGarmin');
+        resultEl.style.display = 'block';
+        resultEl.innerHTML = '<div class="text-xs text-slate-300 py-1">Bezig met zoeken…</div>';
+        parent.postMessage({ source:'garminSetup', action:'findaudioguide' }, '*');
+      });
+    }
+    window.addEventListener('message', (ev) => {
+      const d = ev.data;
+      if (d && d.source === 'garminAudioGuideResult'){
+        const resultEl = document.getElementById('audioGuideResultGarmin');
+        if (!resultEl) return;
+        resultEl.style.display = 'block';
+        if (d.status === 'error'){
+          resultEl.innerHTML = '<div class="text-xs text-slate-300 py-1">' + d.message + '</div>';
+        } else if (d.status === 'ok'){
+          resultEl.innerHTML = d.items.map((o,i) =>
+            '<div class="audio-guide-row-g flex items-center gap-2 py-1.5 border-b border-slate-800/60 cursor-pointer" data-idx="' + i + '">' +
+            (o.thumbnail
+              ? '<img src="' + o.thumbnail + '" class="w-8 h-8 rounded-lg object-cover flex-shrink-0" loading="lazy">'
+              : '<span class="text-base w-8 text-center flex-shrink-0">🎧</span>') +
+            '<div class="flex-1 min-w-0"><div class="text-xs font-bold text-white truncate">' + o.title + '</div>' +
+            '<div class="text-[10px] text-slate-500 truncate">' + (o.distance < 1000 ? Math.round(o.distance) + ' m' : (o.distance/1000).toFixed(1) + ' km') + '</div></div>' +
+            '<span class="text-sm text-violet-400 flex-shrink-0">🔊</span></div>'
+          ).join('') + '<div class="text-[9px] text-slate-600 mt-2 text-center">Data: Wikipedia</div>';
+          resultEl.querySelectorAll('.audio-guide-row-g').forEach(row => {
+            const item = d.items[Number(row.dataset.idx)];
+            row.addEventListener('click', () => {
+              parent.postMessage({ source:'garminSetup', action:'playaudioguide', item }, '*');
+            });
+          });
+        }
+      }
+    });
     window.addEventListener('message', (ev) => {
       const d = ev.data;
       if (d && d.source === 'garminObservationsResult'){
@@ -11616,6 +11734,8 @@ ${GARMIN_MENU_BTN_JS}
 
     const loopGenBtn = document.getElementById('loopGenBtn');
     if (loopGenBtn) loopGenBtn.addEventListener('click', () => parent.postMessage({ source:'garminSetup', action:'loopgen' }, '*'));
+    const nodeListBtn = document.getElementById('nodeListBtn');
+    if (nodeListBtn) nodeListBtn.addEventListener('click', () => parent.postMessage({ source:'garminSetup', action:'nodelist' }, '*'));
     const gpxImportBtn = document.getElementById('gpxImportBtn');
     if (gpxImportBtn) gpxImportBtn.addEventListener('click', () => parent.postMessage({ source:'garminSetup', action:'gpximport' }, '*'));
     const wandelLoopGenBtn = document.getElementById('wandelLoopGenBtn');
@@ -20414,13 +20534,21 @@ function openBikeSetupScreen(mode){
   document.querySelectorAll('.nav-type-card').forEach(c => c.classList.toggle('active', c.dataset.navtype === (appSettings.navType || 'active')));
   $('bikeTypeSection').style.display = mode === 'fiets' ? 'block' : 'none';
   $('natureIdSection').style.display = mode === 'wandel' ? 'block' : 'none';
-  $('wandelToolsSection').style.display = mode === 'wandel' ? 'block' : 'none';
+  // Was voorheen enkel zichtbaar bij wandelen — de rondrit-generator, knooppunten-invoer en GPX-import
+  // werken evengoed bij fietsen, dus deze "Route & Tools"-sectie toont nu bij beide, met mode-passende
+  // tekst op de knoppen die dat nodig hebben (knooppunten-invoer-tekst was al mode-neutraal).
+  $('wandelToolsSection').style.display = 'block';
+  $('wandelLoopGenBtnStdTitle').textContent = mode === 'fiets' ? 'Rondrit-generator' : 'Wandel-Lus Generator';
+  $('wandelLoopGenBtnStdSub').textContent = mode === 'fiets' ? 'Genereer 3 routevoorstellen rond een punt' : 'Genereer 3 wandellussen rond een punt';
+  $('wandelGpxImportBtnStdSub').textContent = mode === 'fiets' ? 'Laad een fietsroute van een site of app' : 'Laad een wandelroute van een site of app';
   $('natureIdResult').style.display = 'none';
   $('natureIdCameraInput').value = '';
   $('restPointsSection').style.display = mode === 'wandel' ? 'block' : 'none';
   $('restPointsResult').style.display = 'none';
   $('natureSpotterSection').style.display = mode === 'wandel' ? 'block' : 'none';
   $('natureSpotterResult').style.display = 'none';
+  $('audioGuideSection').style.display = mode === 'wandel' ? 'block' : 'none';
+  $('audioGuideResult').style.display = 'none';
   $('animalScannerSection').style.display = mode === 'wandel' ? 'block' : 'none';
   $('animalScannerResult').style.display = 'none';
   $('animalScannerInput').value = '';
@@ -20465,6 +20593,21 @@ $('natureSpotterBtn').addEventListener('click', async () => {
   resultEl.querySelectorAll('.obs-row').forEach(row => {
     const item = r.items[Number(row.dataset.idx)];
     row.addEventListener('click', () => openWikiInfoModal(item.sciName, item.commonName));
+  });
+});
+$('audioGuideBtn').addEventListener('click', async () => {
+  const resultEl = $('audioGuideResult');
+  resultEl.style.display = 'block';
+  resultEl.innerHTML = `<div style="color:var(--cream); font-size:12.5px; padding:8px 0;">${curLang()==='en' ? 'Searching…' : 'Bezig met zoeken…'}</div>`;
+  const r = await findNearbyWikiPlaces();
+  if (!r.ok){
+    resultEl.innerHTML = `<div style="color:var(--cream); font-size:12.5px; padding:8px 0;">${wikiPlacesErrorMessage(r.reason)}</div>`;
+    return;
+  }
+  resultEl.innerHTML = renderAudioGuideHtml(r.items);
+  resultEl.querySelectorAll('.audio-guide-row').forEach(row => {
+    const item = r.items[Number(row.dataset.idx)];
+    row.addEventListener('click', () => playAudioGuideItem(item));
   });
 });
 $('animalScannerInput').addEventListener('change', async (e) => {
@@ -20960,6 +21103,79 @@ function renderObservationsHtml(items){
     <span style="color:var(--amber); font-size:14px; flex-shrink:0;">📖</span>
   </div>`).join('') + `<div style="color:rgba(246,244,238,0.4); font-size:9.5px; margin-top:8px; text-align:center;">Data: iNaturalist.org (CC BY-NC) — tik op een soort voor meer info</div>`;
 }
+
+// ---------- Audio Gids: interessante plekken in de buurt via Wikipedia's gratis geosearch ----------
+// Zelfde gratis API als de bestaande "historische audio-fragmenten onderweg" (checkNearbyHistory, hierboven),
+// maar hier als handmatig doorbladerbare lijst: ruimere straal (3 km i.p.v. 350 m), geen automatische timer,
+// en met foto's/korte samenvatting per plek in één enkele API-call (generator=geosearch + prop=extracts|pageimages),
+// zodat de lijst meteen klaar staat zonder per item een aparte aanvraag te moeten doen.
+async function findNearbyWikiPlaces(){
+  if (!navigator.geolocation) return { ok:false, reason:'no-geo' };
+  const pos = await getBestKnownPosition();
+  if (!pos) return { ok:false, reason:'no-location' };
+  const lat = pos.coords.latitude, lon = pos.coords.longitude;
+  try{
+    const wikiLang = curLang()==='en' ? 'en' : 'nl';
+    const url = `https://${wikiLang}.wikipedia.org/w/api.php?action=query&generator=geosearch&ggscoord=${lat}|${lon}&ggsradius=3000&ggslimit=20&prop=coordinates|pageimages|extracts&exintro&explaintext&exchars=180&piprop=thumbnail&pithumbsize=100&format=json&origin=*`;
+    const res = await fetchWithTimeout(url, {}, 12000);
+    if (!res.ok) return { ok:false, reason:'http-error' };
+    const data = await res.json();
+    const pages = (data.query && data.query.pages) || {};
+    const items = Object.values(pages)
+      .filter(p => p.extract && p.coordinates && p.coordinates[0])
+      .map(p => ({
+        title: p.title,
+        extract: p.extract,
+        thumbnail: (p.thumbnail && p.thumbnail.source) || null,
+        distance: haversine(lat, lon, p.coordinates[0].lat, p.coordinates[0].lon)
+      }))
+      .sort((a,b) => a.distance - b.distance)
+      .slice(0, 15);
+    if (!items.length) return { ok:false, reason:'no-results' };
+    return { ok:true, items };
+  } catch(err){
+    return { ok:false, reason:'network' };
+  }
+}
+function wikiPlacesErrorMessage(reason){
+  const en = curLang()==='en';
+  switch(reason){
+    case 'no-geo': return en ? 'No GPS available on this device.' : 'Geen GPS beschikbaar op dit toestel.';
+    case 'no-location': return en ? 'Location access denied.' : 'Locatietoegang geweigerd.';
+    case 'no-results': return en ? 'No Wikipedia articles found within 3 km.' : 'Geen Wikipedia-artikels gevonden binnen 3 km.';
+    default: return en ? 'Could not fetch nearby places — check your connection.' : 'Kon plekken in de buurt niet ophalen — controleer je verbinding.';
+  }
+}
+function renderAudioGuideHtml(items){
+  return items.map((o,i) => `<div class="audio-guide-row" data-idx="${i}" style="display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.06); cursor:pointer;">
+    ${o.thumbnail
+      ? `<img src="${o.thumbnail}" style="width:40px; height:40px; border-radius:10px; object-fit:cover; flex-shrink:0;" loading="lazy">`
+      : `<span style="font-size:22px; flex-shrink:0; width:40px; text-align:center;">🎧</span>`}
+    <div style="flex:1; min-width:0;">
+      <div style="color:var(--cream); font-size:12.5px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${o.title}</div>
+      <div style="color:rgba(246,244,238,0.55); font-size:10.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${o.distance < 1000 ? Math.round(o.distance) + ' m' : (o.distance/1000).toFixed(1) + ' km'}</div>
+    </div>
+    <span style="color:#a78bfa; font-size:15px; flex-shrink:0;">🔊</span>
+  </div>`).join('') + `<div style="color:rgba(246,244,238,0.4); font-size:9.5px; margin-top:8px; text-align:center;">Data: Wikipedia — tik op een plek om te openen & voor te laten lezen</div>`;
+}
+// Opent het Wikipedia-artikel in een nieuw tabblad en leest de samenvatting hardop voor, in de huidige
+// taal (via fetchWikipediaSummary, die al taalbewust is). Gebruikt hetzelfde trucje als de bestaande
+// stem-testknop in Instellingen: voiceEnabled tijdelijk forceren op true, want dit is een bewuste,
+// expliciete tik-om-te-luisteren-actie — die mag niet stilzwijgend niets doen enkel omdat de gebruiker
+// de 🔊/🔇-knop voor navigatiestem toevallig uit had staan.
+async function playAudioGuideItem(item){
+  const r = await fetchWikipediaSummary(item.title);
+  const pageUrl = r.ok ? r.pageUrl : `https://${curLang()==='en' ? 'en' : 'nl'}.wikipedia.org/wiki/${encodeURIComponent(item.title)}`;
+  window.open(pageUrl, '_blank');
+  if (!('speechSynthesis' in window)) return;
+  const fullExtract = (r.ok && r.extract) ? r.extract : item.extract;
+  const words = fullExtract.split(/\s+/).slice(0, 60);
+  const spoken = words.join(' ') + (words.length === 60 ? '…' : '');
+  const wasEnabled = voiceEnabled;
+  voiceEnabled = true; // net als bij de stem-testknop: dit moet altijd hoorbaar zijn, ongeacht de mute-knop
+  speak(`${item.title}. ${spoken}`);
+  voiceEnabled = wasEnabled;
+}
 async function identifyPlantPhoto(file){
   const resultEl = $('natureIdResult');
   resultEl.style.display = 'block';
@@ -21033,17 +21249,17 @@ $('bikeSetupContinueBtn').addEventListener('click', () => {
 });
 $('wandelLoopGenBtnStd').addEventListener('click', () => {
   $('bikeSetupScreen').classList.add('hidden');
-  selectMode('wandel');
+  selectMode(bikeSetupTargetMode); // was hier hardcoded 'wandel' — schakelde dus altijd naar wandelen, zelfs vanuit het fiets-opzetscherm
   setTimeout(() => { const b = $('menuLoopGenBtn'); if (b) b.click(); }, 300);
 });
 $('wandelNodeListBtnStd').addEventListener('click', () => {
   $('bikeSetupScreen').classList.add('hidden');
-  selectMode('wandel');
+  selectMode(bikeSetupTargetMode);
   setTimeout(() => { openModal('nodeListModal'); }, 300);
 });
 $('wandelGpxImportBtnStd').addEventListener('click', () => {
   $('bikeSetupScreen').classList.add('hidden');
-  selectMode('wandel');
+  selectMode(bikeSetupTargetMode);
   setTimeout(() => { const b = $('importBtn'); if (b) b.click(); }, 300);
 });
 $('bikeSetupBackBtn').addEventListener('click', () => {
