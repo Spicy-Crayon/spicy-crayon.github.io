@@ -1007,6 +1007,15 @@
   body.rs-rail-hidden #runSessionScreen{ padding-right:20px; }
   #rsMainRow{ display:flex; align-items:center; justify-content:center; gap:16px; width:100%; max-width:440px; margin-top:6px; }
   body.rs-rail-hidden #rsMainRow{ max-width:520px; } /* geen zij-rail zichtbaar (Vrij/Doel/EVY/Zombie Run) → meer ruimte voor de hoofdinhoud */
+  /* Bug: wanneer i.p.v. de rail de km-tempo-sparkline getoond wordt (EVY 5K/10K, of een schema met >40
+     intervallen — zie renderRunProgressRail()) kreeg #runSessionScreen c.s. tóch de volledige rs-rail-hidden-
+     verbreding hierboven, alsof er helemaal geen zijkolom meer stond. Maar die sparkline staat er nog gewoon,
+     fixed, rechts op het scherm (36px breed + 12px rand-marge) — de hoofdinhoud liep er zo overheen. Deze
+     specifiekere regel (body.rs-sparkline-active, enkel gezet wanneer de sparkline echt zichtbaar is — zie
+     renderRunProgressRail()) verbreedt minder ver, net genoeg ruimte latend voor die kolom. Staat na de
+     rs-rail-hidden-regels hierboven zodat hij bij gelijke specificiteit wint wanneer beide klassen actief zijn. */
+  body.rs-sparkline-active #runSessionScreen{ padding-right:58px; }
+  body.rs-sparkline-active #rsMainRow{ max-width:460px; }
   body.theme-garmin #rsMainRow{
     background:#131b2e; border:1px solid rgba(255,255,255,0.08); border-radius:20px;
     padding:20px 16px; box-shadow:0 4px 14px rgba(0,0,0,0.3);
@@ -1106,6 +1115,7 @@
      Doelrun/Zombie Run nooit méé verbreedde met de rest van het scherm zoals #rsStatsRow wel deed. */
   #rsSpeedRow{ max-width:440px; }
   body.rs-rail-hidden #rsStatsRow, body.rs-rail-hidden #rsSpeedRow{ max-width:520px; }
+  body.rs-sparkline-active #rsStatsRow, body.rs-sparkline-active #rsSpeedRow{ max-width:460px; }
   .rs-stat{ display:flex; flex-direction:column; align-items:center; flex:1; }
   body.theme-garmin .rs-stat{
     background:#131b2e; border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:10px 6px;
@@ -1520,6 +1530,10 @@
   body.theme-garmin .simple-modal-head b{ color:#f1f5f9; }
   body.theme-garmin .simple-modal-close{ background:rgba(255,255,255,0.08); color:#f1f5f9; }
   body.theme-garmin .simple-modal-text{ color:rgba(241,245,249,0.75); }
+  /* Zelfde reden als de regels hierboven: knoppen erven color niet automatisch van een omliggend donker
+     element (browsers geven <button> standaard een eigen tekstkleur mee), dus de inline var(--ink) (donker,
+     voor de lichte Standaard-stijl) bleef ook hier donker-op-donker en was onleesbaar. */
+  body.theme-garmin #themeSwitchToSettingsBtn{ color:#f1f5f9; }
   /* Zelfde bug, gemist omdat de pijn-chips (na een run: "Had je ergens pijn?") hun kleur vroeger inline
      zetten i.p.v. via deze klasse — vielen dus niet onder de fix hierboven en bleven zo goed als onzichtbaar. */
   body.theme-garmin .rfPainChip{ color:#f1f5f9; }
@@ -1622,6 +1636,9 @@
   .simple-modal-actions{ display:flex; gap:8px; margin-top:4px; }
   .simple-modal-btn{ flex:1; border:none; border-radius:12px; padding:11px; font-weight:800; font-size:14px; }
   .simple-modal-btn.primary{ background:var(--amber); color:var(--green-900); }
+  /* Expliciete tekstkleur i.p.v. op de browser-standaardkleur van <button> te vertrouwen (die erft color niet
+     automatisch van omliggende elementen) — zie de body.theme-garmin-tegenhanger hieronder voor de donkere stijl. */
+  #themeSwitchToSettingsBtn{ color:var(--ink); }
   #savedLinksList{ list-style:none; margin:0; padding:0; }
   #savedLinksList li{
     display:flex; align-items:center; gap:10px; padding:10px 6px; border-bottom:1px solid var(--line);
@@ -10112,18 +10129,21 @@ function renderRunProgressRail(){
     // krijgt hier de volledige breedte. AI Coach-schema's en EVY behouden hun eigen zij-kolom hieronder.
     rail.style.display = 'none';
     document.body.classList.add('rs-rail-hidden');
+    document.body.classList.remove('rs-sparkline-active'); // écht geen zijkolom hier — volledige breedte is correct
     $('rsKmSparkline').style.display = 'none';
     return;
   }
   if (usingEvy || !list || list.length > 40){
     rail.style.display = 'none';
-    document.body.classList.add('rs-rail-hidden'); // geen rail: hoofdinhoud mag de volledige breedte gebruiken
+    document.body.classList.add('rs-rail-hidden'); // geen rail: hoofdinhoud mag wat breder
+    document.body.classList.add('rs-sparkline-active'); // ...maar de km-sparkline staat er nog wél, dus niet ZO breed dat de hoofdinhoud eroverheen loopt (zie CSS hierboven)
     $('rsKmSparkline').style.display = 'flex'; // toont in plaats daarvan de km-tempo-sparkline
     renderKmSparklineFull();
     return;
   }
   $('rsKmSparkline').style.display = 'none';
   document.body.classList.remove('rs-rail-hidden');
+  document.body.classList.remove('rs-sparkline-active');
   rail.style.display = 'flex';
   const icons = { run:'🏃', walk:'🚶', warmup:'🔥', cooldown:'❄️' };
   // EVY heeft geen eigen idx-teller (audio zelf stuurt de voortgang) — schat de huidige positie via
