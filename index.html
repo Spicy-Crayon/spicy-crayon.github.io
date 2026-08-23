@@ -7612,6 +7612,7 @@ const DEV_NOTES_CONTENT = {
     </section>
     <section>
       <h3>🧟 Zombie Run — mappenstructuur</h3>
+      <p class="settings-note" style="background:rgba(226,161,60,0.12); border:1px solid rgba(226,161,60,0.35); border-radius:8px; padding:8px 10px;">🧪 <b>Testen zonder buiten te lopen:</b> zet naast <code>index.html</code> ook <a href="zombie_test_console.html" target="_blank" rel="noopener">zombie_test_console.html</a> in dezelfde map (dezelfde upload-stap als je audiobestanden). Die opent een testconsole ernaast die een volledige Zombie Run nabootst — nagemaakte GPS-beweging, elke fase (alarm, "ren voor je leven", ontsnapping, beet, bonus, winner/looser) met 1 klik forceren — zodat je meteen je eigen audiobestanden en geluidsinstellingen kan beluisteren. Staat het bestand er nog niet in je repo, dan krijg je op deze link een 404; eerst uploaden dus.</p>
       <p>Zelf te uploaden naast <code>index.html</code>, allemaal onder <code>audio/ZombieRun/</code>, exact deze paden en namen (hoofdlettergevoelig). Je hoeft nergens een aantal in te typen — de app telt zelf hoeveel bestanden er in elke map staan (1, 2, 3... tot er eentje ontbreekt), dus gewoon bestanden toevoegen of verwijderen volstaat. Elk bestand mag <code>.mp3</code> of <code>.wav</code> zijn (gemengd door elkaar mag ook, bv. <code>1.wav</code> naast <code>2.mp3</code> in dezelfde map).</p>
       <p><code>Zombie-intro/1.mp3</code>, ... — willekeurig gekozen bij de start van de run.</p>
       <p><code>Zombie-Story/1/deel1.mp3</code>, <code>deel2.mp3</code>, ..., <code>Zombie-Story/2/</code>, <code>/3/</code>, enzovoort — verhaallijnen, <b>geen vast maximum van 5</b>: de app telt zelf hoeveel <code>Zombie-Story/N/</code>-mappen er zijn (stopt bij het eerste ontbrekende nummer), dus gewoon meer nummers toevoegen (<code>/6/</code>, <code>/7/</code>, ...) volstaat. Bij de start van elke run wordt er willekeurig één verhaallijn gekozen en in volgorde afgespeeld (dus niet geshuffeld, dat zou het verhaal doorelkaar gooien). Heeft een verhaallijn geen bestanden, dan kiest de app gewoon een andere die wel bestanden heeft.</p>
@@ -7719,6 +7720,7 @@ const DEV_NOTES_CONTENT = {
     </section>
     <section>
       <h3>🧟 Zombie Run — folder structure</h3>
+      <p class="settings-note" style="background:rgba(226,161,60,0.12); border:1px solid rgba(226,161,60,0.35); border-radius:8px; padding:8px 10px;">🧪 <b>Test without walking outside:</b> upload <a href="zombie_test_console.html" target="_blank" rel="noopener">zombie_test_console.html</a> next to <code>index.html</code> as well (same upload step as your audio files). That opens a test console alongside it that simulates a full Zombie Run — fake GPS movement, force any phase (alarm, "run for your life", escape, bite, bonus, winner/looser) with one click — so you can immediately listen to your own audio files and sound settings. If the file isn't in your repo yet, this link will 404; upload it first.</p>
       <p>Upload these yourself next to <code>index.html</code>, all under <code>audio/ZombieRun/</code>, exact paths and names (case-sensitive). No need to type a file count anywhere — the app counts how many files are in each folder itself (1, 2, 3... until one's missing), so just add or remove files as you like. Every file can be <code>.mp3</code> or <code>.wav</code> (mixing both in the same folder is fine too, e.g. <code>1.wav</code> next to <code>2.mp3</code>).</p>
       <p><code>Zombie-intro/1.mp3</code>, ... — picked at random at the start of the run.</p>
       <p><code>Zombie-Story/1/deel1.mp3</code>, <code>deel2.mp3</code>, ..., <code>Zombie-Story/2/</code>, <code>/3/</code>, and so on — storylines, <b>no fixed maximum of 5</b>: the app counts how many <code>Zombie-Story/N/</code> folders exist itself (stops at the first missing number), so just add more numbers (<code>/6/</code>, <code>/7/</code>, ...) as you like. One storyline is picked at random at the start of each run and played in order (not shuffled — that would scramble the story). If a storyline has no files, the app just picks another one that does.</p>
@@ -20978,7 +20980,12 @@ $('bikeSetupBackBtn').addEventListener('click', () => {
 });
 $('passiveReadyBtn').addEventListener('click', async () => {
   if (!passiveEditingDone){
-    if (route.length < 2){ toast(tr('toastEditNeedsTwoPoints'), 4000); return; }
+    // Net als bij detourBtn hieronder: met de 'Vertrek'-toggle aan telt je huidige GPS-positie als eerste
+    // punt mee, ook al staat die (bewust, zie drawRoutePath) niet zelf in route[] — dus dan volstaat 1 gezet
+    // punt. Zonder die toggle heb je wél minstens 2 zelf gezette punten nodig. Voorheen werd hier altijd
+    // route.length < 2 geëist, ongeacht routeStartsFromGps — dat gaf ten onrechte "2 punten nodig" te zien
+    // terwijl vertrek (GPS) + 1 gezet punt een prima volledige route is.
+    if (route.length < 2 && !routeStartsFromGps){ toast(tr('toastEditNeedsTwoPoints'), 4000); return; }
     passiveEditingDone = true;
     $('passiveReadyBtn').classList.add('editing');
     $('passiveReadyBtn').textContent = curLang()==='en' ? '✏️ Edit' : '✏️ Edit';
@@ -21003,7 +21010,7 @@ $('passiveAnalyseBtn').addEventListener('click', () => {
   openAnalyseScreen();
 });
 $('bikeRoutingProAnalyseBtn').addEventListener('click', () => {
-  if (route.length < 2){ toast(tr('toastEditNeedsTwoPoints'), 4000); return; }
+  if (route.length < 2 && !routeStartsFromGps){ toast(tr('toastEditNeedsTwoPoints'), 4000); return; }
   openAnalyseScreen();
 });
 let analyseMapInstance = null;
@@ -21019,7 +21026,13 @@ let analyseRideEntry = null, analyseWindTabBtn = null, analysePrevImportedTrack 
 let analyseMapDot = null;
 let analyseChartDragHandler = null;
 function setupAnalyseChartDrag(){
-  teardownAnalyseChartDrag();
+  // GEEN teardownAnalyseChartDrag() hier: loadAnalyseTab() heeft die zelf al vóór de tab-branch aangeroepen
+  // (dat ruimt de vorige tab netjes op), en de branch heeft ondertussen analyseChartValueFn/analyseCurrentProfile
+  // net vers gezet voor DEZE tab. Hier nogmaals teardownAnalyseChartDrag() aanroepen zette analyseChartValueFn
+  // meteen weer op null vlak vóór de eerste updateAnalyseDotByIndex()-aanroep hieronder -- daardoor werd de
+  // grafiek-bol nooit aangemaakt (de check `if (analyseChartValueFn && proj)` faalde altijd), zowel bij de
+  // Hoogte- als de Hellingpercentage-tab. De kaart-bol werd wél aangemaakt (die check bestaat niet), vandaar
+  // dat het leek alsof enkel de grafiek-bol het probleem was.
   const svg = $('analyseSvg');
   const handler = (evt) => {
     if (!analyseCurrentProfile) return;
