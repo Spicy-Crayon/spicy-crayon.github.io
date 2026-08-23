@@ -2103,6 +2103,11 @@
       <button id="openResetLoopBtn" class="simple-modal-btn" style="width:100%; margin-bottom:6px;">🏃 Reset Lopen…</button>
       <button id="openResetFietsWandelBtn" class="simple-modal-btn" style="width:100%;">🚴🥾 Reset Fiets &amp; Wandel-voorkeuren…</button>
     </div>
+    <!-- Deze popup toont enkel de stijlkeuze zelf ("Alle overige instellingen vind je op de Fiets- of
+         Wandel-pagina" hierboven) — maar de échte, algemene instellingen (API-sleutels, kaartstijl, geluid,
+         ...) zitten in #settingsModal, en die was van hieruit nergens rechtstreeks bereikbaar. Vandaar
+         deze link onderaan, altijd zichtbaar ongeacht of de reset-sectie hierboven getoond wordt. -->
+    <button id="themeSwitchToSettingsBtn" type="button" class="simple-modal-btn" style="width:100%; margin-top:12px; background:transparent; border:1.5px dashed var(--line);" data-i18n="themeSwitchSettingsLink">⚙️ Naar alle instellingen →</button>
   </div>
 </div>
 
@@ -6234,6 +6239,19 @@ $('logbookClearBtn').addEventListener('click', () => {
 });
 $('menuSettingsBtn').addEventListener('click', () => { closeActionMenu(); if ($('settingUserName')) $('settingUserName').value = appSettings.userName || ''; openModal('settingsModal'); runOfflineDiagnostics(); checkBatteryLevel(); $('settingsVersionFooter').textContent = APP_VERSION_TEXT; });
 $('modeSelectSettingsBtn').addEventListener('click', () => { syncThemeSwitchRadios(); $('themeSwitchResetSection').classList.remove('hidden'); openModal('themeSwitchModal'); });
+// De "Stijl wisselen"-popup toonde voorheen enkel de tekst "Alle overige instellingen vind je op de
+// Fiets- of Wandel-pagina" — best onhandig vanaf Home zelf, waar je nog geen Fiets/Wandel-modus gekozen
+// hebt. Deze knop opent nu rechtstreeks het volledige instellingenscherm (dezelfde volledige openingsreeks
+// als $('menuSettingsBtn') hierboven), in beide stijlen — het is dezelfde gedeelde #themeSwitchModal/
+// #settingsModal voor Standaard én Garmin, dus één fix hier volstaat voor allebei.
+$('themeSwitchToSettingsBtn').addEventListener('click', () => {
+  closeModal('themeSwitchModal');
+  if ($('settingUserName')) $('settingUserName').value = appSettings.userName || '';
+  openModal('settingsModal');
+  runOfflineDiagnostics();
+  checkBatteryLevel();
+  $('settingsVersionFooter').textContent = APP_VERSION_TEXT;
+});
 $('openResetLoopBtn').addEventListener('click', () => { closeModal('themeSwitchModal'); openModal('resetLoopModal'); });
 $('openResetFietsWandelBtn').addEventListener('click', () => { closeModal('themeSwitchModal'); openModal('resetFietsWandelModal'); });
 
@@ -6962,6 +6980,7 @@ const TRANSLATIONS = {
   stopTrainingConfirm: { nl:'Stoppen', en:'Stop' },
   themeSwitchTitle: { nl:'Stijl wisselen', en:'Switch style' },
   themeSwitchFullHint: { nl:'Alle overige instellingen vind je op de Fiets- of Wandel-pagina.', en:'All other settings are on the Bike or Walk page.' },
+  themeSwitchSettingsLink: { nl:'⚙️ Naar alle instellingen →', en:'⚙️ Go to all settings →' },
   animalScannerTitle: { nl:'🐾 Dieren Scanner', en:'🐾 Animal Scanner' },
   animalScannerTileTitle: { nl:'Neem een foto van een dier', en:'Take a photo of an animal' },
   animalScannerTileSub: { nl:'100% lokaal op je toestel — geen account, geen limiet.', en:'100% on-device — no account, no limit.' },
