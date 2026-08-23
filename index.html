@@ -340,7 +340,7 @@
   #weatherPanel{
     position:absolute; top:0;left:0;right:0;bottom:0; z-index:500; background:linear-gradient(180deg, #1a3a5c 0%, #0a1410 100%);
     display:none; flex-direction:column;
-    padding-top:calc(env(safe-area-inset-top,0px) + var(--extra-top-inset) + 84px); padding-bottom:20px;
+    padding-top:calc(env(safe-area-inset-top,0px) + var(--extra-top-inset) + 96px); padding-bottom:20px;
   }
   #weatherPanel.show{ display:flex; }
   #weatherScroller{
@@ -443,7 +443,15 @@
 
   #weatherLocationBar{
     position:absolute; top:calc(env(safe-area-inset-top,0px) + var(--extra-top-inset) + 69px); left:0; right:0; z-index:501;
-    display:flex; align-items:center; justify-content:center; gap:8px; padding:0 20px;
+    display:flex; align-items:center; justify-content:center; gap:8px; padding:6px 20px;
+    /* Ondoorzichtige achtergrond nodig: dit is een vaste balk boven een verticaal scrollbaar weerscherm
+       (.weather-screen heeft overflow-y:auto). Zonder eigen achtergrond was de balk volledig doorzichtig,
+       waardoor gescrolde inhoud er gewoon doorheen zichtbaar bleef en visueel "in" de plaatsnaam/iconen
+       leek te landen. Zelfde bovenste kleur als #weatherPanel z'n gradient, zodat de balk er naadloos bij aansluit.
+       De padding hier komt bovenop de bestaande 6px "lucht" die #weatherPanel's padding-top al voorzag
+       (69px balk-top vs 84px content-start = 15px marge) — daarom hieronder ook die content-start met
+       exact evenveel opgeschoven, anders schuift de eerste regel weerinhoud nu net onder de nieuwe achtergrond. */
+    background:linear-gradient(180deg, #1a3a5c 0%, rgba(26,58,92,0.94) 85%, rgba(26,58,92,0) 100%);
   }
   #weatherPlaceName{ font-size:13px; font-weight:700; color:rgba(246,244,238,0.85); max-width:70vw; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   #weatherLocateBtn{
@@ -1395,7 +1403,13 @@
   #helpCard{ max-width:440px; max-height:85vh; }
   #devNotesCard{ max-width:440px; max-height:85vh; }
   #logbookCard{ max-width:440px; max-height:85vh; }
-  #loopGenModal .simple-modal-card{ max-height:calc(80vh + 20px); }
+  /* 80vh+20px was vaak nét te krap voor het volledige formulier (afstand, "enkel via knooppunten",
+     startpunt-keuze, fietstype, 4 voorkeur-radio's, genereer-knop) of de 3 route-kaarten erna — de popup
+     scrollde dan wel (overflow-y:auto op .simple-modal-card blijft de vangnet), maar de gebruiker moest
+     onnodig veel scrollen om alles te zien. Nu duidelijk hoger, zoals gevraagd, en de buitenste overlay
+     krijgt hier ook minder eigen padding zodat die extra hoogte ook echt bruikbare ruimte oplevert. */
+  #loopGenModal{ padding:8px; }
+  #loopGenModal .simple-modal-card{ max-height:92vh; }
   .logbook-item{ display:flex; gap:10px; padding:7px 0; border-bottom:1px solid rgba(0,0,0,0.08); font-size:12.5px; }
   .logbook-item:last-child{ border-bottom:none; }
   .logbook-time{ flex-shrink:0; color:#8a8a8a; font-variant-numeric:tabular-nums; }
@@ -4560,6 +4574,7 @@ let pinLatLng = null;
 let pinMarkers = {};        // id -> Leaflet marker, voor spelden die wél aan de route zijn toegevoegd
 let longPressTimer = null;
 let longPressStart = null;
+let loopGenPickMarker = null; // tijdelijke speld tijdens "Kies punt op kaart" in de rondrit-generator
 
 function isMapCurrentlyRotated(){
   return Math.abs(((lastMapRotation % 360) + 360) % 360) > 3; // kleine marge, exact 0° telt niet als 'gedraaid'
@@ -4575,8 +4590,18 @@ function showPinPopup(lat, lon){
   if (loopGenPicking){
     loopGenStartPoint = { lat, lon };
     loopGenPicking = false;
+    // Even een echte speld tonen op de gekozen plek, en de popup pas na een korte pauze terugzetten —
+    // voorheen ging het scherm ONMIDDELLIJK terug naar de rondrit-generator-popup zodra je de vinger
+    // ophief, zonder dat je ook maar even kon zien waar je precies getikt had.
+    if (loopGenPickMarker) map.removeLayer(loopGenPickMarker);
+    loopGenPickMarker = L.marker([lat, lon], {
+      icon: L.divIcon({ className:'', html:'<div class="drop-pin">📍</div>', iconSize:[34,34], iconAnchor:[17,32] })
+    }).addTo(map);
     toast(tr('loopGenPointSet'), 2000);
-    openModal('loopGenModal');
+    setTimeout(() => {
+      if (loopGenPickMarker){ map.removeLayer(loopGenPickMarker); loopGenPickMarker = null; }
+      openModal('loopGenModal');
+    }, 900);
     return;
   }
   pinLatLng = { lat, lon };
@@ -18899,6 +18924,40 @@ async function fetchOpenWeatherMapCurrent(lat, lon){
     return { source:'OpenWeatherMap', temp: Math.round(data.main.temp), windSpeed: Math.round((data.wind?.speed||0)*3.6) };
   }catch(e){ return null; }
 }
+// Lokale zonsopgang/-ondergang/dageraad/schemering — standaard NOAA/Almanac-formule (geen API nodig, geen
+// netwerkfout mogelijk), naar analogie van de maanfaseberekening verderop. Dient als terugval wanneer
+// sunrise-sunset.org niet (tijdig) bereikbaar is, zodat de kompasring nooit halfleeg blijft — voorheen bleven
+// sunriseMin/sunsetMin/dawnMin/duskMin dan gewoon null en werd het hele dag/nacht-ringstuk overgeslagen.
+// zenithDeg: 90.833 = officiële op-/ondergang (met atmosferische refractie), 96 = burgerlijke schemering.
+function calcSunEventLocal(lat, lon, zenithDeg, isSunrise, refDate){
+  const rad = Math.PI / 180, deg = 180 / Math.PI;
+  const startOfYearUtc = Date.UTC(refDate.getUTCFullYear(), 0, 1);
+  const todayUtcMidnight = Date.UTC(refDate.getUTCFullYear(), refDate.getUTCMonth(), refDate.getUTCDate());
+  const dayOfYear = Math.round((todayUtcMidnight - startOfYearUtc) / 86400000) + 1;
+  const lngHour = lon / 15;
+  const t = dayOfYear + ((isSunrise ? 6 : 18) - lngHour) / 24;
+  const M = (0.9856 * t) - 3.289;
+  let L = M + (1.916 * Math.sin(M * rad)) + (0.020 * Math.sin(2 * M * rad)) + 282.634;
+  L = ((L % 360) + 360) % 360;
+  let RA = deg * Math.atan(0.91764 * Math.tan(L * rad));
+  RA = ((RA % 360) + 360) % 360;
+  const Lquadrant = Math.floor(L / 90) * 90, RAquadrant = Math.floor(RA / 90) * 90;
+  RA = (RA + (Lquadrant - RAquadrant)) / 15;
+  const sinDec = 0.39782 * Math.sin(L * rad);
+  const cosDec = Math.cos(Math.asin(sinDec));
+  const cosH = (Math.cos(zenithDeg * rad) - (sinDec * Math.sin(lat * rad))) / (cosDec * Math.cos(lat * rad));
+  if (cosH > 1 || cosH < -1) return null; // middernachtzon of poolnacht: geen op-/ondergang op deze datum/plaats
+  let H = isSunrise ? (360 - deg * Math.acos(cosH)) : (deg * Math.acos(cosH));
+  H /= 15;
+  const T = H + RA - (0.06571 * t) - 6.622;
+  const UT = T - lngHour; // uren UTC, nog niet in [0,24) gewrapt
+  const utWrapped = ((UT % 24) + 24) % 24;
+  const dayOffset = Math.round((UT - utWrapped) / 24); // meestal 0, kan ±1 zijn rond middernacht UTC
+  const d = new Date(todayUtcMidnight + utWrapped * 3600000 + dayOffset * 86400000);
+  // Zelfde omzetting naar lokale tijd als de API-tak hieronder (new Date(iso).getHours()/getMinutes()):
+  // de weergave volgt de tijdzone van dit toestel, niet per se die van de bekeken locatie.
+  return { text: String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0'), min: d.getHours()*60 + d.getMinutes() };
+}
 async function loadWeatherAndSun(){
   const c = weatherLocationOverride || map.getCenter();
   const fresh = weatherSunCache && (Date.now() - weatherSunCache.t < 15*60000)
@@ -19039,6 +19098,19 @@ async function loadWeatherAndSun(){
       if (ss){ sunsetText = ss.text; sunsetMin = ss.min; }
       if (dawn){ dawnText = dawn.text; dawnMin = dawn.min; }
       if (dusk){ duskText = dusk.text; duskMin = dusk.min; }
+    }
+    // sunrise-sunset.org niet (tijdig) bereikbaar geweest (trage/geblokkeerde verbinding, rate-limit, ...) —
+    // val terug op de lokale berekening hierboven, zodat de kompasring nooit halfleeg blijft staan.
+    if (sunriseMin == null){
+      const refNow = new Date();
+      const localSr = calcSunEventLocal(c.lat, c.lng, 90.833, true, refNow);
+      const localSs = calcSunEventLocal(c.lat, c.lng, 90.833, false, refNow);
+      const localDawn = calcSunEventLocal(c.lat, c.lng, 96, true, refNow);
+      const localDusk = calcSunEventLocal(c.lat, c.lng, 96, false, refNow);
+      if (localSr){ sunriseText = localSr.text; sunriseMin = localSr.min; }
+      if (localSs){ sunsetText = localSs.text; sunsetMin = localSs.min; }
+      if (localDawn){ dawnText = localDawn.text; dawnMin = localDawn.min; }
+      if (localDusk){ duskText = localDusk.text; duskMin = localDusk.min; }
     }
     // Maanfase + verlichtingspercentage: lokaal berekend (geen API nodig, geen netwerkfout mogelijk) via het
     // aantal dagen sinds een bekende nieuwe maan, gedeeld door de synodische maancyclus (~29,53 dagen).
