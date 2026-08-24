@@ -3,6 +3,6 @@
       "target": {
         "namespace": "android_app",
         "package_name": "io.github.spicy_crayon.twa",
-        "sha256_cert_fingerprints": ["4E:74:5F:71:0C:6B:53:6C:C4:D1:7E:9F:F6:49:70:12:6B:5A:F6:6F:B2:FC:31:0C:44:89:1A:4C:EB:E5:81:30"]
+        "sha256_cert_fingerprints": ["DF:76:49:67:2B:8C:8A:CD:3C:4C:26:AA:01:EC:A0:70:2E:35:79:6F:25:3C:40:89:5E:8F:FF:BD:2D:22:BA:E0"]
       }
     }]
