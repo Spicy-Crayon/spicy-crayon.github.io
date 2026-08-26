@@ -3013,6 +3013,7 @@
 
       <div class="settings-subnote" style="margin-top:14px;">Spotify — voor het 'nu speelt'-icoontje bij fietsen/lopen. Werkt meteen, geen eigen sleutel of account nodig — gewoon inloggen met je Spotify-account.</div>
       <button id="spotifyConnectBtn" type="button" style="margin-top:8px; padding:8px 14px; border:1px solid var(--line); border-radius:10px; background:#1DB954; color:#0b0f0a; font-weight:800; font-size:12.5px; cursor:pointer;">🎧 Verbind met Spotify</button>
+      <button id="spotifyTestConnectionBtn" type="button" style="margin-top:8px; margin-left:6px; padding:8px 14px; border:1px solid var(--line); border-radius:10px; background:transparent; color:inherit; font-weight:800; font-size:12.5px; cursor:pointer;" data-i18n="settingsSpotifyTestBtn">🔍 Test verbinding</button>
       <span id="spotifyConnectStatus" style="margin-left:8px; font-size:11.5px; color:#33473c;"></span>
       <!-- De meest voorkomende reden dat "Verbind met Spotify" niets lijkt te doen (geen foutmelding IN de app):
            Spotify's inlogscherm zelf toont dan een eigen foutpagina ("INVALID_CLIENT: Invalid redirect URI")
@@ -6858,6 +6859,7 @@ const TRANSLATIONS = {
   settingsWeightLabel: { nl:'⚖️ Lichaamsgewicht (voor calorie-schatting, optioneel)', en:'⚖️ Body weight (for calorie estimate, optional)' },
   settingsGenderLabel: { nl:'⚧ Geslacht', en:'⚧ Gender' },
   settingsSpotifyRedirectLabel: { nl:'Redirect URI (moet exact zo in je Spotify-dashboard staan):', en:'Redirect URI (must match exactly in your Spotify dashboard):' },
+  settingsSpotifyTestBtn: { nl:'🔍 Test verbinding', en:'🔍 Test connection' },
   settingsCopyBtn: { nl:'📋 Kopieer', en:'📋 Copy' },
   genderUnspecified: { nl:'— niet opgegeven —', en:'— not specified —' },
   genderMale: { nl:'Man', en:'Male' },
@@ -7913,17 +7915,25 @@ const DEV_NOTES_CONTENT = {
       <b>Soortherkenning:</b> Pl@ntNet (planten), Gemini vision + GBIF/iNaturalist (dieren), met een lokaal MobileNet-model als laatste terugval.<br>
       <b>Rustpunten in de buurt:</b> gebruikt nu dezelfde robuuste Overpass-opzoeking (met meerdere servers als terugval, elk met een eigen tijdslimiet) als de rest van de app — voorheen probeerde deze functie maar 1 vaste Overpass-server zonder terugval, wat in een drukke/dichtbevolkte omgeving (bv. Brussel) vaker kon mislukken dan in een rustige omgeving (bv. Houthalen), ook al was er op beide plekken wel degelijk iets te vinden.<br>
       <b>Audio Gids:</b> haalt plekken in de buurt nu tegelijk op bij 3 bronnen — Wikipedia en Wikivoyage (allebei gratis, geen sleutel nodig, samen 1 klap per bron dankzij Wikimedia's geosearch-API met samenvatting+foto inbegrepen) en optioneel OpenTripMap (gratis sleutel bij Instellingen → API-sleutels; vindt vaak veel meer/rijkere plekken zoals kastelen en uitkijkpunten, maar levert bij het laden van de lijst zelf geen samenvatting — die wordt pas opgehaald op het moment dat je op een OpenTripMap-plek tikt, om de dagelijkse gratis-limiet niet nodeloos te verbruiken). Alle resultaten worden samengevoegd tot 1 lijst, gesorteerd op afstand, elk met een klein bronlabel (📖/🧭/🏰).</p>
+      <p><b>Opgeloste bug (gemeld: "je ziet de kaart naar het rustpunt gaan en vervolgens een seconde later terug naar je startpunt"):</b> tijdens actieve wandel-navigatie centreert de kaart zichzelf elke GPS-tick automatisch weer op je live positie. Dat automatisch centreren werd voorheen enkel tijdelijk onderdrukt als je zélf aan de kaart sleepte — een tik op een rustpunt-resultaat (dat de kaart programmatisch naar dat punt zet) telde daar niet voor mee, waardoor de eerstvolgende GPS-tick de kaart alweer terugveegde vóór je het rustpunt goed kon bekijken. De kaart blijft nu, net als bij zelf slepen, enkele seconden op het gekozen rustpunt staan.</p>
+      <p><b>Rustpunt effectief aan je wandeling toevoegen:</b> dat kan op dit moment nog niet — een tik op een rustpunt-resultaat toont het enkel op de kaart. Dit vraagt een popup ("Punt toevoegen aan wandeling?") plus een manier om de lopende route effectief om te leiden langs dat punt; dat wordt nog uitgewerkt.</p>
     </section>
     <section>
       <h3>🔐 API-sleutels &amp; inloggen</h3>
       <p>Alle API-sleutels die je invult (routing, Pl@ntNet, Gemini, OpenTripMap, Spotify, Strava, weer) blijven enkel op je eigen toestel — nooit ergens anders naartoe dan rechtstreeks naar die dienst zelf. Spotify gebruikt een veilige inlogmethode (PKCE) zonder geheime sleutel. Strava's inlogmethode vereist wél dat de Client Secret in de broncode van deze pagina zelf staat, want Strava heeft geen PKCE-alternatief — voor persoonlijk gebruik geen probleem, maar wees je ervan bewust dat die technisch zichtbaar is voor wie de pagina inspecteert.</p>
       <p><b>Spotify werkt out-of-the-box</b> — 1 gedeelde Client ID voor iedereen, gewoon inloggen met je eigen Spotify-account, geen eigen Developer-app nodig. <b>Strava vereist wél een eigen Developer-app per gebruiker</b> (zie hierboven waarom), met een Redirect URI/Callback Domain die je zelf instelt op het adres van deze pagina. Verandert het adres van deze app ooit (bv. na een verhuizing naar een andere URL), dan moet je die Strava-stap opnieuw doen in je eigen dashboard, anders blijft enkel Strava-inloggen daar mislukken terwijl de rest van de app gewoon verder werkt.</p>
       <p><b>Spotify-inloggen lukt niet, geen enkele foutmelding zichtbaar?</b> Dit gebeurt zodra Spotify's eigen inlogscherm de aanvraag afkeurt vóór het ooit terugkeert naar deze app — de app zelf krijgt dan simpelweg niets te zien om te tonen. Twee meest voorkomende oorzaken: (1) de Redirect URI in Instellingen (nu zichtbaar/kopieerbaar naast de Spotify-knop) komt niet exact overeen met wat in het Spotify Developer Dashboard staat; (2) staat de app in het dashboard nog op <b>"Development mode"</b>? Dan werkt inloggen enkel voor accounts die je zelf hebt toegevoegd onder "User Management"/"Users and Access" in dat dashboard (max. 25) — je eigen Spotify-account moet daar met zijn e-mailadres in staan, anders weigert Spotify stil.</p>
+      <p><b>Opgeloste bug (gemeld: "Verbind met Spotify" ververst de pagina en komt terug op het beginscherm, zonder foutmelding):</b> een écht geslaagde terugkeer van Spotify (of Strava) crashte de app met een onafgevangen JavaScript-fout (een "temporal dead zone"-fout op een const-variabele die pas veel verderop in het bestand gedeclareerd stond) — vóórdat de eigen foutafhandeling ooit bereikt werd, dus zonder enige zichtbare melding. De verbinding leek daardoor gewoon "niets te doen". Daarnaast deelden Spotify en Strava toevallig dezelfde Redirect URI, waardoor een terugkerende Strava-aanmelding soms per ongeluk als een mislukte Spotify-poging verwerkt werd; beide gebruiken nu een eigen "state"-veld om dat te voorkomen. Stond Instellingen open toen je op "Verbind" drukte, dan heropent het scherm nu ook vanzelf na de onvermijdelijke volledige pagina-herlaad, i.p.v. dat het voelt alsof je zomaar terug bij af bent.</p>
+      <p><b>Is de verbinding écht actief?</b> De nieuwe knop <b>"🔍 Test verbinding"</b> naast "Verbind met Spotify" doet een echte, lichte aanroep naar Spotify's eigen account-API en toont een concrete melding (incl. je accountnaam bij succes) — in tegenstelling tot het "✅ verbonden"-label ernaast, dat enkel nagaat of er ooit een token opgeslagen werd, niet of die nu nog écht werkt.</p>
     </section>
     <section>
       <h3>🎧 EVY — eigen schema aanpassen</h3>
       <p>Zet zelf een bestand <code>schema.json</code> in <code>audio/evy5k/</code> (en/of <code>audio/evy10k/</code>) om het opbouwschema aan te passen — geen code nodig. Formaat: een lijst van weken, elke week 3 sessies, elke sessie een lijst <code>[minuten, "run"|"walk"]</code>-paren, bv. <code>[[1,"run"],[1,"walk"],[2,"run"]]</code> = 1 min lopen, 1 min wandelen, 2 min lopen. Bestaat het bestand niet (of is het kapot), dan valt 5K terug op het ingebouwde standaardschema; voor 10K is er geen ingebouwde terugval, dus zonder <code>schema.json</code> blijft de duur-weergave daar leeg (de audio zelf blijft wel gewoon werken).</p>
       <p><b>Km-voortgangskolom bleef op het 1ste blokje hangen?</b> Die kolom (vervangt bij EVY de gewone intervallenrail) werd voorheen elke seconde volledig herbouwd, wat de live opvulling van de lopende kilometer telkens terugzette naar 0% vóór de volgende gps-fix er weer wat bij optelde — zichtbaar als "vult zich met kleuren, maar blijft hangen". De kolom wordt nu enkel nog volledig opgebouwd bij de allereerste render; daarna houdt elke gps-fix hem gewoon zelf bij.</p>
+    </section>
+    <section>
+      <h3>▶️⏸️ Looppagina — pauze/hervat-knop</h3>
+      <p><b>Opgeloste bug (gemeld: "het knopje Hervat stond er al toen de sessie actief was en startte"):</b> een nieuwe sessie zette intern altijd correct "niet gepauzeerd", maar het zíchtbare knoplabel werd voorheen enkel bijgewerkt op het moment dat je zelf op pauze/hervat tikte — niet bij het starten van een sessie zelf. Werd een vorige sessie gepauzeerd gelaten (label toen al "▶ Hervat") en daarna gestopt zonder eerst weer te hervatten, dan bleef dat label gewoon zichtbaar staan tot je er zelf op tikte — en dook het zo verwarrend weer op bij de eerstvolgende, net-gestarte sessie, terwijl die al gewoon actief liep. Het label wordt nu bij elke sessiestart expliciet teruggezet naar "Pauze".</p>
     </section>
     <section>
       <h3>🤖 AI Coach — eigen schema aanpassen</h3>
@@ -8048,17 +8058,25 @@ const DEV_NOTES_CONTENT = {
       <b>Species ID:</b> Pl@ntNet (plants), Gemini vision + GBIF/iNaturalist (animals), with a local MobileNet model as final fallback.<br>
       <b>Nearby rest points:</b> now uses the same robust Overpass lookup (with several fallback servers, each with its own time limit) as the rest of the app — this feature used to try only 1 fixed Overpass server with no fallback, which could fail more often in a busy/dense area (e.g. Brussels) than in a quiet one (e.g. Houthalen), even though results existed in both places.<br>
       <b>Audio guide:</b> now queries 3 sources at once — Wikipedia and Wikivoyage (both free, no key needed, 1 call per source thanks to Wikimedia's geosearch API which already includes a summary + photo) and, optionally, OpenTripMap (free key via Settings → API keys; often finds many more/richer places such as castles and viewpoints, but the list request itself returns no summary — that's fetched only when you tap an OpenTripMap place, to avoid wasting the free daily limit). All results are merged into one list, sorted by distance, each with a small source badge (📖/🧭/🏰).</p>
+      <p><b>Fixed bug (reported: "the map moves to the rest point and then, a second later, snaps back to your start point"):</b> during active walking navigation, the map re-centres itself on your live position on every GPS tick. That auto-recentring used to only be suppressed temporarily when you dragged the map yourself — tapping a rest point result (which moves the map programmatically) didn't count, so the next GPS tick would immediately snap the map back before you could really see the rest point. The map now stays on the selected rest point for a few seconds, just like it does after you drag the map yourself.</p>
+      <p><b>Actually adding a rest point to your walk:</b> not possible yet — tapping a result only shows it on the map. This needs a confirmation popup ("Add point to walk?") plus a way to actually reroute the current route through that point; still to be built.</p>
     </section>
     <section>
       <h3>🔐 API keys &amp; login</h3>
       <p>All API keys you fill in (routing, Pl@ntNet, Gemini, OpenTripMap, Spotify, Strava, weather) stay only on your own device — never sent anywhere except straight to that service itself. Spotify uses a secure login flow (PKCE) with no secret exposed. Strava's login method does require its Client Secret to be present in this page's own source code, since Strava has no PKCE alternative — fine for personal use, just be aware it is technically visible to anyone who inspects the page.</p>
       <p><b>Spotify works out of the box</b> — 1 shared Client ID for everyone, just sign in with your own Spotify account, no Developer app needed on your end. <b>Strava does require its own Developer app per user</b> (see why above), with a Redirect URI/Callback Domain you set yourself to this page's address. If this app's address ever changes (e.g. after moving to a different URL), you'll need to redo that Strava step in your own dashboard — only Strava login there keeps failing while everything else in the app keeps working fine.</p>
       <p><b>Spotify login fails with no error message at all?</b> This happens whenever Spotify's own login screen rejects the request before it ever redirects back to this app — the app itself then simply has nothing to show. Two most common causes: (1) the Redirect URI in Settings (now shown/copyable next to the Spotify button) doesn't exactly match what's registered in the Spotify Developer Dashboard; (2) is the app in the dashboard still in <b>"Development mode"</b>? Then login only works for accounts you've explicitly added under "User Management"/"Users and Access" in that dashboard (max. 25) — your own Spotify account needs to be listed there by email, otherwise Spotify silently refuses.</p>
+      <p><b>Fixed bug (reported: "Connect to Spotify" just refreshes the page and lands back on the home screen, with no error message):</b> a genuinely successful return from Spotify (or Strava) used to crash the app with an uncaught JavaScript error (a "temporal dead zone" error on a const variable declared much further down in the file) — before the app's own error handling was ever reached, so nothing was shown. The connection therefore looked like it simply "did nothing." On top of that, Spotify and Strava happened to share the same Redirect URI, so a returning Strava login could occasionally get mistaken for a failed Spotify attempt; both now carry their own "state" field to prevent that. If Settings was open when you pressed "Connect", the screen now reopens automatically after the unavoidable full-page reload, instead of feeling like you were dropped back to square one.</p>
+      <p><b>Is the connection actually working?</b> The new <b>"🔍 Test connection"</b> button next to "Connect to Spotify" makes a real, lightweight call to Spotify's own account API and shows a concrete result (including your account name on success) — unlike the "✅ connected" label beside it, which only checks whether a token was ever stored, not whether it still actually works.</p>
     </section>
     <section>
       <h3>🎧 EVY — customising the schedule</h3>
       <p>Place a <code>schema.json</code> file in <code>audio/evy5k/</code> (and/or <code>audio/evy10k/</code>) to customise the training schedule — no code needed. Format: a list of weeks, each week with 3 sessions, each session a list of <code>[minutes, "run"|"walk"]</code> pairs, e.g. <code>[[1,"run"],[1,"walk"],[2,"run"]]</code> = 1 min running, 1 min walking, 2 min running. If the file doesn't exist (or is broken), 5K falls back to the built-in default schedule; there's no built-in fallback for 10K, so without <code>schema.json</code> the duration display stays empty there (the audio itself keeps working regardless).</p>
       <p><b>Km-progress column stuck on the first block?</b> That column (replaces the regular interval rail for EVY) used to be fully rebuilt every second, which reset the current kilometer's live fill back to 0% before the next GPS fix could add to it — visible as "fills with colour but stays stuck". The column is now only fully built on the very first render; after that, each GPS fix simply keeps it up to date itself.</p>
+    </section>
+    <section>
+      <h3>▶️⏸️ Run screen — pause/resume button</h3>
+      <p><b>Fixed bug (reported: "the Resume button was already showing even though the session was active and just starting"):</b> a new session always correctly set "not paused" internally, but the visible button label used to only get updated at the moment you actually tapped pause/resume yourself — not when a session started. If a previous session was left paused (label already "▶ Resume") and then stopped without resuming it first, that label simply stayed on screen until you tapped it — and would confusingly reappear on the very next, freshly-started session, even though that one was already running normally. The label is now explicitly reset to "Pause" every time a session starts.</p>
     </section>
     <section>
       <h3>🤖 AI Coach — customising the schedule</h3>
@@ -10323,6 +10341,13 @@ async function startRunSession(opts){
     speedKalman: createSpeedKalman() // Kalman-toestand voor de getoonde snelheid op de looppagina, reset bij elke interval-grens
   };
   updateRsShareLocationBtnStyle(); // knop terug in rust-stand tonen — een vorige sessie kan hem actief/rood hebben achtergelaten
+  // BUG (gemeld: "het knopje Hervat stond er al toen de sessie actief was en startte"): rsState.paused wordt
+  // hierboven altijd correct op false gezet bij een nieuwe sessie, maar het zichtbare rsPauseBtn-label wordt
+  // ENKEL bijgewerkt door toggleRunSessionPause() (bij een echte tik erop) — nooit hier bij het STARTEN van
+  // een sessie. Werd een vorige sessie gepauzeerd (label toen al omgezet naar "▶ Hervat") en daarna gestopt/
+  // afgerond zonder eerst weer op "Hervat" te tikken, dan bleef dat "Hervat"-label gewoon zichtbaar staan —
+  // en dook het zo, verwarrend, weer op bij de eerstvolgende nieuwe sessie, terwijl die net wél al actief liep.
+  $('rsPauseBtn').innerHTML = curLang()==='en' ? '<span class="ic">⏸</span><span>Pause</span>' : '<span class="ic">⏸</span><span>Pauze</span>';
   $('rsRaceBadge').classList.add('hidden');
   $('runCoachScreen').classList.add('hidden');
   $('runSessionScreen').classList.remove('hidden');
@@ -14596,6 +14621,7 @@ document.querySelectorAll('input[name="settingGenderRadio"]').forEach(radio => {
   radio.addEventListener('change', () => { appSettings.bodyGender = radio.value || ''; saveSettings(); });
 });
 $('spotifyConnectBtn').addEventListener('click', connectSpotify);
+$('spotifyTestConnectionBtn').addEventListener('click', testSpotifyConnection);
 if ($('spotifyRedirectUriDisplay')) $('spotifyRedirectUriDisplay').textContent = spotifyRedirectUri();
 if ($('spotifyRedirectUriCopyBtn')){
   $('spotifyRedirectUriCopyBtn').addEventListener('click', async () => {
@@ -14738,8 +14764,31 @@ $('welcomeNameSaveBtn').addEventListener('click', () => {
   if ($('settingUserName')) $('settingUserName').value = appSettings.userName;
   closeModal('welcomeNameModal');
 });
-handleSpotifyCallbackIfPresent();
-handleStravaCallbackIfPresent();
+// BUG (gemeld: "Verbind met Spotify" ververst de pagina en komt terug op het beginscherm zonder foutmelding,
+// en/of "blijft errors geven"): rechtstreeks HIER aanroepen crashte met een onafgevangen "Uncaught (in
+// promise) ReferenceError: Cannot access 'SPOTIFY_VERIFIER_KEY' before initialization" zodra er écht een
+// ?code=... in de URL stond -- dus exact bij een terugkeer van een geslaagde Spotify/Strava-login.
+// SPOTIFY_VERIFIER_KEY/SPOTIFY_TOKENS_KEY/STRAVA_TOKENS_KEY zijn const-declaraties die pas duizenden regels
+// verderop in dit bestand staan (bij de eigenlijke Spotify/Strava-integratiecode) -- een klassieke JS
+// "temporal dead zone"-fout: op DIT punt in de scriptuitvoering is die latere const-regel nog niet bereikt/
+// geïnitialiseerd. Bij een gewone paginalaad (geen ?code=... in de URL) viel dit nooit op, want dan keerden
+// beide functies al terug vóórdat ze die constanten ooit aanraakten -- vandaar dat dit lang onopgemerkt bleef,
+// en enkel precies zichtbaar werd op het moment dat je écht terugkeerde van een geslaagde login (de crash
+// gebeurde bovendien vóór de eigen try/catch-foutmelding werd bereikt, dus zonder zichtbare toast — de
+// verbinding leek daardoor gewoon "niets te doen"). setTimeout(...,0) stelt de aanroep uit tot ná de huidige
+// synchrone scriptuitvoering, dus tot alle latere const-declaraties al lang geïnitialiseerd zijn.
+setTimeout(async () => {
+  await handleSpotifyCallbackIfPresent();
+  await handleStravaCallbackIfPresent();
+  // Was Instellingen open toen je op "Verbind met Spotify/Strava" drukte? Dan voelt de onvermijdelijke volledige
+  // pagina-herlaad (een gewone browsernavigatie naar Spotify/Strava en terug herstart de hele app) alsof je
+  // zomaar teruggezet werd naar het beginscherm -- heropen Instellingen hier weer, zodat het voelt als "gewoon
+  // teruggekeerd" i.p.v. "alles kwijt en terug bij af".
+  if (localStorage.getItem('oauthReopenSettings')){
+    localStorage.removeItem('oauthReopenSettings');
+    openModal('settingsModal');
+  }
+}, 0);
 storageGet('appEventLog').then(saved => { try{ if (saved) appEventLog = JSON.parse(saved); }catch(e){ appEventLog = []; } }).catch(() => {});
 
 // ---------- Wissel modus ----------
@@ -19341,11 +19390,16 @@ async function connectSpotify(){
   const verifier = randomPkceString(64);
   localStorage.setItem(SPOTIFY_VERIFIER_KEY, verifier);
   const challenge = await sha256Base64Url(verifier);
+  // "state:'spotify'" laat handleSpotifyCallbackIfPresent() ondubbelzinnig herkennen dat een terugkerende
+  // ?code=... écht van Spotify komt en niet van Strava (die toevallig dezelfde redirect_uri gebruikt) -- zie
+  // de uitleg daar.
   const params = new URLSearchParams({
     client_id: clientId, response_type:'code', redirect_uri: spotifyRedirectUri(),
-    code_challenge_method:'S256', code_challenge: challenge,
+    code_challenge_method:'S256', code_challenge: challenge, state:'spotify',
     scope:'user-read-currently-playing user-read-playback-state user-modify-playback-state'
   });
+  // Was Instellingen open? Zie de toelichting bij de setTimeout(...,0)-aanroep van handleSpotifyCallbackIfPresent().
+  if ($('settingsModal').classList.contains('show')) localStorage.setItem('oauthReopenSettings', '1');
   location.href = 'https://accounts.spotify.com/authorize?' + params.toString();
 }
 // Wordt bij elke pagina-load aangeroepen: als de URL net terugkomt van Spotify (?code=... of ?error=...), de
@@ -19362,7 +19416,15 @@ async function handleSpotifyCallbackIfPresent(){
   const url = new URL(location.href);
   const code = url.searchParams.get('code');
   const oauthError = url.searchParams.get('error');
-  if (!code && !oauthError) return;
+  const state = url.searchParams.get('state');
+  // BUG (Spotify en Strava gebruiken toevallig dezelfde redirect_uri): zonder deze state-check greep deze
+  // functie ELKE ?code=... in de URL, ook eentje die net van Strava terugkwam -- de URL werd dan hier al
+  // schoongeveegd (history.replaceState hieronder) vóór handleStravaCallbackIfPresent() ooit de kans kreeg
+  // om zijn eigen code te zien, en de Spotify-uitwisseling faalde vervolgens onterecht met een verwarrende
+  // foutmelding. Enkel bewust afwijzen bij een AFWIJKENDE state (dus duidelijk van Strava) -- een lege/
+  // ontbrekende state blijft gewoon verwerkt worden, als vangnet voor het geval een provider ooit geen state
+  // teruggeeft.
+  if ((!code && !oauthError) || (state && state !== 'spotify')) return;
   history.replaceState({}, '', location.pathname); // ?code=...&?error=... weg uit de zichtbare URL, ongeacht of het lukt
   if (oauthError){
     console.error('Spotify OAuth error:', oauthError, url.searchParams.get('error_description') || '');
@@ -19370,6 +19432,7 @@ async function handleSpotifyCallbackIfPresent(){
     return;
   }
   const verifier = localStorage.getItem(SPOTIFY_VERIFIER_KEY);
+  localStorage.removeItem(SPOTIFY_VERIFIER_KEY); // eenmalig geldig -- nooit laten rondslingeren voor een volgende, andere poging
   if (!verifier){
     console.error('Spotify callback: geen PKCE-verifier meer gevonden in localStorage.');
     toast(curLang()==='en' ? 'Spotify login session expired — please try connecting again.' : 'Spotify-inlogsessie verlopen — probeer opnieuw te verbinden.', 4000);
@@ -19419,6 +19482,27 @@ async function getSpotifyAccessToken(){
   }catch(e){ localStorage.removeItem(SPOTIFY_TOKENS_KEY); return null; }
 }
 function isSpotifyConnected(){ return !!localStorage.getItem(SPOTIFY_TOKENS_KEY); }
+// Gevraagd door de gebruiker: "In de opties waar je de verbinding maakt zou er een test moeten komen of de
+// verbinding gemaakt is." isSpotifyConnected() hierboven toetst enkel of er OOIT een token opgeslagen werd —
+// niet of die nog écht werkt (bv. na een mislukte ververs-beurt, of ingetrokken toegang). Deze test doet een
+// echte, lichte aanroep naar Spotify's eigen API en toont een concrete pass/fail-melding.
+async function testSpotifyConnection(){
+  const token = await getSpotifyAccessToken();
+  if (!token){
+    if ($('spotifyConnectStatus')) $('spotifyConnectStatus').textContent = '';
+    toast(curLang()==='en' ? '❌ Not connected to Spotify.' : '❌ Niet verbonden met Spotify.', 3500);
+    return;
+  }
+  try{
+    const res = await fetch('https://api.spotify.com/v1/me', { headers:{ Authorization:'Bearer ' + token } });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    if ($('spotifyConnectStatus')) $('spotifyConnectStatus').textContent = '✅ verbonden';
+    toast((curLang()==='en' ? '✅ Spotify connection works — logged in as ' : '✅ Spotify-verbinding werkt — ingelogd als ') + (data.display_name || data.id), 4000);
+  }catch(e){
+    toast((curLang()==='en' ? '❌ Spotify connection test failed: ' : '❌ Spotify-verbindingstest mislukt: ') + e.message, 4500);
+  }
+}
 async function fetchSpotifyNowPlaying(){
   const token = await getSpotifyAccessToken();
   if (!token) return null;
@@ -19463,15 +19547,18 @@ function connectStrava(){
   if (!clientId){ toast(curLang()==='en' ? 'Fill in your Strava Client ID first (Settings).' : 'Vul eerst je Strava Client ID in (Instellingen).', 3000); return; }
   const params = new URLSearchParams({
     client_id: clientId, response_type:'code', redirect_uri: stravaRedirectUri(),
-    approval_prompt:'auto', scope:'activity:write,activity:read_all'
+    approval_prompt:'auto', scope:'activity:write,activity:read_all', state:'strava'
   });
+  // Was Instellingen open? Zie de toelichting bij de setTimeout(...,0)-aanroep van handleSpotifyCallbackIfPresent().
+  if ($('settingsModal').classList.contains('show')) localStorage.setItem('oauthReopenSettings', '1');
   location.href = 'https://www.strava.com/oauth/authorize?' + params.toString();
 }
 async function handleStravaCallbackIfPresent(){
   const url = new URL(location.href);
   const code = url.searchParams.get('code');
   const scope = url.searchParams.get('scope');
-  if (!code || !scope || !scope.includes('activity')) return; // dit was een Spotify-callback, niet Strava (of niets)
+  const state = url.searchParams.get('state');
+  if (!code || (state && state !== 'strava') || !scope || !scope.includes('activity')) return; // dit was een Spotify-callback, niet Strava (of niets)
   history.replaceState({}, '', location.pathname);
   try{
     const res = await fetch('https://www.strava.com/oauth/token', {
@@ -21373,6 +21460,14 @@ $('navRestPointsBtn').addEventListener('click', async () => {
     const point = r.points[Number(row.dataset.idx)];
     row.addEventListener('click', () => {
       closeModal('navRestPointsModal');
+      // BUG (gemeld: "je ziet de kaart naar die plaats gaan en vervolgens een seconde later terug naar je
+      // startpunt"): tijdens actieve navigatie centreert de kaart zichzelf elke GPS-tick automatisch weer op
+      // je live positie (zie map.panTo(...) verderop) -- dat automatisch centreren wordt normaal enkel
+      // tijdelijk onderdrukt als je ZELF aan de kaart sleept (map.on('dragstart', markNavMapUserPan)). Deze
+      // programmatische map.setView(...) hieronder is geen sleepgebaar, dus die onderdrukking werd hier nooit
+      // ingeschakeld -- de eerstvolgende (vaak al binnen 1 seconde) automatische centrering veegde de kaart
+      // dan gewoon meteen terug naar je eigen positie, nog vóór je het rustpunt goed en wel kon bekijken.
+      markNavMapUserPan();
       map.setView([point.lat, point.lon], 18, { animate:true });
       toast(`${point.emoji} ${point.name}`, 2500);
     });
