@@ -2746,7 +2746,7 @@
       <h4 data-i18n="runGuideAiCoachTitle">AI Coach</h4>
       <p class="settings-note" data-i18n="runGuideAiCoachNote">3 ingebouwde opbouwschema's (5K/7,5K/10K), gebaseerd op resp. het officiële NHS Couch to 5K en Hal Higdon's Novice 10K-programma. Kies je afstand bovenaan, tik daarna op een weekkaartje om er handmatig naartoe te springen (met bevestiging), of bouw via "Schema wisselen of zelf opbouwen" je eigen schema.</p>
       <h4 style="margin-top:14px;" data-i18n="runGuideEvyTitle">EVY Podcast</h4>
-      <p class="settings-note" data-i18n="runGuideEvyNote">Jouw eigen 10-weken audioprogramma (5K en 10K, apart bijgehouden). De app onthoudt zelf bij welke week/sessie je zit en speelt automatisch het juiste mp3-bestand af. Een sessie al ergens anders gedaan? Tik "Deze sessie al gedaan → volgende" om handmatig door te schuiven, zonder een sessie te starten. Tijdens EVY blijft de app-stem stil — de podcast zelf is dan je coaching.</p>
+      <p class="settings-note" data-i18n="runGuideEvyNote">Jouw eigen 10-weken audioprogramma (5K en 10K, apart bijgehouden). De app onthoudt zelf bij welke week/sessie je zit en speelt automatisch het juiste mp3-bestand af. Een sessie al ergens anders gedaan, of per ongeluk te ver gebladerd? De gestippelde pijltjes onderaan de 5K/10K-tegel bladeren handmatig een sessie terug of vooruit, zonder een sessie te starten. Tijdens EVY blijft de app-stem stil — de podcast zelf is dan je coaching.</p>
       <h4 style="margin-top:14px;" data-i18n="runGuideFreeTitle">Vrij/Doel</h4>
       <p class="settings-note" data-i18n="runGuideFreeNote">Vrije Run (geen limiet), Target Run op 5 of 10 km, of een HIIT-sprintschema — voor wie al comfortabel loopt en geen opbouwschema nodig heeft.</p>
       <h4 style="margin-top:14px;" data-i18n="runGuideDuringTitle">Tijdens het lopen</h4>
@@ -3097,8 +3097,8 @@
 
       <p class="settings-note" data-i18n="screenOffGapNote" style="margin-top:12px;">⚠️ Belangrijk voor een goede meting: als je scherm zelf uitgaat/vergrendelt (niet via "sterk verdonkeren" hieronder, maar het toestel zelf), kan Android de browser na een tijdje volledig op pauze zetten — dan stopt ook de GPS-meting, en zie je nadien een rechte/groene lijn waar eigenlijk niets gemeten werd. Dat is een grens van wat een website/PWA kan (een "echte" app kan dit via een Foreground Service afdwingen, een website niet). Twee dingen helpen: (1) hieronder "Scherm actief houden" aanzetten, of (2) in je Android-instellingen zelf batterij-optimalisatie UITzetten voor je browser (Instellingen → Apps → [je browser] → Batterij).</p>
 
-      <label class="settings-check" style="margin-top:12px;"><input type="checkbox" id="settingKeepScreenOnDuringNav"> <span><span data-i18n="settingsKeepScreenOnDuringNav">🔋📱 Scherm actief houden tijdens navigatie</span></span></label>
-      <div class="settings-subnote" data-i18n="settingsKeepScreenOnDuringNavSub">Voorkomt gaten in de snelheids-/afstandsmeting doordat het scherm vergrendelt — kost wel meer batterij omdat het scherm aan blijft (combineer eventueel met "sterk verdonkeren" hierboven om dat te beperken).</div>
+      <label class="settings-check" style="margin-top:12px;"><input type="checkbox" id="settingKeepScreenOnDuringNav"> <span><span data-i18n="settingsKeepScreenOnDuringNav">🔋📱 Scherm actief houden tijdens navigatie/lopen</span></span></label>
+      <div class="settings-subnote" data-i18n="settingsKeepScreenOnDuringNavSub">Voorkomt gaten in de snelheids-/afstandsmeting doordat het scherm vergrendelt — geldt voor fietsen/wandelen ÉN voor een loopsessie (Vrije Run, AI Coach, EVY, Zombie Run, ...). Kost wel meer batterij omdat het scherm aan blijft (combineer eventueel met "sterk verdonkeren" hierboven om dat te beperken).</div>
 
       <label class="settings-check" style="margin-top:12px;"><input type="checkbox" id="settingVoiceOnly"> <span><span data-i18n="settingsVoiceOnly">🔋 Scherm sterk verdonkeren tijdens navigatie</span></span></label>
       <div class="settings-subnote" data-i18n="settingsVoiceOnlySub">Enkel het scherm doven, spraaknavigatie blijft werken — tik gewoon op het scherm om het weer op te lichten. Werkt het best op moderne (OLED/AMOLED-)schermen.</div>
@@ -3274,16 +3274,24 @@
           <div style="color:rgba(255,255,255,0.85); font-size:12px;" data-i18n="rcEvyIntroDesc">Tik je afstand aan om je volgende sessie te starten — de app onthoudt zelf bij welke week/sessie je zit.</div>
         </div>
         <div style="display:flex; flex-direction:column; gap:10px; margin:10px 0;">
-          <button id="rcEvyStart5Std" style="width:100%; border:2px solid rgba(226,161,60,0.4); background:rgba(255,255,255,0.04); border-radius:18px; padding:22px 20px; color:var(--cream); text-align:left;">
+          <!-- GEVRAAGD DOOR DE GEBRUIKER: "misschien een gestippelde pijl rechts en links" i.p.v. het oude
+               "✅ Volgende sessie"-tekstlinkje -- subtiele, niet-opvallende stippel-pijltjes om een sessie
+               terug/vooruit te bladeren, zonder bevestigingspopup (triviaal terug te draaien met de andere
+               pijl, in tegenstelling tot de 🔄-herstartknoppen hieronder). De tegel is nu een <div
+               role="button"> i.p.v. <button> zodat de pijltjes als échte, geneste <button>-elementen erin
+               kunnen (twee <button>'s in elkaar nesten is ongeldige HTML). -->
+          <div id="rcEvyStart5Std" role="button" tabindex="0" style="width:100%; border:2px solid rgba(226,161,60,0.4); background:rgba(255,255,255,0.04); border-radius:18px; padding:22px 42px; color:var(--cream); text-align:center; position:relative; cursor:pointer;">
             <div style="font-size:19px; margin-bottom:6px;">🏁 5 KM</div>
             <div id="rcEvyProg5Std" style="font-size:12px; color:var(--amber); font-weight:700;">Week – · Sessie –</div>
-            <div id="rcEvyDone5Std" class="rcEvyMarkDoneStd" data-dist="5" data-i18n="evyMarkDone" style="font-size:10.5px; color:rgba(246,244,238,0.5); text-decoration:underline; margin-top:10px;">✅ Volgende sessie</div>
-          </button>
-          <button id="rcEvyStart10Std" style="width:100%; border:2px solid rgba(226,161,60,0.4); background:rgba(255,255,255,0.04); border-radius:18px; padding:22px 20px; color:var(--cream); text-align:left;">
+            <button class="rcEvyPrevStd" data-dist="5" aria-label="Vorige sessie" style="position:absolute; left:2px; top:50%; transform:translateY(-50%); width:34px; height:34px; background:none; border:none; padding:0; color:rgba(246,244,238,0.3); cursor:pointer; display:flex; align-items:center; justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-dasharray="2.5,3" stroke-linecap="round"><polyline points="15,4 7,12 15,20"/></svg></button>
+            <button class="rcEvyNextStd" data-dist="5" aria-label="Volgende sessie" style="position:absolute; right:2px; top:50%; transform:translateY(-50%); width:34px; height:34px; background:none; border:none; padding:0; color:rgba(246,244,238,0.3); cursor:pointer; display:flex; align-items:center; justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-dasharray="2.5,3" stroke-linecap="round"><polyline points="9,4 17,12 9,20"/></svg></button>
+          </div>
+          <div id="rcEvyStart10Std" role="button" tabindex="0" style="width:100%; border:2px solid rgba(226,161,60,0.4); background:rgba(255,255,255,0.04); border-radius:18px; padding:22px 42px; color:var(--cream); text-align:center; position:relative; cursor:pointer;">
             <div style="font-size:19px; margin-bottom:6px;">🔥 10 KM</div>
             <div id="rcEvyProg10Std" style="font-size:12px; color:var(--amber); font-weight:700;">Week – · Sessie –</div>
-            <div id="rcEvyDone10Std" class="rcEvyMarkDoneStd" data-dist="10" data-i18n="evyMarkDone" style="font-size:10.5px; color:rgba(246,244,238,0.5); text-decoration:underline; margin-top:10px;">✅ Volgende sessie</div>
-          </button>
+            <button class="rcEvyPrevStd" data-dist="10" aria-label="Vorige sessie" style="position:absolute; left:2px; top:50%; transform:translateY(-50%); width:34px; height:34px; background:none; border:none; padding:0; color:rgba(246,244,238,0.3); cursor:pointer; display:flex; align-items:center; justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-dasharray="2.5,3" stroke-linecap="round"><polyline points="15,4 7,12 15,20"/></svg></button>
+            <button class="rcEvyNextStd" data-dist="10" aria-label="Volgende sessie" style="position:absolute; right:2px; top:50%; transform:translateY(-50%); width:34px; height:34px; background:none; border:none; padding:0; color:rgba(246,244,238,0.3); cursor:pointer; display:flex; align-items:center; justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-dasharray="2.5,3" stroke-linecap="round"><polyline points="9,4 17,12 9,20"/></svg></button>
+          </div>
         </div>
         <div style="display:flex; justify-content:center; gap:18px; margin-bottom:14px;">
           <button id="rcEvyReset5Std" data-i18n="evy5kRestart" style="background:none; border:none; color:rgba(246,244,238,0.5); font-size:11px; text-decoration:underline;">🔄 5K herstarten</button>
@@ -6066,6 +6074,20 @@ async function advanceEvyProgress(distKm){
   await saveEvyProgress(distKm, p);
   return p;
 }
+// GEVRAAGD DOOR DE GEBRUIKER: "Je kan naar een volgende sessie, maar je moet ook naar een vorige." Zelfde
+// opzet als advanceEvyProgress() hierboven, maar dan achteruit -- en geklemd op Week 1 · Sessie 1 (kan niet
+// verder terug dan het allereerste programma-onderdeel).
+async function retreatEvyProgress(distKm){
+  const p = await getEvyProgress(distKm);
+  if (p.session <= 1){
+    if (p.week > 1){ p.week -= 1; p.session = EVY_SESSIONS_PER_WEEK; }
+    // anders: al bij Week 1 · Sessie 1, kan niet verder terug -- blijft staan
+  } else {
+    p.session -= 1;
+  }
+  await saveEvyProgress(distKm, p);
+  return p;
+}
 async function resetEvyProgress(distKm){ const p = { week:1, session:1 }; await saveEvyProgress(distKm, p); return p; }
 // Pad-patroon: audio/evy5k/Start to Run - Aflevering 01.mp3 ... 30.mp3, en audio/evy10k/... (doorlopend genummerd, geen W/S meer) — bestanden moeten in die mappen naast index.html staan.
 function evyFilePath(distKm, p){
@@ -6774,7 +6796,7 @@ const TRANSLATIONS = {
   runGuideAiCoachTitle: { nl:'AI Coach', en:'AI Coach' },
   runGuideAiCoachNote: { nl:'3 ingebouwde opbouwschema\'s (5K/7,5K/10K), gebaseerd op resp. het officiële NHS Couch to 5K en Hal Higdon\'s Novice 10K-programma. Kies je afstand bovenaan, tik daarna op een weekkaartje om er handmatig naartoe te springen (met bevestiging), of bouw via "Schema wisselen of zelf opbouwen" je eigen schema.', en:'3 built-in training plans (5K/7.5K/10K), based on the official NHS Couch to 5K and Hal Higdon\'s Novice 10K programme respectively. Pick your distance at the top, then tap a week card to jump there manually (with confirmation), or build your own schedule via "Switch plan or build your own".' },
   runGuideEvyTitle: { nl:'EVY Podcast', en:'EVY Podcast' },
-  runGuideEvyNote: { nl:'Jouw eigen 10-weken audioprogramma (5K en 10K, apart bijgehouden). De app onthoudt zelf bij welke week/sessie je zit en speelt automatisch het juiste mp3-bestand af. Een sessie al ergens anders gedaan? Tik "Deze sessie al gedaan → volgende" om handmatig door te schuiven, zonder een sessie te starten. Tijdens EVY blijft de app-stem stil — de podcast zelf is dan je coaching.', en:'Your own 10-week audio programme (5K and 10K, tracked separately). The app remembers which week/session you\'re on and automatically plays the right mp3 file. Already did a session elsewhere? Tap "Already did this session → next" to advance manually, without starting a session. During EVY the app voice stays silent — the podcast itself is your coaching.' },
+  runGuideEvyNote: { nl:'Jouw eigen 10-weken audioprogramma (5K en 10K, apart bijgehouden). De app onthoudt zelf bij welke week/sessie je zit en speelt automatisch het juiste mp3-bestand af. Een sessie al ergens anders gedaan, of per ongeluk te ver gebladerd? De gestippelde pijltjes onderaan de 5K/10K-tegel bladeren handmatig een sessie terug of vooruit, zonder een sessie te starten. Tijdens EVY blijft de app-stem stil — de podcast zelf is dan je coaching.', en:'Your own 10-week audio programme (5K and 10K, tracked separately). The app remembers which week/session you\'re on and automatically plays the right mp3 file. Already did a session elsewhere, or browsed too far by accident? The dotted arrows at the bottom of the 5K/10K tile step a session back or forward manually, without starting a session. During EVY the app voice stays silent — the podcast itself is your coaching.' },
   runGuideFreeTitle: { nl:'Vrij/Doel', en:'Free/Target' },
   runGuideFreeNote: { nl:'Vrije Run (geen limiet), Target Run op 5 of 10 km, of een HIIT-sprintschema — voor wie al comfortabel loopt en geen opbouwschema nodig heeft.', en:'Free Run (no limit), Target Run over 5 or 10 km, or a HIIT sprint schedule — for anyone who already runs comfortably and doesn\'t need a training plan.' },
   runGuideDuringTitle: { nl:'Tijdens het lopen', en:'While running' },
@@ -6865,8 +6887,8 @@ const TRANSLATIONS = {
   genderMale: { nl:'Man', en:'Male' },
   genderFemale: { nl:'Vrouw', en:'Female' },
   screenOffGapNote: { nl:'⚠️ Belangrijk voor een goede meting: als je scherm zelf uitgaat/vergrendelt (niet via "sterk verdonkeren" hieronder, maar het toestel zelf), kan Android de browser na een tijdje volledig op pauze zetten — dan stopt ook de GPS-meting, en zie je nadien een rechte/groene lijn waar eigenlijk niets gemeten werd. Dat is een grens van wat een website/PWA kan (een "echte" app kan dit via een Foreground Service afdwingen, een website niet). Twee dingen helpen: (1) hieronder "Scherm actief houden" aanzetten, of (2) in je Android-instellingen zelf batterij-optimalisatie UITzetten voor je browser (Instellingen → Apps → [je browser] → Batterij).', en:'⚠️ Important for accurate tracking: if your screen itself turns off/locks (not via "dim strongly" below, but the device itself), Android can eventually fully suspend the browser — GPS tracking then stops too, leaving a straight/green line afterwards where nothing was actually measured. That is a limit of what a website/PWA can do (a native app can enforce this via a Foreground Service, a website cannot). Two things help: (1) turn on "Keep screen on" below, or (2) in your Android settings, turn OFF battery optimization for your browser (Settings → Apps → [your browser] → Battery).' },
-  settingsKeepScreenOnDuringNav: { nl:'🔋📱 Scherm actief houden tijdens navigatie', en:'🔋📱 Keep screen on during navigation' },
-  settingsKeepScreenOnDuringNavSub: { nl:'Voorkomt gaten in de snelheids-/afstandsmeting doordat het scherm vergrendelt — kost wel meer batterij omdat het scherm aan blijft (combineer eventueel met "sterk verdonkeren" hierboven om dat te beperken).', en:'Prevents gaps in speed/distance tracking caused by the screen locking — costs more battery since the screen stays on (optionally combine with "dim strongly" above to limit that).' },
+  settingsKeepScreenOnDuringNav: { nl:'🔋📱 Scherm actief houden tijdens navigatie/lopen', en:'🔋📱 Keep screen on during navigation/running' },
+  settingsKeepScreenOnDuringNavSub: { nl:'Voorkomt gaten in de snelheids-/afstandsmeting doordat het scherm vergrendelt — geldt voor fietsen/wandelen ÉN voor een loopsessie (Vrije Run, AI Coach, EVY, Zombie Run, ...). Kost wel meer batterij omdat het scherm aan blijft (combineer eventueel met "sterk verdonkeren" hierboven om dat te beperken).', en:'Prevents gaps in speed/distance tracking caused by the screen locking — applies to cycling/walking AND to a running session (Free Run, AI Coach, EVY, Zombie Run, ...). Costs more battery since the screen stays on (optionally combine with "dim strongly" above to limit that).' },
   statsTitle: { nl:'Mijn statistieken', en:'My statistics' },
   statsWeek: { nl:'Week', en:'Week' },
   statsMonth: { nl:'Maand', en:'Month' },
@@ -7583,7 +7605,7 @@ const HELP_CONTENT = {
       <h3>☕ Pauze zoeken (tijdens navigatie)</h3>
       <p>Tik tijdens het navigeren op het ☕-honingraat-knopje links op het scherm. Kies "Iets drinken" of "Iets eten", en je krijgt de 3 dichtstbijzijnde opties — <b>enkel op het stuk route dat je nog moet rijden</b>, nooit iets waarvoor je zou moeten terugrijden. Kies er eentje, en die plek wordt meteen als tussenstop ingevoegd; nadien navigeer je gewoon verder naar je oorspronkelijke bestemming. Elke suggestie heeft ook een link om ze op Google op te zoeken (recensies, openingsuren, ...).</p>
       <h3>🪑 Rustpunten &amp; 🦉 Natuurspotter (tijdens het wandelen)</h3>
-      <p>Naast de andere honingraat-knopjes verschijnen bij wandelen ook 🪑 en 🦉 — dezelfde opzoekingen als vooraf op het opzetscherm, maar nu bereikbaar tijdens de wandeling zelf, gebaseerd op je actuele positie op dat moment (niet je vertrekpunt). Tik een resultaat aan om het op de kaart te tonen (Rustpunten) of meer informatie te lezen (Natuurspotter) — je navigatie zelf loopt gewoon door op de achtergrond.</p>
+      <p>Naast de andere honingraat-knopjes verschijnen bij wandelen ook 🪑 en 🦉 — dezelfde opzoekingen als vooraf op het opzetscherm, maar nu bereikbaar tijdens de wandeling zelf, gebaseerd op je actuele positie op dat moment (niet je vertrekpunt). Tik een resultaat aan om het op de kaart te tonen (Rustpunten) of meer informatie te lezen (Natuurspotter) — je navigatie zelf loopt gewoon door op de achtergrond. Bij een rustpunt krijg je meteen ook de vraag of je het als tussenstop aan je wandeling wil toevoegen — bevestig en de route herberekent er automatisch langs, net zoals bij een omwegpunt.</p>
     </section>
     <section>
       <h3>🧭 Navigeren</h3>
@@ -7687,7 +7709,7 @@ const HELP_CONTENT = {
       <p><b>❤️ Hartslagband</b> — tik het hartje-icoontje om via Bluetooth te koppelen (lopen én fietsen/wandelen); je krijgt eerst een korte uitleg te zien vóór het koppelscherm van je toestel zelf opent. Met gewicht+leeftijd+geslacht ingevuld gebruikt de calorie-schatting dan de nauwkeurigere hartslag-formule.<br>
       <b>🎧 Spotify</b> — toont wat er nu speelt, met bediening.<br>
       <b>🟠 Strava</b> — upload je sessie met 1 tik. Beide vereisen een eenmalige, gratis registratie (Instellingen).</p>
-      <p><b>🧟 Zombie Run</b> — verhaal-gestuurde looptocht met achtervolgingen: loop sneller dan de vereiste snelheid of verlies een leven, met een beloningssysteem (sprint voor bonuspunten die levens terugwinnen), een mini-radar, en een moeilijkheidsgraad-keuze die alles vooraf instelt. Vereist zelf geüploade mp3-bestanden — zie "🛠️ Technische werking" voor de volledige mappenstructuur en een checklist als je niets hoort.</p>
+      <p><b>🧟 Zombie Run</b> — verhaal-gestuurde looptocht met achtervolgingen: loop sneller dan de vereiste snelheid of verlies een leven, met een beloningssysteem (sprint voor bonuspunten die levens terugwinnen), een mini-radar, en een moeilijkheidsgraad-keuze die alles vooraf instelt. Vereist zelf geüploade mp3-bestanden — zie "🛠️ Technische werking" voor de volledige mappenstructuur en een checklist als je niets hoort. Je hoort tijdens Zombie Run uitsluitend nog je eigen aangeleverde audiobestanden — geen gesproken AI-coach-stem meer, op geen enkel moment.</p>
     </section>
   `,
   en: `
@@ -7730,7 +7752,7 @@ const HELP_CONTENT = {
       <h3>☕ Find a break (while navigating)</h3>
       <p>While navigating, tap the ☕ honeycomb button on the left of the screen. Choose "Something to drink" or "Something to eat", and you'll get the 3 nearest options — <b>only along the stretch of route you still have to ride</b>, never something that would require riding back. Pick one, and that place is immediately inserted as a stop; afterwards you just keep navigating to your original destination. Each suggestion also has a link to look it up on Google (reviews, opening hours, ...).</p>
       <h3>🪑 Rest points &amp; 🦉 Nature spotter (while walking)</h3>
-      <p>Alongside the other honeycomb buttons, 🪑 and 🦉 also appear while walking — the same searches as on the setup screen beforehand, but now reachable during the walk itself, based on your current position at that moment (not your starting point). Tap a result to show it on the map (rest points) or read more about it (nature spotter) — your navigation just keeps running in the background.</p>
+      <p>Alongside the other honeycomb buttons, 🪑 and 🦉 also appear while walking — the same searches as on the setup screen beforehand, but now reachable during the walk itself, based on your current position at that moment (not your starting point). Tap a result to show it on the map (rest points) or read more about it (nature spotter) — your navigation just keeps running in the background. For a rest point you're also immediately asked whether you want to add it as a stop on your walk — confirm and the route recalculates through it automatically, just like a detour point.</p>
     </section>
     <section>
       <h3>🧭 Navigating</h3>
@@ -7834,7 +7856,7 @@ const HELP_CONTENT = {
       <p><b>❤️ Heart rate monitor</b> — tap the heart icon to connect via Bluetooth (running as well as cycling/walking); you'll first see a short explanation before your device's own pairing screen opens. With weight+age+gender filled in, calorie estimates then use the more accurate heart-rate formula.<br>
       <b>🎧 Spotify</b> — shows what's currently playing, with controls.<br>
       <b>🟠 Strava</b> — upload your session in one tap. Both require a one-time, free registration (Settings).</p>
-      <p><b>🧟 Zombie Run</b> — a story-driven run with chases: outrun the required speed or lose a life, with a reward system (sprint for bonus points that regain lives), a mini-radar, and a difficulty preset that fills in the settings for you. Requires your own uploaded mp3 files — see "🛠️ Technical details" for the full folder structure and a checklist if you hear nothing.</p>
+      <p><b>🧟 Zombie Run</b> — a story-driven run with chases: outrun the required speed or lose a life, with a reward system (sprint for bonus points that regain lives), a mini-radar, and a difficulty preset that fills in the settings for you. Requires your own uploaded mp3 files — see "🛠️ Technical details" for the full folder structure and a checklist if you hear nothing. During Zombie Run you only ever hear your own supplied audio files — no spoken AI-coach voice, at any point.</p>
     </section>
   `
 };
@@ -7882,10 +7904,14 @@ const DEV_NOTES_CONTENT = {
       <h3>🔋 Batterij</h3>
       <p>5 losse instellingen bij "Batterij": scherm actief houden, scherm verdonkeren, GPS-nauwkeurigheid verlagen, kaart niet laten meedraaien, en het interval waarop je positie ververst wordt. Staan allemaal standaard uit — op een moderne telefoon haal je met scherm aan doorgaans al 4-6+ uur navigatie zonder deze extra's.</p>
       <p><b>Scherm uit/vergrendeld = geen meting (grens van een PWA):</b> zodra het toestel zélf het scherm uitschakelt (niet via "sterk verdonkeren", dat blijft actief), kan Android de browser na verloop van tijd volledig pauzeren, wat GPS-metingen stopzet — nadien zie je dan een gat (rechte/groene lijn). Een native app kan dit afdwingen via een <i>Foreground Service</i>; een website/PWA heeft die toegang niet. Twee tegenmaatregelen: (1) "Scherm actief houden" gebruikt de Wake Lock API om het scherm effectief aan te houden zolang je navigeert; (2) los daarvan speelt de app tijdens navigatie altijd een onhoorbaar, stil audiofragment af op de achtergrond — een bekende techniek die browsers vaak (niet gegarandeerd) net iets soepeler laat omgaan met een pagina met een actieve audiosessie. Het meest betrouwbare blijft: batterij-optimalisatie voor je browser uitzetten in je Android-instellingen zelf (Instellingen → Apps → [je browser] → Batterij).</p>
+      <p><b>Opgeloste bug (gemeld: rechte/groene lijn dwars door een looppiste op de momenten dat het scherm dimde/uitging):</b> deze 2 tegenmaatregelen (Wake Lock + stille achtergrond-audio) werden voorheen enkel aangevraagd bij fiets-/wandelnavigatie (de "Start"-knop op de kaart) — niet bij een loopsessie (Vrije Run, AI Coach, EVY, Zombie Run, eigen schema). De instelling zelf beloofde dit al voor alle modi, maar was voor lopen dus in de praktijk een dode letter. Nu vraagt ook het starten van een loopsessie beide aan, en laat het stoppen ervan ze weer los — exact dezelfde aanpak als bij navigeren.</p>
+      <p><b>Diagnostische melding bij het starten (gemeld: "Kan ik dat testen zonder echt te lopen?" en "na enkele seconden is het scherm uit" ondanks het ingeschakelde vinkje):</b> er was voorheen geen enkele zichtbare bevestiging of "Scherm actief houden" écht lukte — de enige manier om dat te controleren was daadwerkelijk lopen/navigeren en afwachten of het scherm alsnog uitging. Bij het starten van navigatie of een loopsessie (met de instelling aan) verschijnt nu eenmalig een korte melding: "🔒📱 Scherm blijft actief" bij succes, of een duidelijke waarschuwing als het op dit toestel/deze browser niet lukt — zo is dit meteen te controleren, gewoon zittend aan tafel, zonder een volledige sessie te moeten lopen. Lukt het niet, dan is het meest betrouwbare alternatief nog steeds batterij-optimalisatie voor je browser zelf uitzetten in je Android-instellingen (zie hierboven): sommige toestellen/merken (agressieve batterijbesparing van bv. Xiaomi/Samsung/OnePlus e.d.) doden een achtergrond-Wake-Lock alsnog na een tijdje, ongeacht wat een website aanvraagt — dat is een grens van wat een PWA kan afdwingen, geen bug in deze app.</p>
     </section>
     <section>
       <h3>📍 Snelheidsmeting</h3>
-      <p>De getoonde snelheid (kaart-navigatie én looppagina) is <i>niet</i> meer de rauwe, ongefilterde GPS-snelheid van je toestel — die kan bij een zwak signaal zelf al "alle kanten op springen". Aanpak: (1) een fix met een slechte nauwkeurigheid (&gt;12m) wordt genegeerd voor snelheid; (2) zonder chip-snelheid wordt zelf berekend over een venster van minstens 2s i.p.v. elke seconde apart, wat pure GPS-drift bij lage snelheid onderdrukt; (3) een fysiek onmogelijke sprong (GPS-glitch) wordt weggegooid i.p.v. getoond; (4) wat overblijft loopt door een echte <i>Kalman-filter</i> — dit verving de eerdere adaptieve EMA-demping (2 vaste alpha-drempels): de filter houdt zelf een schatting én de onzekerheid daarover bij, en weegt elke nieuwe meting automatisch af tegen die onzekerheid i.p.v. tegen 2 hardgecodeerde grenswaarden. Concreet: de chip-eigen snelheid (Doppler, indien beschikbaar) telt zwaarder mee dan een snelheid die zelf uit 2 posities berekend is, en een fix met een zwakkere GPS-nauwkeurigheid weegt minder zwaar door — bij een grote, échte tempowissel volgt het cijfer nog steeds vlot mee, maar een eenmalige losse ruis-uitschieter wordt sterker afgeremd dan voorheen. Op de looppagina reset deze filter bovendien exact bij elke interval-grens (Start/Loop-wissel), zodat het display niet blijft napijlen op het tempo van het vorige blok. Dit geldt voor fietsen, wandelen én lopen, en bij lopen voor élk type sessie — AI Coach, EVY, Zombie Run, je eigen schema en Vrije Run — want die lopen allemaal via dezelfde onderliggende GPS-functie, dus 1 fix werkt overal. Een volledige sensor-fusie met de bewegingssensoren van je toestel (zoals een native app kan) is binnen een browser niet haalbaar — de accelerometer-data die een website wél kan lezen, drift te sterk om zinvol te combineren met GPS; dit blijft dus bewust een zuiver GPS-gebaseerde aanpak, nu met een beter onderbouwd wiskundig model.</p>
+      <p>De getoonde snelheid (kaart-navigatie én looppagina) is <i>niet</i> meer de rauwe, ongefilterde GPS-snelheid van je toestel — die kan bij een zwak signaal zelf al "alle kanten op springen". Aanpak: (1) een fix met een slechte nauwkeurigheid (&gt;12m) wordt genegeerd voor snelheid; (2) zonder chip-snelheid wordt zelf berekend over een venster van minstens 2s i.p.v. elke seconde apart, wat pure GPS-drift bij lage snelheid onderdrukt; (3) een fysiek onmogelijke sprong (GPS-glitch) wordt weggegooid i.p.v. getoond; (4) wat overblijft loopt door een echte <i>Kalman-filter</i> — dit verving de eerdere adaptieve EMA-demping (2 vaste alpha-drempels): de filter houdt zelf een schatting én de onzekerheid daarover bij, en weegt elke nieuwe meting automatisch af tegen die onzekerheid i.p.v. tegen 2 hardgecodeerde grenswaarden. Concreet: de chip-eigen snelheid (Doppler, indien beschikbaar) telt zwaarder mee dan een snelheid die zelf uit 2 posities berekend is, en een fix met een zwakkere GPS-nauwkeurigheid weegt minder zwaar door — bij een grote, échte tempowissel volgt het cijfer nog steeds vlot mee, maar een eenmalige losse ruis-uitschieter wordt sterker afgeremd dan voorheen. Op de looppagina reset deze filter bovendien exact bij elke interval-grens (Start/Loop-wissel), zodat het display niet blijft napijlen op het tempo van het vorige blok. Dit geldt voor fietsen, wandelen én lopen, en bij lopen voor élk type sessie — AI Coach, EVY, Zombie Run, je eigen schema en Vrije Run — want die lopen allemaal via dezelfde onderliggende GPS-functie, dus 1 fix werkt overal. Een volledige, continue sensor-fusie die de GPS-positie zelf zou bijsturen op basis van de bewegingssensoren (zoals een native app via dead reckoning kan) blijft binnen een browser niet haalbaar — de accelerometer-data die een website wél kan lezen, drift te sterk om daar een positie/snelheid uit af te leiden die je zinvol met GPS kan combineren. Dit is dus bewust nog steeds een zuiver GPS-gebaseerde snelheidsberekening; zie hieronder wel voor een veel beperktere vorm van sensorgebruik (enkel als aan/uit-signaal "is er beweging?", niet om zelf een snelheid te berekenen) die de stilstand-ruis eronder verder aanpakt.</p>
+      <p><b>Opgeloste bug (gemeld: "de snelheid wordt zo traag geupdate, van 8 km/u lopen naar wandelen duurt zeker 10 seconden of meer" + "na het scherm terug aanzetten is de snelheid niet 0, mss de waarde van net voor het dimmen?"):</b> bovenstaande aanpak was tot nu toe eigenlijk enkel écht zo geïmplementeerd voor kaart-navigatie (fietsen/wandelen) — de looppagina had daarnaast, apart, nog haar eigen, oudere snelheidsberekening staan: élke ruwe GPS-tick apart laten differentiëren (i.p.v. minstens een 2s-venster) én nooit de chip-eigen snelheid gebruiken. Bij een normale hardloop-tempowissel (korte tik-tot-tik-afstand) maakte dat de gemeten ruis torenhoog t.o.v. de toegelaten variatie per seconde in de Kalman-filter, vandaar de trage (10+ seconden) update. Dat is nu rechtgetrokken: de looppagina gebruikt voortaan écht dezelfde aanpak als kaart-navigatie (chip-snelheid met voorrang, anders een 2s-venster). Daarnaast kreeg de looppagina een max-tijdsgat-detectie: een gat van meer dan 20s tussen 2 GPS-fixes (typisch: het scherm was even uit) telt niet meer mee als 1 rechte sprong voor afstand/kaartlijn (dat gaf de rechte lijn dwars door de piste), en herstart de snelheids-Kalman vers i.p.v. "bevroren" te blijven hangen op de laatste waarde van vóór het gat.</p>
+      <p><b>Opgeloste bug — stilstand-ruis, in 2 stappen (gemeld: eerst "snelheid staat nu op 8.8, dan 6.6 enz" bij een stilliggende telefoon, daarna nog erger: "Ik zit stil en loop 23.6 km/u. Onbruikbaar dus..."):</b> zelfs met bovenstaande fixes bleek een écht stilliggende telefoon soms nog altijd een ruizige, niet-nul chip-snelheid te tonen én afstand op te bouwen — GPS-chips kunnen bij (bijna) stilstand een "Doppler-snelheid" van een paar km/u blijven rapporteren, puur meetruis. Aanpak 1: een eigen, striktere stilstand-drempel (los van de bestaande 1,2 km/u die voor automatisch-pauzeren gebruikt wordt) op de over 6s gladgestreken GPS-snelheid, die een gemeten snelheid/afstand naar 0 herschrijft zodra die drempel niet gehaald wordt. Aanpak 2, op voorstel van de gebruiker zelf ("als er geen stappen zijn sta je stil... kan je op basis van dat en gps de snelheid niet berekenen?"): wanneer het toestel/de browser het toelaat, gebruikt de looppagina er nu óók de bewegingssensor (<code>DeviceMotionEvent</code>) bij als extra, van GPS onafhankelijk signaal — een eenvoudige piekdetectie op de ruwe versnellingsmeter herkent voetstappen. Geen stappen gezien in de laatste seconden → stilstand, ook al claimt de GPS-chip een snelheid; wél stappen gezien → beweging, ook al zakt de gladgestreken GPS-snelheid even kortstondig. Een website heeft geen toegang tot de échte hardware-stappenteller van het besturingssysteem (dat is met opzet afgeschermd, om privacy-/beveiligingsredenen) — dit is dus een eigen, benaderende piekdetectie, geen exacte staplengte-berekening (looppas varieert te veel per tempo om daar zelf een betrouwbare snelheid uit af te leiden); ze dient uitsluitend als aan/uit-signaal, niet om de getoonde snelheid zelf te berekenen. Zodra de sensor minstens 1x actief data levert, wint dat stappensignaal het van de GPS-drempel; stopt de sensor daarna weer met leveren (of was ze nooit beschikbaar/toegestaan), dan valt alles automatisch terug op die GPS-drempel — dat wordt continu zelf gedetecteerd, dus dit kan nooit een sessie per ongeluk permanent op "stilstand" laten vastlopen. Een écht betrouwbaardere, hardware-eigen stappenteller (en achtergrond-tracking zonder de beperkingen van een browser) is enkel haalbaar via een volledige omzetting naar een native/hybride Android-app (bv. via CapacitorJS) — technisch goed doenbaar, maar een apart, groter project buiten de scope van dit ene bestand.</p>
     </section>
     <section>
       <h3>🧱 Architectuur</h3>
@@ -7916,7 +7942,7 @@ const DEV_NOTES_CONTENT = {
       <b>Rustpunten in de buurt:</b> gebruikt nu dezelfde robuuste Overpass-opzoeking (met meerdere servers als terugval, elk met een eigen tijdslimiet) als de rest van de app — voorheen probeerde deze functie maar 1 vaste Overpass-server zonder terugval, wat in een drukke/dichtbevolkte omgeving (bv. Brussel) vaker kon mislukken dan in een rustige omgeving (bv. Houthalen), ook al was er op beide plekken wel degelijk iets te vinden.<br>
       <b>Audio Gids:</b> haalt plekken in de buurt nu tegelijk op bij 3 bronnen — Wikipedia en Wikivoyage (allebei gratis, geen sleutel nodig, samen 1 klap per bron dankzij Wikimedia's geosearch-API met samenvatting+foto inbegrepen) en optioneel OpenTripMap (gratis sleutel bij Instellingen → API-sleutels; vindt vaak veel meer/rijkere plekken zoals kastelen en uitkijkpunten, maar levert bij het laden van de lijst zelf geen samenvatting — die wordt pas opgehaald op het moment dat je op een OpenTripMap-plek tikt, om de dagelijkse gratis-limiet niet nodeloos te verbruiken). Alle resultaten worden samengevoegd tot 1 lijst, gesorteerd op afstand, elk met een klein bronlabel (📖/🧭/🏰).</p>
       <p><b>Opgeloste bug (gemeld: "je ziet de kaart naar het rustpunt gaan en vervolgens een seconde later terug naar je startpunt"):</b> tijdens actieve wandel-navigatie centreert de kaart zichzelf elke GPS-tick automatisch weer op je live positie. Dat automatisch centreren werd voorheen enkel tijdelijk onderdrukt als je zélf aan de kaart sleepte — een tik op een rustpunt-resultaat (dat de kaart programmatisch naar dat punt zet) telde daar niet voor mee, waardoor de eerstvolgende GPS-tick de kaart alweer terugveegde vóór je het rustpunt goed kon bekijken. De kaart blijft nu, net als bij zelf slepen, enkele seconden op het gekozen rustpunt staan.</p>
-      <p><b>Rustpunt effectief aan je wandeling toevoegen:</b> dat kan op dit moment nog niet — een tik op een rustpunt-resultaat toont het enkel op de kaart. Dit vraagt een popup ("Punt toevoegen aan wandeling?") plus een manier om de lopende route effectief om te leiden langs dat punt; dat wordt nog uitgewerkt.</p>
+      <p><b>Rustpunt effectief aan je wandeling toevoegen:</b> een tik op een rustpunt-resultaat toont het nu eerst op de kaart, met de vraag "Punt '...' toevoegen aan wandeling?". Bevestig je, dan wordt het punt een nieuw tussenpunt in je route — precies hetzelfde onderliggende mechanisme als een handmatig geplaatst omwegpunt (zie 🔀 Omweg in Hulp): de navigatie schakelt daarvoor even naar de omweg-pauze, het punt komt op de logische plek in je resterende route, en de route herberekent meteen vanaf je huidige positie. Tik op "Hervat" om verder te navigeren zodra je klaar bent.</p>
     </section>
     <section>
       <h3>🔐 API-sleutels &amp; inloggen</h3>
@@ -7930,6 +7956,7 @@ const DEV_NOTES_CONTENT = {
       <h3>🎧 EVY — eigen schema aanpassen</h3>
       <p>Zet zelf een bestand <code>schema.json</code> in <code>audio/evy5k/</code> (en/of <code>audio/evy10k/</code>) om het opbouwschema aan te passen — geen code nodig. Formaat: een lijst van weken, elke week 3 sessies, elke sessie een lijst <code>[minuten, "run"|"walk"]</code>-paren, bv. <code>[[1,"run"],[1,"walk"],[2,"run"]]</code> = 1 min lopen, 1 min wandelen, 2 min lopen. Bestaat het bestand niet (of is het kapot), dan valt 5K terug op het ingebouwde standaardschema; voor 10K is er geen ingebouwde terugval, dus zonder <code>schema.json</code> blijft de duur-weergave daar leeg (de audio zelf blijft wel gewoon werken).</p>
       <p><b>Km-voortgangskolom bleef op het 1ste blokje hangen?</b> Die kolom (vervangt bij EVY de gewone intervallenrail) werd voorheen elke seconde volledig herbouwd, wat de live opvulling van de lopende kilometer telkens terugzette naar 0% vóór de volgende gps-fix er weer wat bij optelde — zichtbaar als "vult zich met kleuren, maar blijft hangen". De kolom wordt nu enkel nog volledig opgebouwd bij de allereerste render; daarna houdt elke gps-fix hem gewoon zelf bij.</p>
+      <p><b>Gevraagde wijziging: sessie terug-/vooruitbladeren.</b> De 5K/10K-tegel had voorheen enkel een "✅ Volgende sessie"-tekstlinkje: een "al gedaan markeren en doorschuiven"-actie met bevestigingspopup. Dat is vervangen door twee subtiele, gestippelde pijltjes links/rechts onderaan de tegel (<code>retreatEvyProgress()</code>/<code>advanceEvyProgress()</code>) — puur navigatie, geen bevestiging nodig omdat een pijl in de andere richting het meteen weer rechtzet. <code>retreatEvyProgress()</code> klemt op Week 1 · Sessie 1 (kan niet verder terug). Zowel de Standaard-tegel (waar de pijltjes als geneste knoppen in een <code>&lt;div role="button"&gt;</code> zitten — twee <code>&lt;button&gt;</code>'s in elkaar nesten is ongeldige HTML) als de Garmin-tegel (dezelfde opzet, maar dan binnen de iframe, die de actie via <code>postMessage({action:'retreatevy'|'advanceevy', evyDist})</code> naar de hoofdpagina stuurt) hebben elk hun eigen, bijpassende versie van deze pijltjes gekregen.</p>
     </section>
     <section>
       <h3>▶️⏸️ Looppagina — pauze/hervat-knop</h3>
@@ -7942,6 +7969,7 @@ const DEV_NOTES_CONTENT = {
     <section>
       <h3>🧟 Zombie Run — mappenstructuur</h3>
       <p class="settings-note" style="background:rgba(226,161,60,0.12); border:1px solid rgba(226,161,60,0.35); border-radius:8px; padding:8px 10px;">🧪 <b>Testen zonder buiten te lopen:</b> zet naast <code>index.html</code> ook <a href="zombie_test_console.html" target="_blank" rel="noopener">zombie_test_console.html</a> in dezelfde map (dezelfde upload-stap als je audiobestanden). Die opent een testconsole ernaast die een volledige Zombie Run nabootst — nagemaakte GPS-beweging, elke fase (alarm, "ren voor je leven", ontsnapping, beet, bonus, winner/looser) met 1 klik forceren — zodat je meteen je eigen audiobestanden en geluidsinstellingen kan beluisteren. Staat het bestand er nog niet in je repo, dan krijg je op deze link een 404; eerst uploaden dus.</p>
+      <p><b>Opgeloste bug/gevraagde wijziging (gemeld: "Ik hoor nog steeds: 'ze zitten...' — dus toch nog de audio coach die er is... Die audio coaching wil ik volledig uit de Zombie Run, enkel mijn audio"):</b> naast de bestandjes hierboven sprak Zombie Run tot voor kort nog op een handvol momenten een eigen, apart gesproken lijntje (via dezelfde spraaksynthese als de gewone AI-coach, dus het klínkt identiek): "Ze zitten vlak achter je!" vlak vóór je gepakt wordt, "Voorraad in de buurt — sprint ernaartoe!" bij een sprint-kans, een tijdsdoel-melding, en een terugvalzin bij overlijden als de <code>Zombie-Looser</code>-map leeg is. Al die lijntjes zijn nu uitgeschakeld. <b>Eén uitzondering, later expliciet gevraagd:</b> bij het rapen van een bonus (voorraadkist, serum, antidote, nipper-beloning) klinkt er nog steeds één vaste, altijd-Engelse gesproken bevestiging — "Supply catched!" bij de voorraadkist, "Item catched!" bij alle andere bonussen — nooit het (vertaalde) item-label zelf, en ongeacht of de app op Nederlands of Engels staat. Voor al de rest blijft Zombie Run stil op je eigen audiobestanden hierboven (de bijhorende toast/visuele melding, waar aanwezig, blijft wel gewoon verschijnen).</p>
       <p>Zelf te uploaden naast <code>index.html</code>, allemaal onder <code>audio/ZombieRun/</code>, exact deze paden en namen (hoofdlettergevoelig). Je hoeft nergens een aantal in te typen — de app telt zelf hoeveel bestanden er in elke map staan (1, 2, 3... tot er eentje ontbreekt), dus gewoon bestanden toevoegen of verwijderen volstaat. Elk bestand mag <code>.mp3</code> of <code>.wav</code> zijn (gemengd door elkaar mag ook, bv. <code>1.wav</code> naast <code>2.mp3</code> in dezelfde map).</p>
       <p><code>Zombie-intro/1.mp3</code>, ... — willekeurig gekozen bij de start van de run.</p>
       <p><code>Zombie-Story/1/deel1.mp3</code>, <code>deel2.mp3</code>, ..., <code>Zombie-Story/2/</code>, <code>/3/</code>, enzovoort — verhaallijnen, <b>geen vast maximum van 5</b>: de app telt zelf hoeveel <code>Zombie-Story/N/</code>-mappen er zijn (stopt bij het eerste ontbrekende nummer), dus gewoon meer nummers toevoegen (<code>/6/</code>, <code>/7/</code>, ...) volstaat. Bij de start van elke run wordt er willekeurig één verhaallijn gekozen en in volgorde afgespeeld (dus niet geshuffeld, dat zou het verhaal doorelkaar gooien). Heeft een verhaallijn geen bestanden, dan kiest de app gewoon een andere die wel bestanden heeft.</p>
@@ -8025,10 +8053,14 @@ const DEV_NOTES_CONTENT = {
       <h3>🔋 Battery</h3>
       <p>5 separate settings under "Battery": keep the screen on, dim the screen, lower GPS accuracy, stop the map rotating, and the interval at which your position refreshes. All off by default — on a modern phone, you typically already get 4-6+ hours of navigation with the screen on without these extras.</p>
       <p><b>Screen off/locked = no tracking (a PWA limit):</b> once the device itself turns the screen off (not via "dim heavily", which stays active), Android can eventually fully suspend the browser, which stops GPS tracking — you'll then see a gap afterwards (a straight/green line). A native app can enforce continued tracking via a <i>Foreground Service</i>; a website/PWA doesn't have that access. Two mitigations: (1) "Keep screen on" uses the Wake Lock API to actually keep the screen on while navigating; (2) separately, the app always plays a silent, inaudible audio loop in the background during navigation — a known technique that often (not guaranteed) makes browsers a bit more lenient with a page that has an active audio session. The most reliable option remains: turning off battery optimization for your browser in your Android settings themselves (Settings → Apps → [your browser] → Battery).</p>
+      <p><b>Fixed bug (reported: a straight/green line cutting across a running track at the exact moments the screen dimmed/turned off):</b> these 2 mitigations (Wake Lock + silent background audio) used to only be requested for cycling/walking navigation (the "Start" button on the map) — not for a running session (Free Run, AI Coach, EVY, Zombie Run, your own schedule). The setting itself already promised this for every mode, but for running it was in practice a dead letter. Starting a running session now requests both as well, and stopping it releases them again — exactly the same approach as navigating.</p>
+      <p><b>Diagnostic toast on start (reported: "Can I test that without actually running?" and "after a few seconds the screen turns off" despite the setting being checked):</b> there used to be no visible confirmation at all of whether "Keep screen on" actually succeeded — the only way to check was to actually go run/navigate and wait to see if the screen turned off anyway. Starting navigation or a running session (with the setting on) now shows a one-time toast: "🔒📱 Screen will stay on" on success, or a clear warning if it fails on this device/browser — so this can be checked immediately, just sitting at a table, without needing to run a full session. If it fails, the most reliable fallback is still turning off battery optimization for your browser itself in your Android settings (see above): some devices/brands (aggressive battery saving on e.g. Xiaomi/Samsung/OnePlus) kill a background Wake Lock anyway after a while, regardless of what a website requests — that's a limit of what a PWA can enforce, not a bug in this app.</p>
     </section>
     <section>
       <h3>📍 Speed measurement</h3>
-      <p>The displayed speed (map navigation and the run page alike) is no longer the raw, unfiltered GPS speed from your device — that can itself "jump all over the place" on a weak signal. Approach: (1) a fix with poor accuracy (&gt;12m) is ignored for speed; (2) without a chip-reported speed, it's calculated over a window of at least 2s instead of every single second, which suppresses pure GPS drift at low speed; (3) a physically implausible jump (a GPS glitch) is discarded instead of shown; (4) what remains passes through a real <i>Kalman filter</i> — this replaced the earlier adaptive EMA smoothing (2 fixed alpha thresholds): the filter keeps its own estimate and the uncertainty around it, and automatically weighs every new measurement against that uncertainty instead of against 2 hardcoded cutoffs. In practice: the chip's own speed reading (Doppler, when available) counts more heavily than a speed calculated from 2 positions, and a fix with weaker GPS accuracy counts for less — a large, genuine pace change is still followed quickly, but a one-off noisy outlier is damped more strongly than before. On the run page, this filter additionally resets exactly at every interval boundary (Start/Run switch), so the display doesn't lag behind the previous block's pace. This applies to cycling, walking, and running alike, and for running, to every session type — AI Coach, EVY, Zombie Run, your own schedule, and Free Run — since they all run through the same underlying GPS function, so one fix covers all of them. Full sensor fusion with your device's motion sensors (as a native app could do) isn't feasible inside a browser — the accelerometer data a website can actually read drifts too much to combine meaningfully with GPS; this deliberately remains a purely GPS-based approach, now with a better-grounded mathematical model.</p>
+      <p>The displayed speed (map navigation and the run page alike) is no longer the raw, unfiltered GPS speed from your device — that can itself "jump all over the place" on a weak signal. Approach: (1) a fix with poor accuracy (&gt;12m) is ignored for speed; (2) without a chip-reported speed, it's calculated over a window of at least 2s instead of every single second, which suppresses pure GPS drift at low speed; (3) a physically implausible jump (a GPS glitch) is discarded instead of shown; (4) what remains passes through a real <i>Kalman filter</i> — this replaced the earlier adaptive EMA smoothing (2 fixed alpha thresholds): the filter keeps its own estimate and the uncertainty around it, and automatically weighs every new measurement against that uncertainty instead of against 2 hardcoded cutoffs. In practice: the chip's own speed reading (Doppler, when available) counts more heavily than a speed calculated from 2 positions, and a fix with weaker GPS accuracy counts for less — a large, genuine pace change is still followed quickly, but a one-off noisy outlier is damped more strongly than before. On the run page, this filter additionally resets exactly at every interval boundary (Start/Run switch), so the display doesn't lag behind the previous block's pace. This applies to cycling, walking, and running alike, and for running, to every session type — AI Coach, EVY, Zombie Run, your own schedule, and Free Run — since they all run through the same underlying GPS function, so one fix covers all of them. Full, continuous sensor fusion that corrects the GPS position itself using motion sensors (as a native app could do via dead reckoning) remains infeasible inside a browser — the accelerometer data a website can actually read drifts too much to derive a position/speed from that's meaningful to combine with GPS. This deliberately remains a purely GPS-based speed calculation; see below for a much narrower use of the motion sensor (purely as an on/off "is there movement?" signal, not to calculate a speed itself) that further tackles standing-still noise.</p>
+      <p><b>Fixed bug (reported: "the speed updates so slowly, going from 8 km/h running to walking takes at least 10 seconds or more" + "after turning the screen back on the speed isn't 0, maybe the value from right before it dimmed?"):</b> the approach above used to actually only be implemented that way for map navigation (cycling/walking) — the run page separately still had its own, older speed calculation: differentiating every single raw GPS tick on its own (instead of at least a 2s window), and never using the chip's own speed. On a normal running pace change (a short tick-to-tick distance), that made the measured noise towering compared to the allowed per-second variation in the Kalman filter, hence the slow (10+ second) update. That's now straightened out: the run page genuinely uses the same approach as map navigation (chip speed preferred, otherwise a 2s window). The run page also got a max-time-gap detector: a gap of more than 20s between 2 GPS fixes (typically: the screen was off for a bit) no longer counts as a single straight jump for distance/the map line (that's what caused the straight line cutting across the track), and restarts the speed Kalman fresh instead of staying "frozen" on the last value from before the gap.</p>
+      <p><b>Fixed bug — standing-still noise, in 2 steps (reported: first "speed now shows 8.8, then 6.6 etc" on a phone lying still, then worse: "I'm sitting still and it says I'm running at 23.6 km/h. Unusable."):</b> even with the fixes above, a genuinely stationary phone could still show a noisy, non-zero chip speed and accumulate distance — GPS chips can keep reporting a "Doppler speed" of a few km/h near-zero motion, pure measurement noise. Approach 1: a dedicated, stricter stillness threshold (separate from the existing 1.2 km/h used for auto-pause) on the 6s-smoothed GPS speed, which rewrites a measured speed/distance to 0 once that threshold isn't met. Approach 2, suggested by the user themselves ("if there are no steps you're standing still... can't you calculate speed from that and GPS?"): where the device/browser allows it, the run page now also uses the motion sensor (<code>DeviceMotionEvent</code>) as an extra, GPS-independent signal — simple peak detection on the raw accelerometer recognizes footsteps. No steps seen in the last few seconds → standing still, even if the GPS chip claims a speed; steps seen → moving, even if the smoothed GPS speed briefly dips. A website has no access to the operating system's actual hardware step counter (deliberately locked down for privacy/security reasons) — this is therefore its own, approximate peak detector, not an exact stride-length calculation (running stride varies too much by pace to derive a reliable speed from it on its own); it's used purely as an on/off signal, not to calculate the displayed speed itself. As soon as the sensor delivers active data at least once, that step signal wins over the GPS threshold; if the sensor then stops delivering data again (or was never available/permitted), everything automatically falls back to that GPS threshold — that's continuously detected on its own, so this can never accidentally get a session permanently stuck on "standing still". A genuinely more reliable, hardware-native step counter (and background tracking without a browser's limits) is only achievable by fully converting to a native/hybrid Android app (e.g. via CapacitorJS) — technically quite doable, but a separate, larger project outside the scope of this one file.</p>
     </section>
     <section>
       <h3>🧱 Architecture</h3>
@@ -8059,7 +8091,7 @@ const DEV_NOTES_CONTENT = {
       <b>Nearby rest points:</b> now uses the same robust Overpass lookup (with several fallback servers, each with its own time limit) as the rest of the app — this feature used to try only 1 fixed Overpass server with no fallback, which could fail more often in a busy/dense area (e.g. Brussels) than in a quiet one (e.g. Houthalen), even though results existed in both places.<br>
       <b>Audio guide:</b> now queries 3 sources at once — Wikipedia and Wikivoyage (both free, no key needed, 1 call per source thanks to Wikimedia's geosearch API which already includes a summary + photo) and, optionally, OpenTripMap (free key via Settings → API keys; often finds many more/richer places such as castles and viewpoints, but the list request itself returns no summary — that's fetched only when you tap an OpenTripMap place, to avoid wasting the free daily limit). All results are merged into one list, sorted by distance, each with a small source badge (📖/🧭/🏰).</p>
       <p><b>Fixed bug (reported: "the map moves to the rest point and then, a second later, snaps back to your start point"):</b> during active walking navigation, the map re-centres itself on your live position on every GPS tick. That auto-recentring used to only be suppressed temporarily when you dragged the map yourself — tapping a rest point result (which moves the map programmatically) didn't count, so the next GPS tick would immediately snap the map back before you could really see the rest point. The map now stays on the selected rest point for a few seconds, just like it does after you drag the map yourself.</p>
-      <p><b>Actually adding a rest point to your walk:</b> not possible yet — tapping a result only shows it on the map. This needs a confirmation popup ("Add point to walk?") plus a way to actually reroute the current route through that point; still to be built.</p>
+      <p><b>Actually adding a rest point to your walk:</b> tapping a result now first shows it on the map, with the prompt "Add '...' to your walk?". Confirm, and the point becomes a new via-point in your route — the exact same underlying mechanism as a manually placed detour point (see 🔀 Detour in Help): navigation briefly switches to the detour pause for this, the point lands at the logical spot in your remaining route, and the route recalculates right away from your current position. Tap "Resume" to continue navigating once you're ready.</p>
     </section>
     <section>
       <h3>🔐 API keys &amp; login</h3>
@@ -8073,6 +8105,7 @@ const DEV_NOTES_CONTENT = {
       <h3>🎧 EVY — customising the schedule</h3>
       <p>Place a <code>schema.json</code> file in <code>audio/evy5k/</code> (and/or <code>audio/evy10k/</code>) to customise the training schedule — no code needed. Format: a list of weeks, each week with 3 sessions, each session a list of <code>[minutes, "run"|"walk"]</code> pairs, e.g. <code>[[1,"run"],[1,"walk"],[2,"run"]]</code> = 1 min running, 1 min walking, 2 min running. If the file doesn't exist (or is broken), 5K falls back to the built-in default schedule; there's no built-in fallback for 10K, so without <code>schema.json</code> the duration display stays empty there (the audio itself keeps working regardless).</p>
       <p><b>Km-progress column stuck on the first block?</b> That column (replaces the regular interval rail for EVY) used to be fully rebuilt every second, which reset the current kilometer's live fill back to 0% before the next GPS fix could add to it — visible as "fills with colour but stays stuck". The column is now only fully built on the very first render; after that, each GPS fix simply keeps it up to date itself.</p>
+      <p><b>Requested change: browsing a session back/forward.</b> The 5K/10K tile used to only have a "✅ Next session" text link: a "mark as already done and advance" action with a confirmation popup. That's been replaced with two subtle, dotted arrows at the bottom-left/right of the tile (<code>retreatEvyProgress()</code>/<code>advanceEvyProgress()</code>) — pure navigation, no confirmation needed since an arrow the other way instantly undoes it. <code>retreatEvyProgress()</code> clamps at Week 1 · Session 1 (can't go back further). Both the Standard tile (where the arrows are nested buttons inside a <code>&lt;div role="button"&gt;</code> — nesting two <code>&lt;button&gt;</code> elements is invalid HTML) and the Garmin tile (same idea, but inside the iframe, which sends the action via <code>postMessage({action:'retreatevy'|'advanceevy', evyDist})</code> to the parent page) each got their own matching version of these arrows.</p>
     </section>
     <section>
       <h3>▶️⏸️ Run screen — pause/resume button</h3>
@@ -8085,6 +8118,7 @@ const DEV_NOTES_CONTENT = {
     <section>
       <h3>🧟 Zombie Run — folder structure</h3>
       <p class="settings-note" style="background:rgba(226,161,60,0.12); border:1px solid rgba(226,161,60,0.35); border-radius:8px; padding:8px 10px;">🧪 <b>Test without walking outside:</b> upload <a href="zombie_test_console.html" target="_blank" rel="noopener">zombie_test_console.html</a> next to <code>index.html</code> as well (same upload step as your audio files). That opens a test console alongside it that simulates a full Zombie Run — fake GPS movement, force any phase (alarm, "run for your life", escape, bite, bonus, winner/looser) with one click — so you can immediately listen to your own audio files and sound settings. If the file isn't in your repo yet, this link will 404; upload it first.</p>
+      <p><b>Fixed bug/requested change (reported: "I still hear: 'they're...' — so the audio coach is still there after all... I want that audio coaching completely out of Zombie Run, only my own audio"):</b> alongside the files above, Zombie Run used to also speak its own separate line at a handful of moments (via the same speech synthesis as the regular AI coach, so it sounds identical): "They're right behind you!" just before you get caught, "Supplies nearby — sprint to reach them!" on a sprint opportunity, a time-goal notice, and a fallback line on death if the <code>Zombie-Looser</code> folder is empty. All of those are now disabled. <b>One exception, requested afterwards:</b> picking up a bonus (supply crate, serum, antidote, nipper reward) still plays one fixed, always-English spoken confirmation — "Supply catched!" for the supply crate, "Item catched!" for every other bonus — never the (translated) item label itself, regardless of whether the app is set to Dutch or English. Everywhere else Zombie Run stays silent and relies only on your own audio files above (the accompanying toast/visual notice, where present, still appears as normal).</p>
       <p>Upload these yourself next to <code>index.html</code>, all under <code>audio/ZombieRun/</code>, exact paths and names (case-sensitive). No need to type a file count anywhere — the app counts how many files are in each folder itself (1, 2, 3... until one's missing), so just add or remove files as you like. Every file can be <code>.mp3</code> or <code>.wav</code> (mixing both in the same folder is fine too, e.g. <code>1.wav</code> next to <code>2.mp3</code>).</p>
       <p><code>Zombie-intro/1.mp3</code>, ... — picked at random at the start of the run.</p>
       <p><code>Zombie-Story/1/deel1.mp3</code>, <code>deel2.mp3</code>, ..., <code>Zombie-Story/2/</code>, <code>/3/</code>, and so on — storylines, <b>no fixed maximum of 5</b>: the app counts how many <code>Zombie-Story/N/</code> folders exist itself (stops at the first missing number), so just add more numbers (<code>/6/</code>, <code>/7/</code>, ...) as you like. One storyline is picked at random at the start of each run and played in order (not shuffled — that would scramble the story). If a storyline has no files, the app just picks another one that does.</p>
@@ -8793,8 +8827,9 @@ function tickZombieSprintReward(){
   const ratio = base > 0 ? kmh / base : 0;
   if (ratio >= 1.2){
     if (!z.sprintActive || z.sprintPhase !== activePhase){
+      // GEVRAAGD DOOR DE GEBRUIKER: geen gesproken sprint-hint meer -- Zombie Run blijft hier stil (zie
+      // zombieSpeak() hierboven, enkel de bonus-bevestiging spreekt nog).
       z.sprintActive = true; z.sprintPhase = activePhase; z.sprintStartAt = Date.now(); z.sprintPeakRatio = ratio;
-      if (activePhase === 'story') zombieSpeak(curLang()==='en' ? 'Supplies nearby — sprint to reach them!' : 'Voorraad in de buurt — sprint ernaartoe!');
     } else {
       z.sprintPeakRatio = Math.max(z.sprintPeakRatio, ratio);
     }
@@ -8852,14 +8887,16 @@ function flushZombieQueuedEffect(){
   const file = z.effectQueue.shift();
   player.src = file; player.volume = zombieAudioParam('narrationVol'); player.play().catch(() => {});
 }
-// Gesproken coach-mededelingen (Web Speech, een heel andere audiobron dan de <audio>-elementen hierboven)
-// mogen tijdens Zombie Run nooit over het verhaal/alarm/cue-kanaal heen praten — dat kanaal heeft zelf ook
-// een stem, en 2 stemmen tegelijk klinkt rommelig ("verschillende audio tussen elkaar"). Dus: gewoon
-// overslaan als dat kanaal nu bezig is. Zelfde reden voor het fx-kanaal (zombieEffectsPlayer): dat speelt
-// bv. een powerup-cue of een enge-geluiden-fragment, en dat mag evenmin overlappen met een gesproken lijn
-// (was voorheen niet gecheckt hier — enkel het hoofdkanaal — waardoor de coach-stem toch nog over fx-audio
-// heen kon praten). De toast/visuele melding bij de aanroep (indien aanwezig) blijft wél altijd gewoon
-// verschijnen — enkel de gesproken versie valt hier soms weg.
+// GEVRAAGD DOOR DE GEBRUIKER: "Die audio coaching wil ik volledig uit de ZOMBIE RUN... Enkel mijn audio..."
+// -- met 1 uitdrukkelijke uitzondering, achteraf toegevoegd: "die bonussen... Dat is het enige waar een stem
+// mag zeggen, in het Engels, steeds 'Supply catched' of 'Item catched'." zombieSpeak() sprak voorheen op een
+// handvol momenten nog mee (o.a. "Ze zitten vlak achter je!" vlak vóór je gepakt wordt, een sprint-hint,
+// een tijdsdoel-melding, en een terugvalzin bij overlijden) — dat kon aanvoelen als "de gewone AI-coach
+// praat toch nog mee", want zombieSpeak() gebruikt dezelfde spraaksynthese als de gewone coach, dus het
+// KLINKT identiek. Al DIE momenten zijn nu stil (die aanroepen zijn verwijderd, zie awardZombieBonus() /
+// triggerZombieLastHeartbeat() / tickZombieState() / handleZombieDeath() elders). zombieSpeak() zelf blijft
+// wél gewoon werken — de enige overgebleven aanroep is de bonus-bevestiging in awardZombieBonus(), met een
+// vaste Engelse tekst (nooit vertaald, ongeacht app-taal), zoals gevraagd.
 function zombieSpeak(text){
   if (!$('runMusicPlayer').paused) return;
   const fx = $('zombieEffectsPlayer');
@@ -8907,7 +8944,10 @@ async function awardZombieBonus(reward){
   z.totalBonusEarned = Math.round(((z.totalBonusEarned||0) + reward.pts) * 10) / 10;
   z.score += reward.pts;
   toast(`${reward.icon} ${reward.label}! +${reward.pts}`, 3500);
-  zombieSpeak(curLang()==='en' ? `${reward.label} secured!` : `${reward.label} veiliggesteld!`);
+  // GEVRAAGD DOOR DE GEBRUIKER: altijd in het Engels, altijd deze 2 vaste zinnen — nooit het (vertaalde)
+  // item-label zelf uitspreken. 🎒 = de voorraadkist ("Supply crate"/"Voorraadkist") -> "Supply catched!",
+  // alle andere bonussen (serum, antidote, nipper-bonussen) -> "Item catched!".
+  zombieSpeak(reward.icon === '🎒' ? 'Supply catched!' : 'Item catched!');
   triggerZombieFlash('reward');
   while (z.bonusAccum >= 1 && z.lives < z.livesStart){
     z.bonusAccum -= 1; z.lives += 1;
@@ -8996,7 +9036,9 @@ function triggerZombieLastHeartbeat(){
     el.classList.add('zr-heartbeat-hit');
     setTimeout(() => el.classList.remove('zr-heartbeat-hit'), 500);
   }
-  zombieSpeak(curLang()==='en' ? "They're right behind you!" : 'Ze zitten vlak achter je!');
+  // GEVRAAGD DOOR DE GEBRUIKER (gemeld: "Ik hoor nog steeds: 'ze zitten...' -- dus toch nog de audio coach
+  // die er is"): geen gesproken "Ze zitten vlak achter je!" meer -- trilling + vignet-flits blijven de
+  // waarschuwing, zonder stem.
 }
 function updateZombieRadar(){
   const z = rsState && rsState.zombie;
@@ -9367,9 +9409,10 @@ function tickZombieState(){
     const elapsedMin = (Date.now() - rsState.startedAt - (rsState.pausedMs||0)) / 60000;
     if (elapsedMin >= z.targetMinutes){
       z.targetTimeReached = true;
-      zombieSpeak(curLang()==='en'
-        ? `Time goal of ${z.targetMinutes} minutes reached. Keep going or stop whenever you like.`
-        : `Tijdsdoel van ${z.targetMinutes} minuten bereikt. Loop verder of stop wanneer je wil.`);
+      // GEVRAAGD DOOR DE GEBRUIKER: geen gesproken melding meer -- een toast draagt dezelfde info stil over.
+      toast(curLang()==='en'
+        ? `⏱️ Time goal of ${z.targetMinutes} minutes reached. Keep going or stop whenever you like.`
+        : `⏱️ Tijdsdoel van ${z.targetMinutes} minuten bereikt. Loop verder of stop wanneer je wil.`, 4000);
     }
   }
   if (z.phase === 'interlude'){ updateZombieBanner(); return; } // aftellen gebeurt via setTimeout, hier enkel de banner verversen
@@ -9448,16 +9491,11 @@ async function handleZombieDeath(){
   z.finished = true; z.died = true;
   clearTimeout(z.interludeTimeoutId); clearTimeout(zombieCreepyTimeoutId); clearTimeout(zombieNarrationCutoffTimeoutId); clearTimeout(zombieAmbientTimeoutId);
   updateZombieBanner();
-  // Bug: dit riep voorheen playZombieOutcomeAudio('looser') aan zónder erop te wachten (die is zelf async —
-  // zombieRandomFile() moet nog een HEAD-request-discovery afronden) en startte meteen daarna, volledig
-  // ongesynchroniseerd, ook nog de "Ze hebben je te pakken..."-stem. Daardoor kon je de stemregel horen
-  // starten vóór (of dwars door) het eigenlijke Looser-geluidsbestand — precies het "2 dingen tegelijk
-  // door elkaar" dat zombieSpeak() elders juist probeert te vermijden. Nu eerst netjes awaiten, en de
-  // stemregel enkel nog als terugval gebruiken wanneer er geen Looser-bestand gevonden werd (zelfde aanpak
-  // als de winnaars-kant hierboven in finishRunSession(), die om dezelfde reden geen extra afsluitzin meer spreekt
-  // zodra er al een eigen winnaars-/verliezers-geluid is).
-  const hadLooserAudio = await playZombieOutcomeAudio('looser');
-  if (!hadLooserAudio) zombieSpeak(curLang()==='en' ? 'They got you...' : 'Ze hebben je te pakken...');
+  // Speelt het Zombie-Looser-bestand (indien aanwezig) netjes af, eerst awaiten (zombieRandomFile() moet nog
+  // een HEAD-request-discovery afronden) vóór de tombstone-info hieronder gezet wordt. GEVRAAGD DOOR DE
+  // GEBRUIKER: geen gesproken terugvalzin meer als er geen Looser-bestand is -- dan blijft dit moment gewoon
+  // stil (enkel de bonus-bevestiging in awardZombieBonus() spreekt nog, zie zombieSpeak() hierboven).
+  await playZombieOutcomeAudio('looser');
   const name = (appSettings.userName && appSettings.userName.trim()) || (curLang()==='en' ? 'Runner' : 'Loper');
   $('zrTombstoneName').textContent = name;
   $('zrTombstoneDate').textContent = new Date().toLocaleDateString(curLang()==='en' ? 'en-GB' : 'nl-BE', { day:'numeric', month:'long', year:'numeric' });
@@ -9544,14 +9582,27 @@ $('rcEvyReset5Std').addEventListener('click', async () => {
 $('rcEvyReset10Std').addEventListener('click', async () => {
   if (await customConfirm(curLang()==='en' ? 'Reset the 10K series to Week 1 · Session 1?' : 'De 10K-reeks terugzetten naar Week 1 · Sessie 1?')){ await resetEvyProgress(10); await renderEvyProgressStd(); }
 });
-document.querySelectorAll('.rcEvyMarkDoneStd').forEach(el => {
+// De EVY-tegels zijn nu <div role="button"> i.p.v. <button> (om de geneste pijltjes-knoppen mogelijk te maken)
+// -- toetsenbord-toegankelijkheid (Enter/spatie) blijft hierdoor wel gewoon werken.
+[$('rcEvyStart5Std'), $('rcEvyStart10Std')].forEach(el => {
+  el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); el.click(); } });
+});
+// GEVRAAGD DOOR DE GEBRUIKER: subtiele gestippelde pijltjes om een sessie terug/vooruit te bladeren, i.p.v.
+// het vroegere "✅ Volgende sessie"-tekstlinkje ("al gedaan markeren" met bevestigingspopup). Vooruitbladeren
+// doet nog steeds gewoon advanceEvyProgress(), maar dan zonder popup -- triviaal terug te draaien met de
+// andere pijl. retreatEvyProgress() staat hierboven bij advanceEvyProgress().
+document.querySelectorAll('.rcEvyPrevStd').forEach(el => {
   el.addEventListener('click', async (e) => {
-    e.stopPropagation(); // anders start het klikken hier ook meteen een nieuwe sessie (zit binnen dezelfde knop)
-    const dist = Number(el.dataset.dist);
-    if (await customConfirm((curLang()==='en' ? `Mark this session (${dist} km) as already done and advance to the next?` : `Deze sessie (${dist} km) markeren als al gedaan en doorschuiven naar de volgende?`))){
-      await advanceEvyProgress(dist);
-      await renderEvyProgressStd();
-    }
+    e.stopPropagation(); // anders start het klikken hier ook meteen een nieuwe sessie (zit binnen dezelfde tegel)
+    await retreatEvyProgress(Number(el.dataset.dist));
+    await renderEvyProgressStd();
+  });
+});
+document.querySelectorAll('.rcEvyNextStd').forEach(el => {
+  el.addEventListener('click', async (e) => {
+    e.stopPropagation();
+    await advanceEvyProgress(Number(el.dataset.dist));
+    await renderEvyProgressStd();
   });
 });
 async function renderEvyProgressStd(){
@@ -10338,7 +10389,8 @@ async function startRunSession(opts){
     raceKey, raceRef, raceDeltaSec:null,
     breadcrumbs:[],
     liveTrackSessionId:null, liveTrackIntervalId:null, liveTrackActive:false, // "Live locatie delen" (optie B) — zie toggleFirebaseLiveTracking hierboven
-    speedKalman: createSpeedKalman() // Kalman-toestand voor de getoonde snelheid op de looppagina, reset bij elke interval-grens
+    speedKalman: createSpeedKalman(), // Kalman-toestand voor de getoonde snelheid op de looppagina, reset bij elke interval-grens
+    lastPosForSpeed: null // eigen 2s-meetvenster voor de snelheid, zie handleRunGpsUpdate() -- los van rsState.lastPos (dat blijft élke ruwe fix bijhouden, voor afstand/route)
   };
   updateRsShareLocationBtnStyle(); // knop terug in rust-stand tonen — een vorige sessie kan hem actief/rood hebben achtergelaten
   // BUG (gemeld: "het knopje Hervat stond er al toen de sessie actief was en startte"): rsState.paused wordt
@@ -10397,6 +10449,16 @@ async function startRunSession(opts){
   else switchAudioForIntervalType(intervals[0].type);
   $('runMusicPlayer').addEventListener('ended', handleRunTrackEnded);
   rsState.tickId = setInterval(tickRunSession, 1000);
+  // GEVRAAGD DOOR DE GEBRUIKER (gemeld: rechte lijn dwars door de piste + bevroren/traag bijgetrokken snelheid
+  // net op de momenten dat het scherm dimde/uitging): dezelfde "Scherm actief houden"-instelling (Instellingen
+  // → Batterij, appSettings.keepScreenOnDuringNav) die dit al oploste voor fiets-/wandelnavigatie (startNav()
+  // hieronder) werd voorheen NOOIT aangevraagd bij een loopsessie — enkel de tekst van die instelling
+  // ("scopeAll") beloofde dit al voor alle modi. Nu ook hier aangevraagd, met dezelfde best-effort-aanpak
+  // (Wake Lock API + de stille-audio-achtergrondtruc) als bij navigeren.
+  navWakeLockToastShownThisSession = false;
+  acquireNavWakeLock();
+  startBgKeepAlive();
+  startRunStepDetection();
   if (navigator.geolocation){
     rsState.watchId = navigator.geolocation.watchPosition(handleRunGpsUpdate, () => {
       $('rsGpsWarning').style.display = 'block';
@@ -10431,6 +10493,20 @@ function smoothedSpeedKmh(breadcrumbs, windowSec){
   if (dtSec < 1) return 0; // te kort venster om betrouwbaar te zijn
   const distM = haversine(first.lat, first.lon, last.lat, last.lon);
   return (distM / dtSec) * 3.6;
+}
+// smoothedSpeedKmh() hierboven geeft in 2 heel verschillende gevallen dezelfde "0" terug: (a) écht een lage/
+// stilstaande snelheid, EN (b) gewoon nog te weinig data (bv. de allereerste GPS-fix van een sessie, of 2
+// fixes die nog geen 1s uit elkaar liggen) -- voor de meeste bestaande aanroepen (kleur van de kaartlijn, km-
+// sparkline, badge-tekst) maakt dat niets uit, "0" is daar toch een prima startwaarde. Voor reallyStill
+// hieronder is dat onderscheid wél cruciaal: zonder deze aparte check zou de allereerste fix van élke sessie
+// (nog maar 1 kruimel, dus geval (b)) foutief als "bevestigd stilstaand" behandeld worden, waardoor een
+// meteen beschikbare, prima chip-snelheid op de eerste fix ten onrechte naar 0 herschreven zou worden.
+function autoPauseWindowHasEnoughData(breadcrumbs, windowSec){
+  if (!breadcrumbs || breadcrumbs.length < 2) return false;
+  const now = breadcrumbs[breadcrumbs.length - 1].t;
+  const inWindow = breadcrumbs.filter(b => b.t >= now - windowSec*1000);
+  if (inWindow.length < 2) return false;
+  return (inWindow[inWindow.length - 1].t - inWindow[0].t) / 1000 >= 1;
 }
 function paceColorForSpeed(speedKmh){
   if (speedKmh < 6) return '#4ade80';   // wandeltempo: groen
@@ -10559,6 +10635,105 @@ function renderRunProgressRail(){
   const current = rail.querySelector('.rail-current');
   if (current) current.scrollIntoView({ block:'center' });
 }
+// GEVRAAGD DOOR DE GEBRUIKER (gemeld: "de groene lijnen gaan door de piste heen" op de momenten dat het scherm
+// dimt/uitgaat; snelheid blijft na het terug aanzetten van het scherm hangen op een oude waarde; snelheid
+// update ook tergend traag — "8 km/u lopen naar wandelen duurt zeker 10 seconden of meer"): een groot tijdsgat
+// tussen 2 opeenvolgende GPS-fixes ontstaat vooral doordat Android de pagina (en dus watchPosition) na een
+// tijdje volledig pauzeert zodra het scherm zelf vergrendelt — exact wat "screenOffGapNote" in Instellingen →
+// Batterij al beschrijft. Zo'n gat werd hier voorheen gewoon als 1 rechte lijn/afstand getekend (vandaar de
+// lijn dwars door de piste) én liet de Kalman-snelheid gewoon "bevroren" hangen op de laatste waarde van vóór
+// het gat (er kwam simpelweg geen nieuwe update binnen om ze bij te trekken). Een gat groter dan
+// RUN_GPS_GAP_BREAK_SEC wordt hieronder nu apart behandeld: geen kaartlijn/afstand over dat gat heen, en de
+// snelheids-Kalman + het eigen meetvenster starten vers op i.p.v. traag bij te trekken.
+const RUN_GPS_GAP_BREAK_SEC = 20;
+// GEVRAAGD DOOR DE GEBRUIKER (live getest: stilliggende telefoon toonde tot 23,6 km/u en tikte foutief
+// afstand bij -- de eerdere, uitsluitend op GPS-snelheid gebaseunde stilstand-drempel (AUTO_PAUSE_RUN_THRESHOLD_KMH,
+// bedoeld voor automatisch pauzeren, niet voor dit soort ruisfiltering) bleek niet streng genoeg voor hoe
+// ruizig een GPS-chip bij stilstand kan rapporteren): een eigen, hogere drempel specifiek voor deze
+// ruisfilter, LOS van AUTO_PAUSE_RUN_THRESHOLD_KMH (die blijft ongewijzigd voor het automatisch-pauzeren-
+// gedrag elders) omdat het hier om een ander doel gaat (is dit ruis of beweging?) met een andere, hogere
+// tolerantie nodig dan "is de gebruiker gestopt met lopen?".
+const RUN_STATIONARY_NOISE_THRESHOLD_KMH = 2.5;
+// Stapdetectie via de bewegingssensor (devicemotion) als extra, van GPS onafhankelijk signaal -- het idee van
+// de gebruiker zelf: "als er geen stappen zijn sta je stil". Een webpagina heeft geen toegang tot de echte
+// hardware-stappenteller van het besturingssysteem (privacy/beveiliging), maar met de ruwe versnellingsmeter
+// (DeviceMotionEvent) kan een eenvoudige piekdetectie wél betrouwbaar "is er beweging?" beantwoorden: een
+// stilliggende telefoon geeft nauwelijks pieken, een lopende telefoon (in de hand, broekzak, armband, ...)
+// een duidelijk, regelmatig patroon. Dit dient dus niet om een exacte pastaslengte-gebaseerde snelheid te
+// berekenen (looppas varieert te veel per tempo om betrouwbaar te zijn) maar puur als aan/uit-signaal om
+// GPS-snelheidsruis bij écht stilstaan eruit te filteren. Werkt enkel als het toestel/de browser dit
+// ondersteunt én toestemming geeft (vooral iOS 13+ vereist een expliciete requestPermission()-aanroep, na een
+// gebruikersactie -- hier de "start sessie"-klik); is dat niet het geval, dan valt reallyStill hieronder
+// gewoon terug op de GPS-snelheidsdrempel alleen.
+let rsStepTimestamps = [];
+let rsMotionBaseline = null;
+let rsMotionListenerActive = false;
+// BELANGRIJK, in 2 stappen ontdekt: (1) window.addEventListener('devicemotion', ...) lukt altijd zonder fout,
+// ook op toestellen/browsers die dat event NOOIT écht afvuren (geen bewegingssensor, of een browser/policy die
+// 'm stilzwijgend nooit aanroept) -- rsMotionListenerActive alleen zegt dus enkel "de listener staat
+// geregistreerd", niet "de sensor levert echt data". (2) Zelfs "er kwam ooit minstens 1 event binnen" is NIET
+// genoeg bewijs: sommige browsers/toestellen vuren het event maar een handvol keer af en stoppen daarna
+// stilzwijgend (bv. door agressieve batterijbesparing, of gewoon een eigenaardigheid van de headless-
+// testomgeving hier, die precies 1x vuurt en dan nooit meer). Zonder dit apart bij te houden zou
+// recentStepsDetected() na zo'n stop voorgoed "geen stappen" (false, niet null) blijven geven -- en dan zou
+// reallyStill de rest van de sessie permanent "stilstand" blijven denken, wat erger zou zijn dan de
+// oorspronkelijke ruis-bug: snelheid/afstand zouden dan NOOIT meer bijwerken, zelfs bij een prima GPS-signaal.
+// rsLastMotionEventAt houdt daarom het tijdstip van het LAATST ontvangen event bij (ongeacht of het een stap
+// was) -- enkel als dat recent genoeg is (RUN_STEP_SENSOR_FRESH_MS), telt de sensor als "levert nu actief
+// data" en mag het stappensignaal het van de GPS-drempel overnemen.
+let rsLastMotionEventAt = null;
+const RUN_STEP_WINDOW_SEC = 4;          // "recent" genoeg om als "nu in beweging" te tellen
+const RUN_STEP_MIN_INTERVAL_MS = 250;   // verwerpt te snel opeenvolgende "dubbele" pieken (niemand doet >4 stappen/sec)
+const RUN_STEP_PEAK_THRESHOLD = 1.8;    // m/s² boven het lopend gemiddelde -- typische voetstap-piek
+const RUN_STEP_SENSOR_FRESH_MS = 3000;  // langer dan dit geen nieuw event gezien -> sensor beschouwen als "gestopt"/onbetrouwbaar
+function handleRunDeviceMotion(e){
+  rsLastMotionEventAt = Date.now();
+  const a = (e.acceleration && e.acceleration.x != null) ? e.acceleration : e.accelerationIncludingGravity;
+  if (!a || a.x == null) return;
+  const mag = Math.sqrt((a.x||0)**2 + (a.y||0)**2 + (a.z||0)**2);
+  if (rsMotionBaseline == null){ rsMotionBaseline = mag; return; }
+  const now = Date.now();
+  const last = rsStepTimestamps[rsStepTimestamps.length - 1];
+  if (mag - rsMotionBaseline > RUN_STEP_PEAK_THRESHOLD && (!last || now - last > RUN_STEP_MIN_INTERVAL_MS)){
+    rsStepTimestamps.push(now);
+    const cutoff = now - RUN_STEP_WINDOW_SEC * 4000;
+    while (rsStepTimestamps.length && rsStepTimestamps[0] < cutoff) rsStepTimestamps.shift();
+  }
+  // Traag lopend gemiddelde ná de piekcheck bijwerken (niet ervoor) -- anders zou een echte piek zelf ook al
+  // meteen (deels) in de eigen baseline verrekend worden, waardoor de piek zichzelf verdoezelt.
+  rsMotionBaseline += (mag - rsMotionBaseline) * 0.1;
+}
+async function startRunStepDetection(){
+  rsStepTimestamps = [];
+  rsMotionBaseline = null;
+  rsLastMotionEventAt = null;
+  if (typeof DeviceMotionEvent === 'undefined') return;
+  try{
+    if (typeof DeviceMotionEvent.requestPermission === 'function'){
+      const perm = await DeviceMotionEvent.requestPermission();
+      if (perm !== 'granted') return;
+    }
+    window.addEventListener('devicemotion', handleRunDeviceMotion);
+    rsMotionListenerActive = true;
+  } catch(e){ /* geen bewegingssensor beschikbaar of geweigerd -- reallyStill valt dan terug op GPS alleen */ }
+}
+function stopRunStepDetection(){
+  if (rsMotionListenerActive) window.removeEventListener('devicemotion', handleRunDeviceMotion);
+  rsMotionListenerActive = false;
+  rsStepTimestamps = [];
+  rsMotionBaseline = null;
+  rsLastMotionEventAt = null;
+}
+// null = geen bruikbare/actuele sensor-info (toestemming geweigerd, niet ondersteund, óf de sensor heeft de
+// laatste RUN_STEP_SENSOR_FRESH_MS niets meer afgevuurd -- beschouwd als "gestopt") -- reallyStill valt dan
+// terug op de GPS-drempel; true/false = de sensor levert nu aantoonbaar actief data en heeft wel/geen stappen
+// gezien in het venster.
+function recentStepsDetected(windowSec){
+  if (!rsMotionListenerActive || rsLastMotionEventAt == null) return null;
+  if (Date.now() - rsLastMotionEventAt > RUN_STEP_SENSOR_FRESH_MS) return null;
+  const cutoff = Date.now() - windowSec * 1000;
+  return rsStepTimestamps.some(t => t >= cutoff);
+}
 function handleRunGpsUpdate(pos){
   $('rsGpsWarning').style.display = 'none';
   // Eigen, aparte kruimelbuffer voor het automatisch-pauzeren-op-stilstand-onderzoek (checkRunSessionAutoPause) —
@@ -10569,25 +10744,43 @@ function handleRunGpsUpdate(pos){
   rsAutoPauseBreadcrumbs.push({ lat:pos.coords.latitude, lon:pos.coords.longitude, t:Date.now() });
   if (rsAutoPauseBreadcrumbs.length > 12) rsAutoPauseBreadcrumbs.shift();
   if (rsState.paused){ rsState.lastPos = pos; return; }
+  const gapSec = rsState.lastPos ? (pos.timestamp - rsState.lastPos.timestamp) / 1000 : 0;
+  const hadBigGap = gapSec > RUN_GPS_GAP_BREAK_SEC;
+  if (hadBigGap){ rsState.speedKalman.reset(); rsState.lastPosForSpeed = null; }
   rsState.breadcrumbs.push({ lat:pos.coords.latitude, lon:pos.coords.longitude, ele:pos.coords.altitude, t:Date.now() });
+  // GEVRAAGD DOOR DE GEBRUIKER (live getest, gsm plat op tafel: "snelheid staat op 8.8, dan 6.6" + "kijk de
+  // beweging, groene lijn en snelheid" + de gesproken coach zei zelfs "nice rhythm, keep it up" terwijl er
+  // niets bewoog -- na bijna 5 min stilstand had de app al 0,23 km "afstand"): puur GPS-ruis (soms ook de
+  // chip-eigen Doppler-snelheid zelf) kan bij stilstand een paar meter per fix afwijken -- te weinig om de
+  // 30m/2s-jitterfilter hierboven te raken, maar opgeteld over honderden fixes toch een aardige "afstand", en
+  // per fix soms een paar km/u "snelheid". Dezelfde, allang bestaande stilstand-detectie als bij automatisch
+  // pauzeren (een over 6s gladgestreken snelheid onder AUTO_PAUSE_RUN_THRESHOLD_KMH) wordt hier nu OOK gebruikt
+  // om die ruis eruit te filteren -- los van of de instelling "Automatisch pauzeren" zelf aan staat, want dit
+  // is een datakwaliteitscheck (is dit ruis of beweging?), geen gedragskeuze (moet de sessie pauzeren?). Sinds
+  // dit voor sommige toestellen/situaties nog niet streng genoeg bleek (live gemeld: tot 23,6 km/u getoond bij
+  // een écht stilliggende telefoon), telt de stapdetectie (zie hierboven) nu als sterkere, primaire check
+  // wanneer beschikbaar: geen recente stappen = zeker stilstaan, ook al oogt de GPS-snelheid zelf niet extreem
+  // laag; wél recente stappen = zeker in beweging, ook al zakt de GPS-gladgestreken snelheid even kortstondig
+  // onder de drempel (bv. bij een bocht of een korte signaaldip). Geen sensor-info beschikbaar → gewoon terug
+  // op de (verhoogde) GPS-snelheidsdrempel alleen.
+  // Enkel als het venster écht genoeg data heeft (zie autoPauseWindowHasEnoughData hierboven) mag "lage
+  // gladgestreken snelheid" als bevestigde stilstand gelden -- anders (bv. de allereerste fix van de sessie)
+  // is er gewoon nog geen uitspraak mogelijk, en moet reallyStill NIET stilstand aannemen (zie r4/r5 hieronder:
+  // een meteen beschikbare chip-snelheid mag niet naar 0 herschreven worden puur omdat het venster nog leeg is).
+  const gpsLooksStill = autoPauseWindowHasEnoughData(rsAutoPauseBreadcrumbs, 6)
+    && smoothedSpeedKmh(rsAutoPauseBreadcrumbs, 6) < RUN_STATIONARY_NOISE_THRESHOLD_KMH;
+  const stepsSeen = recentStepsDetected(RUN_STEP_WINDOW_SEC);
+  const reallyStill = stepsSeen === null ? gpsLooksStill : !stepsSeen;
   let speedKmh = 0;
   if (rsState.lastPos && pos.coords.accuracy < 30){
     const d = haversine(rsState.lastPos.coords.latitude, rsState.lastPos.coords.longitude, pos.coords.latitude, pos.coords.longitude);
     // GPS-jitter filteren: een "sprong" van meer dan 30m in minder dan 2s is vrijwel zeker ruis, geen echte beweging.
     const dt = (pos.timestamp - rsState.lastPos.timestamp) / 1000;
-    if (!(d > 30 && dt < 2)){
+    // Groot tijdsgat (zie RUN_GPS_GAP_BREAK_SEC hierboven): niet meetellen als 1 rechte sprong -- dat gaf zowel
+    // een opgeblazen afstand als de rechte lijn dwars door de piste. reallyStill (zie hierboven): kleinere
+    // stilstand-ruis mag evenmin als afstand/kaartlijn meetellen.
+    if (!(d > 30 && dt < 2) && !hadBigGap && !reallyStill){
       rsState.distanceM += d;
-      const rawTickKmh = dt > 0 ? (d / dt) * 3.6 : 0;
-      // Fysiek onmogelijke sprong (GPS-glitch) negeren i.p.v. tonen -- hardlopen gaat realistisch nooit >25 km/u.
-      const plausibleKmh = rawTickKmh <= 25 ? rawTickKmh : null;
-      // Kalman-filter (zie createSpeedKalman hierboven) op het GETOONDE cijfer i.p.v. elke ruwe tick apart
-      // tonen -- dat laatste was precies waarom de snelheid "alle kanten op sprong". Vervangt de vroegere
-      // adaptieve EMA met 2 vaste alpha-drempels: de filter dempt nu automatisch sterker bij een zwakkere
-      // GPS-fix (afgeleid uit pos.coords.accuracy) i.p.v. enkel op basis van hoe groot het verschil met de
-      // vorige schatting toevallig was. Reset bij elke interval-grens (zie 'rsState.speedKalman.reset()'
-      // hieronder) zodat het display niet blijft napijlen op het tempo van het vorige blok.
-      rsState.speedKalman.update(plausibleKmh, pos.coords.accuracy, pos.timestamp, false);
-      speedKmh = rsState.speedKalman.est != null ? rsState.speedKalman.est : 0;
       if (rsMap){
         const colorSpeed = smoothedSpeedKmh(rsState.breadcrumbs, 4);
         L.polyline(
@@ -10597,6 +10790,36 @@ function handleRunGpsUpdate(pos){
       }
     }
   }
+  // Snelheid: dezelfde, robuustere aanpak als bij fiets/wandel-navigatie (zie currentSpeedKmh() hierboven) i.p.v.
+  // de vroegere methode die hier apart stond en zonder goede reden trager was: die liet élke ruwe 1s-tick apart
+  // differentiëren (i.p.v. minstens een 2s-venster) én gebruikte nooit de nauwkeurigere chip-eigen Doppler-
+  // snelheid (pos.coords.speed), enkel zelf-berekende snelheid uit 2 posities. Bij zo'n korte tik-tot-tik-
+  // afstand (normale hardloop-tempowissel) werd de gemeten ruis in de Kalman-filter torenhoog t.o.v. de
+  // toegelaten variatie per seconde, dus duurde het bijtrekken van de getoonde snelheid soms 10+ seconden.
+  const speedAccuracyOk = pos.coords.accuracy == null || pos.coords.accuracy <= 12;
+  let rawSpeedKmh = null, isNativeSpeed = false;
+  if (speedAccuracyOk && pos.coords.speed != null && pos.coords.speed >= 0){
+    rawSpeedKmh = pos.coords.speed * 3.6;
+    isNativeSpeed = true;
+  } else if (speedAccuracyOk){
+    if (!rsState.lastPosForSpeed) rsState.lastPosForSpeed = { lat: pos.coords.latitude, lon: pos.coords.longitude, t: pos.timestamp };
+    else {
+      const dtw = (pos.timestamp - rsState.lastPosForSpeed.t) / 1000;
+      if (dtw >= 2){
+        const dw = haversine(rsState.lastPosForSpeed.lat, rsState.lastPosForSpeed.lon, pos.coords.latitude, pos.coords.longitude);
+        rawSpeedKmh = (dw / dtw) * 3.6;
+        rsState.lastPosForSpeed = { lat: pos.coords.latitude, lon: pos.coords.longitude, t: pos.timestamp };
+      }
+    }
+  }
+  // Fysiek onmogelijke sprong (GPS-glitch) negeren i.p.v. tonen -- hardlopen gaat realistisch nooit >25 km/u.
+  if (rawSpeedKmh != null && rawSpeedKmh > 25) rawSpeedKmh = null;
+  // reallyStill (zie hierboven) overschrijft een eventuele ruizige chip-/venster-meting: forceer een echte 0-
+  // meting i.p.v. ruis te tonen, en behandel die als "zeer betrouwbaar" (isNativeSpeed=true) zodat het display
+  // vlot naar 0.0 zakt i.p.v. er langzaam naartoe te blijven kruipen.
+  if (reallyStill){ rawSpeedKmh = 0; isNativeSpeed = true; }
+  rsState.speedKalman.update(rawSpeedKmh, pos.coords.accuracy, pos.timestamp, isNativeSpeed);
+  speedKmh = rsState.speedKalman.est != null ? rsState.speedKalman.est : 0;
   if (rsMap){
     if (rsMarker) rsMarker.setLatLng([pos.coords.latitude, pos.coords.longitude]);
     else rsMarker = L.circleMarker([pos.coords.latitude, pos.coords.longitude], { radius:7, color:'#fff', weight:2, fillColor:'#3b82f6', fillOpacity:1 }).addTo(rsMap);
@@ -10711,6 +10934,7 @@ function tickRunSession(){
   if (rsState.remainingSec <= 0){
     rsState.idx += 1;
     rsState.speedKalman.reset(); // interval-grens: niet laten napijlen op het tempo van het vorige blok
+    rsState.lastPosForSpeed = null; // idem voor het eigen 2s-meetvenster hieronder in handleRunGpsUpdate()
     if (rsState.idx >= rsState.intervals.length){ finishRunSession(true); return; }
     rsState.remainingSec = rsState.intervals[rsState.idx].sec;
     const type = rsState.intervals[rsState.idx].type;
@@ -11091,6 +11315,9 @@ async function finishRunSession(completed){
   // nooit stiekem PUT-verzoeken blijven versturen — zelfde opruim-patroon als de andere per-sessie timers hier.
   stopFirebaseLiveTracking();
   if (rsState.watchId != null) navigator.geolocation.clearWatch(rsState.watchId);
+  releaseNavWakeLock();
+  stopBgKeepAlive();
+  stopRunStepDetection();
   if (rsMap){ try{ rsMap.remove(); }catch(e){} rsMap = null; rsMarker = null; }
   const player = $('runMusicPlayer');
   if (!player.paused) player.pause();
@@ -11806,6 +12033,7 @@ window.addEventListener('message', (ev) => {
     case 'setpodcaststart': runPodcastIdx = data.startIndex || 0; break;
     case 'resetevy':     resetEvyProgress(data.evyDist).then(sendRunCoachDataToFrame); break;
     case 'advanceevy':   advanceEvyProgress(data.evyDist).then(sendRunCoachDataToFrame); break;
+    case 'retreatevy':   retreatEvyProgress(data.evyDist).then(sendRunCoachDataToFrame); break;
     case 'setplan':       setActivePlanId(data.planId).then(sendRunCoachDataToFrame); break;
     case 'setweek':        jumpToRunWeek(data.week).then(sendRunCoachDataToFrame); break;
     case 'resumesession':  resumeRunSessionView(); break;
@@ -13520,20 +13748,26 @@ function buildGarminRunCoachHtml(){
           <h2 class="text-base font-black text-white leading-tight">Jouw 10-weken audioprogramma</h2>
           <p class="text-[11px] text-white/70 mt-1">Tik je afstand aan om meteen je volgende sessie te starten — de app onthoudt zelf bij welke week/sessie je zit.</p>
         </div>
-        <button id="rcEvyStart5" class="w-full border-2 border-amber-500/40 bg-gradient-to-br from-emerald-800/60 to-slate-900 rounded-3xl p-6 text-center mb-3">
+        <!-- GEVRAAGD DOOR DE GEBRUIKER: gestippelde pijltjes i.p.v. het oude "✅ Volgende sessie"-tekstlinkje,
+             "in Garmin-stijl" (dus met Tailwind-classes, passend bij de rest van deze look). Nu een <div
+             role="button"> i.p.v. <button> zodat de pijltjes als échte, geneste <button>-elementen erin
+             kunnen. -->
+        <div id="rcEvyStart5" role="button" tabindex="0" class="relative w-full border-2 border-amber-500/40 bg-gradient-to-br from-emerald-800/60 to-slate-900 rounded-3xl p-6 text-center mb-3 cursor-pointer">
           <div class="text-3xl mb-1.5">🏁</div>
           <div class="text-xl font-black text-white">5 KM</div>
           <div class="text-[11px] text-emerald-300 mt-1">Ideaal om mee te starten</div>
           <div id="rcEvyProg5" class="text-xs text-amber-400 font-bold mt-2.5">Week – · Sessie –</div>
-          <div id="rcEvyDone5" class="rcEvyMarkDone text-[10px] text-slate-400 underline mt-2" data-dist="5">✅ Volgende sessie</div>
-        </button>
-        <button id="rcEvyStart10" class="w-full border-2 border-amber-500/40 bg-gradient-to-br from-rose-900/60 to-slate-900 rounded-3xl p-6 text-center mb-2">
+          <button class="rcEvyPrev absolute left-1 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center text-slate-500/60" data-dist="5" aria-label="Vorige sessie"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-dasharray="2.5,3" stroke-linecap="round"><polyline points="15,4 7,12 15,20"/></svg></button>
+          <button class="rcEvyNext absolute right-1 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center text-slate-500/60" data-dist="5" aria-label="Volgende sessie"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-dasharray="2.5,3" stroke-linecap="round"><polyline points="9,4 17,12 9,20"/></svg></button>
+        </div>
+        <div id="rcEvyStart10" role="button" tabindex="0" class="relative w-full border-2 border-amber-500/40 bg-gradient-to-br from-rose-900/60 to-slate-900 rounded-3xl p-6 text-center mb-2 cursor-pointer">
           <div class="text-3xl mb-1.5">🔥</div>
           <div class="text-xl font-black text-white">10 KM</div>
           <div class="text-[11px] text-rose-300 mt-1">Voor als je verder wil bouwen</div>
           <div id="rcEvyProg10" class="text-xs text-amber-400 font-bold mt-2.5">Week – · Sessie –</div>
-          <div id="rcEvyDone10" class="rcEvyMarkDone text-[10px] text-slate-400 underline mt-2" data-dist="10">✅ Volgende sessie</div>
-        </button>
+          <button class="rcEvyPrev absolute left-1 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center text-slate-500/60" data-dist="10" aria-label="Vorige sessie"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-dasharray="2.5,3" stroke-linecap="round"><polyline points="15,4 7,12 15,20"/></svg></button>
+          <button class="rcEvyNext absolute right-1 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center text-slate-500/60" data-dist="10" aria-label="Volgende sessie"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-dasharray="2.5,3" stroke-linecap="round"><polyline points="9,4 17,12 9,20"/></svg></button>
+        </div>
         <div class="flex justify-center gap-5 mb-3.5">
           <button id="rcEvyReset5" class="text-[10px] text-slate-500 underline">🔄 5K herstarten</button>
           <button id="rcEvyReset10" class="text-[10px] text-slate-500 underline">🔄 10K herstarten</button>
@@ -14019,19 +14253,30 @@ ${GARMIN_MENU_BTN_JS}
     document.getElementById('rcEvyStart10').addEventListener('click', () => {
       parent.postMessage({ source:'garminRunCoach', action:'starttraining', mode:'evy', evyDist:10 }, '*');
     });
+    // De EVY-tegels zijn nu <div role="button"> i.p.v. <button> (om de geneste pijltjes-knoppen mogelijk te
+    // maken) -- toetsenbord-toegankelijkheid (Enter/spatie) blijft hierdoor wel gewoon werken.
+    [document.getElementById('rcEvyStart5'), document.getElementById('rcEvyStart10')].forEach(el => {
+      el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); el.click(); } });
+    });
     document.getElementById('rcEvyReset5').addEventListener('click', async () => {
       if (await rcConfirm('De 5K-reeks terugzetten naar Week 1 · Sessie 1?')) parent.postMessage({ source:'garminRunCoach', action:'resetevy', evyDist:5 }, '*');
     });
     document.getElementById('rcEvyReset10').addEventListener('click', async () => {
       if (await rcConfirm('De 10K-reeks terugzetten naar Week 1 · Sessie 1?')) parent.postMessage({ source:'garminRunCoach', action:'resetevy', evyDist:10 }, '*');
     });
-    document.querySelectorAll('.rcEvyMarkDone').forEach(el => {
-      el.addEventListener('click', async (e) => {
-        e.stopPropagation(); // anders start het klikken hier ook meteen een nieuwe sessie (zit binnen dezelfde knop)
-        const dist = Number(el.dataset.dist);
-        if (await rcConfirm('Deze sessie (' + dist + ' km) markeren als al gedaan en doorschuiven naar de volgende?')){
-          parent.postMessage({ source:'garminRunCoach', action:'advanceevy', evyDist:dist }, '*');
-        }
+    // GEVRAAGD DOOR DE GEBRUIKER: gestippelde pijltjes i.p.v. het "✅ Volgende sessie"-tekstlinkje -- zelfde
+    // onderliggende acties (advanceevy/retreatevy via postMessage naar de parent), maar zonder bevestigingspopup
+    // (triviaal terug te draaien met de andere pijl).
+    document.querySelectorAll('.rcEvyPrev').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.stopPropagation(); // anders start het klikken hier ook meteen een nieuwe sessie (zit binnen dezelfde tegel)
+        parent.postMessage({ source:'garminRunCoach', action:'retreatevy', evyDist:Number(el.dataset.dist) }, '*');
+      });
+    });
+    document.querySelectorAll('.rcEvyNext').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        parent.postMessage({ source:'garminRunCoach', action:'advanceevy', evyDist:Number(el.dataset.dist) }, '*');
       });
     });
 
@@ -18536,11 +18781,37 @@ async function saveLoopGenResult(i){
 // ---------- Scherm-uit / achtergrond-metingen: best-effort binnen wat een PWA kan (geen echte Android
 // Foreground Service beschikbaar zoals een native app die zou hebben) ----------
 let navWakeLock = null;
+// GEVRAAGD DOOR DE GEBRUIKER ("Kan ik dat testen zonder echt te lopen?" / "na enkele seconden is het scherm
+// uit" ondanks het aangevinkte vinkje): tot nu toe was er geen enkele zichtbare bevestiging of de Wake Lock
+// écht lukte -- de gebruiker kon dus alleen testen door daadwerkelijk te lopen en te wachten of het scherm
+// uitging. Een korte, eenmalige melding per sessie (niet bij elke stille visibilitychange-herbevestiging,
+// anders spamt dat) laat nu direct zien, ook gewoon zittend aan tafel: lukte het aanvragen, of niet (en
+// eventueel waarom niet)? Zie ook de uitleg in Instellingen → Batterij ("screenOffGapNote" hierboven) over
+// waarom dit soms alsnog niet volstaat: sommige toestellen/merken (bv. agressieve batterijbesparing van
+// Xiaomi/Samsung/OnePlus e.d.) doden een achtergrond-Wake-Lock alsnog, ongeacht wat de website aanvraagt --
+// dan helpt enkel batterij-optimalisatie voor de browser zelf UITzetten in de Android-instellingen.
+let navWakeLockToastShownThisSession = false;
 async function acquireNavWakeLock(){
   if (!appSettings.keepScreenOnDuringNav) return;
   try{
-    if ('wakeLock' in navigator) navWakeLock = await navigator.wakeLock.request('screen');
-  }catch(e){ /* niet ondersteund, of pagina net niet zichtbaar -- gewoon negeren, de rest blijft werken */ }
+    if ('wakeLock' in navigator){
+      navWakeLock = await navigator.wakeLock.request('screen');
+      if (!navWakeLockToastShownThisSession){
+        navWakeLockToastShownThisSession = true;
+        toast(curLang()==='en' ? '🔒📱 Screen will stay on' : '🔒📱 Scherm blijft actief', 2500);
+      }
+    } else if (!navWakeLockToastShownThisSession){
+      navWakeLockToastShownThisSession = true;
+      toast(curLang()==='en' ? "⚠️ This browser doesn't support keeping the screen on — see Settings → Battery" : "⚠️ Deze browser ondersteunt 'scherm actief houden' niet — zie Instellingen → Batterij", 4000);
+    }
+  }catch(e){
+    // niet ondersteund, of pagina net niet zichtbaar -- de rest blijft gewoon werken. Meld dit wel 1x zodat
+    // de gebruiker het kan zien zonder daadwerkelijk te moeten lopen en te wachten tot het scherm uitgaat.
+    if (!navWakeLockToastShownThisSession){
+      navWakeLockToastShownThisSession = true;
+      toast(curLang()==='en' ? "⚠️ Couldn't keep the screen on on this device — see Settings → Battery" : "⚠️ 'Scherm actief houden' lukte niet op dit toestel — zie Instellingen → Batterij", 4000);
+    }
+  }
 }
 function releaseNavWakeLock(){
   if (navWakeLock){ try{ navWakeLock.release(); }catch(e){} navWakeLock = null; }
@@ -18548,7 +18819,7 @@ function releaseNavWakeLock(){
 // Een Wake Lock wordt door de browser automatisch losgelaten zodra het tabblad niet meer zichtbaar is (bv.
 // even een andere app geopend) -- bij terugkeer moet die dus opnieuw aangevraagd worden.
 document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible' && navActive) acquireNavWakeLock();
+  if (document.visibilityState === 'visible' && (navActive || rsState)) acquireNavWakeLock();
 });
 
 // Bekende, veelgebruikte truc om te helpen voorkomen dat browsers de pagina (en dus de GPS-metingen) te
@@ -18593,6 +18864,7 @@ function startNav(){
   navTargetIndex = 0;
   lastPosForSpeed = null;
   mainSpeedKalman.reset();
+  navWakeLockToastShownThisSession = false;
   acquireNavWakeLock();
   startBgKeepAlive();
   lastArrowRotation = 0;
@@ -21470,9 +21742,40 @@ $('navRestPointsBtn').addEventListener('click', async () => {
       markNavMapUserPan();
       map.setView([point.lat, point.lon], 18, { animate:true });
       toast(`${point.emoji} ${point.name}`, 2500);
+      // GEVRAAGD DOOR DE GEBRUIKER: "Er moet popup of zo komen met de vraag 'Punt naam toevoegen aan
+      // wandeling?'" -- en later verduidelijkt: "nieuw tussenpunt he.. Net zoals je café zou zoeken. Daar
+      // krijg je ook de optie om dat toe te voegen." Zie addRestPointToRoute() hieronder: hergebruikt exact
+      // hetzelfde tussenpunt-invoegmechanisme als een handmatig omwegpunt (insertManualDetourPin()) --
+      // dezelfde, al geteste manier waarop de app een nieuw punt mid-route zet en herberekent.
+      customConfirm(curLang()==='en' ? `Add "${point.name}" to your walk?` : `Punt "${point.name}" toevoegen aan wandeling?`,
+        { okText: curLang()==='en' ? 'Add' : 'Toevoegen' }).then(ok => { if (ok) addRestPointToRoute(point); });
     });
   });
 });
+// Voegt een rustpunt toe als nieuw tussenpunt in de lopende route -- zelfde onderliggende mechanisme als een
+// handmatig geplaatst omwegpunt (insertManualDetourPin() hierboven): tijdens actieve navigatie wordt de
+// omweg-pauze ingeschakeld (het bekende "tik op Hervat wanneer je klaar bent"-patroon; net als bij een
+// omwegpunt raakt de kaart dan toch al niet meer gedraaid, dus is die pauze geen extra stap voor niets),
+// het punt komt op de meest logische plek in de resterende route te staan, en de route wordt meteen
+// herberekend vanaf je huidige, live positie.
+async function addRestPointToRoute(point){
+  if (!canEditRouteNow()) return;
+  if (navActive && !navPausedForDetour) pauseNavForDetour();
+  const stopPoint = { id:'restpoint-' + Math.random().toString(36).slice(2,9), ref: point.emoji || '🪑', poiName: point.name, lat: point.lat, lon: point.lon, isVia:true };
+  let insertAt = navTargetIndex, bestD = Infinity;
+  for (let i = navTargetIndex; i < route.length; i++){
+    const d = haversine(point.lat, point.lon, route[i].lat, route[i].lon);
+    if (d < bestD){ bestD = d; insertAt = i; }
+  }
+  route.splice(insertAt, 0, stopPoint);
+  addDraggableRoutePointMarker(stopPoint);
+  renderRoute();
+  updateProgressUI();
+  toast(curLang()==='en' ? '🔄 Recalculating via your new point…' : '🔄 Herberekenen via je nieuwe punt…', 2500);
+  await drawRoutePath(true);
+  applyRouteColoring();
+  toast(curLang()==='en' ? `✅ "${point.name}" added — tap "Resume" when ready.` : `✅ "${point.name}" toegevoegd — tik op "Hervat" wanneer je klaar bent.`, 4000);
+}
 $('navNatureSpotterBtn').addEventListener('click', async () => {
   const resultEl = $('navNatureSpotterResult');
   openModal('navNatureSpotterModal');
