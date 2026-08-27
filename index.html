@@ -7914,6 +7914,11 @@ const DEV_NOTES_CONTENT = {
       <p><b>Opgeloste bug — stilstand-ruis, in 2 stappen (gemeld: eerst "snelheid staat nu op 8.8, dan 6.6 enz" bij een stilliggende telefoon, daarna nog erger: "Ik zit stil en loop 23.6 km/u. Onbruikbaar dus..."):</b> zelfs met bovenstaande fixes bleek een écht stilliggende telefoon soms nog altijd een ruizige, niet-nul chip-snelheid te tonen én afstand op te bouwen — GPS-chips kunnen bij (bijna) stilstand een "Doppler-snelheid" van een paar km/u blijven rapporteren, puur meetruis. Aanpak 1: een eigen, striktere stilstand-drempel (los van de bestaande 1,2 km/u die voor automatisch-pauzeren gebruikt wordt) op de over 6s gladgestreken GPS-snelheid, die een gemeten snelheid/afstand naar 0 herschrijft zodra die drempel niet gehaald wordt. Aanpak 2, op voorstel van de gebruiker zelf ("als er geen stappen zijn sta je stil... kan je op basis van dat en gps de snelheid niet berekenen?"): wanneer het toestel/de browser het toelaat, gebruikt de looppagina er nu óók de bewegingssensor (<code>DeviceMotionEvent</code>) bij als extra, van GPS onafhankelijk signaal — een eenvoudige piekdetectie op de ruwe versnellingsmeter herkent voetstappen. Geen stappen gezien in de laatste seconden → stilstand, ook al claimt de GPS-chip een snelheid; wél stappen gezien → beweging, ook al zakt de gladgestreken GPS-snelheid even kortstondig. Een website heeft geen toegang tot de échte hardware-stappenteller van het besturingssysteem (dat is met opzet afgeschermd, om privacy-/beveiligingsredenen) — dit is dus een eigen, benaderende piekdetectie, geen exacte staplengte-berekening (looppas varieert te veel per tempo om daar zelf een betrouwbare snelheid uit af te leiden); ze dient uitsluitend als aan/uit-signaal, niet om de getoonde snelheid zelf te berekenen. Zodra de sensor minstens 1x actief data levert, wint dat stappensignaal het van de GPS-drempel; stopt de sensor daarna weer met leveren (of was ze nooit beschikbaar/toegestaan), dan valt alles automatisch terug op die GPS-drempel — dat wordt continu zelf gedetecteerd, dus dit kan nooit een sessie per ongeluk permanent op "stilstand" laten vastlopen. Een écht betrouwbaardere, hardware-eigen stappenteller (en achtergrond-tracking zonder de beperkingen van een browser) is enkel haalbaar via een volledige omzetting naar een native/hybride Android-app (bv. via CapacitorJS) — technisch goed doenbaar, maar een apart, groter project buiten de scope van dit ene bestand.</p>
     </section>
     <section>
+      <h3>🔥 Calorieën</h3>
+      <p>Een ruwe schatting via MET-waarde × gewicht × tijd (of, met een verbonden hartslagband én ingevuld gewicht/leeftijd/geslacht, de nauwkeurigere hartslag-gebaseerde formule) — zie Instellingen → Persoonlijk voor je gewicht. Zonder ingevuld gewicht kan de app geen enkele schatting maken, dus dan wordt er bewust niets getoond in plaats van een verzonnen cijfer.</p>
+      <p><b>Opgeloste bug (gemeld: "in de stats van elke run zie ik geen calorieën... ik dacht dat die er bij fietsen wel waren"):</b> zonder ingevuld gewicht toonden de fiets-/wandel-statistieken al langer een duidelijke tekst ("Vul je gewicht in bij Instellingen") — de loop-statistieken deden dat niet: zowel het samenvattend kaartje (Standaard- én Garmin/Tailwind-stijl) als elke individuele run in de geschiedenis toonden gewoon een kaal "–" of een op zichzelf staand ⚖️-icoontje, zonder enige uitleg waaróm er niets stond. Dat kon makkelijk overkomen als "werkt niet" i.p.v. "je hebt nog geen gewicht ingevuld". Het samenvattend kaartje heeft nu een duidelijke title-tooltip (bij hover) én is aantikbaar — een tik toont dezelfde uitleg als toast, net als bij fietsen/wandelen; elke individuele run in de geschiedenis toont voortaan "gewicht invullen ⚖️" i.p.v. een kale "–". Bij de Garmin/Tailwind-stijl (die als los <code>&lt;iframe&gt;</code> draait, zie 🧱 Architectuur hieronder, en dus geen eigen taallogica heeft) wordt die tekst al voorvertaald door de hoofdpagina meegestuurd via <code>postMessage</code>, net als de andere statistiek-velden.</p>
+    </section>
+    <section>
       <h3>🧱 Architectuur</h3>
       <p>Eén enkel statisch <code>index.html</code>-bestand — geen build-stap, geen server, gewoon zo gehost op GitHub Pages. Alle logica draait client-side in je browser. De Tailwind-stijl schermen (RunCoach, Kompas, Weer, Setup, Hub) draaien elk in hun eigen <code>&lt;iframe srcdoc&gt;</code>, en praten met de hoofdpagina via <code>postMessage</code>.</p>
     </section>
@@ -8061,6 +8066,11 @@ const DEV_NOTES_CONTENT = {
       <p>The displayed speed (map navigation and the run page alike) is no longer the raw, unfiltered GPS speed from your device — that can itself "jump all over the place" on a weak signal. Approach: (1) a fix with poor accuracy (&gt;12m) is ignored for speed; (2) without a chip-reported speed, it's calculated over a window of at least 2s instead of every single second, which suppresses pure GPS drift at low speed; (3) a physically implausible jump (a GPS glitch) is discarded instead of shown; (4) what remains passes through a real <i>Kalman filter</i> — this replaced the earlier adaptive EMA smoothing (2 fixed alpha thresholds): the filter keeps its own estimate and the uncertainty around it, and automatically weighs every new measurement against that uncertainty instead of against 2 hardcoded cutoffs. In practice: the chip's own speed reading (Doppler, when available) counts more heavily than a speed calculated from 2 positions, and a fix with weaker GPS accuracy counts for less — a large, genuine pace change is still followed quickly, but a one-off noisy outlier is damped more strongly than before. On the run page, this filter additionally resets exactly at every interval boundary (Start/Run switch), so the display doesn't lag behind the previous block's pace. This applies to cycling, walking, and running alike, and for running, to every session type — AI Coach, EVY, Zombie Run, your own schedule, and Free Run — since they all run through the same underlying GPS function, so one fix covers all of them. Full, continuous sensor fusion that corrects the GPS position itself using motion sensors (as a native app could do via dead reckoning) remains infeasible inside a browser — the accelerometer data a website can actually read drifts too much to derive a position/speed from that's meaningful to combine with GPS. This deliberately remains a purely GPS-based speed calculation; see below for a much narrower use of the motion sensor (purely as an on/off "is there movement?" signal, not to calculate a speed itself) that further tackles standing-still noise.</p>
       <p><b>Fixed bug (reported: "the speed updates so slowly, going from 8 km/h running to walking takes at least 10 seconds or more" + "after turning the screen back on the speed isn't 0, maybe the value from right before it dimmed?"):</b> the approach above used to actually only be implemented that way for map navigation (cycling/walking) — the run page separately still had its own, older speed calculation: differentiating every single raw GPS tick on its own (instead of at least a 2s window), and never using the chip's own speed. On a normal running pace change (a short tick-to-tick distance), that made the measured noise towering compared to the allowed per-second variation in the Kalman filter, hence the slow (10+ second) update. That's now straightened out: the run page genuinely uses the same approach as map navigation (chip speed preferred, otherwise a 2s window). The run page also got a max-time-gap detector: a gap of more than 20s between 2 GPS fixes (typically: the screen was off for a bit) no longer counts as a single straight jump for distance/the map line (that's what caused the straight line cutting across the track), and restarts the speed Kalman fresh instead of staying "frozen" on the last value from before the gap.</p>
       <p><b>Fixed bug — standing-still noise, in 2 steps (reported: first "speed now shows 8.8, then 6.6 etc" on a phone lying still, then worse: "I'm sitting still and it says I'm running at 23.6 km/h. Unusable."):</b> even with the fixes above, a genuinely stationary phone could still show a noisy, non-zero chip speed and accumulate distance — GPS chips can keep reporting a "Doppler speed" of a few km/h near-zero motion, pure measurement noise. Approach 1: a dedicated, stricter stillness threshold (separate from the existing 1.2 km/h used for auto-pause) on the 6s-smoothed GPS speed, which rewrites a measured speed/distance to 0 once that threshold isn't met. Approach 2, suggested by the user themselves ("if there are no steps you're standing still... can't you calculate speed from that and GPS?"): where the device/browser allows it, the run page now also uses the motion sensor (<code>DeviceMotionEvent</code>) as an extra, GPS-independent signal — simple peak detection on the raw accelerometer recognizes footsteps. No steps seen in the last few seconds → standing still, even if the GPS chip claims a speed; steps seen → moving, even if the smoothed GPS speed briefly dips. A website has no access to the operating system's actual hardware step counter (deliberately locked down for privacy/security reasons) — this is therefore its own, approximate peak detector, not an exact stride-length calculation (running stride varies too much by pace to derive a reliable speed from it on its own); it's used purely as an on/off signal, not to calculate the displayed speed itself. As soon as the sensor delivers active data at least once, that step signal wins over the GPS threshold; if the sensor then stops delivering data again (or was never available/permitted), everything automatically falls back to that GPS threshold — that's continuously detected on its own, so this can never accidentally get a session permanently stuck on "standing still". A genuinely more reliable, hardware-native step counter (and background tracking without a browser's limits) is only achievable by fully converting to a native/hybrid Android app (e.g. via CapacitorJS) — technically quite doable, but a separate, larger project outside the scope of this one file.</p>
+    </section>
+    <section>
+      <h3>🔥 Calories</h3>
+      <p>A rough estimate via MET value × weight × time (or, with a connected heart rate band plus your weight/age/sex filled in, the more accurate heart-rate-based formula) — see Settings → Personal for your weight. Without your weight filled in, the app has no basis to estimate at all, so it deliberately shows nothing instead of a made-up number.</p>
+      <p><b>Fixed bug (reported: "in the stats of every run I don't see calories... I thought those were there for cycling"):</b> without a weight set, the cycling/walking stats had long shown a clear message ("Set your weight in Settings") — the running stats didn't: both the summary card (Standard and Garmin/Tailwind style alike) and every individual run in history just showed a bare "–" or a standalone ⚖️ icon, with no explanation of why nothing was showing. That could easily read as "broken" rather than "you haven't set a weight yet". The summary card now has a clear title tooltip (on hover) and is tappable — a tap shows the same explanation as a toast, same as cycling/walking; every individual run in history now shows "set weight ⚖️" instead of a bare "–". For the Garmin/Tailwind style (which runs as a separate <code>&lt;iframe&gt;</code>, see 🧱 Architecture below, and so has no language logic of its own), that text is now pre-translated by the main page and sent along via <code>postMessage</code>, just like the other stat fields.</p>
     </section>
     <section>
       <h3>🧱 Architecture</h3>
@@ -9646,7 +9656,21 @@ async function renderRunStatsPanel(){
   $('rcStatKm').textContent = totalKm.toFixed(1);
   $('rcStatTime').textContent = totalSec >= 3600 ? (totalSec/3600).toFixed(1) + 'u' : Math.round(totalSec/60) + 'm';
   const totalRunCal = history.reduce((s,r) => s + (caloriesForEntry(r, (r.durationSec||0)/60, 'hardlopen') || 0), 0);
+  // GEVRAAGD DOOR DE GEBRUIKER (gemeld: "in de stats van elke run zie ik geen calorieën... ik dacht dat die er
+  // bij fietsen wel waren"): bij fietsen/wandelen toont "Mijn statistieken" bij ontbrekend gewicht al een
+  // duidelijke tekst ("Vul je gewicht in bij Instellingen") -- hier stond enkel een kaal ⚖️-icoontje zonder
+  // enige uitleg, wat je makkelijk kan aanzien voor "werkt niet"/"geen data". Het kaartje is nu ook aantikbaar
+  // (zie de click-listener hieronder) en toont dan diezelfde duidelijke boodschap als toast.
   $('rcStatCalories').textContent = totalRunCal > 0 ? `~${totalRunCal}` : (appSettings.bodyWeightKg ? '–' : '⚖️');
+  $('rcStatCalories').title = appSettings.bodyWeightKg ? '' :
+    (curLang()==='en' ? 'Set your weight in Settings to see estimated calories' : 'Vul je gewicht in bij Instellingen om geschatte calorieën te zien');
+  $('rcStatCalories').parentElement.style.cursor = appSettings.bodyWeightKg ? '' : 'pointer';
+  // onclick= (i.p.v. addEventListener) is bewust idempotent: renderRunStatsPanel() kan meermaals draaien
+  // (bv. bij elke keer dat het Stats-tabblad geopend wordt) zonder dat dezelfde listener zich opstapelt.
+  $('rcStatCalories').parentElement.onclick = () => {
+    if (appSettings.bodyWeightKg) return;
+    toast(curLang()==='en' ? '⚖️ Set your weight in Settings to see estimated calories' : '⚖️ Vul je gewicht in bij Instellingen om geschatte calorieën te zien', 3500);
+  };
 
   // Kleine staafgrafiek van de laatste 10 runs (oudste links, meest recente rechts)
   const recent = history.slice(0, 10).slice().reverse();
@@ -9675,6 +9699,7 @@ async function renderRunStatsPanel(){
     const painIcon = (r.painAreas && r.painAreas.length) ? ` 🩹${r.painAreas.length>1 ? ' ('+r.painAreas.length+'x)' : ''}` : '';
     const zombieIcon = r.zombie ? ` ${r.zombie.died ? '💀' : '🧟'}${r.zombie.score >= 0 ? '+' : ''}${r.zombie.score}` : '';
     const cal = caloriesForEntry(r, (r.durationSec||0)/60, 'hardlopen');
+    const calLabel = cal != null ? cal + ' kcal' : (appSettings.bodyWeightKg ? '–' : (curLang()==='en' ? 'set weight ⚖️' : 'gewicht invullen ⚖️'));
     const painLabel = (r.painAreas && r.painAreas.length) ? r.painAreas.join(', ') : (curLang()==='en' ? 'None' : 'Geen');
     const moodLabel = curLang()==='en'
       ? (r.mood === 'happy' ? '😄 Felt good' : r.mood === 'sad' ? '😔 Felt tough' : '– Not filled in')
@@ -9688,7 +9713,7 @@ async function renderRunStatsPanel(){
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px 12px; margin-bottom:6px;">
           <span>📅 ${dateLabel} · ${timeLabel}</span>
           <span>🏃 ${r.runType || '–'}</span>
-          <span>🔥 ${cal != null ? cal + ' kcal' : '–'}</span>
+          <span>🔥 ${calLabel}</span>
           <span>🩹 ${painLabel}</span>
         </div>
         <div>${moodLabel}</div>
@@ -12061,15 +12086,24 @@ async function sendGarminRunCoachStats(){
     km: totalKm.toFixed(1),
     time: totalSec >= 3600 ? (totalSec/3600).toFixed(1) + 'u' : Math.round(totalSec/60) + 'm',
     calories: totalRunCal > 0 ? `~${totalRunCal}` : (appSettings.bodyWeightKg ? '–' : '⚖️'),
+    // GEVRAAGD DOOR DE GEBRUIKER (gemeld: "in de stats van elke run zie ik geen calorieën... ik dacht dat die er
+    // bij fietsen wel waren"): het kale ⚖️-icoontje (of "–" per run) hierboven legde nooit uit WAAROM er geen
+    // calorieën te zien zijn, in tegenstelling tot de fiets/wandel-statistieken (die daar al een duidelijke
+    // tekst voor tonen). caloriesTooltip is hier al voorvertaald (curLang()), want dit iframe-script zelf heeft
+    // geen eigen taallogica -- het krijgt kant-en-klare tekst via postMessage, net als "time"/"km" hierboven.
+    caloriesTooltip: appSettings.bodyWeightKg ? '' :
+      (curLang()==='en' ? 'Set your weight in Settings to see estimated calories' : 'Vul je gewicht in bij Instellingen om geschatte calorieën te zien'),
     chart: recent.map(r => r.km || 0),
     medals: RUN_MEDALS.map(m => ({ km:m.km, label:m.label, icon:m.icon, unlocked: maxKm >= m.km })),
     history: history.slice(0,15).map(r => {
       const d = new Date(r.date);
+      const cal = caloriesForEntry(r, (r.durationSec||0)/60, 'hardlopen');
       return {
         dateLabel: d.toLocaleDateString('nl-BE', { day:'2-digit', month:'short' }), timeLabel: d.toLocaleTimeString('nl-BE', { hour:'2-digit', minute:'2-digit' }),
         km: r.km.toFixed(2), duration: fmtMMSS(r.durationSec), completed: r.completed,
         mood: r.mood || null, painCount: (r.painAreas && r.painAreas.length) || 0, painAreas: r.painAreas || [],
-        runType: r.runType || '–', calories: caloriesForEntry(r, (r.durationSec||0)/60, 'hardlopen'),
+        runType: r.runType || '–',
+        calLabel: cal != null ? cal + ' kcal' : (appSettings.bodyWeightKg ? '–' : (curLang()==='en' ? 'set weight ⚖️' : 'gewicht invullen ⚖️')),
         zombie: r.zombie || null, zoneBarHtml: buildHrZoneBarHtml(r.hrZoneSeconds, r.avgBpm, r.maxBpm)
       };
     })
@@ -14360,6 +14394,8 @@ ${GARMIN_MENU_BTN_JS}
         document.getElementById('rcStatKm').textContent = d.km;
         document.getElementById('rcStatTime').textContent = d.time;
         document.getElementById('rcStatCalories').textContent = d.calories;
+        document.getElementById('rcStatCalories').title = d.caloriesTooltip || '';
+        if (document.getElementById('rcStatCalories').parentElement) document.getElementById('rcStatCalories').parentElement.style.cursor = d.caloriesTooltip ? 'pointer' : '';
         const maxBar = Math.max(1, ...(d.chart||[]));
         document.getElementById('rcDistanceChart').innerHTML = (d.chart||[]).length ? d.chart.map(km => \`
           <div style="flex:1; display:flex; align-items:flex-end; height:100%;">
@@ -14384,7 +14420,7 @@ ${GARMIN_MENU_BTN_JS}
               <div class="grid grid-cols-2 gap-x-3 gap-y-1 mb-1.5">
                 <span>📅 \${r.dateLabel} · \${r.timeLabel}</span>
                 <span>🏃 \${r.runType}</span>
-                <span>🔥 \${r.calories != null ? r.calories + ' kcal' : '–'}</span>
+                <span>🔥 \${r.calLabel}</span>
                 <span>🩹 \${r.painAreas.length ? r.painAreas.join(', ') : 'Geen'}</span>
               </div>
               <div>\${r.mood === 'happy' ? '😄 Goed gevoel' : r.mood === 'sad' ? '😔 Zwaar gevoel' : '– Niet ingevuld'}</div>
