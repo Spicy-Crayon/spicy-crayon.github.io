@@ -1007,7 +1007,11 @@
   }
   /* margin-top houdt hier bewust afstand tot #rsMinimizeBtn (top-links, hoogte 36px + startpositie 14px) —
      zonder die marge lag de kaart er letterlijk overheen, met haar ronde hoek half over de knop. */
-  #rsMapWrap{ position:relative; width:100%; max-width:440px; height:200px; margin-top:46px; border-radius:22px; overflow:hidden; flex-shrink:0; box-shadow:0 8px 24px rgba(0,0,0,0.4); }
+  /* Hoogte iets verlaagd (was 200px) op vraag van gebruiker: op een aantal toestellen/lettergroottes stond
+     het loopscherm te vol (kaart + tijd-kader + statistiek-rijen pasten net niet allemaal comfortabel onder
+     elkaar). Geldt voor alle looptypes — Zombie Run heeft daarnaast nog zijn eigen (nu evenredig verlaagde)
+     override hieronder (body.zr-mode #rsMapWrap). */
+  #rsMapWrap{ position:relative; width:100%; max-width:440px; height:172px; margin-top:46px; border-radius:22px; overflow:hidden; flex-shrink:0; box-shadow:0 8px 24px rgba(0,0,0,0.4); }
   #rsMapContainer{ width:100%; height:100%; background:#1a1f2b; }
   #rsMapBadge{
     position:absolute; top:10px; left:10px; z-index:500; background:var(--amber); color:var(--green-900);
@@ -1033,22 +1037,27 @@
   body.rs-sparkline-active #rsMainRow{ max-width:460px; }
   body.theme-garmin #rsMainRow{
     background:#131b2e; border:1px solid rgba(255,255,255,0.08); border-radius:20px;
-    padding:20px 16px; box-shadow:0 4px 14px rgba(0,0,0,0.3);
+    /* padding was 20px 16px — dat is precies het "kader met de tijd" dat gebruikers te hoog vonden, samen
+       met de nu ook verkleinde #rsIntervalLabel/#rsCountdown hierboven. */
+    padding:12px 16px; box-shadow:0 4px 14px rgba(0,0,0,0.3);
   }
   #rsMainCol{ flex:1; min-width:0; }
-  #rsIntervalLabel{ font-size:16px; font-weight:800; letter-spacing:0.6px; text-transform:uppercase; }
+  /* Tijd-kader compacter op vraag van gebruiker: interval-naam (het "oranje"/gekleurde label bij opwarmen/
+     afkoelen) en de grote tijdsaanduiding stonden beiden onnodig groot, wat het kader onnodig hoog maakte —
+     zeker samen met het Garmin-thema's eigen padding rond #rsMainRow hieronder. */
+  #rsIntervalLabel{ font-size:14px; font-weight:800; letter-spacing:0.6px; text-transform:uppercase; }
   #rsIntervalLabel.type-run{ color:#4ade80; }
   #rsIntervalLabel.type-walk{ color:#60a5fa; }
   #rsIntervalLabel.type-warmup, #rsIntervalLabel.type-cooldown{ color:var(--amber); }
-  #rsCountdown{ font-size:48px; font-weight:900; line-height:1; margin:6px 0 4px; font-variant-numeric:tabular-nums; }
+  #rsCountdown{ font-size:39px; font-weight:900; line-height:1; margin:5px 0 3px; font-variant-numeric:tabular-nums; }
   #rsNextLabel{ color:rgba(246,244,238,0.55); font-size:12.5px; }
-  #rsElapsedLine{ color:rgba(246,244,238,0.4); font-size:11px; margin-top:7px; }
+  #rsElapsedLine{ color:rgba(246,244,238,0.4); font-size:11px; margin-top:6px; }
   /* ---------- Zombie Run: compactere hardloopscherm-layout (body.zr-mode, gezet in initZombieState()) ----------
      De STORY/SCORE/hartjes-regel is langer dan een gewone interval-naam en de radar staat er als extra kolom
      naast, dus de gewone (grote) maten van het rustschema-scherm ogen hier te dicht op elkaar. Alles hieronder
      maakt tekst compacter en geeft de kaart wat minder hoogte, zodat justify-content:space-evenly op
      #runSessionScreen vanzelf meer ademruimte tussen de blokken krijgt. */
-  body.zr-mode #rsMapWrap{ height:190px; }
+  body.zr-mode #rsMapWrap{ height:164px; }
   body.zr-mode #rsMainRow{ align-items:flex-start; max-width:520px; }
   body.zr-mode #rsIntervalLabel{ font-size:13px; letter-spacing:0.3px; }
   body.zr-mode #rsCountdown{ font-size:34px; margin:4px 0 3px; }
@@ -1059,7 +1068,12 @@
      blijft de Bonus-regel eronder ook mooi in de buurt van "Totaal: ..." staan. */
   body.zr-mode #zrRadarWrap{ margin-top:19px; }
   body.zr-mode #zrRadarContainer{ width:84px; height:84px; }
-  #rsCalorieLine{ color:rgba(246,244,238,0.55); font-size:12.5px; font-weight:700; margin-top:-4px; }
+  /* BUG (opgelost): stond hier voorheen op margin-top:-4px, kennelijk getuned voor het kale standaardthema
+     zonder kader rond de statistiek-rijen. Zodra een stat-rij effectief hoger uitviel dan verwacht (bv. het
+     Garmin-thema's eigen padding/rand op .rs-stat hieronder, of "GEM. SNELHEID" dat op een smal scherm naar
+     een 2e regel omslaat) plakte deze regel daardoor letterlijk over/tegen de snelheid- en gem.snelheid-
+     kaders aan — precies de klacht. Een kleine positieve marge lost dat in alle thema's/schermbreedtes op. */
+  #rsCalorieLine{ color:rgba(246,244,238,0.55); font-size:12.5px; font-weight:700; margin-top:4px; }
   #rsRaceBadge{ color:rgba(246,244,238,0.72); font-size:12.5px; font-weight:700; margin-top:2px; }
   #rsRaceBadge.race-ahead{ color:#4ade80; }
   #rsRaceBadge.race-behind{ color:#f87171; }
@@ -1138,7 +1152,7 @@
   body.rs-sparkline-active #rsStatsRow, body.rs-sparkline-active #rsSpeedRow{ max-width:460px; }
   .rs-stat{ display:flex; flex-direction:column; align-items:center; flex:1; }
   body.theme-garmin .rs-stat{
-    background:#131b2e; border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:10px 6px;
+    background:#131b2e; border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:7px 6px;
   }
   .rs-stat b{ font-size:21px; font-weight:900; }
   .rs-stat span{ font-size:10px; color:rgba(246,244,238,0.55); text-transform:uppercase; letter-spacing:0.4px; margin-top:2px; }
@@ -4028,20 +4042,25 @@ document.getElementById('zoomInBtn').addEventListener('click', () => map.zoomIn(
 document.getElementById('zoomOutBtn').addEventListener('click', () => map.zoomOut());
 // Meerdere gratis kaartbronnen: als de eerste stilvalt (bv. door een compressie-proxy in sommige
 // telefoonbrowsers die tegel-verzoeken laat hangen zonder échte foutmelding), schakelt de app zelf over.
+// LET OP (27/8/2026): CARTO's rastertiles/voyager-tegels (basemaps.cartocdn.com) stonden hier vroeger als
+// eerste/enige bron, maar vereisen sinds kort een eigen (gratis) API-sleutel — zonder sleutel leveren ze nu
+// gewoon een "geldige" afbeelding terug met daarop de tekst "API KEY REQUIRED", die de tegel-watchdog
+// hieronder (useTileProvider) dus gewoon als "geladen, alles goed" beschouwt en NOOIT meer naar de volgende
+// bron in de lijst doorschakelt — de kaart bleef daardoor voorgoed op die kapotte watermark-tegel hangen.
+// Vandaar nu standaard enkel nog de twee OSM-bronnen, die altijd zonder sleutel blijven werken.
 const TILE_PROVIDERS_STANDARD = [
-  { url:'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', options:{ subdomains:'abcd', maxZoom:19, attribution:'© OpenStreetMap, © CARTO', detectRetina:true } },
   { url:'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', options:{ subdomains:'abc', maxZoom:19, attribution:'© OpenStreetMap-medewerkers' } },
   { url:'https://tile.openstreetmap.de/{z}/{x}/{y}.png', options:{ maxZoom:19, attribution:'© OpenStreetMap-medewerkers' } }
 ];
 // CyclOSM: gratis, geen sleutel nodig, legt sterk de nadruk op fietsinfrastructuur (fietspaden, -netwerken, oppervlaktetype)
 const TILE_PROVIDERS_CYCLOSM = [
   { url:'https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', options:{ subdomains:'abc', maxZoom:20, attribution:'© OpenStreetMap, CyclOSM' } },
-  { url:'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', options:{ subdomains:'abcd', maxZoom:19, attribution:'© OpenStreetMap, © CARTO', detectRetina:true } }
+  { url:'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', options:{ subdomains:'abc', maxZoom:19, attribution:'© OpenStreetMap-medewerkers' } }
 ];
 // OpenTopoMap: topografische stijl met hoogtelijnen ingebakken, gratis, geen sleutel — populair bij wandelaars/bergfietsers
 const TILE_PROVIDERS_OPENTOPO = [
   { url:'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', options:{ subdomains:'abc', maxZoom:17, attribution:'© OpenStreetMap, SRTM, © OpenTopoMap (CC-BY-SA)' } },
-  { url:'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', options:{ subdomains:'abcd', maxZoom:19, attribution:'© OpenStreetMap, © CARTO', detectRetina:true } }
+  { url:'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', options:{ subdomains:'abc', maxZoom:19, attribution:'© OpenStreetMap-medewerkers' } }
 ];
 let activeTileProviders = TILE_PROVIDERS_STANDARD;
 let tileProviderIndex = 0;
@@ -7998,6 +8017,12 @@ const DEV_NOTES_CONTENT = {
       <p><b>EVY-scrubslider.</b> <code>#rsEvySeekInput</code> (een <code>&lt;input type="range"&gt;</code>) toont/bewerkt <code>runMusicPlayer.currentTime</code>/<code>duration</code>, enkel zichtbaar bij <code>rsState.evyDist</code>. De lastigste valkuil: <code>updateRunSessionUI()</code> loopt elke seconde en zou anders de vinger van de gebruiker van de balk "wegduwen" terwijl die aan het slepen is — opgelost met een <code>rsEvySeekDragging</code>-vlag (gezet op <code>pointerdown</code>, gewist op <code>pointerup</code>/<code>pointercancel</code>/<code>change</code>) die de tick-update van de slider-<i>waarde</i> blokkeert zolang die aan staat (de live tijdlabel-tekst via het <code>input</code>-event blijft wel gewoon meelopen). De effectieve seek zelf gebeurt pas op <code>change</code> (niet <code>input</code>), zodat een sleepbeweging niet honderden keren per seconde in het mp3-bestand springt.</p>
     </section>
     <section>
+      <h3>🐛 Bugfixes 27/8/2026: dubbele navigatie-aankondiging, kaarttegels, loopscherm-layout</h3>
+      <p><b>Opgeloste bug — spraak herhaalde zichzelf (gemeld: "over 40 meter" die halverwege afbreekt en dan een paar seconden later helemaal opnieuw klinkt, mét de afslagrichting erbij).</b> <code>speak()</code> (navigatie) en <code>speakForRun()</code> (hardlopen) wachtten, wanneer de stemmenlijst van <code>speechSynthesis</code> bij de allereerste aanroep nog niet geladen was, via een eenmalige <code>'voiceschanged'</code>-listener op die stemmenlijst — maar riepen ernaast, buiten die "if" om, ook nog onvoorwaardelijk meteen zelf <code>window.speechSynthesis.speak(u)</code> aan. Dezelfde <code>SpeechSynthesisUtterance</code> werd zo in de praktijk 2x ingepland: 1x meteen (vaak zonder stem, soms geluidloos), en nogmaals zodra <code>'voiceschanged'</code> alsnog afging. Sommige toestellen/engines herstarten een fragment i.p.v. de dubbele aanroep te negeren, wat precies als "afgebroken en dan herhaald" klinkt. Nu een if/else: ofwel wachten op <code>'voiceschanged'</code>, ofwel meteen spreken, nooit allebei.</p>
+      <p><b>Opgeloste bug — "API KEY REQUIRED" op de kaart.</b> Alle kaartlagen in dit bestand gebruikten CARTO's rastertiles/voyager-stijl (<code>basemaps.cartocdn.com</code>) als (eerste) bron. CARTO vereist sinds kort een eigen, gratis API-sleutel voor die tegels; zonder sleutel levert hun server gewoon een "geldige" PNG-afbeelding terug met daarop de tekst "API KEY REQUIRED" + hun URL. Omdat dat technisch een succesvol geladen tegel is, dacht de bestaande fallback-watchdog in <code>useTileProvider()</code> (die normaal na 5s zonder <code>tileload</code>-event naar de volgende bron in <code>TILE_PROVIDERS_STANDARD</code>/<code>_CYCLOSM</code>/<code>_OPENTOPO</code> overschakelt) dat alles gewoon in orde was, en switchte dus nooit weg. Vijf andere, kleinere kaartjes elders in dit bestand (live-locatie-viewer, RunCoach-minikaartje tijdens hardlopen, Garmin-radar, weerradar, analyse-kaart na een rit) hadden CARTO daarnaast nog eens rechtstreeks hardgecodeerd staan, volledig buiten dat fallback-systeem om. Alle 8 plekken gebruiken nu enkel nog sleutelloze OpenStreetMap-tegels (<code>tile.openstreetmap.org</code>/<code>.de</code>) — de kaart oogt hierdoor iets minder "Voyager-gestileerd" dan voorheen, maar vereist geen enkele configuratie en kan nooit meer op deze manier vastlopen.</p>
+      <p><b>Layout — loopscherm oogde te vol/te hoog (met name Garmin-thema), kcal-regel plakte tegen de snelheid/gem. snelheid-kaders.</b> <code>#rsCalorieLine</code> stond op <code>margin-top:-4px</code> — kennelijk getuned voor het kale standaardthema zonder kader rond de statistiekrijen. Zodra de rij erboven effectief hoger uitviel (het Garmin-thema's eigen padding/rand op <code>.rs-stat</code>, of "GEM. SNELHEID" dat op een smal scherm naar een 2e regel omslaat) plakte de kcal-tekst daar letterlijk overheen. Nu een kleine positieve marge, theme-onafhankelijk. Daarnaast, puur om het geheel wat lager/compacter te maken: <code>#rsMapWrap</code> (200px → 172px, Zombie Run-variant evenredig mee verlaagd), <code>#rsCountdown</code> (48px → 39px) en <code>#rsIntervalLabel</code> (16px → 14px) verkleind, en de Garmin-thema-padding rond <code>#rsMainRow</code> (20px 16px → 12px 16px) en <code>.rs-stat</code> (10px 6px → 7px 6px) verminderd. Bewust niet aangeraakt: de intervallen-rail rechts (<code>#rsProgressRail</code>/<code>.rs-rail-item</code>) en de EVY-km-sparkline (<code>#rsKmSparkline</code>/<code>.rs-km-bar</code>) — die moesten expliciet blijven staan zoals ze waren.</p>
+    </section>
+    <section>
       <h3>🔥 Calorieën</h3>
       <p>Een ruwe schatting via MET-waarde × gewicht × tijd (of, met een verbonden hartslagband én ingevuld gewicht/leeftijd/geslacht, de nauwkeurigere hartslag-gebaseerde formule) — zie Instellingen → Persoonlijk voor je gewicht. Zonder ingevuld gewicht kan de app geen enkele schatting maken, dus dan wordt er bewust niets getoond in plaats van een verzonnen cijfer.</p>
       <p><b>Opgeloste bug (gemeld: "in de stats van elke run zie ik geen calorieën... ik dacht dat die er bij fietsen wel waren"):</b> zonder ingevuld gewicht toonden de fiets-/wandel-statistieken al langer een duidelijke tekst ("Vul je gewicht in bij Instellingen") — de loop-statistieken deden dat niet: zowel het samenvattend kaartje (Standaard- én Garmin/Tailwind-stijl) als elke individuele run in de geschiedenis toonden gewoon een kaal "–" of een op zichzelf staand ⚖️-icoontje, zonder enige uitleg waaróm er niets stond. Dat kon makkelijk overkomen als "werkt niet" i.p.v. "je hebt nog geen gewicht ingevuld". Het samenvattend kaartje heeft nu een duidelijke title-tooltip (bij hover) én is aantikbaar — een tik toont dezelfde uitleg als toast, net als bij fietsen/wandelen; elke individuele run in de geschiedenis toont voortaan "gewicht invullen ⚖️" i.p.v. een kale "–". Bij de Garmin/Tailwind-stijl (die als los <code>&lt;iframe&gt;</code> draait, zie 🧱 Architectuur hieronder, en dus geen eigen taallogica heeft) wordt die tekst al voorvertaald door de hoofdpagina meegestuurd via <code>postMessage</code>, net als de andere statistiek-velden.</p>
@@ -8157,6 +8182,12 @@ const DEV_NOTES_CONTENT = {
       <h3>🎵 Music skip buttons &amp; EVY seek bar</h3>
       <p><b>Skip buttons (Free Run/Target Run/AI Coach).</b> A new <code>skipRunTrack(dir)</code> function reuses the existing <code>playNextTrackFromPool()</code>/<code>runMusicIdx</code>/<code>runPodcastIdx</code> machinery instead of building a separate playback path: "next" is literally the same call used when a track naturally ends (<code>handleRunTrackEnded()</code>), since the idx counter always already points at the next track after each one played. "Previous" first rewinds that counter by 2 (<code>((idx - 2) % length + length) % length</code>, to avoid a negative JS modulo result) so the same call afterwards again correctly points at "the track after this one". The buttons (<code>#rsMusicBar</code>) are only shown when <code>!rsState.zombie &amp;&amp; !rsState.evyDist &amp;&amp; !rsState.paused &amp;&amp; rsCurrentAudioPool</code> — deliberately excluded for Zombie Run (its own story audio, no "next track" concept) and EVY (1 continuous episode, no pool). Visibility is recomputed every second inside <code>updateRunSessionUI()</code>, so it automatically reacts to every transition (interval switch, pausing, session end).</p>
       <p><b>EVY seek bar.</b> <code>#rsEvySeekInput</code> (an <code>&lt;input type="range"&gt;</code>) displays/edits <code>runMusicPlayer.currentTime</code>/<code>duration</code>, shown only when <code>rsState.evyDist</code>. The trickiest pitfall: <code>updateRunSessionUI()</code> runs every second and would otherwise "push the user's finger off" the slider mid-drag — solved with an <code>rsEvySeekDragging</code> flag (set on <code>pointerdown</code>, cleared on <code>pointerup</code>/<code>pointercancel</code>/<code>change</code>) that blocks the tick's update of the slider's <i>value</i> while it's set (the live time-label text via the <code>input</code> event still keeps updating as normal). The actual seek only happens on <code>change</code> (not <code>input</code>), so a drag gesture doesn't jump around inside the mp3 file hundreds of times per second.</p>
+    </section>
+    <section>
+      <h3>🐛 Bugfixes 8/27/2026: repeating navigation announcement, map tiles, run screen layout</h3>
+      <p><b>Fixed bug — speech repeated itself (reported: "in 40 metres" cutting off mid-way and then, a couple seconds later, playing again in full, this time with the turn direction included).</b> <code>speak()</code> (navigation) and <code>speakForRun()</code> (running) would, whenever <code>speechSynthesis</code>'s voice list wasn't loaded yet on the very first call, wait via a one-time <code>'voiceschanged'</code> listener on that voice list — but ALSO, outside that "if", unconditionally called <code>window.speechSynthesis.speak(u)</code> right away regardless. The same <code>SpeechSynthesisUtterance</code> ended up scheduled twice in practice: once immediately (often voiceless or with a placeholder voice), and again once <code>'voiceschanged'</code> eventually fired. Some devices/engines restart a fragment instead of ignoring the duplicate call, which sounds exactly like "cut off, then repeated". Now an if/else: either wait for <code>'voiceschanged'</code>, or speak immediately — never both.</p>
+      <p><b>Fixed bug — "API KEY REQUIRED" on the map.</b> Every map layer in this file used CARTO's rastertiles/voyager style (<code>basemaps.cartocdn.com</code>) as its (first) tile source. CARTO recently started requiring its own free API key for those tiles; without a key their server still returns a "valid" PNG image, just one with "API KEY REQUIRED" and their URL printed on it. Because that technically counts as a successfully loaded tile, the existing fallback watchdog in <code>useTileProvider()</code> (which normally switches to the next source in <code>TILE_PROVIDERS_STANDARD</code>/<code>_CYCLOSM</code>/<code>_OPENTOPO</code> after 5s without a <code>tileload</code> event) considered everything fine and never switched away. Five other, smaller maps elsewhere in this file (live-location viewer, the RunCoach mini-map during a run, Garmin radar, weather radar, the post-ride analysis map) also had CARTO hardcoded directly, entirely outside that fallback system. All 8 spots now use only key-free OpenStreetMap tiles (<code>tile.openstreetmap.org</code>/<code>.de</code>) — the map looks slightly less "Voyager-styled" than before, but needs zero configuration and can never get stuck this way again.</p>
+      <p><b>Layout — run screen felt too full/tall (especially the Garmin theme), the kcal line stuck to the speed/avg. speed tiles below it.</b> <code>#rsCalorieLine</code> had <code>margin-top:-4px</code> — apparently tuned for the plain default theme with no box around the stat rows. The moment the row above it turned out taller than expected (the Garmin theme's own padding/border on <code>.rs-stat</code>, or "AVG. SPEED" wrapping to a 2nd line on a narrow screen) the kcal text literally overlapped it. Now a small positive margin, theme-independent. Also, purely to make the whole screen a bit shorter/tighter: <code>#rsMapWrap</code> (200px → 172px, Zombie Run's own variant lowered proportionally), <code>#rsCountdown</code> (48px → 39px) and <code>#rsIntervalLabel</code> (16px → 14px) shrunk, and the Garmin-theme padding around <code>#rsMainRow</code> (20px 16px → 12px 16px) and <code>.rs-stat</code> (10px 6px → 7px 6px) reduced. Deliberately left untouched: the interval rail on the right (<code>#rsProgressRail</code>/<code>.rs-rail-item</code>) and the EVY km sparkline (<code>#rsKmSparkline</code>/<code>.rs-km-bar</code>) — those had to explicitly stay as they were.</p>
     </section>
     <section>
       <h3>🔥 Calories</h3>
@@ -10410,7 +10441,7 @@ function initLiveTrackViewer(){
   if (container && typeof L !== 'undefined'){
     // Startpunt is een neutraal, algemeen middelpunt tot de eerste live-positie binnenkomt (poll hieronder herpositioneert meteen).
     liveTrackViewerMap = L.map(container, { zoomControl:false, attributionControl:false }).setView([50.85, 4.35], 13);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { subdomains:'abcd', maxZoom:19 }).addTo(liveTrackViewerMap);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { subdomains:'abc', maxZoom:19 }).addTo(liveTrackViewerMap);
     setTimeout(() => { if (liveTrackViewerMap) liveTrackViewerMap.invalidateSize(); }, 200);
   }
   pollLiveTrackPosition();
@@ -10476,10 +10507,14 @@ function speakForRun(text){
       u.onstart = () => { fadeAudioVolume(player, normalVol * 0.5, 300); };
       u.onend = () => { fadeAudioVolume(player, normalVol, 1200); };
     }
+    // Zelfde dubbele-aankondiging-bug als in speak() hierboven gefixt: niet zowel via 'voiceschanged'
+    // wachten ALS meteen al onvoorwaardelijk speak(u) aanroepen — dat plande dezelfde coaching-melding
+    // soms dubbel in, wat op sommige toestellen als een afgebroken en dan herhaalde melding klinkt.
     if (window.speechSynthesis.getVoices().length === 0){
       window.speechSynthesis.addEventListener('voiceschanged', () => window.speechSynthesis.speak(u), { once:true });
+    } else {
+      window.speechSynthesis.speak(u);
     }
-    window.speechSynthesis.speak(u);
   }catch(e){ /* spraaksynthese niet beschikbaar, negeer */ }
 }
 function fmtMMSS(totalSec){
@@ -10627,7 +10662,7 @@ function initRunSessionMap(){
   const container = $('rsMapContainer');
   if (!container || typeof L === 'undefined') return;
   rsMap = L.map(container, { zoomControl:false, attributionControl:false }).setView([50.93, 5.34], 16);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { subdomains:'abcd', maxZoom:19 }).addTo(rsMap);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { subdomains:'abc', maxZoom:19 }).addTo(rsMap);
   setTimeout(() => { if (rsMap) rsMap.invalidateSize(); }, 200);
 }
 // Gemiddelde snelheid over de laatste ~windowSec seconden van het kruimelspoor — veel stabieler dan
@@ -13544,7 +13579,7 @@ ${GARMIN_MENU_BTN_JS}
     function initGarminRadarMap(lat, lng){
       if (garminRadarMap) return; // eenmalig initialiseren; nieuwe locatie-fetches passen gewoon de bestaande kaart aan
       garminRadarMap = L.map('garminRadarMap', { zoomControl:false, attributionControl:false }).setView([lat, lng], 7);
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png', { subdomains:'abcd' }).addTo(garminRadarMap);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { subdomains:'abc' }).addTo(garminRadarMap);
       L.circleMarker([lat, lng], { radius:6, color:'#fff', weight:2, fillColor:'#3b82f6', fillOpacity:1 }).addTo(garminRadarMap);
       fetch('https://api.rainviewer.com/public/weather-maps.json')
         .then(r => r.json())
@@ -17360,10 +17395,19 @@ function speak(text, onEnd){
     if (onEnd){ u.addEventListener('end', onEnd); u.addEventListener('error', onEnd); }
     // Op sommige Android-toestellen is de stemmenlijst bij de allereerste aanroep nog niet geladen,
     // waardoor speak() geluidloos "lukt" zonder enige fout — dit wacht dan eenmalig op de stemmenlijst.
+    // BUG (opgelost): hieronder stond voorheen ná deze "if" ook nog een onvoorwaardelijke
+    // window.speechSynthesis.speak(u) los ervan — waardoor dezelfde aankondiging in de praktijk TWEE keer
+    // werd ingepland zodra de stemmenlijst nog niet klaar was (typisch bij de allereerste aankondiging van
+    // een navigatiesessie): één keer meteen (zonder stemmen, vaak geluidloos of met een tijdelijke stem),
+    // en nogmaals zodra 'voiceschanged' afging. Twee keer dezelfde SpeechSynthesisUtterance inplannen laat
+    // sommige toestellen het fragment herstarten i.p.v. gewoon negeren — vandaar de klacht "over 40 meter"
+    // die halverwege afbreekt en dan een paar seconden later helemaal opnieuw (met richting erbij) klinkt.
+    // Nu dus een if/else: ofwel wachten op 'voiceschanged', ofwel meteen spreken — nooit allebei.
     if (window.speechSynthesis.getVoices().length === 0){
       window.speechSynthesis.addEventListener('voiceschanged', () => window.speechSynthesis.speak(u), { once:true });
+    } else {
+      window.speechSynthesis.speak(u);
     }
-    window.speechSynthesis.speak(u);
   }catch(e){ /* spraaksynthese niet beschikbaar, negeer */ }
 }
 
@@ -21167,7 +21211,7 @@ function initRadarMapIfNeeded(){
   if (radarMapInstance){ setTimeout(() => radarMapInstance.invalidateSize(), 200); placeRadarMeMarker(); startPrecipTimeline(); startRadarAnimation(); return; }
   const c = weatherLocationOverride || map.getCenter();
   radarMapInstance = L.map('weatherRadarMap', { zoomControl:false, attributionControl:false }).setView([c.lat, c.lng], 7);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png', { subdomains:'abcd' }).addTo(radarMapInstance);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { subdomains:'abc' }).addTo(radarMapInstance);
   fetch('https://api.rainviewer.com/public/weather-maps.json')
     .then(r => r.json())
     .then(rvData => {
@@ -23121,7 +23165,7 @@ function openAnalyseScreen(rideEntry){
   $('analyseScreen').classList.remove('hidden');
   if (!analyseMapInstance){
     analyseMapInstance = L.map('analyseMap', { zoomControl:false, attributionControl:false });
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { subdomains:'abcd', maxZoom:19 }).addTo(analyseMapInstance);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { subdomains:'abc', maxZoom:19 }).addTo(analyseMapInstance);
   }
   setTimeout(() => analyseMapInstance.invalidateSize(), 50);
   analyseRideEntry = rideEntry || null;
