@@ -1142,6 +1142,22 @@
   }
   .rs-stat b{ font-size:21px; font-weight:900; }
   .rs-stat span{ font-size:10px; color:rgba(246,244,238,0.55); text-transform:uppercase; letter-spacing:0.4px; margin-top:2px; }
+  #rsMusicBar{
+    display:flex; align-items:center; gap:10px; width:100%; max-width:440px; margin-top:6px; padding:6px 10px;
+    background:rgba(255,255,255,0.06); border-radius:14px;
+  }
+  #rsMusicBar button{
+    flex:0 0 auto; width:34px; height:34px; border-radius:50%; border:none; background:rgba(255,255,255,0.1);
+    color:var(--cream); display:flex; align-items:center; justify-content:center; font-size:14px;
+  }
+  #rsMusicBar button:active{ background:rgba(255,255,255,0.2); }
+  #rsMusicNowPlaying{ flex:1; text-align:center; font-size:11.5px; font-weight:800; color:rgba(246,244,238,0.75); }
+  #rsEvySeekBar{
+    display:flex; align-items:center; gap:8px; width:100%; max-width:440px; margin-top:6px; padding:2px 10px;
+  }
+  #rsEvySeekBar span{ font-size:10.5px; font-weight:700; color:rgba(246,244,238,0.6); min-width:32px; }
+  #rsEvySeekBar #rsEvySeekDur{ text-align:right; }
+  #rsEvySeekInput{ flex:1; accent-color:var(--amber); }
   #rsControls{ display:flex; gap:8px; width:100%; max-width:440px; }
   #rsControls button{
     flex:1; border:none; border-radius:14px; padding:10px 6px; font-weight:800; font-size:11px;
@@ -2741,6 +2757,31 @@
     </div>
     </details>
 
+    <details class="settings-accordion"><summary><span class="settings-summary-row"><span data-i18n="settingsGroupStillnessAdvanced">🔬 Geavanceerd: stilstand-detectie (lopen)</span><span class="settings-scope-tag" data-i18n="scopeRun"></span></span></summary>
+    <div class="settings-section">
+      <p class="settings-note" data-i18n="stillnessAdvancedNote">Fijnafstelling van hoe de app "sta ik stil?" herkent tijdens het lopen (zie 📍 Snelheidsmeting in Technische werking voor de volledige uitleg). Standaardwaarden zijn een eerste inschatting, nog niet tegen echte loopdata gekalibreerd — enkel aanpassen als je zelf merkt dat de app te gevoelig (valse stappen) of te ongevoelig (gemiste stilstand) is.</p>
+
+      <label class="settings-check-label" data-i18n="stillnessPeakLabel">Stapsensor: piekdrempel (m/s² boven het lopend gemiddelde)</label>
+      <input type="number" id="settingStepPeakThreshold" value="1.8" min="0.5" max="5" step="0.1" class="settings-text-input" style="max-width:110px;">
+      <div class="settings-subnote" data-i18n="stillnessPeakSub">Lager = gevoeliger (herkent zachtere passen, maar ook meer kans op valse stappen bij een hobbelige weg of een telefoon los in een zak). Hoger = strenger.</div>
+
+      <label class="settings-check-label" style="margin-top:14px;" data-i18n="stillnessMinIntervalLabel">Stapsensor: minimale tijd tussen 2 stappen (ms)</label>
+      <input type="number" id="settingStepMinIntervalMs" value="250" min="100" max="600" step="10" class="settings-text-input" style="max-width:110px;">
+      <div class="settings-subnote" data-i18n="stillnessMinIntervalSub">Verwerpt te snel opeenvolgende "dubbele" pieken. 250ms staat gelijk aan maximaal 4 stappen per seconde — verlaag dit enkel als je zelf sneller loopt dan dat.</div>
+
+      <label class="settings-check-label" style="margin-top:14px;" data-i18n="stillnessGpsLabel">GPS-terugval: stilstand-drempel (km/u, enkel zonder bruikbare stapsensor)</label>
+      <input type="number" id="settingStationaryNoiseKmh" value="2.5" min="1" max="6" step="0.1" class="settings-text-input" style="max-width:110px;">
+      <div class="settings-subnote" data-i18n="stillnessGpsSub">Onder deze gladgestreken GPS-snelheid geldt je positie als stilstaand (afstand/snelheid tellen niet mee) wanneer de stapsensor niet beschikbaar/vers is. Hoger = strenger filteren van GPS-drift, maar ook meer kans dat een heel traag begin van een sprint er even uitgefilterd wordt.</div>
+
+      <button id="settingsStillnessResetBtn" class="settings-btn" style="margin-top:14px;" data-i18n="stillnessResetBtn">↺ Terug naar standaardwaarden (1.8 / 250ms / 2.5 km/u)</button>
+
+      <label class="settings-check" style="margin-top:16px; padding-top:12px; border-top:1px solid var(--line);"><input type="checkbox" id="settingStepDebugLog"> <span data-i18n="stillnessDebugLogLabel">🧪 Diagnostische sensor-log bijhouden tijdens je volgende run</span></label>
+      <p class="settings-note" data-i18n="stillnessDebugLogNote" style="margin:2px 0 0;">Legt tijdens de sessie elke seconde een regel vast (ruwe versnellingsmeting, gladgestreken GPS-snelheid, en of de app dat moment als "stilstaand" beschouwde) — enkel bedoeld om na een echte run de bovenstaande drempels gericht te kunnen bijstellen. Kost wat extra geheugen tijdens een lange sessie, dus staat standaard uit.</p>
+      <button id="settingsStepDebugExportBtn" class="settings-btn" style="margin-top:10px;" data-i18n="stillnessDebugExportBtn" disabled>📥 Exporteer laatste sensor-log (CSV)</button>
+      <div class="settings-subnote" id="settingsStepDebugExportStatus" data-i18n="stillnessDebugExportNone">Nog geen log beschikbaar deze sessie.</div>
+    </div>
+    </details>
+
     <details class="settings-accordion"><summary><span class="settings-summary-row"><span data-i18n="settingsGroupRunGuide">🏃 Lopen — handleiding</span><span class="settings-scope-tag" data-i18n="scopeRun"></span></span></summary>
     <div class="settings-section">
       <h4 data-i18n="runGuideAiCoachTitle">AI Coach</h4>
@@ -3509,6 +3550,21 @@
   <div id="rsCalorieLine">🔥 <span id="rsCalories">–</span></div>
   <div id="rsRaceBadge" class="hidden">🏁 <span id="rsRaceBadgeText">–</span></div>
   <div id="rsHrLine"><span id="rsHrValue">❤️ verbind hartslagband</span></div>
+  <!-- Muziek-skip-knoppen: enkel zichtbaar bij Vrije Run/Doelrun/AI Coach met eigen muziek/podcast geladen —
+       NOOIT bij Zombie Run (eigen verhaal-gestuurde audio, geen "volgende track") of EVY (1 doorlopende
+       aflevering, zie rsEvySeekBar hieronder in plaats daarvan). Zichtbaarheid + labeltekst worden elke
+       seconde bijgewerkt vanuit updateRunSessionUI(). -->
+  <div id="rsMusicBar" class="hidden">
+    <button id="rsMusicPrevBtn" aria-label="Vorig nummer" data-i18n-aria="rsMusicPrevAria" title="Vorig nummer" data-i18n-title="rsMusicPrevAria"><span class="ic">⏮</span></button>
+    <div id="rsMusicNowPlaying">🎵 <span data-i18n="rsMusicPlayingLabel">Muziek</span></div>
+    <button id="rsMusicNextBtn" aria-label="Volgend nummer" data-i18n-aria="rsMusicNextAria" title="Volgend nummer" data-i18n-title="rsMusicNextAria"><span class="ic">⏭</span></button>
+  </div>
+  <!-- EVY-scrubslider: enkel zichtbaar tijdens een EVY-sessie (1 doorlopende aflevering op runMusicPlayer). -->
+  <div id="rsEvySeekBar" class="hidden">
+    <span id="rsEvySeekCur">0:00</span>
+    <input type="range" id="rsEvySeekInput" min="0" max="100" step="1" value="0" aria-label="Positie in de aflevering" data-i18n-aria="rsEvySeekAria">
+    <span id="rsEvySeekDur">0:00</span>
+  </div>
   <div>
     <div id="rsControls">
       <button id="rsPauseBtn"><span class="ic">⏸</span><span data-i18n="rsPauzeBtnLabel">Pauze</span></button>
@@ -6904,6 +6960,10 @@ const TRANSLATIONS = {
   rsSplitBtnLabel: { nl:'Split', en:'Split' },
   rsDeelBtnLabel: { nl:'Deel', en:'Share' },
   rsStopBtnLabel: { nl:'Stop', en:'Stop' },
+  rsMusicPrevAria: { nl:'Vorig nummer', en:'Previous track' },
+  rsMusicNextAria: { nl:'Volgend nummer', en:'Next track' },
+  rsMusicPlayingLabel: { nl:'Muziek', en:'Music' },
+  rsEvySeekAria: { nl:'Positie in de aflevering', en:'Position in the episode' },
   zrSoundTabNote: { nl:'Alle geluidsinstellingen hieronder — de rest van de app raakt hier niet aan. Gerust laten staan, dit zijn gewoon de standaardwaarden.', en:"All sound settings below — nothing else in the app is affected. Feel free to leave these alone, they're just the defaults." },
   zrSoundSourceLabel: { nl:'🎧 Muziekbron', en:'🎧 Music source' },
   zrSoundSourceServer: { nl:'Server — ingebouwde bestanden (rustig ⇄ opzwepend wisselt automatisch)', en:'Server — built-in files (calm ⇄ upbeat switches automatically)' },
@@ -7022,6 +7082,19 @@ const TRANSLATIONS = {
   firebaseSetupNote: { nl:'Enkel nodig voor "Echt live volgen": maak gratis een Firebase-project op firebase.google.com, schakel daarin een Realtime Database in, en plak hierboven de Database-URL + een secret/auth-token (Project instellingen → Service accounts → Database secrets). Zet in de Database-regels iets als het voorbeeld hieronder, zodat schrijven een geldig token vereist maar lezen open staat — de sessie-id in de deel-link is lang en willekeurig, maar dit is "obscurity", geen echte beveiliging: deel de link dus enkel met wie je vertrouwt.', en:'Only needed for "Real live tracking": create a free Firebase project at firebase.google.com, enable a Realtime Database in it, and paste the Database URL + a secret/auth token above (Project settings → Service accounts → Database secrets). Set your Database rules to something like the example below, so writing requires a valid token while reading stays open — the session id in the share link is long and random, but this is "security by obscurity", not real security: only share the link with people you trust.' },
   liveTrackViewerCloseBtn: { nl:'✕ Sluiten', en:'✕ Close' },
   settingsAutoPauseRunCoachNote: { nl:'Herkent stilstand op dezelfde manier als de coaching zelf (negeert korte GPS-uitschieters) — pauzeert na ~12 seconden onbeweeglijkheid, en hervat automatisch zodra je weer beweegt. Werkt niet tijdens Zombie Run (daar is stilstaan bewust een spelmechaniek).', en:"Detects standing still the same way the coaching itself does (ignores brief GPS blips) — pauses after ~12 seconds of no movement, and resumes automatically once you're moving again. Doesn't apply during Zombie Run (standing still is a deliberate game mechanic there)." },
+  settingsGroupStillnessAdvanced: { nl:'🔬 Geavanceerd: stilstand-detectie (lopen)', en:'🔬 Advanced: stillness detection (running)' },
+  stillnessAdvancedNote: { nl:'Fijnafstelling van hoe de app "sta ik stil?" herkent tijdens het lopen (zie 📍 Snelheidsmeting in Technische werking voor de volledige uitleg). Standaardwaarden zijn een eerste inschatting, nog niet tegen echte loopdata gekalibreerd — enkel aanpassen als je zelf merkt dat de app te gevoelig (valse stappen) of te ongevoelig (gemiste stilstand) is.', en:'Fine-tune how the app recognizes "am I standing still?" while running (see 📍 Speed measurement in Technical details for the full explanation). Default values are a first estimate, not yet calibrated against real running data — only change these if you notice the app being too sensitive (false steps) or not sensitive enough (missed stillness).' },
+  stillnessPeakLabel: { nl:'Stapsensor: piekdrempel (m/s² boven het lopend gemiddelde)', en:'Step sensor: peak threshold (m/s² above the running average)' },
+  stillnessPeakSub: { nl:'Lager = gevoeliger (herkent zachtere passen, maar ook meer kans op valse stappen bij een hobbelige weg of een telefoon los in een zak). Hoger = strenger.', en:'Lower = more sensitive (recognizes softer steps, but also more prone to false steps on a bumpy road or a phone loose in a pocket). Higher = stricter.' },
+  stillnessMinIntervalLabel: { nl:'Stapsensor: minimale tijd tussen 2 stappen (ms)', en:'Step sensor: minimum time between 2 steps (ms)' },
+  stillnessMinIntervalSub: { nl:'Verwerpt te snel opeenvolgende "dubbele" pieken. 250ms staat gelijk aan maximaal 4 stappen per seconde — verlaag dit enkel als je zelf sneller loopt dan dat.', en:'Rejects "double" peaks that follow each other too quickly. 250ms corresponds to a maximum of 4 steps per second — only lower this if you actually run faster than that.' },
+  stillnessGpsLabel: { nl:'GPS-terugval: stilstand-drempel (km/u, enkel zonder bruikbare stapsensor)', en:'GPS fallback: stillness threshold (km/h, only without a usable step sensor)' },
+  stillnessGpsSub: { nl:'Onder deze gladgestreken GPS-snelheid geldt je positie als stilstaand (afstand/snelheid tellen niet mee) wanneer de stapsensor niet beschikbaar/vers is. Hoger = strenger filteren van GPS-drift, maar ook meer kans dat een heel traag begin van een sprint er even uitgefilterd wordt.', en:'Below this smoothed GPS speed, your position counts as standing still (distance/speed don\'t accumulate) whenever the step sensor isn\'t available/fresh. Higher = filters GPS drift more strictly, but also more chance that a very slow start of a sprint gets briefly filtered out too.' },
+  stillnessResetBtn: { nl:'↺ Terug naar standaardwaarden (1.8 / 250ms / 2.5 km/u)', en:'↺ Reset to defaults (1.8 / 250ms / 2.5 km/h)' },
+  stillnessDebugLogLabel: { nl:'🧪 Diagnostische sensor-log bijhouden tijdens je volgende run', en:'🧪 Keep a diagnostic sensor log during your next run' },
+  stillnessDebugLogNote: { nl:'Legt tijdens de sessie elke seconde een regel vast (ruwe versnellingsmeting, gladgestreken GPS-snelheid, en of de app dat moment als "stilstaand" beschouwde) — enkel bedoeld om na een echte run de bovenstaande drempels gericht te kunnen bijstellen. Kost wat extra geheugen tijdens een lange sessie, dus staat standaard uit.', en:'Records one line every second during the session (raw accelerometer reading, smoothed GPS speed, and whether the app considered that moment "standing still") — purely meant to let you fine-tune the thresholds above after a real run. Costs some extra memory during a long session, so it\'s off by default.' },
+  stillnessDebugExportBtn: { nl:'📥 Exporteer laatste sensor-log (CSV)', en:'📥 Export latest sensor log (CSV)' },
+  stillnessDebugExportNone: { nl:'Nog geen log beschikbaar deze sessie.', en:'No log available yet this session.' },
   settingsRoutePrefHeading: { nl:'Kortste of snelste route', en:'Shortest or fastest route' },
   settingsRoutePrefNote: { nl:'Bij BRouter (de standaard-engine): "Snelste" gebruikt hun directe fastbike-profiel; "Kortste" en "Evenwichtig" geven bij BRouter noodgedwongen hetzelfde resultaat, want hun gratis server heeft geen apart, écht-kortste fietsprofiel. Wil je een écht ander, betrouwbaar resultaat voor "Kortste", schakel dan over naar Valhalla, OpenRouteService of GraphHopper als engine — die ondersteunen dit wél apart. Bij OSRM heeft deze instelling geen effect.', en:'With BRouter (the default engine): "Fastest" uses their direct fastbike profile; "Shortest" and "Balanced" necessarily give the same result on BRouter, since their free server has no separate, truly-shortest bike profile. For a genuinely different, reliable "Shortest" result, switch to Valhalla, OpenRouteService or GraphHopper as the engine — they do support this distinctly. With OSRM this setting has no effect.' },
   settingsRoutePrefBalanced: { nl:'⚖️ Evenwichtig (standaard)', en:'⚖️ Balanced (default)' },
@@ -7703,9 +7776,11 @@ const HELP_CONTENT = {
     <section>
       <h3>🏃 RunCoach</h3>
       <p><b>AI Coach</b> — 3 ingebouwde opbouwschema's (5K/7,5K/10K, gebaseerd op NHS Couch to 5K en Hal Higdon's Novice 10K), of je eigen schema via "Schema wisselen of zelf opbouwen".<br>
-      <b>EVY Podcast</b> — jouw eigen 10-weken audioprogramma; de app onthoudt zelf bij welke week/sessie je zit.<br>
+      <b>EVY Podcast</b> — jouw eigen 10-weken audioprogramma; de app onthoudt zelf bij welke week/sessie je zit. Tijdens het beluisteren verschijnt een schuifbalk onderaan om zelf vooruit/achteruit te spoelen binnen de aflevering.<br>
       <b>Vrij/Doel</b> — Vrije Run, Target Run of HIIT, voor wie geen opbouwschema nodig heeft.<br>
       Tijdens het lopen: het minimaliseer-knopje linksboven stuurt je naar andere tabbladen zonder de sessie te stoppen — en de terugknop/het terug-gebaar van je toestel doet nu hetzelfde (i.p.v. de app in 1 druk af te sluiten): eerst minimaliseren, pas bij nóg een terug-druk terwijl je training nog loopt, vraagt de app het expliciet te bevestigen. Na afloop vraagt de app hoe het ging (stemming + eventuele pijnlocatie).</p>
+      <p><b>🎵 Eigen muziek/podcast</b> — laad je eigen bestanden (Instellingen → "Eigen muziek tijdens de training"); ze wisselen automatisch mee met loop-/wandelintervallen. Bij Vrije Run, Doelrun en AI Coach verschijnen tijdens het lopen twee kleine ⏮/⏭-knoppen om zelf een track over te slaan — niet bij Zombie Run (eigen verhaal-audio, geen "volgende track") of EVY (1 doorlopende aflevering, zie de schuifbalk hierboven).</p>
+      <p><b>🔬 Stilstand-detectie fijnafstellen</b> — merk je dat de app tijdens het lopen valse stappen telt, of net stilstand mist? Instellingen → "Geavanceerd: stilstand-detectie (lopen)" laat je de gevoeligheid van de stapsensor en de GPS-terugvaldrempel zelf bijstellen, met een reset-knop terug naar de standaardwaarden. Daar vind je ook een optionele diagnostische log (CSV-export) van de ruwe sensorwaarden tijdens je volgende run, handig om gericht te kunnen bijsturen na een echte sessie.</p>
       <p><b>❤️ Hartslagband</b> — tik het hartje-icoontje om via Bluetooth te koppelen (lopen én fietsen/wandelen); je krijgt eerst een korte uitleg te zien vóór het koppelscherm van je toestel zelf opent. Met gewicht+leeftijd+geslacht ingevuld gebruikt de calorie-schatting dan de nauwkeurigere hartslag-formule.<br>
       <b>🎧 Spotify</b> — toont wat er nu speelt, met bediening.<br>
       <b>🟠 Strava</b> — upload je sessie met 1 tik. Beide vereisen een eenmalige, gratis registratie (Instellingen).</p>
@@ -7850,9 +7925,11 @@ const HELP_CONTENT = {
     <section>
       <h3>🏃 RunCoach</h3>
       <p><b>AI Coach</b> — 3 built-in training plans (5K/7.5K/10K, based on NHS Couch to 5K and Hal Higdon's Novice 10K), or your own plan via "Switch plan or build your own".<br>
-      <b>EVY Podcast</b> — your own 10-week audio programme; the app remembers which week/session you're on.<br>
+      <b>EVY Podcast</b> — your own 10-week audio programme; the app remembers which week/session you're on. While listening, a seek bar appears at the bottom to scrub forward/backward within the episode yourself.<br>
       <b>Free/Target</b> — Free Run, Target Run or HIIT, for when you don't need a build-up plan.<br>
       While running: the minimise button top-left sends you to other tabs without stopping the session — and your device's back button/gesture now does the same (instead of closing the app in one press): it minimises first, and only if you press back again while your training is still running does the app ask you to explicitly confirm. Afterwards the app asks how it went (mood + any pain location).</p>
+      <p><b>🎵 Your own music/podcast</b> — load your own files (Settings → "Your own music during training"); they switch automatically along with the run/walk intervals. During Free Run, Target Run and AI Coach, two small ⏮/⏭ buttons appear while running to skip a track yourself — not during Zombie Run (its own story audio, no "next track") or EVY (1 continuous episode, see the seek bar above instead).</p>
+      <p><b>🔬 Fine-tuning stillness detection</b> — noticing the app counting false steps while running, or missing genuine stillness? Settings → "Advanced: stillness detection (running)" lets you adjust the step sensor's sensitivity and the GPS fallback threshold yourself, with a reset button back to the defaults. You'll also find an optional diagnostic log there (CSV export) of the raw sensor values during your next run, handy for fine-tuning after a real session.</p>
       <p><b>❤️ Heart rate monitor</b> — tap the heart icon to connect via Bluetooth (running as well as cycling/walking); you'll first see a short explanation before your device's own pairing screen opens. With weight+age+gender filled in, calorie estimates then use the more accurate heart-rate formula.<br>
       <b>🎧 Spotify</b> — shows what's currently playing, with controls.<br>
       <b>🟠 Strava</b> — upload your session in one tap. Both require a one-time, free registration (Settings).</p>
@@ -7912,6 +7989,13 @@ const DEV_NOTES_CONTENT = {
       <p>De getoonde snelheid (kaart-navigatie én looppagina) is <i>niet</i> meer de rauwe, ongefilterde GPS-snelheid van je toestel — die kan bij een zwak signaal zelf al "alle kanten op springen". Aanpak: (1) een fix met een slechte nauwkeurigheid (&gt;12m) wordt genegeerd voor snelheid; (2) zonder chip-snelheid wordt zelf berekend over een venster van minstens 2s i.p.v. elke seconde apart, wat pure GPS-drift bij lage snelheid onderdrukt; (3) een fysiek onmogelijke sprong (GPS-glitch) wordt weggegooid i.p.v. getoond; (4) wat overblijft loopt door een echte <i>Kalman-filter</i> — dit verving de eerdere adaptieve EMA-demping (2 vaste alpha-drempels): de filter houdt zelf een schatting én de onzekerheid daarover bij, en weegt elke nieuwe meting automatisch af tegen die onzekerheid i.p.v. tegen 2 hardgecodeerde grenswaarden. Concreet: de chip-eigen snelheid (Doppler, indien beschikbaar) telt zwaarder mee dan een snelheid die zelf uit 2 posities berekend is, en een fix met een zwakkere GPS-nauwkeurigheid weegt minder zwaar door — bij een grote, échte tempowissel volgt het cijfer nog steeds vlot mee, maar een eenmalige losse ruis-uitschieter wordt sterker afgeremd dan voorheen. Op de looppagina reset deze filter bovendien exact bij elke interval-grens (Start/Loop-wissel), zodat het display niet blijft napijlen op het tempo van het vorige blok. Dit geldt voor fietsen, wandelen én lopen, en bij lopen voor élk type sessie — AI Coach, EVY, Zombie Run, je eigen schema en Vrije Run — want die lopen allemaal via dezelfde onderliggende GPS-functie, dus 1 fix werkt overal. Een volledige, continue sensor-fusie die de GPS-positie zelf zou bijsturen op basis van de bewegingssensoren (zoals een native app via dead reckoning kan) blijft binnen een browser niet haalbaar — de accelerometer-data die een website wél kan lezen, drift te sterk om daar een positie/snelheid uit af te leiden die je zinvol met GPS kan combineren. Dit is dus bewust nog steeds een zuiver GPS-gebaseerde snelheidsberekening; zie hieronder wel voor een veel beperktere vorm van sensorgebruik (enkel als aan/uit-signaal "is er beweging?", niet om zelf een snelheid te berekenen) die de stilstand-ruis eronder verder aanpakt.</p>
       <p><b>Opgeloste bug (gemeld: "de snelheid wordt zo traag geupdate, van 8 km/u lopen naar wandelen duurt zeker 10 seconden of meer" + "na het scherm terug aanzetten is de snelheid niet 0, mss de waarde van net voor het dimmen?"):</b> bovenstaande aanpak was tot nu toe eigenlijk enkel écht zo geïmplementeerd voor kaart-navigatie (fietsen/wandelen) — de looppagina had daarnaast, apart, nog haar eigen, oudere snelheidsberekening staan: élke ruwe GPS-tick apart laten differentiëren (i.p.v. minstens een 2s-venster) én nooit de chip-eigen snelheid gebruiken. Bij een normale hardloop-tempowissel (korte tik-tot-tik-afstand) maakte dat de gemeten ruis torenhoog t.o.v. de toegelaten variatie per seconde in de Kalman-filter, vandaar de trage (10+ seconden) update. Dat is nu rechtgetrokken: de looppagina gebruikt voortaan écht dezelfde aanpak als kaart-navigatie (chip-snelheid met voorrang, anders een 2s-venster). Daarnaast kreeg de looppagina een max-tijdsgat-detectie: een gat van meer dan 20s tussen 2 GPS-fixes (typisch: het scherm was even uit) telt niet meer mee als 1 rechte sprong voor afstand/kaartlijn (dat gaf de rechte lijn dwars door de piste), en herstart de snelheids-Kalman vers i.p.v. "bevroren" te blijven hangen op de laatste waarde van vóór het gat.</p>
       <p><b>Opgeloste bug — stilstand-ruis, in 2 stappen (gemeld: eerst "snelheid staat nu op 8.8, dan 6.6 enz" bij een stilliggende telefoon, daarna nog erger: "Ik zit stil en loop 23.6 km/u. Onbruikbaar dus..."):</b> zelfs met bovenstaande fixes bleek een écht stilliggende telefoon soms nog altijd een ruizige, niet-nul chip-snelheid te tonen én afstand op te bouwen — GPS-chips kunnen bij (bijna) stilstand een "Doppler-snelheid" van een paar km/u blijven rapporteren, puur meetruis. Aanpak 1: een eigen, striktere stilstand-drempel (los van de bestaande 1,2 km/u die voor automatisch-pauzeren gebruikt wordt) op de over 6s gladgestreken GPS-snelheid, die een gemeten snelheid/afstand naar 0 herschrijft zodra die drempel niet gehaald wordt. Aanpak 2, op voorstel van de gebruiker zelf ("als er geen stappen zijn sta je stil... kan je op basis van dat en gps de snelheid niet berekenen?"): wanneer het toestel/de browser het toelaat, gebruikt de looppagina er nu óók de bewegingssensor (<code>DeviceMotionEvent</code>) bij als extra, van GPS onafhankelijk signaal — een eenvoudige piekdetectie op de ruwe versnellingsmeter herkent voetstappen. Geen stappen gezien in de laatste seconden → stilstand, ook al claimt de GPS-chip een snelheid; wél stappen gezien → beweging, ook al zakt de gladgestreken GPS-snelheid even kortstondig. Een website heeft geen toegang tot de échte hardware-stappenteller van het besturingssysteem (dat is met opzet afgeschermd, om privacy-/beveiligingsredenen) — dit is dus een eigen, benaderende piekdetectie, geen exacte staplengte-berekening (looppas varieert te veel per tempo om daar zelf een betrouwbare snelheid uit af te leiden); ze dient uitsluitend als aan/uit-signaal, niet om de getoonde snelheid zelf te berekenen. Zodra de sensor minstens 1x actief data levert, wint dat stappensignaal het van de GPS-drempel; stopt de sensor daarna weer met leveren (of was ze nooit beschikbaar/toegestaan), dan valt alles automatisch terug op die GPS-drempel — dat wordt continu zelf gedetecteerd, dus dit kan nooit een sessie per ongeluk permanent op "stilstand" laten vastlopen. Een écht betrouwbaardere, hardware-eigen stappenteller (en achtergrond-tracking zonder de beperkingen van een browser) is enkel haalbaar via een volledige omzetting naar een native/hybride Android-app (bv. via CapacitorJS) — technisch goed doenbaar, maar een apart, groter project buiten de scope van dit ene bestand.</p>
+      <p><b>Nieuw: zichtbare status van de stapsensor.</b> Bovenstaande stappensensor-fallback loste de gemelde 23,6 km/u-bug op, maar bleef stilzwijgend terugvallen op GPS als de sensor niet werkte — precies hetzelfde "werkt het wel echt?"-probleem als bij Wake Lock hieronder. Nu toont <code>startRunStepDetection()</code> een eenmalige toast per sessie (zelfde patroon als <code>navWakeLockToastShownThisSession</code>) zodra vaststaat dat er geen bruikbare sensordata is: onmiddellijk als <code>DeviceMotionEvent</code> niet bestaat, als de iOS-toestemming geweigerd wordt, of als de aanvraag zelf een fout gooit. Voor het sluipender geval — de listener registreert wél probleemloos, maar er komt nooit (of niet lang genoeg) een event binnen — plant <code>scheduleRunStepSensorStatusCheck()</code> een eenmalige check <code>RUN_STEP_SENSOR_FRESH_MS + 1500</code>ms na de start: is <code>recentStepsDetected()</code> op dat moment nog steeds <code>null</code> (geen vers event), dan verschijnt alsnog de melding. Zo weet je meteen, ook zonder daadwerkelijk te lopen, of de app op dat toestel/die sessie op de sterkere stapsensor draait of op de zwakkere GPS-fallback.</p>
+      <p><b>Nieuw: instelbare gevoeligheid + diagnostische log.</b> <code>RUN_STEP_PEAK_THRESHOLD</code>, <code>RUN_STEP_MIN_INTERVAL_MS</code> en <code>RUN_STATIONARY_NOISE_THRESHOLD_KMH</code> hierboven zijn nog steeds de standaardwaarden, maar 3 nieuwe helpers — <code>stepPeakThreshold()</code>, <code>stepMinIntervalMs()</code>, <code>stationaryNoiseThresholdKmh()</code> — lezen voortaan eerst een instelbare <code>appSettings</code>-waarde (Instellingen → 🔬 Geavanceerd: stilstand-detectie), met diezelfde constante als terugval — exact hetzelfde patroon als <code>appSettings.avoidBufferM || 18</code> elders in dit bestand. <code>handleRunDeviceMotion()</code> en <code>handleRunGpsUpdate()</code> roepen deze helpers aan i.p.v. de constanten rechtstreeks, zodat een wijziging in Instellingen meteen doorwerkt in de lopende sessie, zonder herstart. Daarnaast: <code>appSettings.stepDebugLogEnabled</code> (uit bij standaard) laat <code>handleRunGpsUpdate()</code> per gps-fix (~1x/sec) een regel wegschrijven naar <code>rsStepDebugLog</code> — ruwe versnellingsmagnitude, lopende baseline, of er sinds de vorige regel een stap gezien werd, de 6s-gladgestreken GPS-snelheid, en de 3 booleans <code>gpsLooksStill</code>/<code>stepsSeen</code>/<code>reallyStill</code>. <code>startRunStepDetection()</code> maakt die log bij elke nieuwe sessie leeg (1 log per run, geen eeuwige opstapeling), en de exportknop in Instellingen schrijft hem via de bestaande <code>downloadBlob()</code>-helper (dezelfde als GPX/JSON-export elders) weg als CSV — puur bedoeld om ná een echte run de bovenstaande 3 drempels gericht te kunnen bijstellen op basis van wat er écht gemeten werd, i.p.v. verder te gokken.</p>
+    </section>
+    <section>
+      <h3>🎵 Muziek-skip-knoppen &amp; EVY-scrubslider</h3>
+      <p><b>Skip-knoppen (Vrije Run/Doelrun/AI Coach).</b> Nieuwe <code>skipRunTrack(dir)</code>-functie, hergebruikt de bestaande <code>playNextTrackFromPool()</code>/<code>runMusicIdx</code>/<code>runPodcastIdx</code>-machinerie i.p.v. een eigen afspeelpad te bouwen: "volgende" is letterlijk dezelfde aanroep als bij het natuurlijk aflopen van een track (<code>handleRunTrackEnded()</code>), want de idx-teller wijst na elke afgespeelde track altijd al naar de volgende. "Vorige" zet die teller eerst 2 terug (<code>((idx - 2) % length + length) % length</code>, om een negatieve JS-modulo te vermijden) zodat dezelfde aanroep nadien weer correct naar "de track erna" wijst. De knoppen (<code>#rsMusicBar</code>) zijn enkel zichtbaar wanneer <code>!rsState.zombie &amp;&amp; !rsState.evyDist &amp;&amp; !rsState.paused &amp;&amp; rsCurrentAudioPool</code> — bewust uitgesloten bij Zombie Run (eigen verhaal-audio, geen "volgende track"-concept) en EVY (1 doorlopende aflevering, geen pool). Zichtbaarheid wordt elke seconde herberekend in <code>updateRunSessionUI()</code>, dus reageert vanzelf op elke overgang (interval-wissel, pauzeren, sessie-einde).</p>
+      <p><b>EVY-scrubslider.</b> <code>#rsEvySeekInput</code> (een <code>&lt;input type="range"&gt;</code>) toont/bewerkt <code>runMusicPlayer.currentTime</code>/<code>duration</code>, enkel zichtbaar bij <code>rsState.evyDist</code>. De lastigste valkuil: <code>updateRunSessionUI()</code> loopt elke seconde en zou anders de vinger van de gebruiker van de balk "wegduwen" terwijl die aan het slepen is — opgelost met een <code>rsEvySeekDragging</code>-vlag (gezet op <code>pointerdown</code>, gewist op <code>pointerup</code>/<code>pointercancel</code>/<code>change</code>) die de tick-update van de slider-<i>waarde</i> blokkeert zolang die aan staat (de live tijdlabel-tekst via het <code>input</code>-event blijft wel gewoon meelopen). De effectieve seek zelf gebeurt pas op <code>change</code> (niet <code>input</code>), zodat een sleepbeweging niet honderden keren per seconde in het mp3-bestand springt.</p>
     </section>
     <section>
       <h3>🔥 Calorieën</h3>
@@ -8066,6 +8150,13 @@ const DEV_NOTES_CONTENT = {
       <p>The displayed speed (map navigation and the run page alike) is no longer the raw, unfiltered GPS speed from your device — that can itself "jump all over the place" on a weak signal. Approach: (1) a fix with poor accuracy (&gt;12m) is ignored for speed; (2) without a chip-reported speed, it's calculated over a window of at least 2s instead of every single second, which suppresses pure GPS drift at low speed; (3) a physically implausible jump (a GPS glitch) is discarded instead of shown; (4) what remains passes through a real <i>Kalman filter</i> — this replaced the earlier adaptive EMA smoothing (2 fixed alpha thresholds): the filter keeps its own estimate and the uncertainty around it, and automatically weighs every new measurement against that uncertainty instead of against 2 hardcoded cutoffs. In practice: the chip's own speed reading (Doppler, when available) counts more heavily than a speed calculated from 2 positions, and a fix with weaker GPS accuracy counts for less — a large, genuine pace change is still followed quickly, but a one-off noisy outlier is damped more strongly than before. On the run page, this filter additionally resets exactly at every interval boundary (Start/Run switch), so the display doesn't lag behind the previous block's pace. This applies to cycling, walking, and running alike, and for running, to every session type — AI Coach, EVY, Zombie Run, your own schedule, and Free Run — since they all run through the same underlying GPS function, so one fix covers all of them. Full, continuous sensor fusion that corrects the GPS position itself using motion sensors (as a native app could do via dead reckoning) remains infeasible inside a browser — the accelerometer data a website can actually read drifts too much to derive a position/speed from that's meaningful to combine with GPS. This deliberately remains a purely GPS-based speed calculation; see below for a much narrower use of the motion sensor (purely as an on/off "is there movement?" signal, not to calculate a speed itself) that further tackles standing-still noise.</p>
       <p><b>Fixed bug (reported: "the speed updates so slowly, going from 8 km/h running to walking takes at least 10 seconds or more" + "after turning the screen back on the speed isn't 0, maybe the value from right before it dimmed?"):</b> the approach above used to actually only be implemented that way for map navigation (cycling/walking) — the run page separately still had its own, older speed calculation: differentiating every single raw GPS tick on its own (instead of at least a 2s window), and never using the chip's own speed. On a normal running pace change (a short tick-to-tick distance), that made the measured noise towering compared to the allowed per-second variation in the Kalman filter, hence the slow (10+ second) update. That's now straightened out: the run page genuinely uses the same approach as map navigation (chip speed preferred, otherwise a 2s window). The run page also got a max-time-gap detector: a gap of more than 20s between 2 GPS fixes (typically: the screen was off for a bit) no longer counts as a single straight jump for distance/the map line (that's what caused the straight line cutting across the track), and restarts the speed Kalman fresh instead of staying "frozen" on the last value from before the gap.</p>
       <p><b>Fixed bug — standing-still noise, in 2 steps (reported: first "speed now shows 8.8, then 6.6 etc" on a phone lying still, then worse: "I'm sitting still and it says I'm running at 23.6 km/h. Unusable."):</b> even with the fixes above, a genuinely stationary phone could still show a noisy, non-zero chip speed and accumulate distance — GPS chips can keep reporting a "Doppler speed" of a few km/h near-zero motion, pure measurement noise. Approach 1: a dedicated, stricter stillness threshold (separate from the existing 1.2 km/h used for auto-pause) on the 6s-smoothed GPS speed, which rewrites a measured speed/distance to 0 once that threshold isn't met. Approach 2, suggested by the user themselves ("if there are no steps you're standing still... can't you calculate speed from that and GPS?"): where the device/browser allows it, the run page now also uses the motion sensor (<code>DeviceMotionEvent</code>) as an extra, GPS-independent signal — simple peak detection on the raw accelerometer recognizes footsteps. No steps seen in the last few seconds → standing still, even if the GPS chip claims a speed; steps seen → moving, even if the smoothed GPS speed briefly dips. A website has no access to the operating system's actual hardware step counter (deliberately locked down for privacy/security reasons) — this is therefore its own, approximate peak detector, not an exact stride-length calculation (running stride varies too much by pace to derive a reliable speed from it on its own); it's used purely as an on/off signal, not to calculate the displayed speed itself. As soon as the sensor delivers active data at least once, that step signal wins over the GPS threshold; if the sensor then stops delivering data again (or was never available/permitted), everything automatically falls back to that GPS threshold — that's continuously detected on its own, so this can never accidentally get a session permanently stuck on "standing still". A genuinely more reliable, hardware-native step counter (and background tracking without a browser's limits) is only achievable by fully converting to a native/hybrid Android app (e.g. via CapacitorJS) — technically quite doable, but a separate, larger project outside the scope of this one file.</p>
+      <p><b>New: a visible motion-sensor status.</b> The step-sensor fallback above fixed the reported 23.6 km/h bug, but silently fell back to GPS whenever the sensor wasn't working — exactly the same "does it actually work?" problem as the Wake Lock below. Now <code>startRunStepDetection()</code> shows a one-time toast per session (same pattern as <code>navWakeLockToastShownThisSession</code>) as soon as it's established there's no usable sensor data: immediately if <code>DeviceMotionEvent</code> doesn't exist, if the iOS permission prompt is denied, or if the request itself throws. For the sneakier case — the listener registers fine, but no event ever arrives (or stops arriving) — <code>scheduleRunStepSensorStatusCheck()</code> schedules a one-time check <code>RUN_STEP_SENSOR_FRESH_MS + 1500</code>ms after start: if <code>recentStepsDetected()</code> still returns <code>null</code> by then (no fresh event), the toast fires anyway. This way you know right away, without even having to actually run, whether the app on that device/session is riding on the stronger step sensor or the weaker GPS fallback.</p>
+      <p><b>New: adjustable sensitivity + a diagnostic log.</b> <code>RUN_STEP_PEAK_THRESHOLD</code>, <code>RUN_STEP_MIN_INTERVAL_MS</code> and <code>RUN_STATIONARY_NOISE_THRESHOLD_KMH</code> above are still the defaults, but 3 new helpers — <code>stepPeakThreshold()</code>, <code>stepMinIntervalMs()</code>, <code>stationaryNoiseThresholdKmh()</code> — now read an adjustable <code>appSettings</code> value first (Settings → 🔬 Advanced: stillness detection), falling back to that same constant — exactly the same pattern as <code>appSettings.avoidBufferM || 18</code> elsewhere in this file. <code>handleRunDeviceMotion()</code> and <code>handleRunGpsUpdate()</code> call these helpers instead of the constants directly, so a change in Settings takes effect immediately in the running session, no restart needed. On top of that: <code>appSettings.stepDebugLogEnabled</code> (off by default) makes <code>handleRunGpsUpdate()</code> write one line to <code>rsStepDebugLog</code> per GPS fix (~once/sec) — raw acceleration magnitude, the running baseline, whether a step was seen since the last line, the 6s-smoothed GPS speed, and the 3 booleans <code>gpsLooksStill</code>/<code>stepsSeen</code>/<code>reallyStill</code>. <code>startRunStepDetection()</code> clears that log at the start of every new session (one log per run, no endless buildup), and the export button in Settings writes it out as CSV via the existing <code>downloadBlob()</code> helper (the same one used for GPX/JSON exports elsewhere) — purely meant to let you fine-tune the 3 thresholds above after a real run, based on what was actually measured instead of continuing to guess.</p>
+    </section>
+    <section>
+      <h3>🎵 Music skip buttons &amp; EVY seek bar</h3>
+      <p><b>Skip buttons (Free Run/Target Run/AI Coach).</b> A new <code>skipRunTrack(dir)</code> function reuses the existing <code>playNextTrackFromPool()</code>/<code>runMusicIdx</code>/<code>runPodcastIdx</code> machinery instead of building a separate playback path: "next" is literally the same call used when a track naturally ends (<code>handleRunTrackEnded()</code>), since the idx counter always already points at the next track after each one played. "Previous" first rewinds that counter by 2 (<code>((idx - 2) % length + length) % length</code>, to avoid a negative JS modulo result) so the same call afterwards again correctly points at "the track after this one". The buttons (<code>#rsMusicBar</code>) are only shown when <code>!rsState.zombie &amp;&amp; !rsState.evyDist &amp;&amp; !rsState.paused &amp;&amp; rsCurrentAudioPool</code> — deliberately excluded for Zombie Run (its own story audio, no "next track" concept) and EVY (1 continuous episode, no pool). Visibility is recomputed every second inside <code>updateRunSessionUI()</code>, so it automatically reacts to every transition (interval switch, pausing, session end).</p>
+      <p><b>EVY seek bar.</b> <code>#rsEvySeekInput</code> (an <code>&lt;input type="range"&gt;</code>) displays/edits <code>runMusicPlayer.currentTime</code>/<code>duration</code>, shown only when <code>rsState.evyDist</code>. The trickiest pitfall: <code>updateRunSessionUI()</code> runs every second and would otherwise "push the user's finger off" the slider mid-drag — solved with an <code>rsEvySeekDragging</code> flag (set on <code>pointerdown</code>, cleared on <code>pointerup</code>/<code>pointercancel</code>/<code>change</code>) that blocks the tick's update of the slider's <i>value</i> while it's set (the live time-label text via the <code>input</code> event still keeps updating as normal). The actual seek only happens on <code>change</code> (not <code>input</code>), so a drag gesture doesn't jump around inside the mp3 file hundreds of times per second.</p>
     </section>
     <section>
       <h3>🔥 Calories</h3>
@@ -8501,6 +8592,41 @@ function handleRunTrackEnded(){
   if (rsState && rsState.zombie){ handleZombieTrackEnded(); return; }
   if (rsCurrentAudioPool) playNextTrackFromPool(rsCurrentAudioPool);
 }
+// GEVRAAGD DOOR DE GEBRUIKER: handmatig een track overslaan tijdens Vrije Run/Doelrun/AI Coach — expliciet
+// NIET bij Zombie Run (eigen verhaal-gestuurde audio, geen "volgende track" concept) of EVY (1 doorlopende
+// aflevering, zie de scrubslider i.p.v. skip-knoppen). dir = 1 (volgende) of -1 (vorige).
+// "Volgende" hergebruikt gewoon playNextTrackFromPool() (zelfde als handleRunTrackEnded hierboven): de
+// idx-teller wijst na de huidige track altijd al naar de volgende, dus nogmaals aanroepen speelt precies die
+// af. "Vorige" zet de idx-teller eerst 2 terug (1 voor de huidige track die al 1x de teller ophoogde, nog 1
+// voor de track die we willen horen) zodat diezelfde functie na de aanroep weer correct naar "de track erna"
+// wijst -- (% + length) % length voorkomt een negatieve modulo-uitkomst in JS.
+function skipRunTrack(dir){
+  if (!rsState || rsState.zombie || rsState.evyDist || rsState.paused || !rsCurrentAudioPool) return;
+  if (rsCurrentAudioPool === 'music' && runMusicFiles.length){
+    if (dir < 0) runMusicIdx = ((runMusicIdx - 2) % runMusicFiles.length + runMusicFiles.length) % runMusicFiles.length;
+    playNextTrackFromPool('music');
+  } else if (rsCurrentAudioPool === 'podcast' && runPodcastFiles.length){
+    if (dir < 0) runPodcastIdx = ((runPodcastIdx - 2) % runPodcastFiles.length + runPodcastFiles.length) % runPodcastFiles.length;
+    playNextTrackFromPool('podcast');
+  }
+}
+$('rsMusicPrevBtn').addEventListener('click', () => skipRunTrack(-1));
+$('rsMusicNextBtn').addEventListener('click', () => skipRunTrack(1));
+// ---------- EVY-scrubslider: zoeken binnen de lopende aflevering (runMusicPlayer) ----------
+// rsEvySeekDragging blokkeert de elke-seconde-update vanuit updateRunSessionUI() zodat die niet de vinger
+// van de gebruiker van de balk "wegduwt" terwijl die aan het slepen is; 'change' (niet 'input') commit pas
+// de effectieve seek zodra de gebruiker loslaat/de pijltjestoets verwerkt is, zodat er niet honderden keren
+// per sleepbeweging in het mp3-bestand gesprongen wordt.
+let rsEvySeekDragging = false;
+$('rsEvySeekInput').addEventListener('pointerdown', () => { rsEvySeekDragging = true; });
+$('rsEvySeekInput').addEventListener('input', () => { $('rsEvySeekCur').textContent = fmtMMSS(parseFloat($('rsEvySeekInput').value) || 0); });
+$('rsEvySeekInput').addEventListener('change', () => {
+  const player = $('runMusicPlayer');
+  const v = parseFloat($('rsEvySeekInput').value);
+  if (player.duration && isFinite(player.duration) && isFinite(v)) player.currentTime = v;
+  rsEvySeekDragging = false;
+});
+['pointerup','pointercancel'].forEach(ev => $('rsEvySeekInput').addEventListener(ev, () => { rsEvySeekDragging = false; }));
 
 // ---------- Zombie Run: verhaal-gestuurde looptocht met achtervolgingen ----------
 // Mappenstructuur (zelf te uploaden naast index.html, exact zoals in de analyse):
@@ -10708,19 +10834,33 @@ let rsMotionListenerActive = false;
 // data" en mag het stappensignaal het van de GPS-drempel overnemen.
 let rsLastMotionEventAt = null;
 const RUN_STEP_WINDOW_SEC = 4;          // "recent" genoeg om als "nu in beweging" te tellen
-const RUN_STEP_MIN_INTERVAL_MS = 250;   // verwerpt te snel opeenvolgende "dubbele" pieken (niemand doet >4 stappen/sec)
-const RUN_STEP_PEAK_THRESHOLD = 1.8;    // m/s² boven het lopend gemiddelde -- typische voetstap-piek
+const RUN_STEP_MIN_INTERVAL_MS = 250;   // standaardwaarde -- instelbaar bij Instellingen → 🔬 Geavanceerd: stilstand-detectie, zie stepMinIntervalMs() hieronder
+const RUN_STEP_PEAK_THRESHOLD = 1.8;    // standaardwaarde -- instelbaar, zie stepPeakThreshold() hieronder
 const RUN_STEP_SENSOR_FRESH_MS = 3000;  // langer dan dit geen nieuw event gezien -> sensor beschouwen als "gestopt"/onbetrouwbaar
+// GEVRAAGD DOOR DE GEBRUIKER (vervolg op de gevoeligheids-discussie hierboven): "instelbaar/loggen maken zodat
+// je na echt gebruik kan bijsturen" -- deze 3 helpers lezen de instelbare Instellingen-waarde met de constante
+// hierboven als terugval, exact hetzelfde patroon als bv. appSettings.avoidBufferM || 18 elders in dit bestand.
+function stepPeakThreshold(){ return appSettings.stepPeakThreshold || RUN_STEP_PEAK_THRESHOLD; }
+function stepMinIntervalMs(){ return appSettings.stepMinIntervalMs || RUN_STEP_MIN_INTERVAL_MS; }
+function stationaryNoiseThresholdKmh(){ return appSettings.stationaryNoiseThresholdKmh || RUN_STATIONARY_NOISE_THRESHOLD_KMH; }
+// Voor de diagnostische sensor-log (zie appSettings.stepDebugLogEnabled): de meest recente ruwe magnitude en
+// of die tot een gedetecteerde stap leidde -- rsLastMotionWasStep wordt door handleRunGpsUpdate() hieronder
+// telkens na het loggen weer teruggezet, zodat elke logregel enkel "sinds de vorige gps-fix" weergeeft.
+let rsLastMotionMag = null;
+let rsLastMotionWasStep = false;
+let rsStepDebugLog = [];
 function handleRunDeviceMotion(e){
   rsLastMotionEventAt = Date.now();
   const a = (e.acceleration && e.acceleration.x != null) ? e.acceleration : e.accelerationIncludingGravity;
   if (!a || a.x == null) return;
   const mag = Math.sqrt((a.x||0)**2 + (a.y||0)**2 + (a.z||0)**2);
+  rsLastMotionMag = mag;
   if (rsMotionBaseline == null){ rsMotionBaseline = mag; return; }
   const now = Date.now();
   const last = rsStepTimestamps[rsStepTimestamps.length - 1];
-  if (mag - rsMotionBaseline > RUN_STEP_PEAK_THRESHOLD && (!last || now - last > RUN_STEP_MIN_INTERVAL_MS)){
+  if (mag - rsMotionBaseline > stepPeakThreshold() && (!last || now - last > stepMinIntervalMs())){
     rsStepTimestamps.push(now);
+    rsLastMotionWasStep = true;
     const cutoff = now - RUN_STEP_WINDOW_SEC * 4000;
     while (rsStepTimestamps.length && rsStepTimestamps[0] < cutoff) rsStepTimestamps.shift();
   }
@@ -10728,19 +10868,67 @@ function handleRunDeviceMotion(e){
   // meteen (deels) in de eigen baseline verrekend worden, waardoor de piek zichzelf verdoezelt.
   rsMotionBaseline += (mag - rsMotionBaseline) * 0.1;
 }
+// GEVRAAGD DOOR DE GEBRUIKER (vervolg op de stilstand-detectie hierboven): tot nu toe viel de app bij het
+// ontbreken van een bruikbare bewegingssensor stilzwijgend terug op de (zwakkere) GPS-drempel, zonder dat je
+// dat ooit te zien kreeg -- exact hetzelfde soort "werkt het wel echt?"-probleem als bij de Wake Lock (zie
+// navWakeLockToastShownThisSession hieronder), en met dezelfde eenmalige-toast-aanpak opgelost: één duidelijke
+// melding per sessie zodra vaststaat dat de stapsensor niet (meer) levert, zodat je weet dat de stilstand-
+// onderdrukking op dat moment op de minder betrouwbare GPS-fallback draait i.p.v. op de sterkere stapsensor.
+let rsStepSensorToastShown = false;
 async function startRunStepDetection(){
   rsStepTimestamps = [];
   rsMotionBaseline = null;
   rsLastMotionEventAt = null;
-  if (typeof DeviceMotionEvent === 'undefined') return;
+  rsStepSensorToastShown = false;
+  // Vers beginnen bij elke nieuwe run -- "tijdens je volgende run" (zie Instellingen → 🔬 Geavanceerd:
+  // stilstand-detectie) betekent 1 log per sessie, niet een eeuwig doorgroeiende log over meerdere runs heen.
+  if (appSettings.stepDebugLogEnabled) rsStepDebugLog = [];
+  if (typeof updateStepDebugExportUI === 'function') updateStepDebugExportUI();
+  if (typeof DeviceMotionEvent === 'undefined'){
+    rsStepSensorToastShown = true;
+    toast(curLang()==='en'
+      ? '⚠️ No motion sensor on this device — falling back to GPS for stillness detection'
+      : '⚠️ Geen bewegingssensor op dit toestel — valt terug op GPS voor stilstand-detectie', 4000);
+    return;
+  }
   try{
     if (typeof DeviceMotionEvent.requestPermission === 'function'){
       const perm = await DeviceMotionEvent.requestPermission();
-      if (perm !== 'granted') return;
+      if (perm !== 'granted'){
+        rsStepSensorToastShown = true;
+        toast(curLang()==='en'
+          ? '⚠️ Motion sensor permission denied — falling back to GPS for stillness detection'
+          : '⚠️ Toestemming voor bewegingssensor geweigerd — valt terug op GPS voor stilstand-detectie', 4000);
+        return;
+      }
     }
     window.addEventListener('devicemotion', handleRunDeviceMotion);
     rsMotionListenerActive = true;
-  } catch(e){ /* geen bewegingssensor beschikbaar of geweigerd -- reallyStill valt dan terug op GPS alleen */ }
+    scheduleRunStepSensorStatusCheck();
+  } catch(e){
+    // geen bewegingssensor beschikbaar of geweigerd -- reallyStill valt dan terug op GPS alleen
+    rsStepSensorToastShown = true;
+    toast(curLang()==='en'
+      ? '⚠️ Motion sensor unavailable — falling back to GPS for stillness detection'
+      : '⚠️ Bewegingssensor niet beschikbaar — valt terug op GPS voor stilstand-detectie', 4000);
+  }
+}
+// Ná het opstarten van de listener nog 1x checken of de sensor ook écht data levert: sommige toestellen/
+// browsers registreren de listener probleemloos maar vuren daarna nooit een devicemotion-event af (of
+// stoppen daar snel weer mee) -- exact het scenario waar reallyStill stilzwijgend op GPS terugvalt zonder dat
+// je dat kan zien. recentStepsDetected() geeft null terug zodra er niets vers genoeg binnenkwam (zie
+// RUN_STEP_SENSOR_FRESH_MS hierboven); de extra 1500ms marge bovenop die versheidstermijn voorkomt dat deze
+// check zichzelf te vroeg, nog vóór het eerste event kon binnenkomen, als "geen data" beschouwt.
+function scheduleRunStepSensorStatusCheck(){
+  setTimeout(() => {
+    if (!rsState || rsStepSensorToastShown) return; // sessie kan intussen gestopt zijn, of de melding werd al elders getoond
+    if (recentStepsDetected(RUN_STEP_WINDOW_SEC) === null){
+      rsStepSensorToastShown = true;
+      toast(curLang()==='en'
+        ? '⚠️ No data from the motion sensor yet — falling back to GPS for stillness detection'
+        : '⚠️ Nog geen data van de bewegingssensor — valt terug op GPS voor stilstand-detectie', 4000);
+    }
+  }, RUN_STEP_SENSOR_FRESH_MS + 1500);
 }
 function stopRunStepDetection(){
   if (rsMotionListenerActive) window.removeEventListener('devicemotion', handleRunDeviceMotion);
@@ -10792,10 +10980,27 @@ function handleRunGpsUpdate(pos){
   // gladgestreken snelheid" als bevestigde stilstand gelden -- anders (bv. de allereerste fix van de sessie)
   // is er gewoon nog geen uitspraak mogelijk, en moet reallyStill NIET stilstand aannemen (zie r4/r5 hieronder:
   // een meteen beschikbare chip-snelheid mag niet naar 0 herschreven worden puur omdat het venster nog leeg is).
+  const gpsSmoothedKmh6s = smoothedSpeedKmh(rsAutoPauseBreadcrumbs, 6);
   const gpsLooksStill = autoPauseWindowHasEnoughData(rsAutoPauseBreadcrumbs, 6)
-    && smoothedSpeedKmh(rsAutoPauseBreadcrumbs, 6) < RUN_STATIONARY_NOISE_THRESHOLD_KMH;
+    && gpsSmoothedKmh6s < stationaryNoiseThresholdKmh();
   const stepsSeen = recentStepsDetected(RUN_STEP_WINDOW_SEC);
   const reallyStill = stepsSeen === null ? gpsLooksStill : !stepsSeen;
+  // Diagnostische sensor-log (opt-in, Instellingen → 🔬 Geavanceerd: stilstand-detectie) -- 1 regel per
+  // gps-fix (~1x/sec), zodat je na een echte run kan nagaan of bovenstaande drempels goed zaten.
+  // rsLastMotionWasStep vat "was er een stap SINDS de vorige logregel?" -- vandaar de reset erna.
+  if (appSettings.stepDebugLogEnabled && rsState){
+    rsStepDebugLog.push({
+      t: Math.round((Date.now() - (rsState.startedAt || Date.now())) / 1000),
+      mag: rsLastMotionMag != null ? Math.round(rsLastMotionMag * 100) / 100 : null,
+      baseline: rsMotionBaseline != null ? Math.round(rsMotionBaseline * 100) / 100 : null,
+      stepSinceLastLog: rsLastMotionWasStep,
+      gpsSmoothedKmh: Math.round(gpsSmoothedKmh6s * 100) / 100,
+      gpsLooksStill, stepsSeen, reallyStill
+    });
+    if (rsStepDebugLog.length > 20000) rsStepDebugLog.shift(); // veiligheidsklep bij een erg lange sessie
+    rsLastMotionWasStep = false;
+    if (typeof updateStepDebugExportUI === 'function') updateStepDebugExportUI();
+  }
   let speedKmh = 0;
   if (rsState.lastPos && pos.coords.accuracy < 30){
     const d = haversine(rsState.lastPos.coords.latitude, rsState.lastPos.coords.longitude, pos.coords.latitude, pos.coords.longitude);
@@ -11079,6 +11284,26 @@ function updateRunSessionUI(){
   $('rsPace').textContent = (km > 0.05 && runningMinutes > 0) ? fmtMMSS((runningMinutes / km) * 60) : '–:–';
   if ($('rsAvgSpeed')) $('rsAvgSpeed').textContent = (km > 0.05 && elapsedSec > 0) ? (km / (elapsedSec / 3600)).toFixed(1) : '–';
   $('rsSplitLabel').textContent = (Math.floor(km) + 1) + ' km';
+  // Muziek-skip-knoppen: enkel bij gewone runs (Vrije Run/Doelrun/AI Coach) mét actieve muziek/podcast-pool,
+  // en niet terwijl gepauzeerd (er speelt dan toch niets af om tussen te wisselen).
+  const showMusicSkip = !rsState.zombie && !rsState.evyDist && !rsState.paused && !!rsCurrentAudioPool;
+  $('rsMusicBar').classList.toggle('hidden', !showMusicSkip);
+  if (showMusicSkip){
+    $('rsMusicNowPlaying').textContent = '🎵 ' + (rsCurrentAudioPool === 'podcast' ? (en ? 'Podcast' : 'Podcast') : (en ? 'Music' : 'Muziek'));
+  }
+  // EVY-scrubslider: enkel tijdens een EVY-sessie, en enkel bijwerken als de gebruiker de balk niet net
+  // vasthoudt (anders vecht deze elke-seconde-update met de vinger van de gebruiker, zie rsEvySeekDragging).
+  const showEvySeek = !!rsState.evyDist;
+  $('rsEvySeekBar').classList.toggle('hidden', !showEvySeek);
+  if (showEvySeek && !rsEvySeekDragging){
+    const player = $('runMusicPlayer');
+    if (player.duration && isFinite(player.duration)){
+      $('rsEvySeekInput').max = player.duration;
+      $('rsEvySeekInput').value = player.currentTime;
+      $('rsEvySeekCur').textContent = fmtMMSS(player.currentTime);
+      $('rsEvySeekDur').textContent = fmtMMSS(player.duration);
+    }
+  }
 }
 $('rsSplitBtn').addEventListener('click', () => {
   if (!rsState) return;
@@ -14528,6 +14753,10 @@ async function loadSettings(){
   $('settingShakeKm').value = appSettings.shakeKm || 30;
   $('settingAvoidBufferM').value = appSettings.avoidBufferM || 18;
   $('settingMaxOverlapPct').value = appSettings.maxOverlapPct || 8;
+  $('settingStepPeakThreshold').value = appSettings.stepPeakThreshold || RUN_STEP_PEAK_THRESHOLD;
+  $('settingStepMinIntervalMs').value = appSettings.stepMinIntervalMs || RUN_STEP_MIN_INTERVAL_MS;
+  $('settingStationaryNoiseKmh').value = appSettings.stationaryNoiseThresholdKmh || RUN_STATIONARY_NOISE_THRESHOLD_KMH;
+  $('settingStepDebugLog').checked = !!appSettings.stepDebugLogEnabled;
   if (typeof updateVertrekBtnStyle === 'function') updateVertrekBtnStyle();
   $('settingFallDetection').checked = !!appSettings.fallDetectionOn;
   $('sosContactNumber').value = appSettings.sosContactNumber || '';
@@ -14580,6 +14809,7 @@ async function loadSettings(){
   $('poiParking').checked = !!appSettings.poiLayers.parking;
   $('poiHotel').checked = !!appSettings.poiLayers.hotel;
   $('settingShowPoiDetails').checked = !!appSettings.showPoiDetails;
+  if (typeof updateStepDebugExportUI === 'function') updateStepDebugExportUI();
   applySettings();
 }
 function saveSettings(){ storageSet(SETTINGS_KEY, JSON.stringify(appSettings)); applySettings(); }
@@ -14725,6 +14955,49 @@ $('settingsLoopAdvancedResetBtn').addEventListener('click', () => {
   $('settingAvoidBufferM').value = 18;
   $('settingMaxOverlapPct').value = 30;
   toast(curLang()==='en' ? 'Reset to defaults' : 'Teruggezet naar standaardwaarden', 2000);
+});
+$('settingStepPeakThreshold').addEventListener('change', (e) => { appSettings.stepPeakThreshold = parseFloat(e.target.value) || RUN_STEP_PEAK_THRESHOLD; saveSettings(); });
+$('settingStepMinIntervalMs').addEventListener('change', (e) => { appSettings.stepMinIntervalMs = parseFloat(e.target.value) || RUN_STEP_MIN_INTERVAL_MS; saveSettings(); });
+$('settingStationaryNoiseKmh').addEventListener('change', (e) => { appSettings.stationaryNoiseThresholdKmh = parseFloat(e.target.value) || RUN_STATIONARY_NOISE_THRESHOLD_KMH; saveSettings(); });
+$('settingsStillnessResetBtn').addEventListener('click', () => {
+  appSettings.stepPeakThreshold = RUN_STEP_PEAK_THRESHOLD;
+  appSettings.stepMinIntervalMs = RUN_STEP_MIN_INTERVAL_MS;
+  appSettings.stationaryNoiseThresholdKmh = RUN_STATIONARY_NOISE_THRESHOLD_KMH;
+  saveSettings();
+  $('settingStepPeakThreshold').value = RUN_STEP_PEAK_THRESHOLD;
+  $('settingStepMinIntervalMs').value = RUN_STEP_MIN_INTERVAL_MS;
+  $('settingStationaryNoiseKmh').value = RUN_STATIONARY_NOISE_THRESHOLD_KMH;
+  toast(curLang()==='en' ? 'Reset to defaults' : 'Teruggezet naar standaardwaarden', 2000);
+});
+$('settingStepDebugLog').addEventListener('change', (e) => {
+  appSettings.stepDebugLogEnabled = e.target.checked;
+  saveSettings();
+  if (e.target.checked) rsStepDebugLog = []; // vers beginnen -- een oude log uit een eerdere sessie mag niet blijven doorlekken in de export
+  updateStepDebugExportUI();
+});
+// GEVRAAGD DOOR DE GEBRUIKER: "een debug-log/export van de ruwe sensorwaarden" -- exporteert de in-memory
+// rsStepDebugLog (gevuld door handleRunGpsUpdate() hierboven, 1 regel per gps-fix) als CSV, met dezelfde
+// downloadBlob()-helper als de andere exports (GPX/JSON/etc.) in dit bestand.
+function updateStepDebugExportUI(){
+  const btn = $('settingsStepDebugExportBtn');
+  const status = $('settingsStepDebugExportStatus');
+  if (!btn || !status) return;
+  const en = curLang()==='en';
+  if (rsStepDebugLog.length){
+    btn.disabled = false;
+    status.textContent = en ? `${rsStepDebugLog.length} logged data points, ready to export.` : `${rsStepDebugLog.length} gelogde datapunten, klaar om te exporteren.`;
+  } else {
+    btn.disabled = true;
+    status.textContent = appSettings.stepDebugLogEnabled
+      ? (en ? 'Logging is on — data appears here once you start a run.' : 'Loggen staat aan — data verschijnt hier zodra je een run start.')
+      : tr('stillnessDebugExportNone');
+  }
+}
+$('settingsStepDebugExportBtn').addEventListener('click', () => {
+  if (!rsStepDebugLog.length) return;
+  const header = 't_sec,mag,baseline,stepSinceLastLog,gpsSmoothedKmh,gpsLooksStill,stepsSeen,reallyStill';
+  const rows = rsStepDebugLog.map(r => [r.t, r.mag, r.baseline, r.stepSinceLastLog, r.gpsSmoothedKmh, r.gpsLooksStill, r.stepsSeen, r.reallyStill].join(','));
+  downloadBlob(header + '\n' + rows.join('\n'), `stapsensor-log-${new Date().toISOString().slice(0,19).replace(/[:T]/g,'-')}.csv`, 'text/csv');
 });
 $('settingFallDetection').addEventListener('change', (e) => { appSettings.fallDetectionOn = e.target.checked; saveSettings(); if (e.target.checked) requestFallDetectionPermission(); else stopFallDetection(); });
 $('sosContactNumber').addEventListener('change', (e) => { appSettings.sosContactNumber = e.target.value.trim(); saveSettings(); });

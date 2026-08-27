@@ -364,6 +364,10 @@ function renderStatus(){
   const musicSrc = shortSrc(doc.getElementById('runMusicPlayer'));
   const bgSrc = shortSrc(doc.getElementById('zombieMusicPlayer'));
   const fxSrc = shortSrc(doc.getElementById('zombieEffectsPlayer'));
+  // De app gebruikt sinds een eerdere sessie z.effectQueue (een array met wachtende cue-bestanden) i.p.v.
+  // het oudere, enkelvoudige veld z.queuedEffectFile — dat laatste bestaat niet meer in index.html, dus
+  // deze regel is bijgewerkt om weer de echte wachtrij te tonen (in plaats van altijd "leeg").
+  const queue = Array.isArray(z.effectQueue) ? z.effectQueue : [];
   document.getElementById('statusBox').innerHTML = `
     <span class="pill">${z.phase}</span> &nbsp; ${z.finished ? (z.died ? '<span class="bad">💀 gestorven</span>' : '<span class="ok">✅ afgerond</span>') : ''}<br>
     Levens: <b>${z.lives}/${z.livesStart}</b> &nbsp; Score: <b>${z.score}</b> &nbsp; Bonus: <b>${(z.totalBonusEarned||0).toFixed(1)}</b><br>
@@ -372,7 +376,7 @@ function renderStatus(){
     <span style="color:#8ba17e">verhaal/cue-speler:</span> ${musicSrc}<br>
     <span style="color:#8ba17e">achtergrondmuziek:</span> ${bgSrc}<br>
     <span style="color:#8ba17e">fx-kanaal</span> <span style="color:#666; font-size:10.5px;">(powerup / enge geluiden dichtbij / zombies-in-de-verte / winner-looser delen dit ene kanaal, max 1 tegelijk)</span>: ${fxSrc}<br>
-    ${z.queuedEffectFile ? `<span style="color:#fbbf24">⏳ wachtrij (speelt zodra verhaal/alarm klaar is):</span> ${decodeURIComponent(z.queuedEffectFile.split('/').slice(-2).join('/'))}` : '<span style="color:#666">⏳ wachtrij: leeg</span>'}
+    ${queue.length ? `<span style="color:#fbbf24">⏳ wachtrij (${queue.length}, speelt zodra verhaal/alarm klaar is):</span> ${decodeURIComponent(String(queue[0]).split('/').slice(-2).join('/'))}` : '<span style="color:#666">⏳ wachtrij: leeg</span>'}
   `;
 }
 </script>
