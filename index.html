@@ -2841,6 +2841,7 @@
       <label class="settings-check"><input type="checkbox" id="settingShowCompassBtn" checked> <span><span data-i18n="settingsShowCompassBtn">🧭 Toon kompasknop bovenop de kaart</span></span></label>
       <div class="settings-subnote" style="margin:10px 0 4px;"><span data-i18n="settingsMapStyleSub">Kaartstijl</span></div>
       <label class="settings-radio"><input type="radio" name="mapStyle" value="standard" checked> <span><span data-i18n="settingsMapStandard">🗺️ Standaard</span></span></label>
+      <div class="settings-subnote"><span data-i18n="settingsCartoSub2">Gebruikt gratis OpenStreetMap-tegels. Optioneel: vul een gratis CARTO-sleutel in bij 🔑 API-sleutels hieronder voor de iets strakkere "Voyager"-kaartstijl.</span></div>
       <label class="settings-radio"><input type="radio" name="mapStyle" value="cyclosm"> <span><span data-i18n="settingsMapCyclosm">🚴 Fietskaart (CyclOSM) — toont fietspaden/-netwerken duidelijker</span></span></label>
       <label class="settings-radio"><input type="radio" name="mapStyle" value="opentopo"> <span><span data-i18n="settingsMapTopo">⛰️ OpenTopoMap — hoogtelijnen, ideaal voor wandelen/bergfietsen</span></span></label>
       <label class="settings-radio"><input type="radio" name="mapStyle" value="thunderforest"> <span><span data-i18n="settingsMapThunder">🚵 OpenCycleMap (Thunderforest) — toont ook mountainbike-paden + wegdektype</span></span></label>
@@ -3042,7 +3043,10 @@
       <h4><span data-i18n="settingsApiKeysHeading">🔑 API-sleutels</span></h4>
       <p class="settings-note"><span data-i18n="settingsApiKeysNote">Alle optionele gratis sleutels op 1 plek. Elke sleutel schakelt een specifiek extraatje elders in de app vrij — zie de verwijzing bij elk veld.</span></p>
 
-      <div class="settings-subnote" style="margin-top:4px;"><span data-i18n="settingsThunderforestSub">Thunderforest — voor de OpenCycleMap-kaartstijl hierboven. Gratis account op thunderforest.com.</span></div>
+      <div class="settings-subnote" style="margin-top:4px;"><span data-i18n="settingsCartoSub">CARTO — voor de fraaiere "Voyager"-kaartstijl bij de standaard-kaartstijl hierboven. Volledig optioneel: zonder sleutel gebruikt de app gewoon (ook gratis, geen sleutel nodig) OpenStreetMap-tegels. Gratis sleutel via carto.com/basemaps/apikey, geen account nodig, ±1 minuut.</span></div>
+      <input type="text" id="cartoKeyInput" placeholder="Jouw gratis CARTO API-sleutel (optioneel)…" data-i18n-placeholder="phCartoKey" class="settings-text-input">
+
+      <div class="settings-subnote" style="margin-top:14px;"><span data-i18n="settingsThunderforestSub">Thunderforest — voor de OpenCycleMap-kaartstijl hierboven. Gratis account op thunderforest.com.</span></div>
       <input type="text" id="thunderforestKeyInput" placeholder="Jouw gratis Thunderforest API-sleutel…" data-i18n-placeholder="phThunderforestKey" class="settings-text-input">
 
       <div class="settings-subnote" style="margin-top:14px;"><span data-i18n="settingsGraphhopperSub">GraphHopper — voor de GraphHopper-routeringsengine hieronder. Gratis account op graphhopper.com.</span></div>
@@ -4098,8 +4102,8 @@ function useTileProvider(index){
   }, 5000);
 }
 let lastAppliedMapStyleKey = null;
-function setMapStyle(style, thunderforestKey){
-  const cacheKey = style + '|' + (thunderforestKey || '');
+function setMapStyle(style, thunderforestKey, cartoKey){
+  const cacheKey = style + '|' + (thunderforestKey || '') + '|' + (cartoKey || '');
   // Elke saveSettings() (dus élke instelling, niet enkel kaartgerelateerde) riep dit vroeger aan, wat
   // steeds de volledige tegellaag verwijderde en opnieuw opbouwde — vandaar het kort grijs worden van de
   // kaart bij bv. de Vertrek-toggle. Nu enkel nog echt herladen als de kaartstijl zelf gewijzigd is.
@@ -4115,8 +4119,20 @@ function setMapStyle(style, thunderforestKey){
     activeTileProviders = TILE_PROVIDERS_STANDARD;
   } else if (style === 'opentopo'){
     activeTileProviders = TILE_PROVIDERS_OPENTOPO;
+  } else if (style === 'cyclosm'){
+    activeTileProviders = TILE_PROVIDERS_CYCLOSM;
+  } else if (cartoKey){
+    // Optionele, gratis CARTO-sleutel (zie Instellingen → 🔑 API-sleutels): geeft de standaard-kaartstijl de
+    // fraaiere "Voyager"-look terug, met de sleutelloze OSM-tegels gewoon nog als terugval erna — dezelfde
+    // opbouw als de Thunderforest-tak hierboven. Zonder sleutel (het gros van de gebruikers) blijft dit
+    // gewoon TILE_PROVIDERS_STANDARD, dat sinds 27/8/2026 zelf al geen CARTO meer bevat (zie 🐛 Bugfixes
+    // 27/8/2026 in de Technische werking-uitleg voor waarom: CARTO's tegels vereisen sinds kort een sleutel).
+    activeTileProviders = [
+      { url:`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=${cartoKey}`, options:{ subdomains:'abcd', maxZoom:19, attribution:'© OpenStreetMap, © CARTO', detectRetina:true } },
+      ...TILE_PROVIDERS_STANDARD
+    ];
   } else {
-    activeTileProviders = style === 'cyclosm' ? TILE_PROVIDERS_CYCLOSM : TILE_PROVIDERS_STANDARD;
+    activeTileProviders = TILE_PROVIDERS_STANDARD;
   }
   tileProviderIndex = 0;
   useTileProvider(0);
@@ -6727,7 +6743,7 @@ async function runOfflineDiagnostics(){
 // ---------- Instellingen: thema, kompasknop, wegtype-voorkeuren ----------
 const SETTINGS_KEY = 'app_settings_v1';
 let appSettings = {
-  theme:'default', showCompassBtn:true, orsKey:'', graphhopperKey:'', geoapifyKey:'', plantnetKey:'', geminiKey:'', otmKey:'', bikeType:'regular', mapStyle:'standard', thunderforestKey:'',
+  theme:'default', showCompassBtn:true, orsKey:'', graphhopperKey:'', geoapifyKey:'', plantnetKey:'', geminiKey:'', otmKey:'', bikeType:'regular', mapStyle:'standard', thunderforestKey:'', cartoKey:'',
   dashTextSize:'normal', dashBold:true, largeNodesAccessibility:false, offRouteDist:35, autoReroute:false, silentReroute:false,
   overlays:{ cycling:false, hiking:false, mtb:false },
   poiLayers:{ cafe:false, restaurant:false, bakery:false, supermarket:false, pharmacy:false, bike:false, water:false, toilet:false, money:false, camping:false, charging:false, playground:false, parking:false, hotel:false }, showPoiDetails:false,
@@ -7279,6 +7295,8 @@ const TRANSLATIONS = {
   settingsMapStyleSub: { nl:'Kaartstijl', en:'Map style' },
   settingsThunderforestSub: { nl:'Thunderforest — voor de OpenCycleMap-kaartstijl hierboven. Gratis account op thunderforest.com.', en:'Thunderforest — for the OpenCycleMap map style above. Free account at thunderforest.com.' },
   settingsThunderforestSub2: { nl:'Vereist een gratis sleutel — vul die in bij 🔑 API-sleutels hieronder.', en:'Requires a free key — fill it in under 🔑 API keys below.' },
+  settingsCartoSub: { nl:'CARTO — voor de fraaiere "Voyager"-kaartstijl bij de standaard-kaartstijl hierboven. Volledig optioneel: zonder sleutel gebruikt de app gewoon (ook gratis, geen sleutel nodig) OpenStreetMap-tegels. Gratis sleutel via carto.com/basemaps/apikey, geen account nodig, ±1 minuut.', en:'CARTO — for the nicer "Voyager" map style with the standard map style above. Fully optional: without a key the app just uses (also free, no key needed) OpenStreetMap tiles. Free key via carto.com/basemaps/apikey, no account needed, ~1 minute.' },
+  settingsCartoSub2: { nl:'Gebruikt gratis OpenStreetMap-tegels. Optioneel: vul een gratis CARTO-sleutel in bij 🔑 API-sleutels hieronder voor de iets strakkere "Voyager"-kaartstijl.', en:'Uses free OpenStreetMap tiles. Optional: fill in a free CARTO key under 🔑 API keys below for the slightly sleeker "Voyager" map style.' },
   settingsGraphhopperSub: { nl:'GraphHopper — voor de GraphHopper-routeringsengine hieronder. Gratis account op graphhopper.com.', en:'GraphHopper — for the GraphHopper routing engine below. Free account at graphhopper.com.' },
   settingsGraphhopperSub2: { nl:'Vul je sleutel in bij 🔑 API-sleutels hierboven.', en:'Fill in your key under 🔑 API keys above.' },
   settingsOrsSub: { nl:'OpenRouteService — voor wegtype-routering, fietstype-onverhard-vermijding, en de "harde vermijding" bij rondrit/omweg. Gratis account op openrouteservice.org (2000 aanvragen/dag inbegrepen).', en:'OpenRouteService — for road-type routing, bike-type unpaved avoidance, and "hard avoidance" in round-trip/detour. Free account at openrouteservice.org (2000 requests/day included).' },
@@ -7582,6 +7600,7 @@ const TRANSLATIONS = {
 
   phNameOptional: { nl:'Naam om te bewaren (optioneel)', en:'Name to save (optional)' },
   phThunderforestKey: { nl:'Jouw gratis Thunderforest API-sleutel…', en:'Your free Thunderforest API key…' },
+  phCartoKey: { nl:'Jouw gratis CARTO API-sleutel (optioneel)…', en:'Your free CARTO API key (optional)…' },
   phGraphhopperKey: { nl:'Jouw gratis GraphHopper API-sleutel…', en:'Your free GraphHopper API key…' },
   phOrsKey: { nl:'Jouw gratis OpenRouteService API-sleutel…', en:'Your free OpenRouteService API key…' },
   hintInitial: { nl:'Zoom of pan naar je gebied, tik dan op "Laad knooppunten"', en:'Zoom or pan to your area, then tap "Load nodes"' },
@@ -8019,7 +8038,7 @@ const DEV_NOTES_CONTENT = {
     <section>
       <h3>🐛 Bugfixes 27/8/2026: dubbele navigatie-aankondiging, kaarttegels, loopscherm-layout</h3>
       <p><b>Opgeloste bug — spraak herhaalde zichzelf (gemeld: "over 40 meter" die halverwege afbreekt en dan een paar seconden later helemaal opnieuw klinkt, mét de afslagrichting erbij).</b> <code>speak()</code> (navigatie) en <code>speakForRun()</code> (hardlopen) wachtten, wanneer de stemmenlijst van <code>speechSynthesis</code> bij de allereerste aanroep nog niet geladen was, via een eenmalige <code>'voiceschanged'</code>-listener op die stemmenlijst — maar riepen ernaast, buiten die "if" om, ook nog onvoorwaardelijk meteen zelf <code>window.speechSynthesis.speak(u)</code> aan. Dezelfde <code>SpeechSynthesisUtterance</code> werd zo in de praktijk 2x ingepland: 1x meteen (vaak zonder stem, soms geluidloos), en nogmaals zodra <code>'voiceschanged'</code> alsnog afging. Sommige toestellen/engines herstarten een fragment i.p.v. de dubbele aanroep te negeren, wat precies als "afgebroken en dan herhaald" klinkt. Nu een if/else: ofwel wachten op <code>'voiceschanged'</code>, ofwel meteen spreken, nooit allebei.</p>
-      <p><b>Opgeloste bug — "API KEY REQUIRED" op de kaart.</b> Alle kaartlagen in dit bestand gebruikten CARTO's rastertiles/voyager-stijl (<code>basemaps.cartocdn.com</code>) als (eerste) bron. CARTO vereist sinds kort een eigen, gratis API-sleutel voor die tegels; zonder sleutel levert hun server gewoon een "geldige" PNG-afbeelding terug met daarop de tekst "API KEY REQUIRED" + hun URL. Omdat dat technisch een succesvol geladen tegel is, dacht de bestaande fallback-watchdog in <code>useTileProvider()</code> (die normaal na 5s zonder <code>tileload</code>-event naar de volgende bron in <code>TILE_PROVIDERS_STANDARD</code>/<code>_CYCLOSM</code>/<code>_OPENTOPO</code> overschakelt) dat alles gewoon in orde was, en switchte dus nooit weg. Vijf andere, kleinere kaartjes elders in dit bestand (live-locatie-viewer, RunCoach-minikaartje tijdens hardlopen, Garmin-radar, weerradar, analyse-kaart na een rit) hadden CARTO daarnaast nog eens rechtstreeks hardgecodeerd staan, volledig buiten dat fallback-systeem om. Alle 8 plekken gebruiken nu enkel nog sleutelloze OpenStreetMap-tegels (<code>tile.openstreetmap.org</code>/<code>.de</code>) — de kaart oogt hierdoor iets minder "Voyager-gestileerd" dan voorheen, maar vereist geen enkele configuratie en kan nooit meer op deze manier vastlopen.</p>
+      <p><b>Opgeloste bug — "API KEY REQUIRED" op de kaart.</b> Alle kaartlagen in dit bestand gebruikten CARTO's rastertiles/voyager-stijl (<code>basemaps.cartocdn.com</code>) als (eerste) bron. CARTO vereist sinds kort een eigen, gratis API-sleutel voor die tegels; zonder sleutel levert hun server gewoon een "geldige" PNG-afbeelding terug met daarop de tekst "API KEY REQUIRED" + hun URL. Omdat dat technisch een succesvol geladen tegel is, dacht de bestaande fallback-watchdog in <code>useTileProvider()</code> (die normaal na 5s zonder <code>tileload</code>-event naar de volgende bron in <code>TILE_PROVIDERS_STANDARD</code>/<code>_CYCLOSM</code>/<code>_OPENTOPO</code> overschakelt) dat alles gewoon in orde was, en switchte dus nooit weg. Vijf andere, kleinere kaartjes elders in dit bestand (live-locatie-viewer, RunCoach-minikaartje tijdens hardlopen, Garmin-radar, weerradar, analyse-kaart na een rit) hadden CARTO daarnaast nog eens rechtstreeks hardgecodeerd staan, volledig buiten dat fallback-systeem om. Alle 8 plekken gebruiken nu enkel nog sleutelloze OpenStreetMap-tegels (<code>tile.openstreetmap.org</code>/<code>.de</code>) — de kaart oogt hierdoor iets minder "Voyager-gestileerd" dan voorheen, maar vereist geen enkele configuratie en kan nooit meer op deze manier vastlopen. <b>Later diezelfde dag toegevoegd:</b> een optioneel <code>appSettings.cartoKey</code>-veld (Instellingen → 🔑 API-sleutels, exact hetzelfde patroon als <code>thunderforestKey</code>) — vult iemand daar een eigen gratis sleutel in, dan zet <code>setMapStyle()</code> die weer vooraan in de lijst met <code>?key=...</code> erachter, mét de sleutelloze OSM-tegels nog steeds als terugval erna, en enkel voor de <i>standaard</i>-kaartstijl (niet voor CyclOSM/OpenTopoMap, die hebben elk hun eigen, andere kaartlook). Zonder ingevulde sleutel (de meeste mensen) blijft dit gewoon <code>TILE_PROVIDERS_STANDARD</code> zoals hierboven beschreven.</p>
       <p><b>Layout — loopscherm oogde te vol/te hoog (met name Garmin-thema), kcal-regel plakte tegen de snelheid/gem. snelheid-kaders.</b> <code>#rsCalorieLine</code> stond op <code>margin-top:-4px</code> — kennelijk getuned voor het kale standaardthema zonder kader rond de statistiekrijen. Zodra de rij erboven effectief hoger uitviel (het Garmin-thema's eigen padding/rand op <code>.rs-stat</code>, of "GEM. SNELHEID" dat op een smal scherm naar een 2e regel omslaat) plakte de kcal-tekst daar letterlijk overheen. Nu een kleine positieve marge, theme-onafhankelijk. Daarnaast, puur om het geheel wat lager/compacter te maken: <code>#rsMapWrap</code> (200px → 172px, Zombie Run-variant evenredig mee verlaagd), <code>#rsCountdown</code> (48px → 39px) en <code>#rsIntervalLabel</code> (16px → 14px) verkleind, en de Garmin-thema-padding rond <code>#rsMainRow</code> (20px 16px → 12px 16px) en <code>.rs-stat</code> (10px 6px → 7px 6px) verminderd. Bewust niet aangeraakt: de intervallen-rail rechts (<code>#rsProgressRail</code>/<code>.rs-rail-item</code>) en de EVY-km-sparkline (<code>#rsKmSparkline</code>/<code>.rs-km-bar</code>) — die moesten expliciet blijven staan zoals ze waren.</p>
     </section>
     <section>
@@ -8186,7 +8205,7 @@ const DEV_NOTES_CONTENT = {
     <section>
       <h3>🐛 Bugfixes 8/27/2026: repeating navigation announcement, map tiles, run screen layout</h3>
       <p><b>Fixed bug — speech repeated itself (reported: "in 40 metres" cutting off mid-way and then, a couple seconds later, playing again in full, this time with the turn direction included).</b> <code>speak()</code> (navigation) and <code>speakForRun()</code> (running) would, whenever <code>speechSynthesis</code>'s voice list wasn't loaded yet on the very first call, wait via a one-time <code>'voiceschanged'</code> listener on that voice list — but ALSO, outside that "if", unconditionally called <code>window.speechSynthesis.speak(u)</code> right away regardless. The same <code>SpeechSynthesisUtterance</code> ended up scheduled twice in practice: once immediately (often voiceless or with a placeholder voice), and again once <code>'voiceschanged'</code> eventually fired. Some devices/engines restart a fragment instead of ignoring the duplicate call, which sounds exactly like "cut off, then repeated". Now an if/else: either wait for <code>'voiceschanged'</code>, or speak immediately — never both.</p>
-      <p><b>Fixed bug — "API KEY REQUIRED" on the map.</b> Every map layer in this file used CARTO's rastertiles/voyager style (<code>basemaps.cartocdn.com</code>) as its (first) tile source. CARTO recently started requiring its own free API key for those tiles; without a key their server still returns a "valid" PNG image, just one with "API KEY REQUIRED" and their URL printed on it. Because that technically counts as a successfully loaded tile, the existing fallback watchdog in <code>useTileProvider()</code> (which normally switches to the next source in <code>TILE_PROVIDERS_STANDARD</code>/<code>_CYCLOSM</code>/<code>_OPENTOPO</code> after 5s without a <code>tileload</code> event) considered everything fine and never switched away. Five other, smaller maps elsewhere in this file (live-location viewer, the RunCoach mini-map during a run, Garmin radar, weather radar, the post-ride analysis map) also had CARTO hardcoded directly, entirely outside that fallback system. All 8 spots now use only key-free OpenStreetMap tiles (<code>tile.openstreetmap.org</code>/<code>.de</code>) — the map looks slightly less "Voyager-styled" than before, but needs zero configuration and can never get stuck this way again.</p>
+      <p><b>Fixed bug — "API KEY REQUIRED" on the map.</b> Every map layer in this file used CARTO's rastertiles/voyager style (<code>basemaps.cartocdn.com</code>) as its (first) tile source. CARTO recently started requiring its own free API key for those tiles; without a key their server still returns a "valid" PNG image, just one with "API KEY REQUIRED" and their URL printed on it. Because that technically counts as a successfully loaded tile, the existing fallback watchdog in <code>useTileProvider()</code> (which normally switches to the next source in <code>TILE_PROVIDERS_STANDARD</code>/<code>_CYCLOSM</code>/<code>_OPENTOPO</code> after 5s without a <code>tileload</code> event) considered everything fine and never switched away. Five other, smaller maps elsewhere in this file (live-location viewer, the RunCoach mini-map during a run, Garmin radar, weather radar, the post-ride analysis map) also had CARTO hardcoded directly, entirely outside that fallback system. All 8 spots now use only key-free OpenStreetMap tiles (<code>tile.openstreetmap.org</code>/<code>.de</code>) — the map looks slightly less "Voyager-styled" than before, but needs zero configuration and can never get stuck this way again. <b>Added later that same day:</b> an optional <code>appSettings.cartoKey</code> field (Settings → 🔑 API keys, the exact same pattern as <code>thunderforestKey</code>) — fill in your own free key there and <code>setMapStyle()</code> puts CARTO back at the front of the list with <code>?key=...</code> appended, still with the key-free OSM tiles as a fallback right after it, and only for the <i>standard</i> map style (not CyclOSM/OpenTopoMap, which each have their own distinct map look). Without a key filled in (most people), this stays plain <code>TILE_PROVIDERS_STANDARD</code> as described above.</p>
       <p><b>Layout — run screen felt too full/tall (especially the Garmin theme), the kcal line stuck to the speed/avg. speed tiles below it.</b> <code>#rsCalorieLine</code> had <code>margin-top:-4px</code> — apparently tuned for the plain default theme with no box around the stat rows. The moment the row above it turned out taller than expected (the Garmin theme's own padding/border on <code>.rs-stat</code>, or "AVG. SPEED" wrapping to a 2nd line on a narrow screen) the kcal text literally overlapped it. Now a small positive margin, theme-independent. Also, purely to make the whole screen a bit shorter/tighter: <code>#rsMapWrap</code> (200px → 172px, Zombie Run's own variant lowered proportionally), <code>#rsCountdown</code> (48px → 39px) and <code>#rsIntervalLabel</code> (16px → 14px) shrunk, and the Garmin-theme padding around <code>#rsMainRow</code> (20px 16px → 12px 16px) and <code>.rs-stat</code> (10px 6px → 7px 6px) reduced. Deliberately left untouched: the interval rail on the right (<code>#rsProgressRail</code>/<code>.rs-rail-item</code>) and the EVY km sparkline (<code>#rsKmSparkline</code>/<code>.rs-km-bar</code>) — those had to explicitly stay as they were.</p>
     </section>
     <section>
@@ -14714,7 +14733,7 @@ let poiSettingsDebounceTimer = null;
 function applySettings(){
   applyTheme(appSettings.theme);
   $('northBtn').style.display = appSettings.showCompassBtn ? '' : 'none';
-  setMapStyle(appSettings.mapStyle, appSettings.thunderforestKey);
+  setMapStyle(appSettings.mapStyle, appSettings.thunderforestKey, appSettings.cartoKey);
   applyOverlaySettings();
   document.body.classList.toggle('dash-text-small', appSettings.dashTextSize === 'small');
   $('settingLargeNodes').checked = !!appSettings.largeNodesAccessibility;
@@ -14817,6 +14836,7 @@ async function loadSettings(){
   $('stravaClientSecretInput').value = appSettings.stravaClientSecret || '';
   $('stravaConnectStatus').textContent = isStravaConnected() ? '✅ verbonden' : '';
   $('thunderforestKeyInput').value = appSettings.thunderforestKey || '';
+  $('cartoKeyInput').value = appSettings.cartoKey || '';
   $('orsKeyInput').value = appSettings.orsKey || '';
   $('geoapifyKeyInput').value = appSettings.geoapifyKey || '';
   $('plantnetKeyInput').value = appSettings.plantnetKey || '';
@@ -14850,6 +14870,15 @@ async function loadSettings(){
 function saveSettings(){ storageSet(SETTINGS_KEY, JSON.stringify(appSettings)); applySettings(); }
 
 $('thunderforestKeyInput').addEventListener('change', (e) => { appSettings.thunderforestKey = e.target.value.trim(); saveSettings(); });
+// In tegenstelling tot de Thunderforest-sleutel hierboven (die enkel iets doet zodra je ook echt de
+// OpenCycleMap-kaartstijl kiest) geldt deze meteen voor de standaard-kaartstijl die de meeste mensen al open
+// hebben staan — daarom hier wél meteen opnieuw setMapStyle() aanroepen, zodat de Voyager-look direct
+// verschijnt zodra je een geldige sleutel invult, zonder dat je nog de kaartstijl-instelling zelf hoeft aan te raken.
+$('cartoKeyInput').addEventListener('change', (e) => {
+  appSettings.cartoKey = e.target.value.trim();
+  saveSettings();
+  setMapStyle(appSettings.mapStyle, appSettings.thunderforestKey, appSettings.cartoKey);
+});
 $('orsKeyInput').addEventListener('change', (e) => { appSettings.orsKey = e.target.value.trim(); saveSettings(); rerouteCurrentRouteIfAny(); });
 $('geoapifyKeyInput').addEventListener('change', (e) => { appSettings.geoapifyKey = e.target.value.trim(); saveSettings(); });
 $('plantnetKeyInput').addEventListener('change', (e) => { appSettings.plantnetKey = e.target.value.trim(); saveSettings(); });
@@ -15258,7 +15287,7 @@ $('overlayMtb').addEventListener('change', (e) => { appSettings.overlays.mtb = e
 });
 $('settingsResetBtn').addEventListener('click', () => {
   appSettings = {
-    theme:'default', showCompassBtn:true, orsKey:'', graphhopperKey:'', geoapifyKey:'', plantnetKey:'', geminiKey:'', otmKey:'', bikeType:'regular', mapStyle:'standard', thunderforestKey:'',
+    theme:'default', showCompassBtn:true, orsKey:'', graphhopperKey:'', geoapifyKey:'', plantnetKey:'', geminiKey:'', otmKey:'', bikeType:'regular', mapStyle:'standard', thunderforestKey:'', cartoKey:'',
     dashTextSize:'normal', dashBold:true, largeNodesAccessibility:false, offRouteDist:35, autoReroute:false, silentReroute:false,
     overlays:{ cycling:false, hiking:false, mtb:false },
     poiLayers:{ cafe:false, restaurant:false, bakery:false, supermarket:false, pharmacy:false, bike:false, water:false, toilet:false, money:false, camping:false, charging:false, playground:false, parking:false, hotel:false }, showPoiDetails:false,
@@ -15327,6 +15356,7 @@ $('settingsResetBtn').addEventListener('click', () => {
   $('settingAge').value = '';
   document.querySelectorAll('input[name="settingGenderRadio"]').forEach(r => { r.checked = (r.value === ''); });
   $('thunderforestKeyInput').value = '';
+  $('cartoKeyInput').value = '';
   $('orsKeyInput').value = '';
   $('geoapifyKeyInput').value = '';
   $('plantnetKeyInput').value = '';
