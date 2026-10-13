@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test: wandelroutes in OpenStreetMap</title>
+<style>
+  body{ font-family:-apple-system,system-ui,Segoe UI,Roboto,Arial,sans-serif; max-width:680px; margin:0 auto; padding:18px 16px 60px; background:#f4f7f5; color:#1c2a21; }
+  h1{ font-size:19px; margin:4px 0 2px; }
+  p.sub{ color:#51614f; font-size:13.5px; line-height:1.5; }
+  label{ display:block; font-size:13px; font-weight:600; margin:14px 0 4px; }
+  input{ width:100%; box-sizing:border-box; border:1px solid #cdd8ce; border-radius:10px; padding:10px 11px; font-size:14px; background:#fff; }
+  .row{ display:flex; gap:10px; } .row>div{ flex:1; }
+  button{ margin-top:12px; width:100%; border:none; border-radius:12px; padding:13px; font-size:15px; font-weight:700; background:#2f6b45; color:#fff; cursor:pointer; }
+  button.sec{ background:#5c7a63; }
+  button:disabled{ opacity:.55; }
+  .card{ background:#fff; border:1px solid #dbe5dc; border-radius:12px; padding:11px 12px; margin-top:10px; }
+  .dot{ display:inline-block; width:14px; height:14px; border-radius:50%; vertical-align:-2px; margin-right:6px; border:1px solid #0003; }
+  .meta{ font-size:12.5px; color:#51614f; margin-top:4px; line-height:1.45; }
+  .small{ width:auto; padding:7px 12px; font-size:13px; margin-top:8px; border-radius:9px; }
+  #status{ margin-top:14px; font-size:13.5px; }
+</style>
+</head>
+<body>
+<h1>🧪 Testje: staan de wandellussen in OpenStreetMap?</h1>
+<p class="sub">Gratis, zonder sleutel, zonder AI. Dit zoekt in OpenStreetMap naar gemarkeerde wandelroutes rond een plek,
+met hun naam, kleur en lengte, en laat je er meteen een GPX van downloaden. Los van de app — er wordt niets aangepast.</p>
+
+<label for="place">Plaats zoeken (bv. "Hengelhoef Houthalen")</label>
+<input id="place" type="text" value="Hengelhoef, Houthalen-Helchteren">
+<button class="sec" id="locBtn">📍 …of gebruik mijn huidige locatie</button>
+
+<div class="row">
+  <div><label for="lat">Breedtegraad</label><input id="lat" inputmode="decimal"></div>
+  <div><label for="lon">Lengtegraad</label><input id="lon" inputmode="decimal"></div>
+  <div><label for="rad">Straal (m)</label><input id="rad" inputmode="numeric" value="2500"></div>
+</div>
+<button id="goBtn">🔎 Zoek wandelroutes hier</button>
+<div id="status"></div>
+<div id="list"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const OVERPASS = 'https://overpass-api.de/api/interpreter';
+const NAMED = {red:'#d32f2f',blue:'#1976d2',green:'#388e3c',yellow:'#fbc02d',orange:'#f57c00',white:'#eeeeee',black:'#212121',purple:'#7b1fa2',brown:'#6d4c41',pink:'#ec407a',grey:'#757575',gray:'#757575'};
+const col = c => !c ? '#bbb' : (NAMED[String(c).toLowerCase()] || c);
+const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let found = [];
+
+$('locBtn').onclick = () => navigator.geolocation.getCurrentPosition(
+  p => { $('lat').value = p.coords.latitude.toFixed(5); $('lon').value = p.coords.longitude.toFixed(5); $('status').textContent='📍 Locatie ingevuld.'; },
+  e => { $('status').textContent='Locatie niet beschikbaar: '+e.message; });
+
+// Zelfde aanpak als de app: GET met ?data=... en meerdere spiegelservers als terugval.
+const ENDPOINTS = [
+  'https://overpass-api.de/api/interpreter',
+  'https://overpass.kumi.systems/api/interpreter',
+  'https://overpass.openstreetmap.ru/api/interpreter'
+];
+async function overpass(q){
+  const errs = [];
+  for (const ep of ENDPOINTS){
+    try{
+      $('status').textContent = '⏳ Zoeken via ' + ep.split('/')[2] + '...';
+      const ctl = new AbortController();
+      const timer = setTimeout(() => ctl.abort(), 20000); // max 20 s per server
+      let res;
+      try{ res = await fetch(ep + '?data=' + encodeURIComponent(q), { signal: ctl.signal }); }
+      finally{ clearTimeout(timer); }
+      if (!res.ok){ errs.push(ep.split('/')[2] + ': HTTP ' + res.status); continue; }
+      return await res.json();
+    }catch(e){ errs.push(ep.split('/')[2] + ': ' + (e.name === 'AbortError' ? 'time-out na 20 s' : e.message)); }
+  }
+  throw new Error('alle servers mislukt (' + errs.join(' · ') + ')');
+}
+
+$('goBtn').onclick = async () => {
+  $('goBtn').disabled = true; $('list').innerHTML=''; found=[];
+  try{
+    if (!$('lat').value || !$('lon').value){
+      $('status').textContent='⏳ Plaats opzoeken...';
+      const r = await fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&q='+encodeURIComponent($('place').value));
+      const j = await r.json();
+      if (!j.length) throw new Error('Plaats niet gevonden');
+      $('lat').value = (+j[0].lat).toFixed(5); $('lon').value = (+j[0].lon).toFixed(5);
+    }
+    const lat=$('lat').value, lon=$('lon').value, rad=parseInt($('rad').value)||2500;
+    $('status').textContent='⏳ Wandelroutes zoeken in OpenStreetMap...';
+    // bbox i.p.v. 'around' op relaties: veel sneller op Overpass (gebruikt de bounding box van de relatie)
+    const dLat = rad/111000, dLon = rad/(111000*Math.cos(lat*Math.PI/180));
+    const bb = [(+lat-dLat).toFixed(5),(+lon-dLon).toFixed(5),(+lat+dLat).toFixed(5),(+lon+dLon).toFixed(5)].join(',');
+    const d = await overpass(`[out:json][timeout:25];relation["route"~"^(hiking|foot|walking)$"](${bb});out tags;`);
+    found = d.elements || [];
+    if (!found.length){ $('status').innerHTML='❌ <b>Niets gevonden</b> binnen '+rad+' m. Probeer een grotere straal; zo niet, dan staan deze lussen niet als route in OpenStreetMap.'; return; }
+    $('status').innerHTML='✅ <b>'+found.length+' wandelroute(s)</b> gevonden:';
+    $('list').innerHTML = found.map((e,i)=>{
+      const t=e.tags||{};
+      return `<div class="card"><span class="dot" style="background:${col(t.colour)}"></span><b>${esc(t.name||t.ref||'(zonder naam)')}</b>
+        <div class="meta">kleur: ${esc(t.colour||'—')} · symbool: ${esc(t['osmc:symbol']||'—')} · ref: ${esc(t.ref||'—')} · lengte: ${esc(t.distance||'—')} km<br>
+        netwerk: ${esc(t.network||'—')} · beheerder: ${esc(t.operator||'—')}${t.website?'<br>site: <a href="'+esc(t.website)+'" target="_blank" rel="noopener">'+esc(t.website)+'</a>':''}</div>
+        <button class="small" onclick="dl(${i})">⬇️ GPX downloaden</button> <span id="s${i}" class="meta"></span></div>`;
+    }).join('');
+  }catch(err){ $('status').textContent='Fout: '+err.message; }
+  finally{ $('goBtn').disabled=false; }
+};
+
+async function dl(i){
+  const e=found[i], t=e.tags||{}, s=$('s'+i);
+  s.textContent='⏳ bezig...';
+  try{
+    const d = await overpass(`[out:json][timeout:40];relation(${e.id});way(r);out geom;`);
+    const ways = (d.elements||[]).filter(w=>w.geometry&&w.geometry.length);
+    if (!ways.length) throw new Error('geen geometrie');
+    const name = t.name||t.ref||('route '+e.id);
+    const segs = ways.map(w=>'<trkseg>'+w.geometry.map(p=>`<trkpt lat="${p.lat}" lon="${p.lon}"/>`).join('')+'</trkseg>').join('');
+    const gpx = `<?xml version="1.0" encoding="UTF-8"?><gpx version="1.1" creator="osm-test" xmlns="http://www.topografix.com/GPX/1/1"><trk><name>${esc(name)}</name>${segs}</trk></gpx>`;
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([gpx],{type:'application/gpx+xml'}));
+    a.download=name.replace(/[^\w\-]+/g,'_')+'.gpx'; document.body.appendChild(a); a.click(); a.remove();
+    s.textContent='✅ '+ways.length+' wegstukken';
+  }catch(err){ s.textContent='❌ '+err.message; }
+}
+</script>
+</body>
+</html>
