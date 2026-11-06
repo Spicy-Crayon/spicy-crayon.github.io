@@ -1,0 +1,101 @@
+{
+  "regions": [
+    {
+      "id": "limburg",
+      "name": "Limburg",
+      "places": [
+        {
+          "name": "Terhills (Maasmechelen)",
+          "text": "Meren, heuvels en mijnverleden, met een drijvende pontonbrug en uitzichten over het water (rondwandeling van ongeveer 9,5 km).",
+          "lat": 50.975,
+          "lon": 5.705,
+          "mode": "wandel",
+          "maps": "Terhills Maasmechelen",
+          "opmerking": "coördinaten bij benadering; nog niet zelf gecontroleerd; afstanden en beschrijving uit de pagina's van Nationaal Park Hoge Kempen en Decathlon Outdoor"
+        },
+        {
+          "name": "Mechelse Heide",
+          "text": "Heide en bos met uitzicht over twee grote grindplassen en een zandheuvel waarvan je tot in Duitsland kijkt (ongeveer 12,5 km).",
+          "lat": 50.945,
+          "lon": 5.655,
+          "mode": "wandel",
+          "maps": "Mechelse Heide Maasmechelen",
+          "opmerking": "coördinaten bij benadering; nog niet zelf gecontroleerd; afstanden en beschrijving uit de pagina's van Nationaal Park Hoge Kempen en Decathlon Outdoor"
+        },
+        {
+          "name": "Duinengordel Opglabbeek",
+          "text": "Heide, loofbos en de hoogste landduin van België, met onderweg veel kapelletjes (ongeveer 14,6 km).",
+          "lat": 51.04,
+          "lon": 5.6,
+          "mode": "wandel",
+          "maps": "Duinengordel Opglabbeek",
+          "opmerking": "coördinaten bij benadering; nog niet zelf gecontroleerd; afstanden en beschrijving uit de pagina's van Nationaal Park Hoge Kempen en Decathlon Outdoor"
+        },
+        {
+          "name": "Munsterbos (Zutendaal)",
+          "text": "Vijvers en een beekdal waar bevers wonen, op bospaden langs kapelletjes en gedenktekens (ongeveer 17,9 km).",
+          "lat": 50.94,
+          "lon": 5.56,
+          "mode": "wandel",
+          "maps": "Munsterbos Zutendaal",
+          "opmerking": "coördinaten bij benadering; nog niet zelf gecontroleerd; afstanden en beschrijving uit de pagina's van Nationaal Park Hoge Kempen en Decathlon Outdoor"
+        },
+        {
+          "name": "Kasteel Pietersheim (Lanaken)",
+          "text": "Een middeleeuws waterkasteel, omgeven door bos, beken, beukenlanen en vlonderpaden (ongeveer 11 km).",
+          "lat": 50.865,
+          "lon": 5.63,
+          "mode": "wandel",
+          "maps": "Kasteel Pietersheim Lanaken",
+          "opmerking": "coördinaten bij benadering; nog niet zelf gecontroleerd; afstanden en beschrijving uit de pagina's van Nationaal Park Hoge Kempen en Decathlon Outdoor"
+        },
+        {
+          "name": "Lommelse Sahara en Bosland",
+          "text": "Zandduinen midden in het bos, met uitzicht vanaf De Reus van Bosland; te voet (ongeveer 11 km) of met de fiets.",
+          "lat": 51.235,
+          "lon": 5.32,
+          "mode": "beide",
+          "maps": "Lommelse Sahara",
+          "opmerking": "coördinaten bij benadering; nog niet zelf gecontroleerd; afstanden en beschrijving uit de pagina's van Nationaal Park Hoge Kempen en Decathlon Outdoor"
+        },
+        {
+          "name": "Domein Bokrijk (Genk)",
+          "text": "Groot domein met vijvers en bos, bekend om zijn fietsroutes over het water.",
+          "lat": 50.945,
+          "lon": 5.415,
+          "mode": "beide",
+          "maps": "Domein Bokrijk Genk",
+          "opmerking": "coördinaten bij benadering; nog niet zelf gecontroleerd; afstanden en beschrijving uit de pagina's van Nationaal Park Hoge Kempen en Decathlon Outdoor"
+        },
+        {
+          "name": "Terrils van Beringen",
+          "text": "Mijnterrils waar natuur en industrieel erfgoed samenkomen, met uitzicht over de streek.",
+          "lat": 51.045,
+          "lon": 5.22,
+          "mode": "wandel",
+          "maps": "Terrils Beringen",
+          "opmerking": "coördinaten bij benadering; nog niet zelf gecontroleerd; afstanden en beschrijving uit de pagina's van Nationaal Park Hoge Kempen en Decathlon Outdoor"
+        },
+        {
+          "name": "Fruitstreek bij Wellen en Kerniel",
+          "text": "Een rustige lus door boomgaarden en heuvels naar het Colenklooster (ongeveer 7,7 km); het mooist in het voorjaar tijdens de bloesem.",
+          "lat": 50.83,
+          "lon": 5.35,
+          "mode": "beide",
+          "maps": "Kerniel Wellen",
+          "opmerking": "coördinaten bij benadering; nog niet zelf gecontroleerd; afstanden en beschrijving uit de pagina's van Nationaal Park Hoge Kempen en Decathlon Outdoor"
+        },
+        {
+          "name": "Kattenrothberg (Voeren)",
+          "text": "Heuvelachtig Voeren met twee kastelen (Altenbroek en Ottegraeven) en een uitkijkpunt op de Kattenrothberg (ongeveer 8,5 km).",
+          "lat": 50.76,
+          "lon": 5.78,
+          "mode": "wandel",
+          "maps": "Kattenrothberg Voeren",
+          "opmerking": "coördinaten bij benadering; nog niet zelf gecontroleerd; afstanden en beschrijving uit de pagina's van Nationaal Park Hoge Kempen en Decathlon Outdoor"
+        }
+      ]
+    }
+  ],
+  "tips": []
+}
