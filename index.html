@@ -111,6 +111,8 @@
     display:flex; align-items:center; justify-content:center; font-size:14px;
   }
   .poi-toggle-marker span{ display:inline-block; filter:drop-shadow(0 0 1.5px rgba(255,255,255,0.9)); }
+  .ph-ov-marker{ width:24px; height:24px; border-radius:50%; background:rgba(255,255,255,0.94); border:2px solid #2a5f8f; box-shadow:0 2px 5px rgba(0,0,0,0.35); display:flex; align-items:center; justify-content:center; font-size:13px; }
+  .ph-photo-pop{ max-width:230px; } .ph-photo-pop img{ width:100%; max-height:170px; object-fit:cover; border-radius:8px; margin-bottom:4px; }
   .poi-popup-nav{
     margin-top:6px; border:none; background:var(--amber); color:#0f3d29; font-size:12px; font-weight:800;
     padding:6px 10px; border-radius:8px; width:100%;
@@ -196,6 +198,7 @@
     padding:12px 16px; border-radius:14px; text-align:center;
     box-shadow:var(--shadow); display:none;
   }
+  #offRouteBanner{ cursor:pointer; pointer-events:auto; }
   #offRouteBanner.show{ display:block; animation:shake .4s; }
   #offRouteBanner.with-nav{ top:calc(env(safe-area-inset-top,0px) + var(--extra-top-inset) + 188px); }
 
@@ -4214,6 +4217,18 @@
   </div>
 </div>
 
+<div id="offRouteChoiceModal" class="simple-modal">
+  <div class="simple-modal-card">
+    <div class="simple-modal-head"><b>⚠️ <span data-i18n="offRouteChoiceTitle">Je bent van de route af</span></b></div>
+    <p class="simple-modal-note" style="margin-top:0;" data-i18n="offRouteChoiceNote">Waar wil je nu naartoe? Herberekenen zoekt altijd de weg vanaf je huidige plek; het doel kies je hier.</p>
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <button id="offRouteNextBtn" class="reverse-trip-yes" data-i18n="offRouteChoiceNext">🔄 Naar het volgende punt</button>
+      <button id="offRouteSkipBtn" class="reverse-trip-yes" data-i18n="offRouteChoiceSkip">⏭️ Dit punt overslaan, naar het daaropvolgende</button>
+      <button id="offRouteStartBtn" class="reverse-trip-yes" data-i18n="offRouteChoiceStart">↩️ Terug naar start</button>
+      <button id="offRouteCancelBtn" class="reverse-trip-no" data-i18n="backToStartCancel">Annuleren</button>
+    </div>
+  </div>
+</div>
 <div id="backToStartChoiceModal" class="simple-modal">
   <div class="simple-modal-card">
     <div class="simple-modal-head"><b>↩️ <span data-i18n="backToStartChoiceTitle">Terug naar start</span></b></div>
@@ -4393,6 +4408,10 @@
 
       <div class="settings-subnote" style="margin-top:14px;"><span data-i18n="settingsGeminiSub">Gemini — laatste terugval voor plant-/dierherkenning als de andere bronnen niets vinden. Gratis sleutel via aistudio.google.com (geen creditcard nodig).</span></div>
       <input type="text" id="geminiKeyInput" placeholder="Jouw gratis Gemini API-sleutel…" data-i18n-placeholder="phGeminiKey" class="settings-text-input">
+      <div class="settings-subnote" style="margin-top:14px;"><span data-i18n="settingsWindySub">Windy Webcams — voor de kaartlaag 📹 Webcams. Gratis sleutel via api.windy.com/keys (kan een paar minuten duren voor hij werkt). De beelden zijn kleine, tijdelijke foto's die elke paar minuten vernieuwen.</span></div>
+      <input type="text" id="windyKeyInput" placeholder="Jouw gratis Windy Webcams-sleutel…" data-i18n-placeholder="phWindyKey" class="settings-text-input">
+      <div class="settings-subnote" style="margin-top:14px;"><span data-i18n="settingsLocationIqSub">LocationIQ — voor de kaartstijl "Straten met adressen" (kaartopties). Gratis sleutel via locationiq.com (account, geen creditcard nodig volgens hun site). Het gratis plan heeft een daglimiet; is die op, dan valt de app terug op de gewone kaart.</span></div>
+      <input type="text" id="locationIqKeyInput" placeholder="Jouw gratis LocationIQ-sleutel…" data-i18n-placeholder="phLocationIqKey" class="settings-text-input">
       <div class="settings-subnote" style="margin-top:10px;"><b data-i18n="settingsAssistantTitle">✨ Assistent: waar haalt hij zijn antwoorden vandaan?</b></div>
       <label class="settings-radio"><input type="radio" name="assistantMode" value="sources"> <span data-i18n="assistantModeSources">Enkel mijn bronnen: routes bij jou, eigen tips en brochures (strengst)</span></label>
       <label class="settings-radio"><input type="radio" name="assistantMode" value="knowledge" checked> <span data-i18n="assistantModeKnowledge">Ook Gemini's eigen kennis (standaard): voor algemene vragen; wat niet uit mijn bronnen komt, staat erbij als "niet gecontroleerd"</span></label>
@@ -4575,6 +4594,9 @@
       <label class="settings-check-label" style="margin-top:10px;"><span data-i18n="settingsOverpassTimeoutLabel">🛣️ Wegdektype: max. wachttijd voor OpenStreetMap-bron (seconden)</span></label>
       <input type="number" id="settingOverpassSurfaceTimeout" value="15" min="5" max="40" step="1" class="settings-text-input" style="max-width:110px;">
       <div class="settings-subnote" data-i18n="settingsOverpassTimeoutSub">Hoger = meer geduld voor het gratis, sleutelloze vangnet (kan soms wat trager zijn), maar je wacht ook langer voor je een resultaat ziet. Standaard 15s.</div>
+      <label class="settings-check-label" style="margin-top:14px;"><span data-i18n="settingsAssistantWaitLabel">✨ Assistent: hoe lang wachten op een antwoord (seconden)</span></label>
+      <input type="number" id="settingAssistantWait" value="60" min="20" max="180" step="5" class="settings-text-input" style="max-width:110px;">
+      <div class="settings-subnote" data-i18n="settingsAssistantWaitSub">Hoger = meer geduld met trage servers en Gemini (handig bij 4G of in drukke uren), maar je wacht ook langer voor een foutmelding. Standaard 60 s; de pogingen per server en per model schalen mee.</div>
       <label class="settings-check-label" style="margin-top:14px;"><span data-i18n="settingsRoutingWeightingLabel">🎯 Comfort-routering op basis van je tag-matrix (racefiets/gewone fiets/e-bike, niet bij mountainbike)</span></label>
       <label class="settings-radio"><input type="radio" name="routingWeighting" value="off" checked> <span data-i18n="settingsWeightingOff">⚪ Uit — OpenRouteService's eigen inschatting</span></label>
       <label class="settings-radio"><input type="radio" name="routingWeighting" value="option1"> <span data-i18n="settingsWeightingOption1">1️⃣ Route → verifiëren → corrigeren</span></label>
@@ -5435,7 +5457,7 @@
   <button id="navNatureSpotterBtn" class="tab-hex" title="Natuurspotter" data-i18n-title="titleNavNatureSpotter">🦉</button>
 </div>
 
-<div id="offRouteBanner" data-i18n="toastOffRoute">⚠️ Je wijkt af van de route</div>
+<div id="offRouteBanner" data-i18n="offRouteBannerText" role="button" tabindex="0">⚠️ Je wijkt af van de route · tik voor opties</div>
 
 <!-- Ronde 151: pop-up "Leuke routes bij jou" (zie nrOnModeOpened()); wordt volledig door JS gevuld -->
 <div id="nearbyRoutesOverlay" role="dialog" aria-modal="true" aria-labelledby="nrTitle">
@@ -5936,6 +5958,9 @@ function otLabel(template){
   if (/opentopomap/.test(t)) return 'Topo (OpenTopoMap)';
   if (/cyclosm/.test(t)) return 'CyclOSM';
   if (/arcgisonline/.test(t)) return otT('Satelliet (Esri)', 'Satellite (Esri)');
+  if (/geodatenzentrum/.test(t)) return 'TopPlusOpen (BKG)';
+  if (/vlaanderen\.be\/OMZ/.test(t)) return otT('Luchtfoto Vlaanderen', 'Aerial Flanders');
+  if (/vlaanderen\.be\/GRB/.test(t)) return 'GRB Vlaanderen';
   if (/thunderforest/.test(t)) return /outdoors/.test(t) ? 'Thunderforest Outdoors' : 'Thunderforest';
   if (/openstreetmap\.(org|de)/.test(t)) return otT('Standaard (OpenStreetMap)', 'Standard (OpenStreetMap)');
   try{ return new URL(t.replace(/\{[a-z]+\}/g, 'x')).host; }catch(e){ return t; }
@@ -6549,8 +6574,13 @@ MLA.createMap = function(containerId, opts){
         // tegellaag op (elke MLA.tileLayer-instantie, basis of overlay, gebruikt het 'tl_'-voorvoegsel) en
         // voegt zichzelf daar ALTIJD net onder toe -- tegels blijven zo gegarandeerd onderaan, ongeacht hoe
         // vaak de watchdog/setMapStyle() een tegellaag verwijdert en opnieuw toevoegt.
-        const firstNonTileLayer = (glMap.getStyle().layers || []).find(l => !l.id.startsWith('tl_'));
-        glMap.addLayer({ id, type:'raster', source:id, paint:{ 'raster-opacity': options.opacity != null ? options.opacity : 1 } }, firstNonTileLayer ? firstNonTileLayer.id : undefined);
+        // Ronde 175: een BASISkaart (options.isBase) komt onderaan de tegellagen, onder eventuele overlays (routenetwerken, radar, hellingskaart...). Zonder dit
+        // belandde een basiskaart die na een stijlwissel opnieuw werd toegevoegd BOVEN de overlays, waardoor die verdwenen onder de nieuwe kaart.
+        const styleLayers = glMap.getStyle().layers || [];
+        const firstNonTileLayer = styleLayers.find(l => !l.id.startsWith('tl_'));
+        const firstTileLayer = options.isBase ? styleLayers.find(l => l.id.startsWith('tl_')) : null;
+        const beforeLayer = firstTileLayer || firstNonTileLayer;
+        glMap.addLayer({ id, type:'raster', source:id, paint:{ 'raster-opacity': options.opacity != null ? options.opacity : 1 } }, beforeLayer ? beforeLayer.id : undefined);
         attached = true;
         // Ronde 79 (via nieuwe Playwright-test aan het licht gekomen -- console-fout "There is no source with
         // ID 'tl_x'"): deze listener werd voorheen NOOIT opgeruimd als de laag verwijderd werd (_detach())
@@ -6979,6 +7009,19 @@ const TILE_PROVIDERS_SATELLITE = [
 // Ronde 13: Thunderforest Outdoors -- hergebruikt dezelfde gratis Thunderforest-sleutel als OpenCycleMap
 // hierboven, maar dan de "outdoors"-laag (hoogtelijnen + wandelpaden, alternatief voor OpenTopoMap) --
 // zie de 'outdoors'-tak in setMapStyle() hieronder, dezelfde opbouw als de bestaande 'thunderforest'-tak.
+// Ronde 175: BKG TopPlusOpen (Duitsland, open data dl-de/by-2-0, zoom 0-18) en de gratis webdiensten van Digitaal Vlaanderen (luchtfoto 2024 en GRB-basiskaart, enkel Vlaanderen).
+const TILE_PROVIDERS_TOPLUS = [
+  { url:'https://sgx.geodatenzentrum.de/wmts_topplus_open/tile/1.0.0/web/default/WEBMERCATOR/{z}/{y}/{x}.png', options:{ maxZoom:18, attribution:'© BKG dl-de/by-2-0 · Datenquellen: sg.geodatenzentrum.de' } },
+  { url:'https://tile.openstreetmap.org/{z}/{x}/{y}.png', options:{ subdomains:'abc', maxZoom:19, attribution:'© OpenStreetMap-medewerkers' } }
+];
+const TILE_PROVIDERS_VLORTHO = [
+  { url:'https://geo.api.vlaanderen.be/OMZ/wmts?service=WMTS&request=GetTile&version=1.0.0&layer=omzrgb24vl&style=&format=image/png&tilematrixset=GoogleMapsVL&tilematrix={z}&tilerow={y}&tilecol={x}', options:{ maxZoom:20, attribution:'Orthofotomozaïek 2024 © Digitaal Vlaanderen' } },
+  { url:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', options:{ maxZoom:19, attribution:'© Esri, Maxar, Earthstar Geographics' } }
+];
+const TILE_PROVIDERS_VLGRB = [
+  { url:'https://geo.api.vlaanderen.be/GRB/wmts?service=WMTS&request=GetTile&version=1.0.0&layer=grb_bsk&style=&format=image/png&tilematrixset=GoogleMapsVL&tilematrix={z}&tilerow={y}&tilecol={x}', options:{ maxZoom:20, attribution:'Bron: Grootschalig Referentie Bestand Vlaanderen, Digitaal Vlaanderen' } },
+  { url:'https://tile.openstreetmap.org/{z}/{x}/{y}.png', options:{ subdomains:'abc', maxZoom:19, attribution:'© OpenStreetMap-medewerkers' } }
+];
 let activeTileProviders = TILE_PROVIDERS_STANDARD;
 let tileProviderIndex = 0;
 let currentTileLayer = null;
@@ -7017,7 +7060,7 @@ function useTileProvider(index){
   // randen te geven, dus die ondergrens (en de bovengrens voor een groot scherm) staan nu allebei hoger.
   const viewportPx = Math.max(window.innerWidth, window.innerHeight);
   const dynamicKeepBuffer = Math.min(14, Math.max(10, Math.ceil((viewportPx / 256) * 0.9)));
-  currentTileLayer = MLA.tileLayer(p.url, { ...p.options, keepBuffer: dynamicKeepBuffer }).addTo(map);
+  currentTileLayer = MLA.tileLayer(p.url, { ...p.options, keepBuffer: dynamicKeepBuffer, isBase:true }).addTo(map);
   document.getElementById('mapAttribution').textContent = p.options.attribution;
 
   let anyTileLoaded = false;
@@ -7042,7 +7085,7 @@ function useTileProvider(index){
 }
 let lastAppliedMapStyleKey = null;
 function setMapStyle(style, thunderforestKey, cartoKey){
-  const cacheKey = style + '|' + (thunderforestKey || '') + '|' + (cartoKey || '');
+  const cacheKey = style + '|' + (thunderforestKey || '') + '|' + (cartoKey || '') + '|' + (style === 'locationiq' ? ((appSettings && appSettings.locationIqKey) || '') : '');
   // Elke saveSettings() (dus élke instelling, niet enkel kaartgerelateerde) riep dit vroeger aan, wat
   // steeds de volledige tegellaag verwijderde en opnieuw opbouwde — vandaar het kort grijs worden van de
   // kaart bij bv. de Vertrek-toggle. Nu enkel nog echt herladen als de kaartstijl zelf gewijzigd is.
@@ -7070,6 +7113,21 @@ function setMapStyle(style, thunderforestKey, cartoKey){
     activeTileProviders = TILE_PROVIDERS_OPENTOPO;
   } else if (style === 'cyclosm'){
     activeTileProviders = TILE_PROVIDERS_CYCLOSM;
+  } else if (style === 'locationiq' && String((appSettings && appSettings.locationIqKey) || '').trim()){
+    // Ronde 176: LocationIQ "streets" (OpenStreetMap-gegevens met huisnummers/adressen), eigen gratis sleutel; de gewone kaart blijft terugval.
+    activeTileProviders = [
+      { url:`https://{s}-tiles.locationiq.com/v3/streets/r/{z}/{x}/{y}.png?key=${encodeURIComponent(String(appSettings.locationIqKey).trim())}`, options:{ subdomains:'abc', maxZoom:19, attribution:'© LocationIQ · © OpenStreetMap-medewerkers' } },
+      ...TILE_PROVIDERS_STANDARD
+    ];
+  } else if (style === 'locationiq'){
+    toast(tr('toastFillLocationIqKey'), 4000);
+    activeTileProviders = TILE_PROVIDERS_STANDARD;
+  } else if (style === 'toplus'){
+    activeTileProviders = TILE_PROVIDERS_TOPLUS;
+  } else if (style === 'vlortho'){
+    activeTileProviders = TILE_PROVIDERS_VLORTHO;
+  } else if (style === 'vlgrb'){
+    activeTileProviders = TILE_PROVIDERS_VLGRB;
   } else if (cartoKey){
     // Optionele, gratis CARTO-sleutel (zie Instellingen → 🔑 API-sleutels): geeft de standaard-kaartstijl de
     // fraaiere "Voyager"-look terug, met de sleutelloze OSM-tegels gewoon nog als terugval erna — dezelfde
@@ -7092,7 +7150,9 @@ useTileProvider(tileProviderIndex);
 const OVERLAY_LAYERS = {
   cycling: { url:'https://tile.waymarkedtrails.org/cycling/{z}/{x}/{y}.png', attribution:'© Waymarked Trails (CC-BY-SA)', opacity:0.75 },
   hiking:  { url:'https://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png',  attribution:'© Waymarked Trails (CC-BY-SA)', opacity:0.75 },
-  mtb:     { url:'https://tile.waymarkedtrails.org/mtb/{z}/{x}/{y}.png',    attribution:'© Waymarked Trails (CC-BY-SA)', opacity:0.75 }
+  mtb:     { url:'https://tile.waymarkedtrails.org/mtb/{z}/{x}/{y}.png',    attribution:'© Waymarked Trails (CC-BY-SA)', opacity:0.75 },
+  riding:  { url:'https://tile.waymarkedtrails.org/riding/{z}/{x}/{y}.png',  attribution:'© Waymarked Trails (CC-BY-SA)', opacity:0.75 },
+  slopes:  { url:'https://tile.waymarkedtrails.org/slopes/{z}/{x}/{y}.png',  attribution:'© Waymarked Trails (CC-BY-SA)', opacity:0.75 }
 };
 let activeOverlayLayers = {}; // key -> Leaflet tileLayer-instantie, enkel aanwezig als die laag actief is
 function setOverlayLayer(key, enabled){
@@ -7106,6 +7166,7 @@ function setOverlayLayer(key, enabled){
 }
 function applyOverlaySettings(){
   Object.keys(OVERLAY_LAYERS).forEach(key => setOverlayLayer(key, !!(appSettings.overlays && appSettings.overlays[key])));
+  if (typeof phApplySpecialOverlays === 'function') phApplySpecialOverlays(); // Ronde 175: radar, hellingskaart, haltes, foto's
 }
 
 const nodeLayer = MLA.layerGroup().addTo(map);
@@ -7419,6 +7480,258 @@ map.on('moveend zoomend', () => {
   clearTimeout(poiToggleDebounceTimer);
   poiToggleDebounceTimer = setTimeout(() => { if (!aPoiPopupIsOpen) loadTogglePOIs(); }, 700);
 });
+
+// ---------- Ronde 175: extra kaartlagen (regenradar, hellingskaart, haltes, foto's) ----------
+// Alles hier is optioneel en per laag aan/uit te zetten in het Kaartlagen-scherm (appSettings.overlays.radar/steep/stops/photos). Geen enkele laag draait zolang hij uitstaat.
+const phEsc = (x) => String(x == null ? '' : x).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const phT = (nl, en) => (typeof curLang === 'function' && curLang() === 'en') ? en : nl;
+const phOverlayOn = (k) => !!(appSettings && appSettings.overlays && appSettings.overlays[k]);
+let phSpecial = { radar:null, steep:null }, phRadarTimer = null, phRadarUrl = '';
+let stopsLayer = null, photosLayer = null, phExtraTimer = null, phStopsToken = 0, phPhotosToken = 0, phLastToastAt = {};
+const phStopsCache = new Map(), phPhotosCache = new Map();
+function phToastOnce(key, text, ms){ const now = Date.now(); if (phLastToastAt[key] && now - phLastToastAt[key] < 45000) return; phLastToastAt[key] = now; toast(text, ms || 3500); }
+
+// --- Hellingskaart: kleurt elke tegel uit gratis hoogtegegevens (Terrarium-tegels van de AWS Terrain Tiles) naar steilte in graden ---
+// Pure functies, los van de kaart, zodat ze apart getest kunnen worden.
+function phTerrariumElev(rgba, n){
+  const e = new Float32Array(n);
+  for (let i = 0; i < n; i++) e[i] = rgba[i * 4] * 256 + rgba[i * 4 + 1] + rgba[i * 4 + 2] / 256 - 32768;
+  return e;
+}
+function phTileCenterLat(z, y){ const n = Math.PI - 2 * Math.PI * (y + 0.5) / Math.pow(2, z); return 180 / Math.PI * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n))); }
+// Klassen (graden): <6 niets, 6-10 geel, 10-15 oranje, 15-25 rood, 25-35 paars, >=35 donker. Randpixels gebruiken enkel de buren binnen de tegel.
+function phSlopeClass(deg){
+  if (deg < 6) return null;
+  if (deg < 10) return [255, 214, 0, 120];
+  if (deg < 15) return [255, 140, 0, 150];
+  if (deg < 25) return [230, 50, 40, 165];
+  if (deg < 35) return [150, 40, 170, 175];
+  return [45, 25, 60, 190];
+}
+function phSlopeDeg(elev, size, i, j, pxM){
+  const x0 = Math.max(0, i - 1), x1 = Math.min(size - 1, i + 1), y0 = Math.max(0, j - 1), y1 = Math.min(size - 1, j + 1);
+  const dzdx = (elev[j * size + x1] - elev[j * size + x0]) / ((x1 - x0) * pxM);
+  const dzdy = (elev[y1 * size + i] - elev[y0 * size + i]) / ((y1 - y0) * pxM);
+  return Math.atan(Math.sqrt(dzdx * dzdx + dzdy * dzdy)) * 180 / Math.PI;
+}
+function phSlopeRGBA(elev, z, y, size){
+  const lat = phTileCenterLat(z, y), pxM = 40075016.686 * Math.cos(lat * Math.PI / 180) / (size * Math.pow(2, z));
+  const out = new Uint8ClampedArray(size * size * 4);
+  for (let j = 0; j < size; j++) for (let i = 0; i < size; i++){
+    const c = phSlopeClass(phSlopeDeg(elev, size, i, j, pxM));
+    if (c){ const o = (j * size + i) * 4; out[o] = c[0]; out[o + 1] = c[1]; out[o + 2] = c[2]; out[o + 3] = c[3]; }
+  }
+  return out;
+}
+const phSlopeCache = new Map();
+function phMakeCanvas(w, h){ if (typeof OffscreenCanvas !== 'undefined') return new OffscreenCanvas(w, h); const c = document.createElement('canvas'); c.width = w; c.height = h; return c; }
+async function phCanvasPng(cv){
+  if (cv.convertToBlob) return await (await cv.convertToBlob({ type:'image/png' })).arrayBuffer();
+  const blob = await new Promise(r => cv.toBlob(r, 'image/png'));
+  return await blob.arrayBuffer();
+}
+async function phSlopeLoad(params, abortController){
+  const m = /^phslope:\/\/(\d+)\/(\d+)\/(\d+)/.exec(String(params.url));
+  if (!m) throw new Error('hellingtegel: onbekende url');
+  const z = +m[1], x = +m[2], y = +m[3], key = z + '/' + x + '/' + y;
+  const hit = phSlopeCache.get(key);
+  if (hit) return { data: hit.slice(0) };
+  const cv = phMakeCanvas(256, 256), ctx = cv.getContext('2d', { willReadFrequently:true });
+  if (z >= 9){   // onder zoom 9 is een hellingskaart zinloos (en erg zwaar): lege tegel
+    const res = await fetch(`https://s3.amazonaws.com/elevation-tiles-prod/terrarium/${z}/${x}/${y}.png`, { signal: abortController && abortController.signal });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const bmp = await createImageBitmap(await res.blob());
+    ctx.drawImage(bmp, 0, 0);
+    const id = ctx.getImageData(0, 0, 256, 256);
+    const rgba = phSlopeRGBA(phTerrariumElev(id.data, 256 * 256), z, y, 256);
+    const outImg = ctx.createImageData(256, 256); outImg.data.set(rgba);
+    ctx.putImageData(outImg, 0, 0);
+  }
+  const buf = await phCanvasPng(cv);
+  phSlopeCache.set(key, buf);
+  if (phSlopeCache.size > 160) phSlopeCache.delete(phSlopeCache.keys().next().value);
+  return { data: buf.slice(0) };
+}
+try{ if (typeof maplibregl !== 'undefined' && typeof maplibregl.addProtocol === 'function') maplibregl.addProtocol('phslope', phSlopeLoad); }catch(e){ /* protocol bestaat al: geen probleem */ }
+function phSetSteep(on){
+  if (on && !phSpecial.steep){
+    phSpecial.steep = MLA.tileLayer('phslope://{z}/{x}/{y}', { opacity:0.85, maxZoom:20, maxNativeZoom:14, attribution:'Terrain Tiles (AWS Open Data)' }).addTo(map);
+    phToastOnce('steep', phT('⛰️ Hellingskaart: geel vanaf 6°, oranje 10°, rood 15°, paars 25°. Zichtbaar vanaf zoom 9 en op niet te grove hoogtedata.', '⛰️ Slope map: yellow from 6°, orange 10°, red 15°, purple 25°. Visible from zoom 9, based on fairly coarse elevation data.'), 5000);
+  } else if (!on && phSpecial.steep){ map.removeLayer(phSpecial.steep); phSpecial.steep = null; }
+}
+
+// --- Regenradar op de gewone kaart (RainViewer, laatste echte meting) ---
+async function phRadarRefresh(){
+  if (!phOverlayOn('radar')) return;
+  try{
+    const res = await fetchWithTimeout('https://api.rainviewer.com/public/weather-maps.json', {}, 8000);
+    const j = await res.json();
+    const past = (j && j.radar && j.radar.past) || [];
+    if (!past.length) throw new Error('geen radarbeelden');
+    const f = past[past.length - 1];
+    const host = (j.host && /^https:\/\//.test(j.host)) ? String(j.host).replace(/\/$/, '') : 'https://tilecache.rainviewer.com';
+    const url = `${host}${f.path}/256/{z}/{x}/{y}/4/1_1.png`;
+    if (phSpecial.radar && phRadarUrl === url) return;
+    const old = phSpecial.radar;
+    phSpecial.radar = MLA.tileLayer(url, { opacity:0.6, maxZoom:12, maxNativeZoom:7, attribution:'RainViewer' }).addTo(map);
+    phRadarUrl = url;
+    if (old) map.removeLayer(old);
+  }catch(e){ phToastOnce('radar', phT('Regenradar laden is niet gelukt (internet nodig).', 'Could not load the rain radar (needs internet).'), 3500); }
+}
+function phSetRadar(on){
+  if (on){ phRadarRefresh(); if (!phRadarTimer) phRadarTimer = setInterval(phRadarRefresh, 10 * 60 * 1000); }
+  else {
+    clearInterval(phRadarTimer); phRadarTimer = null;
+    if (phSpecial.radar){ map.removeLayer(phSpecial.radar); phSpecial.radar = null; phRadarUrl = ''; }
+  }
+}
+
+// --- Haltes en stations (OpenStreetMap, per kaartuitsnede, vanaf zoom 14) ---
+const PH_STOP_KIND = { bus_stop:['🚏', 'bushalte', 'bus stop'], tram_stop:['🚋', 'tramhalte', 'tram stop'], station:['🚆', 'station', 'station'], halt:['🚆', 'stopplaats', 'halt'], bus_station:['🚌', 'busstation', 'bus station'] };
+function phStopKind(t){ const k = t.highway === 'bus_stop' ? 'bus_stop' : t.railway === 'tram_stop' ? 'tram_stop' : t.railway === 'station' ? 'station' : t.railway === 'halt' ? 'halt' : t.amenity === 'bus_station' ? 'bus_station' : 'bus_stop'; return k; }
+function phClearGroup(g){ if (g) g.clearLayers(); }
+async function phLoadStops(){
+  if (!phOverlayOn('stops')){ phClearGroup(stopsLayer); return; }
+  if (map.getZoom() < 14){ phClearGroup(stopsLayer); phToastOnce('stopsZoom', phT('🚏 Haltes verschijnen vanaf zoom 14: zoom verder in.', '🚏 Stops appear from zoom 14: zoom in further.'), 3000); return; }
+  if (!stopsLayer) stopsLayer = MLA.layerGroup().addTo(map);
+  const b = map.getBounds(), r3 = (v) => (Math.round(v * 1000) / 1000).toFixed(3);
+  const bbox = `${r3(b.getSouth())},${r3(b.getWest())},${r3(b.getNorth())},${r3(b.getEast())}`;
+  const my = ++phStopsToken;
+  let data = phStopsCache.get(bbox);
+  if (!data){
+    const q = `[out:json][timeout:25];(node["highway"="bus_stop"](${bbox});node["railway"~"^(station|halt|tram_stop)$"](${bbox});node["amenity"="bus_station"](${bbox}););out body 300;`;
+    try{ data = await assistantOverpass(q); }
+    catch(e){ if (my === phStopsToken) phToastOnce('stopsFail', phT('Haltes laden is niet gelukt (internet nodig, servers soms druk).', 'Could not load stops (needs internet, servers are sometimes busy).'), 3500); return; }
+    phStopsCache.set(bbox, data); if (phStopsCache.size > 20) phStopsCache.delete(phStopsCache.keys().next().value);
+  }
+  if (my !== phStopsToken || !phOverlayOn('stops')) return;
+  stopsLayer.clearLayers();
+  ((data && data.elements) || []).slice(0, 300).forEach(el => {
+    if (!Number.isFinite(el.lat) || !Number.isFinite(el.lon)) return;
+    const t = el.tags || {}, k = PH_STOP_KIND[phStopKind(t)];
+    const lines = [`<b>${phEsc(t.name || phT(k[1], k[2]))}</b>`, phEsc(phT(k[1], k[2]))];
+    if (t.network || t.operator) lines.push(phEsc(t.network || t.operator));
+    if (t.route_ref) lines.push(phEsc(phT('Lijnen: ', 'Lines: ') + t.route_ref));
+    lines.push(`<a href="https://www.google.com/maps/search/?api=1&query=${el.lat},${el.lon}" target="_blank" rel="noopener">${phEsc(phT('Open in Maps', 'Open in Maps'))}</a>`);
+    MLA.marker([el.lat, el.lon], { icon: MLA.divIcon({ className:'', html:`<div class="ph-ov-marker">${k[0]}</div>`, iconSize:[24,24], iconAnchor:[12,12] }) }).bindPopup(lines.join('<br>'), { autoPanPadding:[20,80] }).addTo(stopsLayer);
+  });
+}
+
+// --- Foto's (Wikimedia Commons, met GPS-positie, vanaf zoom 13) ---
+function phPhotoOk(u){ return /^https:\/\/(upload|commons)\.wikimedia\.org\//.test(String(u || '')); }
+function phPhotoTitle(t){ return String(t || '').replace(/^(File|Bestand):/i, '').replace(/\.[a-z0-9]{3,4}$/i, '').replace(/_/g, ' ').slice(0, 90); }
+async function phLoadPhotos(){
+  if (!phOverlayOn('photos')){ phClearGroup(photosLayer); return; }
+  if (map.getZoom() < 13){ phClearGroup(photosLayer); phToastOnce('photosZoom', phT('📷 Foto’s verschijnen vanaf zoom 13: zoom verder in.', '📷 Photos appear from zoom 13: zoom in further.'), 3000); return; }
+  if (!photosLayer) photosLayer = MLA.layerGroup().addTo(map);
+  const c = map.getCenter(), b = map.getBounds();
+  const radius = Math.max(300, Math.min(10000, Math.round(haversine(c.lat, c.lng, b.getNorth(), b.getEast()) * 0.95)));
+  const key = c.lat.toFixed(3) + '|' + c.lng.toFixed(3) + '|' + radius;
+  const my = ++phPhotosToken;
+  let pages = phPhotosCache.get(key);
+  if (!pages){
+    const url = 'https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&generator=geosearch&ggscoord=' + c.lat.toFixed(5) + '%7C' + c.lng.toFixed(5) + '&ggsradius=' + radius + '&ggsnamespace=6&ggslimit=40&prop=coordinates%7Cimageinfo&iiprop=url%7Cextmetadata&iiurlwidth=260&iiextmetadatafilter=Artist%7CLicenseShortName&colimit=40';
+    try{ const res = await fetchWithTimeout(url, {}, 9000); if (!res.ok) throw new Error('HTTP ' + res.status); const j = await res.json(); pages = Object.values((j && j.query && j.query.pages) || {}); }
+    catch(e){ if (my === phPhotosToken) phToastOnce('photosFail', phT('Foto’s laden is niet gelukt (internet nodig).', 'Could not load photos (needs internet).'), 3500); return; }
+    phPhotosCache.set(key, pages); if (phPhotosCache.size > 20) phPhotosCache.delete(phPhotosCache.keys().next().value);
+  }
+  if (my !== phPhotosToken || !phOverlayOn('photos')) return;
+  photosLayer.clearLayers();
+  pages.slice(0, 40).forEach(p => {
+    const co = p.coordinates && p.coordinates[0], ii = p.imageinfo && p.imageinfo[0];
+    if (!co || !ii || !Number.isFinite(co.lat) || !Number.isFinite(co.lon) || !phPhotoOk(ii.thumburl || ii.url) || !phPhotoOk(ii.descriptionurl)) return;
+    const em = ii.extmetadata || {}, artist = String((em.Artist && em.Artist.value) || '').replace(/<[^>]*>/g, '').trim().slice(0, 60), lic = String((em.LicenseShortName && em.LicenseShortName.value) || '').slice(0, 30);
+    const html = `<div class="ph-photo-pop"><img src="${phEsc(ii.thumburl || ii.url)}" alt="" loading="lazy"><br><b>${phEsc(phPhotoTitle(p.title))}</b><br><small>${phEsc([artist, lic].filter(Boolean).join(' · '))}</small><br><a href="${phEsc(ii.descriptionurl)}" target="_blank" rel="noopener">Wikimedia Commons</a></div>`;
+    MLA.marker([co.lat, co.lon], { icon: MLA.divIcon({ className:'', html:'<div class="ph-ov-marker">📷</div>', iconSize:[24,24], iconAnchor:[12,12] }) }).bindPopup(html, { autoPanPadding:[20,80] }).addTo(photosLayer);
+  });
+}
+// --- Webcams (Windy Webcams API v3, eigen gratis sleutel, vanaf zoom 10) ---
+// Gratis beeldlinks verlopen na ca. 10 minuten (daarna HTTP 401): daarom wordt nooit een link langer dan PH_WEBCAM_FRESH_MS bewaard
+// en haalt elke tik op een camera eerst een verse link op.
+const PH_WEBCAM_API = 'https://api.windy.com/webcams/api/v3/webcams';
+const PH_WEBCAM_FRESH_MS = 8 * 60 * 1000;
+let webcamsLayer = null, phWebcamsToken = 0; const phWebcamsCache = new Map();
+const phWindyKey = () => String((appSettings && appSettings.windyKey) || '').trim();
+const phWindyOk = (u) => /^https:\/\/([a-z0-9-]+\.)*windy\.com\//i.test(String(u || ''));
+async function phWebcamGet(url, key){
+  if (isNativeApp()){
+    const H = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.CapacitorHttp;
+    if (H && typeof H.get === 'function'){
+      const r = await H.get({ url, responseType:'text', headers:{ 'x-windy-api-key': key, Accept:'application/json' }, connectTimeout:10000, readTimeout:12000 });
+      if (!r || r.status !== 200){ const e = new Error('HTTP ' + (r && r.status)); e.status = r && r.status; throw e; }
+      return typeof r.data === 'string' ? JSON.parse(r.data) : r.data;
+    }
+  }
+  const res = await fetchWithTimeout(url, { headers:{ 'x-windy-api-key': key, Accept:'application/json' } }, 10000);
+  if (!res.ok){ const e = new Error('HTTP ' + res.status); e.status = res.status; throw e; }
+  return await res.json();
+}
+function phWebcamImg(w){ const c = w && w.images && w.images.current; const u = c && (c.preview || c.thumbnail || c.icon); return phWindyOk(u) ? u : ''; }
+function phWebcamErrText(e){
+  const st = e && e.status;
+  if (st === 401 || st === 403) return phT('Windy weigert de sleutel (nog niet actief of niet geldig). Een nieuwe sleutel kan enkele minuten duren.', 'Windy refuses the key (not active yet or not valid). A new key can take a few minutes.');
+  if (st === 429) return phT('Windy: te veel aanvragen, probeer zo meteen opnieuw.', 'Windy: too many requests, try again shortly.');
+  return phT('Webcams laden is niet gelukt (internet nodig).', 'Could not load webcams (needs internet).');
+}
+function phWebcamPopup(w){
+  const el = document.createElement('div'); el.className = 'ph-photo-pop ph-cam-pop';
+  const loc = w.location || {}, place = [loc.city, loc.country].filter(Boolean).join(', ');
+  const img = document.createElement('img'); img.alt = ''; img.loading = 'lazy'; const u0 = phWebcamImg(w); if (u0) img.src = u0;
+  const t = document.createElement('b'); t.textContent = String(w.title || phT('Webcam', 'Webcam')).slice(0, 90);
+  const sm = document.createElement('small'); sm.textContent = place.slice(0, 80);
+  const note = document.createElement('small'); note.className = 'ph-cam-note'; note.textContent = phT('Beeld wordt elke paar minuten vernieuwd.', 'Image is refreshed every few minutes.');
+  el.appendChild(img); el.appendChild(document.createElement('br')); el.appendChild(t); el.appendChild(document.createElement('br')); el.appendChild(sm); el.appendChild(document.createElement('br')); el.appendChild(note);
+  const det = w.urls && w.urls.detail;
+  if (phWindyOk(det)){ const a = document.createElement('a'); a.href = det; a.target = '_blank'; a.rel = 'noopener'; a.textContent = phT('Live bij Windy.com', 'Live at Windy.com'); el.appendChild(document.createElement('br')); el.appendChild(a); }
+  return { el, img };
+}
+async function phWebcamRefreshOne(w, imgEl){
+  const key = phWindyKey(); if (!key || !w.webcamId) return;
+  try{
+    const j = await phWebcamGet(PH_WEBCAM_API + '/' + encodeURIComponent(w.webcamId) + '?include=images,location,urls', key);
+    const u = phWebcamImg(j); if (u) imgEl.src = u;
+  }catch(e){ phToastOnce('webcamsFail', phWebcamErrText(e), 4000); }
+}
+async function phLoadWebcams(){
+  if (!phOverlayOn('webcams')){ phClearGroup(webcamsLayer); return; }
+  const key = phWindyKey();
+  if (!key){ phClearGroup(webcamsLayer); phToastOnce('webcamsKey', phT('📹 Webcams: plak eerst je gratis Windy-sleutel in Instellingen.', '📹 Webcams: first paste your free Windy key in Settings.'), 4500); return; }
+  if (map.getZoom() < 10){ phClearGroup(webcamsLayer); phToastOnce('webcamsZoom', phT('📹 Webcams verschijnen vanaf zoom 10: zoom verder in.', '📹 Webcams appear from zoom 10: zoom in further.'), 3000); return; }
+  if (!webcamsLayer) webcamsLayer = MLA.layerGroup().addTo(map);
+  const c = map.getCenter(), b = map.getBounds();
+  const radius = Math.max(2, Math.min(250, Math.ceil(haversine(c.lat, c.lng, b.getNorth(), b.getEast()) / 1000 * 0.95)));
+  const ck = c.lat.toFixed(2) + '|' + c.lng.toFixed(2) + '|' + radius;
+  const my = ++phWebcamsToken;
+  let hit = phWebcamsCache.get(ck);
+  if (!hit || Date.now() - hit.t > PH_WEBCAM_FRESH_MS){
+    const url = PH_WEBCAM_API + '?nearby=' + c.lat.toFixed(4) + ',' + c.lng.toFixed(4) + ',' + radius + '&limit=50&include=images,location,urls';
+    try{ const j = await phWebcamGet(url, key); hit = { t: Date.now(), list: (j && j.webcams) || [] }; }
+    catch(e){ if (my === phWebcamsToken) phToastOnce('webcamsFail', phWebcamErrText(e), 4000); return; }
+    phWebcamsCache.set(ck, hit); if (phWebcamsCache.size > 10) phWebcamsCache.delete(phWebcamsCache.keys().next().value);
+  }
+  if (my !== phWebcamsToken || !phOverlayOn('webcams')) return;
+  webcamsLayer.clearLayers();
+  hit.list.slice(0, 50).forEach(w => {
+    const loc = w && w.location; if (!loc || !Number.isFinite(loc.latitude) || !Number.isFinite(loc.longitude)) return;
+    const pop = phWebcamPopup(w);
+    const m = MLA.marker([loc.latitude, loc.longitude], { icon: MLA.divIcon({ className:'', html:'<div class="ph-ov-marker">📹</div>', iconSize:[24,24], iconAnchor:[12,12] }) }).bindPopup(pop.el, { autoPanPadding:[20,80] });
+    m.on('click', () => { if (Date.now() - hit.t > 60 * 1000) phWebcamRefreshOne(w, pop.img); });   // links gaan na ca. 10 min kapot: bij een oudere lijst eerst een verse link
+    m.addTo(webcamsLayer);
+  });
+}
+function phRefreshExtraOverlays(){ phLoadStops(); phLoadPhotos(); phLoadWebcams(); }
+map.on('moveend zoomend', () => {
+  if (!phOverlayOn('stops') && !phOverlayOn('photos') && !phOverlayOn('webcams')) return;
+  clearTimeout(phExtraTimer);
+  phExtraTimer = setTimeout(() => { if (!aPoiPopupIsOpen) phRefreshExtraOverlays(); }, 900);
+});
+function phApplySpecialOverlays(){
+  phSetRadar(phOverlayOn('radar'));
+  phSetSteep(phOverlayOn('steep'));
+  if (phOverlayOn('stops') || stopsLayer) phLoadStops();
+  if (phOverlayOn('photos') || photosLayer) phLoadPhotos();
+  if (phOverlayOn('webcams') || webcamsLayer) phLoadWebcams();
+}
 const routeLine = MLA.polyline([], { color:'#e2a13c', weight:5, opacity:0.9, interactive:true, directionArrows:true }).addTo(map);
 const routeColorLayer = MLA.layerGroup().addTo(map); // gekleurde segmentjes (wind/hoogte), bovenop routeLine getekend
 // Ronde 33 (gemeld: "de lijn van wat je reeds aflegde blijft dezelfde kleur als wat je nog moet afleggen,
@@ -7514,6 +7827,14 @@ let navRotHealLoggedAt = 0;
 const NAV_ROT_THRESHOLD_ROUTE_DEG = 1.5, NAV_ROT_THRESHOLD_GPS_DEG = 6;
 let travelHeading = null;   // richting waarin je daadwerkelijk fietst (koers over grond, of kompas als fallback)
 let isOffRoute = false;
+// Ronde 175: het echte startpunt van DEZE route (waar je voor het eerst op Start drukte). Elke nieuwe Start overschreef vroeger navBreadcrumbs[0], waardoor
+// "terug naar start" na een tweede Start naar je huidige plek wees. navOrigin blijft staan zolang de route (eerste + laatste punt) dezelfde is.
+let navOrigin = null;              // { lat, lon, sig, pending }
+function routeOriginSig(){
+  if (!route.length) return '';
+  const f = route[0], l = route[route.length - 1], q = (v) => Number(v).toFixed(5);
+  return route.length + '|' + f.id + '|' + q(f.lat) + ',' + q(f.lon) + '|' + l.id + '|' + q(l.lat) + ',' + q(l.lon);
+}
 let offRouteCandidate = null;      // GEMELD ("geflikker bovenaan het navigatiescherm, enkel bij wandelen"): laatst gemeten kandidaat-status
 let offRouteCandidateStreak = 0;   // hoeveel opeenvolgende tikken die kandidaat-status al aanhoudt
 // Functies i.p.v. vaste constanten, zodat de instelling in Instellingen meteen effect heeft (en pas uitgelezen
@@ -9535,6 +9856,7 @@ function openGpxDirectionModal(){
 }
 function finalizeGpxImport(pts, skipAnalysis){
   importedTrack = pts;
+  navOrigin = null; // Ronde 175: nieuwe route = nieuw startpunt bij de volgende Start
   // Nieuwe/omgedraaide GPX-route: vorige fout-richting-opsporing (zie checkWrongGpxDirection() verderop)
   // hoort niet mee te tellen -- anders zou een net uitgevoerde omdraaiing zichzelf soms meteen opnieuw
   // triggeren op basis van reeds-voorbijgestreken GPS-fixen van vóór de omdraaiing.
@@ -10062,6 +10384,7 @@ $('tileCacheBtn').addEventListener('click', async () => {
   if (!otCanUse()){ toast(otT('Kaart offline opslaan lukt niet in deze browser of app (geen opslag voor kaarttegels).', 'Saving the map offline does not work in this browser or app (no storage for map tiles).'), 6500); return; }
   if (navigator.onLine === false){ toast(otT('Je bent offline: sla de kaart op zodra je internet hebt.', 'You are offline: save the map once you have internet.'), 5000); return; }
   const prov = activeTileProviders[tileProviderIndex];
+  if (prov && /locationiq\.com/.test(prov.url)){ toast(otT('Offline opslaan kan niet met de LocationIQ-kaart (het gratis plan heeft een daglimiet). Kies eerst een andere kaartstijl.', 'Saving offline is not possible with the LocationIQ map (the free plan has a daily limit). Choose another map style first.'), 6500); return; }
   const trackPts = importedTrack.length > 1 ? importedTrack : route.map(r => ({ lat: r.lat, lon: r.lon }));
   const byRoute = trackPts.length >= 1;
   let plan;
@@ -11497,7 +11820,7 @@ $('confirmResetFwBtn').addEventListener('click', async () => {
   if (doBikeType) appSettings.bikeType = 'regular';
   if (doMapPrefs){
     appSettings.mapStyle = 'standard';
-    appSettings.overlays = { cycling:false, hiking:false, mtb:false };
+    appSettings.overlays = { cycling:false, hiking:false, mtb:false, riding:false, slopes:false, radar:false, steep:false, stops:false, photos:false, webcams:false };
     appSettings.poiLayers = { cafe:false, restaurant:false, bakery:false, supermarket:false, pharmacy:false, bike:false, water:false, toilet:false, money:false, camping:false, charging:false, playground:false, parking:false, hotel:false };
     appSettings.showPoiDetails = false;
   }
@@ -11702,13 +12025,13 @@ async function runOfflineDiagnostics(){
 // ---------- Instellingen: thema, kompasknop, wegtype-voorkeuren ----------
 const SETTINGS_KEY = 'app_settings_v1';
 let appSettings = {
-  theme:'default', showCompassBtn:true, compassNorthHaptic:true, compassRadarAltStyle:false, orsKey:'', graphhopperKey:'', geoapifyKey:'', plantnetKey:'', geminiKey:'', groqKey:'', otmKey:'', bikeType:'regular', mapStyle:'standard', mapStyleBike:'standard', mapStyleWalk:'standard', thunderforestKey:'', cartoKey:'', googleTtsKey:'', mapTilerKey:'',
+  theme:'default', showCompassBtn:true, compassNorthHaptic:true, compassRadarAltStyle:false, orsKey:'', graphhopperKey:'', geoapifyKey:'', plantnetKey:'', geminiKey:'', windyKey:'', locationIqKey:'', groqKey:'', otmKey:'', bikeType:'regular', mapStyle:'standard', mapStyleBike:'standard', mapStyleWalk:'standard', thunderforestKey:'', cartoKey:'', googleTtsKey:'', mapTilerKey:'',
   audioSrcWikipedia:true, audioSrcWikivoyage:true, audioSrcNature:true, audioSrcOtm:false, // Ronde 98: aparte aan/uit-schakelaars per audiobron (zie settingAudioSrc*-checkboxes)
   historyAudioRadiusM:150, // Ronde 99: instelbare aankomst-triggerafstand (zie historyAudioRadiusM() in de hoofd-JS)
   dashTextSize:'normal', dashBold:true, largeNodesAccessibility:false, offRouteDist:35, autoReroute:false, silentReroute:false,
-  overlays:{ cycling:false, hiking:false, mtb:false },
+  overlays:{ cycling:false, hiking:false, mtb:false, riding:false, slopes:false, radar:false, steep:false, stops:false, photos:false, webcams:false },
   poiLayers:{ cafe:false, restaurant:false, bakery:false, supermarket:false, pharmacy:false, bike:false, water:false, toilet:false, money:false, camping:false, charging:false, playground:false, parking:false, hotel:false }, showPoiDetails:false,
-  showWindDirection:true, autoPause:false, redNavDot:false, topOffsetPx:0, tabGapPx:0, userName:'', bodyWeightKg:null, bodyHeightCm:null, bodyAge:null, bodyGender:'', spotifyClientId:'', stravaClientId:'', stravaClientSecret:'', voiceOnlyMode:false, routeColorMode:'off', showWindInNav:false, rainWatchOn:true, eatReminderOn:false, eatIntervalMin:45, drinkReminderOn:false, drinkIntervalMin:20, segmentPrOn:true, darkArrivalWarning:true, quietRoutingMode:false, historyAudioOn:false, audioGuideFullArticle:false, birdGeoFilterOn:true, shakeToSurpriseOn:false, shakeKm:30, vertrekFromGps:false, avoidBufferM:18, maxOverlapPct:8, lowerGpsAccuracy:false, disableMapRotation:false, posUpdateIntervalSec:1, mapRecenterDelaySec:6, overpassSurfaceTimeoutSec:15, routingWeighting:'off', navType:'active', fallDetectionOn:false, fallSensitivity:3, sosContactNumber:'', sosContactName:'', autoPauseRunCoach:false, routePreference:'balanced', routeLineColor:'#e2a13c', language:'en', homeBgDim:35, map3dTiltOn:false, speedSmoothingSec:0,
+  showWindDirection:true, autoPause:false, redNavDot:false, topOffsetPx:0, tabGapPx:0, userName:'', bodyWeightKg:null, bodyHeightCm:null, bodyAge:null, bodyGender:'', spotifyClientId:'', stravaClientId:'', stravaClientSecret:'', voiceOnlyMode:false, routeColorMode:'off', showWindInNav:false, rainWatchOn:true, eatReminderOn:false, eatIntervalMin:45, drinkReminderOn:false, drinkIntervalMin:20, segmentPrOn:true, darkArrivalWarning:true, quietRoutingMode:false, historyAudioOn:false, audioGuideFullArticle:false, birdGeoFilterOn:true, shakeToSurpriseOn:false, shakeKm:30, vertrekFromGps:false, avoidBufferM:18, maxOverlapPct:8, lowerGpsAccuracy:false, disableMapRotation:false, posUpdateIntervalSec:1, mapRecenterDelaySec:6, overpassSurfaceTimeoutSec:15, assistantWaitSec:60, routingWeighting:'off', navType:'active', fallDetectionOn:false, fallSensitivity:3, sosContactNumber:'', sosContactName:'', autoPauseRunCoach:false, routePreference:'balanced', routeLineColor:'#e2a13c', language:'en', homeBgDim:35, map3dTiltOn:false, speedSmoothingSec:0,
   liveLocationMode:'off', firebaseDatabaseUrl:'', firebaseAuthToken:'',
   bundledCountries:{ be:true, nl:false }, routingEngine:'brouter', routingEngineBike:'brouter', routingEngineWalk:'brouter',
   coachCats:{ start:true, countdown:true, toRun:true, toWalk:true, breathingTip:true, midpoint:true, kmSplit:true, encouragement:true, tempoWarning:true, personalRecord:true, slowdownSupport:true, lastInterval:true, progressPercent:true, sessionStreak:true, didYouKnow:true, weatherWarning:true, liveMedal:true }
@@ -12267,6 +12590,12 @@ const TRANSLATIONS = {
   backToStartShortest: { nl:'🧭 Kortste weg naar start', en:'🧭 Shortest way to start' },
   backToStartRetrace: { nl:'👣 Zelfde weg terug (je eigen spoor)', en:'👣 Same way back (your own track)' },
   backToStartCancel: { nl:'Annuleren', en:'Cancel' },
+  offRouteBannerText: { nl:'⚠️ Je wijkt af van de route · tik voor opties', en:'⚠️ You are straying from the route · tap for options' },
+  offRouteChoiceTitle: { nl:'Je bent van de route af', en:'You are off the route' },
+  offRouteChoiceNote: { nl:'Waar wil je nu naartoe? Herberekenen zoekt altijd de weg vanaf je huidige plek; het doel kies je hier.', en:'Where do you want to go now? Recalculating always finds the way from your current position; you choose the target here.' },
+  offRouteChoiceNext: { nl:'🔄 Naar het volgende punt', en:'🔄 To the next point' },
+  offRouteChoiceSkip: { nl:'⏭️ Dit punt overslaan, naar het daaropvolgende', en:'⏭️ Skip this point, go to the one after' },
+  offRouteChoiceStart: { nl:'↩️ Terug naar start', en:'↩️ Back to start' },
   toastBackToStartNoStart: { nl:'Geen startpunt gevonden om naar terug te gaan.', en:'No starting point found to go back to.' },
   toastBackToStartNoTrack: { nl:'Er is nog te weinig spoor om terug te volgen. Probeer de kortste weg.', en:'There is not enough track yet to follow back. Try the shortest way.' },
   toastBackToStartAlreadyThere: { nl:'Je staat al (bijna) op het startpunt.', en:'You are already (almost) at the starting point.' },
@@ -12387,6 +12716,8 @@ const TRANSLATIONS = {
   settingsMapStyleSub: { nl:'Kaartstijl', en:'Map style' },
   settingsMapStyleMovedNote: { nl:'🎛️ Kaartstijl en extra lagen (fietsroutenetwerk/wandelnetwerk/MTB) kies je nu rechtstreeks op de kaart, via het knopje boven de zoomknoppen.', en:'🎛️ Map style and extra layers (cycling/hiking/MTB network) are now chosen directly on the map, via the button above the zoom controls.' },
   settingsEngineBikeTypeMovedNote: { nl:'🎛️ Routeringsengine en fietstype kies je nu rechtstreeks op de kaart, via het knopje boven de zoomknoppen — apart onthouden voor fietsen en wandelen. Je OpenRouteService-sleutel (zie 🔑 Integraties & API-sleutels) blijft daarbij gewoon meewerken voor wegtype-bewuste routering.', en:'🎛️ Routing engine and bike type are now chosen directly on the map, via the button above the zoom controls — remembered separately for cycling and walking. Your OpenRouteService key (see 🔑 Integrations & API keys) keeps working alongside it for road-type-aware routing.' },
+  settingsAssistantWaitLabel: { nl:'✨ Assistent: hoe lang wachten op een antwoord (seconden)', en:'✨ Assistant: how long to wait for an answer (seconds)' },
+  settingsAssistantWaitSub: { nl:'Hoger = meer geduld met trage servers en Gemini (handig bij 4G of in drukke uren), maar je wacht ook langer voor een foutmelding. Standaard 60 s; de pogingen per server en per model schalen mee.', en:'Higher = more patience with slow servers and Gemini (handy on 4G or at busy times), but you also wait longer for an error. Default 60 s; the attempts per server and per model scale along.' },
   settingsMapTilerSub: { nl:'MapTiler — voor reliëf/hoogteterrein in het "Bekijk in 3D"-scherm (kaart → 🧊-knop). Volledig optioneel: zonder sleutel toont dat scherm gewoon een vlakke 3D-kaart (nog steeds draaien/kantelen/zoomen). Gratis account op maptiler.com (5000 kaartsessies/maand inbegrepen, geen creditcard nodig).', en:'MapTiler — for hillshade/elevation terrain in the "View in 3D" screen (map → 🧊 button). Fully optional: without a key that screen just shows a flat 3D map (still pan/tilt/zoom). Free account at maptiler.com (5000 map sessions/month included, no credit card needed).' },
   settingsThunderforestSub: { nl:'Thunderforest — voor de OpenCycleMap-kaartstijl hierboven. Gratis account op thunderforest.com.', en:'Thunderforest — for the OpenCycleMap map style above. Free account at thunderforest.com.' },
   settingsThunderforestSub2: { nl:'Vereist een gratis sleutel — vul die in bij 🔑 API-sleutels hieronder.', en:'Requires a free key — fill it in under 🔑 API keys below.' },
@@ -12402,6 +12733,12 @@ const TRANSLATIONS = {
   settingsPlantnetSub: { nl:'Pl@ntNet — voor plantherkenning via foto op het Wandelen-opzetscherm. Gratis account op my.plantnet.org (500 identificaties/dag inbegrepen).', en:'Pl@ntNet — for photo-based plant identification on the Walking setup screen. Free account at my.plantnet.org (500 identifications/day included).' },
   phPlantnetKey: { nl:'Jouw gratis Pl@ntNet API-sleutel…', en:'Your free Pl@ntNet API key…' },
   settingsGeminiSub: { nl:'Gemini — laatste terugval voor plant-/dierherkenning als de andere bronnen niets vinden. Gratis sleutel via aistudio.google.com (geen creditcard nodig).', en:'Gemini — last-resort fallback for plant/animal identification when other sources find nothing. Free key via aistudio.google.com (no credit card needed).' },
+  settingsWindySub: { nl:'Windy Webcams — voor de kaartlaag 📹 Webcams. Gratis sleutel via api.windy.com/keys (kan een paar minuten duren voor hij werkt). De beelden zijn kleine, tijdelijke foto\'s die elke paar minuten vernieuwen.', en:'Windy Webcams — for the 📹 Webcams map layer. Free key from api.windy.com/keys (can take a few minutes to start working). The images are small, temporary pictures that refresh every few minutes.' },
+  phWindyKey: { nl:'Jouw gratis Windy Webcams-sleutel…', en:'Your free Windy Webcams key…' },
+  settingsLocationIqSub: { nl:'LocationIQ — voor de kaartstijl "Straten met adressen" (kaartopties). Gratis sleutel via locationiq.com (account, geen creditcard nodig volgens hun site). Het gratis plan heeft een daglimiet; is die op, dan valt de app terug op de gewone kaart.', en:'LocationIQ — for the "Streets with addresses" map style (map options). Free key from locationiq.com (account; no credit card needed according to their site). The free plan has a daily limit; when it is used up the app falls back to the normal map.' },
+  phLocationIqKey: { nl:'Jouw gratis LocationIQ-sleutel…', en:'Your free LocationIQ key…' },
+  toastFillLocationIqKey: { nl:'Vul eerst je gratis LocationIQ-sleutel in bij Instellingen.', en:'Enter your free LocationIQ key in Settings first.' },
+  mlStyleLocationIq: { nl:'Straten met adressen (LocationIQ)', en:'Streets with addresses (LocationIQ)' },
   phGeminiKey: { nl:'Jouw gratis Gemini API-sleutel…', en:'Your free Gemini API key…' },
   settingsAssistantTitle: { nl:'✨ Assistent: waar haalt hij zijn antwoorden vandaan?', en:'✨ Assistant: where do its answers come from?' },
   assistantModeSources: { nl:'Enkel mijn bronnen: routes bij jou, eigen tips en brochures (strengst)', en:'Only my sources: routes near you, own tips and brochures (strictest)' },
@@ -12791,6 +13128,16 @@ const TRANSLATIONS = {
   mlStyleTopo: { nl:'OpenTopoMap', en:'OpenTopoMap' },
   mlStyleOutdoors: { nl:'Outdoors', en:'Outdoors' },
   mlStyleSatellite: { nl:'Satelliet', en:'Satellite' },
+  mlStyleToplus: { nl:'TopPlusOpen (Duitsland)', en:'TopPlusOpen (Germany)' },
+  mlStyleVlortho: { nl:'Luchtfoto Vlaanderen', en:'Aerial Flanders' },
+  mlStyleVlgrb: { nl:'GRB Vlaanderen', en:'GRB Flanders' },
+  mlOvRiding: { nl:'🐴 Ruiterroutes', en:'🐴 Riding routes' },
+  mlOvSlopes: { nl:'⛷️ Pistes en langlauf', en:'⛷️ Slopes and cross-country' },
+  mlOvRadar: { nl:'🌧️ Regenradar', en:'🌧️ Rain radar' },
+  mlOvSteep: { nl:'⛰️ Hellingskaart (steilte)', en:'⛰️ Slope map (steepness)' },
+  mlOvStops: { nl:'🚏 Haltes en stations', en:'🚏 Stops and stations' },
+  mlOvWebcams: { nl:'📹 Webcams (Windy, eigen sleutel)', en:'📹 Webcams (Windy, own key)' },
+  mlOvPhotos: { nl:'📷 Foto\'s (Wikimedia Commons)', en:'📷 Photos (Wikimedia Commons)' },
   mlEngineBrouter: { nl:'BRouter', en:'BRouter' },
   mlEngineValhalla: { nl:'Valhalla', en:'Valhalla' },
   mlEngineOsrm: { nl:'OSRM', en:'OSRM' },
@@ -12969,6 +13316,10 @@ const HELP_CONTENT = {
       <p>🎯 rechts = ga naar je huidige locatie. +/− = in-/uitzoomen.</p>
       <p><b>📌 Interessante plekken (POI's)</b> — tik op een pin voor naam, adres en openingsuren (indien aangezet in Instellingen), een knop om er rechtstreeks naartoe te navigeren, én een link om de zaak op Google op te zoeken.</p>
       <p><b>🎛️ Kaartopties</b> — kaartstijl, extra lagen, fietstype en routeringsengine, alles op één plek. Weet je niet goed wat een bepaalde optie precies doet? Houd 'm even ingedrukt (±0,6s) voor een korte toelichting, in plaats van 'm meteen te selecteren.</p>
+      <p><b>🗺️ Meer kaarten en lagen (Kaartopties):</b> bij de kaartstijlen vind je nu ook <b>TopPlusOpen</b> (open topografische kaart van Duitsland, fijn aan de Moezel), <b>Luchtfoto Vlaanderen</b> en <b>GRB Vlaanderen</b> (enkel Vlaanderen; elders blijft het beeld leeg). Bij de extra lagen: 🐴 ruiterroutes en ⛷️ pistes en langlauf (Waymarked Trails), 🌧️ <b>regenradar</b> (laatste echte radarbeeld van RainViewer, ververst elke 10 minuten, ongeveer 1 km nauwkeurig), ⛰️ <b>hellingskaart</b> (geel vanaf 6°, oranje 10°, rood 15°, paars 25°; berekend uit gratis hoogtedata van AWS Terrain Tiles, dus grof: tientallen meters, en kleine hellingen of taluds kunnen ontbreken), 🚏 <b>haltes en stations</b> (uit OpenStreetMap, vanaf zoom 14, zonder dienstregeling) en 📷 <b>foto's</b> (met GPS-positie uit Wikimedia Commons, vanaf zoom 13; tik voor maker en licentie, op het platteland zijn er weinig). Alle nieuwe lagen hebben internet nodig; ze worden niet offline opgeslagen, enkel de kaartstijl zelf kan je bij "Kaartbeeld offline" bewaren (bij TopPlusOpen en Vlaanderen is dat nog niet getest).</p>
+      <p><b>📹 Webcams (Kaartopties):</b> toont webcams in de buurt van je kaartbeeld, vanaf zoom 10. Dit werkt met een eigen gratis sleutel van Windy: vraag hem aan op api.windy.com/keys (het kan een paar minuten duren voor hij werkt) en plak hem in Instellingen bij "Windy Webcams". Tik op een camera voor het laatste beeld en een link naar Windy. Het beeld is klein en wordt maar om de paar minuten vernieuwd; de gratis beeldlinks verlopen na ongeveer 10 minuten, dus de app haalt bij elke tik een verse link op. Op het platteland zijn er weinig webcams, en zonder internet werkt de laag niet.</p>
+      <p><b>📮 Straten met adressen (LocationIQ, Kaartopties):</b> een extra kaartstijl op basis van OpenStreetMap waarop straten en huisnummers goed leesbaar zijn. Je hebt een eigen gratis LocationIQ-sleutel nodig (locationiq.com, plakken in Instellingen). Het gratis plan heeft een daglimiet; of de kaartblokjes daarin meetellen kon ik niet nagaan. Is de limiet op of mislukt het laden, dan valt de kaart terug op de gewone. Deze stijl kan je niet offline opslaan.</p>
+      <p><b>✨ Assistent: hoe lang wachten (Instellingen):</b> stel in hoeveel seconden (20 tot 180, standaard 60) de assistent mag wachten op trage servers en Gemini; de wachttijd per poging schaalt mee. Hoger is handig bij 4G of in drukke uren, maar je krijgt een foutmelding later.</p>
       <p><b>🧊 Bekijk in 3D</b> — knopje net boven de kaartopties, opent een apart, enkel-bekijken 3D-kaartscherm met je huidige route erop getekend. Draaien, kantelen en zoomen mag, maar er wordt hier niets aan je route of pinnen aangepast — je gewone 2D-kaart blijft gewoon zoals ze was.</p>
     </section>
     <section>
@@ -13019,7 +13370,8 @@ const HELP_CONTENT = {
       <p><b>💨 Wind tijdens navigatie</b> (optioneel) — windrichting en -snelheid ook zichtbaar tijdens het rijden zelf, niet enkel op kompas/weer.<br>
       <b>💧🍎 Eet- &amp; drinkherinneringen</b> (optioneel, elk apart) — een melding + trilling op een zelfgekozen interval.<br>
       <b>🏆 Persoonlijk record per routestuk</b> — de app onthoudt de tijd tussen elk paar opeenvolgende punten uit je rit-geschiedenis, en meldt het als je een stuk sneller aflegt dan ooit.<br>
-      <b>↩️ Terug naar startpunt</b> — één tik tijdens navigatie om meteen naar je beginpunt te routeren. Wandel of rij je zonder geladen route of GPX, dan kies je: 🧭 de kortste weg naar je startpunt, of 👣 dezelfde weg terug langs je eigen grijze spoor (in omgekeerde richting). Wat je tot dan toe aflegde wordt als wandeling/rit bewaard; tik daarna op Start om terug te gaan.<br>
+      <b>↩️ Terug naar startpunt</b> — één tik tijdens navigatie om terug te gaan naar het punt waar je op Start drukte, met of zonder geladen route of GPX. Je kiest: 🧭 de kortste weg naar je startpunt (een nieuwe route van hier naar de start, de rest van je oude route verdwijnt), of 👣 dezelfde weg terug langs je eigen grijze spoor (in omgekeerde richting). Het startpunt blijft hetzelfde, ook als je daarna opnieuw op Start drukt. Wat je tot dan toe aflegde wordt als wandeling/rit bewaard; tik daarna op Start om terug te gaan.<br>
+      <b>⚠️ Je wijkt af van de route</b> — tik op de rode melding voor keuzes: 🔄 naar het volgende punt (de gewone herberekening), ⏭️ dit punt overslaan en naar het daaropvolgende gaan (handig als je bewust een korter pad nam; niet bij een GPX-route), of ↩️ terug naar start.<br>
       <b>🌙 Aankomst in het donker</b> — extra duidelijke melding + trilling als je na zonsondergang (of voor zonsopgang) aankomt.<br>
       <b>📖 Historische audio-fragmenten</b> (optioneel) — leest via Wikipedia automatisch een kort fragment voor zodra je een gekend punt (kasteel, monument, bezienswaardigheid) passeert. De melding met de naam (onderlijnd, met ⓘ) kun je aantikken: dan opent een venster met het Wikipedia-artikel in de taal van de app (Nederlands of Engels), met een sluitknop bovenaan. Hetzelfde geldt voor een 🦉 Natuurspotter-melding: tik op de soortnaam voor het artikel. Soortnamen na een foto- of geluidsherkenning staan ook in de taal van de app.</p>
       <p><b>🔍 Zoekbalk &amp; tegelrij inklapbaar</b> — de zoekbalk bovenaan en de rij tegelknoppen eronder (kaart/dashboard/kompas/weer/locatie/noorden/Spotify) klappen automatisch in zodra je op "Start" tikt, zodat de navigatiebalk hoger op het scherm kan beginnen. Tik op het pijltje bovenaan de tegelrij (▲) om ze zelf in te klappen, of op de kleine balk bovenin (🔍 / ▼) om ze weer tevoorschijn te halen — een veeg naar boven (inklappen) of naar beneden (uitklappen) werkt ook. Bij "Stop" klapt alles automatisch weer volledig open.</p>
@@ -13147,6 +13499,10 @@ const HELP_CONTENT = {
       <p>🎯 on the right = go to your current location. +/− = zoom in/out.</p>
       <p><b>📌 Points of interest (POIs)</b> — tap a pin for its name, address and opening hours (if enabled in Settings), a button to navigate straight there, and a link to look the business up on Google.</p>
       <p><b>🎛️ Map options</b> — map style, extra layers, bike type and routing engine, all in one place. Not sure what a particular option does? Press and hold it (±0.6s) for a short explanation instead of selecting it right away.</p>
+      <p><b>🗺️ More maps and layers (Map options):</b> the map styles now also include <b>TopPlusOpen</b> (open topographic map of Germany, nice along the Moselle), <b>Aerial Flanders</b> and <b>GRB Flanders</b> (Flanders only; elsewhere the picture stays empty). Extra layers: 🐴 riding routes and ⛷️ slopes and cross-country (Waymarked Trails), 🌧️ <b>rain radar</b> (latest real radar image from RainViewer, refreshed every 10 minutes, accurate to about 1 km), ⛰️ <b>slope map</b> (yellow from 6°, orange 10°, red 15°, purple 25°; computed from free elevation data from AWS Terrain Tiles, so coarse: tens of metres, and small slopes or embankments can be missing), 🚏 <b>stops and stations</b> (from OpenStreetMap, from zoom 14, no timetables) and 📷 <b>photos</b> (with GPS position from Wikimedia Commons, from zoom 13; tap for author and licence, sparse in the countryside). All new layers need internet; they are not stored offline, only the map style itself can be saved under "Map imagery offline" (for TopPlusOpen and Flanders this is not tested yet).</p>
+      <p><b>📹 Webcams (Map options):</b> shows webcams near your map view, from zoom 10. This works with your own free Windy key: request it at api.windy.com/keys (it can take a few minutes to start working) and paste it in Settings under "Windy Webcams". Tap a camera for the latest image and a link to Windy. The image is small and only refreshed every few minutes; the free image links expire after about 10 minutes, so the app fetches a fresh link on every tap. Webcams are sparse in the countryside, and the layer does not work without internet.</p>
+      <p><b>📮 Streets with addresses (LocationIQ, Map options):</b> an extra map style based on OpenStreetMap where streets and house numbers are easy to read. You need your own free LocationIQ key (locationiq.com, paste it in Settings). The free plan has a daily limit; whether map tiles count towards it could not be checked. If the limit is reached or loading fails, the map falls back to the normal one. This style cannot be saved offline.</p>
+      <p><b>✨ Assistant: how long to wait (Settings):</b> set how many seconds (20 to 180, default 60) the assistant may wait for slow servers and Gemini; the wait per attempt scales along. Higher is handy on 4G or at busy times, but an error message comes later.</p>
       <p><b>🧊 View in 3D</b> — button right above the map options, opens a separate, view-only 3D map screen with your current route drawn on it. Panning, tilting and zooming are all fine, but nothing here changes your route or pins — your regular 2D map stays exactly as it was.</p>
     </section>
     <section>
@@ -13197,7 +13553,8 @@ const HELP_CONTENT = {
       <p><b>💨 Wind during navigation</b> (optional) — wind direction and speed also visible while riding, not just on the compass/weather screens.<br>
       <b>💧🍎 Eat &amp; drink reminders</b> (optional, each separate) — a notification + vibration at your own chosen interval.<br>
       <b>🏆 Personal record per route segment</b> — the app remembers the time between each pair of consecutive points from your ride history, and notifies you if you beat it.<br>
-      <b>↩️ Back to starting point</b> — one tap during navigation to route straight back to where you began. If you are walking or riding without a loaded route or GPX, you choose: 🧭 the shortest way to your starting point, or 👣 the same way back along your own grey track (in reverse). What you covered so far is saved as a walk/ride; then tap Start to head back.<br>
+      <b>↩️ Back to starting point</b> — one tap during navigation to go back to the point where you pressed Start, with or without a loaded route or GPX. You choose: 🧭 the shortest way to your starting point (a new route from here to the start; the rest of your old route is dropped), or 👣 the same way back along your own grey track (in reverse). The starting point stays the same, even if you press Start again afterwards. What you covered so far is saved as a walk/ride; then tap Start to head back.<br>
+      <b>⚠️ You are straying from the route</b> — tap the red message for choices: 🔄 to the next point (the normal recalculation), ⏭️ skip this point and go to the one after (handy when you deliberately took a shorter path; not for a GPX route), or ↩️ back to start.<br>
       <b>🌙 Dark arrival</b> — an extra clear notification + vibration if you arrive after sunset (or before sunrise).<br>
       <b>📖 Historical audio snippets</b> (optional) — automatically reads out a short Wikipedia snippet when you pass a known point (castle, monument, landmark). You can tap the notice with the name (underlined, with ⓘ): a window opens with the Wikipedia article in the app language (Dutch or English), with a close button at the top. The same goes for a 🦉 Nature spotter notice: tap the species name for the article. Species names after a photo or sound recognition are also in the app language.</p>
       <p><b>🔍 Collapsible search bar &amp; button row</b> — the search bar at the top and the row of tile buttons below it (map/dashboard/compass/weather/locate/north/Spotify) automatically collapse as soon as you tap "Start", so the navigation bar can start higher up the screen. Tap the arrow at the top of the button row (▲) to collapse them yourself, or the small bar at the top (🔍 / ▼) to bring them back — swiping up (collapse) or down (expand) also works. On "Stop" everything automatically expands again.</p>
@@ -14938,6 +15295,34 @@ const DEV_NOTES_CONTENT = {
       <p><b>Teksten en test:</b> alle nieuwe teksten bestaan in NL en EN, Help en <code>plekken/README.md</code> zijn aangevuld. <b>Testsuite:</b> nieuw bestand <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> is een kiezer aangepast aan de nieuwe rijopbouw. Versie 2.497 / versionCode 116.</p>
     </section>
     <section>
+      <h3>🛠️ Ronde 177: instelling voor de wachttijd van de assistent en de kaartstijl LocationIQ</h3>
+      <p><b>Wachttijd als instelling.</b> Nieuw veld <code>appSettings.assistantWaitSec</code> (Instellingen, <code>#settingAssistantWait</code>, 20 tot 180 seconden, standaard 60; ook in de standaardwaarden en bij "alles terugzetten"). <code>assistantWaitScale()</code> geeft de factor (waarde gedeeld door 60). Die schaalt de basiswaarden uit Ronde 175: <code>assistantOverpass()</code> (tijd per server en totaalbudget), <code>assistantGemini()</code> (tijd per poging en totaalbudget, ook voor de plan- en webaanroepen die eigen waarden meegeven) en de serverlimiet in de plekkenvraag (<code>assistantServerLimitSec()</code>, 25 s bij 60, tussen 15 en 60). Bij de standaardwaarde zijn alle getallen gelijk aan die van Ronde 175.</p>
+      <p><b>Kaartstijl LocationIQ.</b> Nieuwe stijl <code>locationiq</code> in <code>setMapStyle()</code>: tegels van <code>https://{s}-tiles.locationiq.com/v3/streets/r/{z}/{x}/{y}.png?key=…</code> (subdomeinen a, b en c) met de eigen sleutel uit <code>appSettings.locationIqKey</code> (Instellingen, <code>#locationIqKeyInput</code>); de gewone OpenStreetMap-kaart staat erachter als terugval. Zonder sleutel een melding en de gewone kaart. De sleutel zit in de stijlsleutel van de cache, zodat een nieuwe sleutel de kaart opnieuw laadt. De bronvermelding is "LocationIQ · OpenStreetMap". De tegel-url en de stijlnamen (streets, light en dark bestaan) komen uit de documentatie van LocationIQ; de gratis daglimiet staat in de bronnen die ik vond op 5.000 aanvragen per IP, maar of kaartblokjes daarin meetellen is niet bevestigd. Tegels laden is niet getest tegen de echte server.</p>
+      <p><b>Geen offline opslag.</b> De knop "Kaart offline opslaan" weigert bij deze stijl, omdat honderden tegels de daglimiet zouden opeten.</p>
+
+    </section>
+    <section>
+      <h3>🛠️ Ronde 176: kaartlaag Webcams (Windy, eigen sleutel)</h3>
+      <p><b>Bron en sleutel.</b> De laag gebruikt de Windy Webcams API v3: lijst op <code>https://api.windy.com/webcams/api/v3/webcams?nearby=lat,lon,straal&amp;limit=50&amp;include=images,location,urls</code> (straal in km, hoogstens 250, afgeleid uit de zichtbare kaart) en één webcam op <code>…/webcams/{webcamId}?include=images,location,urls</code>. De sleutel komt uit <code>appSettings.windyKey</code> (nieuw veld in Instellingen, <code>#windyKeyInput</code>, ook in de standaardwaarden en bij "alles terugzetten") en gaat mee in de header <code>x-windy-api-key</code>, nooit in het webadres. Zonder sleutel wordt niets gevraagd en volgt een melding.</p>
+      <p><b>Netwerk.</b> <code>phWebcamGet()</code> gebruikt in de app <code>CapacitorHttp.get()</code> (eigen netwerklaag van Android, dus geen CORS) en in de browser gewone <code>fetchWithTimeout()</code> met de sleutelheader. Of Windy in een browser CORS toestaat is niet nagekeken; de documentatie zegt er niets over. Fouten krijgen een eigen melding: 401 of 403 (sleutel geweigerd of nog niet actief), 429 (te veel aanvragen), de rest als algemene netwerkfout.</p>
+      <p><b>Verlopen beeldlinks.</b> De beeldlinks van de gratis laag zijn tijdelijk (ongeveer 10 minuten; daarna HTTP 401). Daarom bewaart <code>phWebcamsCache</code> een lijst hoogstens <code>PH_WEBCAM_FRESH_MS</code> (8 minuten), wordt een oudere lijst bij het verschuiven van de kaart opnieuw opgehaald, en vraagt een tik op een camera bij een lijst die ouder is dan 1 minuut eerst die ene webcam opnieuw op en vervangt het beeld in de open popup. De popup is een DOM-element (<code>phWebcamPopup()</code>), geen HTML-tekst.</p>
+      <p><b>Veiligheid.</b> Titel en plaats worden als tekst gezet (geen HTML). Een beeld wordt enkel geladen en een link enkel getoond als het adres op <code>windy.com</code> staat (<code>phWindyOk()</code>); een webcam zonder positie wordt overgeslagen. Elke popup toont een link naar de Windy-pagina van de camera, zoals de gratis voorwaarden vragen.</p>
+      <p><b>Kaartlagen-scherm.</b> Nieuwe rij <code>webcams</code> in <code>MAP_LAYERS_OVERLAY_OPTIONS_BY_MODE</code> (wandel en fiets), uitleg in <code>ML_HINT_TEXTS.overlay</code>, standaard uit (<code>appSettings.overlays.webcams</code>, op de drie plaatsen met de standaardlagen). <code>phApplySpecialOverlays()</code> en de verschuif-luisteraar (0,9 s na een kaartverplaatsing) laden de laag mee met haltes en foto's.</p>
+
+    </section>
+    <section>
+      <h3>🛠️ Ronde 175: terug naar start met een route, afwijk-keuzes, ruimere time-outs en nieuwe kaartlagen</h3>
+      <p><b>↩️ met een geladen route.</b> De klik-handler riep <code>addPinToRoute(false)</code> aan met het startpunt als nieuwe speld. Die functie voegt een punt in na het geografisch dichtstbijzijnde routepunt en laat alle bestaande punten staan, dus de hele route (ook de al gelopen punten) werd opnieuw berekend: een route [1, 📍, 2 … 9] i.p.v. [hier, start]. Nagebootst met een lus van 9 punten. Nu opent de knop voor elke route <code>#backToStartChoiceModal</code> en loopt alles via <code>freeBackToStart(mode)</code>, dat route, GPX-vlag, <code>importedTrack</code> en pinnen leegt en [hier, start] opbouwt (kortste weg) of het omgekeerde spoor laadt (zelfde weg).</p>
+      <p><b>Startpunt blijft staan.</b> <code>startNav()</code> overschreef bij elke Start <code>navBreadcrumbs[0]</code>, waardoor een tweede Start het "startpunt" op je huidige plek zette (de tweede druk voegde dus gewoon je eigen positie toe). Nieuwe variabele <code>navOrigin</code> {lat, lon, sig, pending} bewaart het eerste startpunt zolang de route (eerste en laatste punt, via <code>routeOriginSig()</code>) dezelfde blijft; <code>backToStartPoint()</code> leest dat. Na een terugweg krijgt <code>navOrigin</code> <code>pending</code>: de eerstvolgende Start neemt de handtekening van de nieuwe terugroute over, maar houdt het oorspronkelijke punt. Wis en een nieuwe GPX-import (<code>finalizeGpxImport()</code>) zetten <code>navOrigin</code> terug op null.</p>
+      <p><b>Afwijk-keuzes.</b> <code>#offRouteBanner</code> is nu aantikbaar (<code>openOffRouteChoice()</code>, enkel als <code>navActive</code> en <code>isOffRoute</code>) en opent <code>#offRouteChoiceModal</code>: naar het volgende punt (<code>rerouteFromCurrentPosition(false)</code>, ongewijzigd: die zoekt altijd de weg naar <code>route[navTargetIndex]</code>), dit punt overslaan (<code>navTargetIndex++</code>, <code>updateProgressUI()</code>, <code>highlightTarget()</code>, daarna herberekenen; niet bij <code>routeIsFromGpx</code>, daar volgt de voortgang de lijn en niet de wegpunten), of terug naar start (<code>freeBackToStart('shortest')</code>).</p>
+      <p><b>Time-outs.</b> Assistent-Overpass: 20 s per server (was 12 s), totaal 60 s (was 40 s), serverlimiet in de zoekopdracht 25 s (was 15 s, korter dan de wachttijd van de client was onlogisch: de client gaf eerder op dan de server). <code>assistantGemini()</code>: 40 s per poging (<code>perTryMs</code>, was 25 s), 70 s totaal (was 45 s); de webstand had zelfs maar 30 s totaal (<code>budgetMs</code> nu 70 s, 45 s per poging, want Google Search maakt een antwoord trager); de planstap blijft kort (15 s per poging, 35 s totaal). De vijfde Overpass-server (<code>openstreetmap.ru</code>) blijft als laatste reserve in de lijst; <code>osmWalkOverpass()</code> en de routes zijn niet aangeraakt.</p>
+      <p><b>Basiskaarten.</b> <code>TILE_PROVIDERS_TOPLUS</code> (BKG TopPlusOpen, WEBMERCATOR, zoom 0-18, dl-de/by-2-0), <code>TILE_PROVIDERS_VLORTHO</code> (laag <code>omzrgb24vl</code>, 2024) en <code>TILE_PROVIDERS_VLGRB</code> (laag <code>grb_bsk</code>), de Vlaamse via KVP-adressen van <code>geo.api.vlaanderen.be</code> met <code>tilematrixset=GoogleMapsVL</code> en een lege stijl-id. Adressen, laagnamen, zoombereik en voorwaarden zijn uit de officiële documentatie gelezen; de tegels zelf konden in de ontwikkelomgeving niet geladen worden, dus CORS en weergave zijn niet getest. Elke bron heeft een terugval op OpenStreetMap of Esri.</p>
+      <p><b>Overlays.</b> Waymarked Trails kreeg <code>riding</code> en <code>slopes</code> in <code>OVERLAY_LAYERS</code>. Nieuw in <code>phApplySpecialOverlays()</code> (aangeroepen vanuit <code>applyOverlaySettings()</code>): <code>radar</code> (<code>phRadarRefresh()</code>, laatste <code>radar.past</code>-beeld van RainViewer, bronzoom 7, elke 10 min), <code>steep</code> (eigen MapLibre-protocol <code>phslope://</code>; <code>phSlopeLoad()</code> haalt een Terrarium-tegel op, <code>phTerrariumElev()</code> decodeert hoogte = R·256 + G + B/256 − 32768, <code>phSlopeRGBA()</code> berekent per pixel de hoek uit het verschil met de buurpixels en de echte pixelgrootte op die breedtegraad; geen buurtegels, dus randpixels gebruiken enkel de buren binnen de tegel; bronzoom max 14, onder zoom 9 een lege tegel, 160 tegels in het geheugen), <code>stops</code> (<code>phLoadStops()</code>, Overpass-vraag per kaartuitsnede via <code>assistantOverpass()</code>, vanaf zoom 14, max 300) en <code>photos</code> (<code>phLoadPhotos()</code>, Wikimedia Commons <code>generator=geosearch</code>, namespace 6, vanaf zoom 13, enkel adressen van wikimedia.org, alle tekst door <code>phEsc()</code>). Haltes en foto's herladen 0,9 s na het verschuiven van de kaart en niet zolang er een popup openstaat.</p>
+      <p><b>Opgeloste volgorde-fout.</b> Een basiskaart die na een stijlwissel opnieuw werd toegevoegd, kwam bovenop de overlays te liggen (de routenetwerken verdwenen onder de nieuwe kaart). <code>MLA.tileLayer()</code> kreeg <code>options.isBase</code>: een basiskaart gaat onder alle bestaande tegellagen, overlays gaan erboven.</p>
+      <p><b>Niet gebouwd, met reden.</b> Hellingsoriëntatie (weinig nut voor wandelaars; het rekenwerk is er wel), webcams (vraagt een eigen sleutel), sluitingen en meldingen (OpenStreetMap kent ze onvolledig en verouderd) en ATHM en lawine-info (alpiene data zonder gratis bron).</p>
+
+    </section>
+    <section>
       <h3>🛠️ Ronde 174: zoeken via Google als OpenStreetMap niets vindt (webstand)</h3>
       <p><b>Aanleiding:</b> de lijst met zaken komt uit OpenStreetMap, ook in de webstand; een lege lijst gaf enkel de melding dat er niets gevonden is, terwijl in die stand Google Search beschikbaar is.</p>
       <p><b>Werking:</b> in <code>nrChatSend()</code> onthoudt <code>poiLL</code> de positie of plaats waarvoor de plekken gezocht werden. Is de stand <code>web</code>, is er een <code>poi</code>-vraag en is <code>pois</code> leeg of mislukt (<code>webPoiFallback</code>), dan krijgt het model een OPMERKING met de categorie en soort, de zoektermen, de plaatsnaam of een ruwe positie met 2 decimalen (ongeveer 1 km), en de opdracht zelf met Google Search te zoeken, enkel zaken te noemen die in de zoekresultaten staan, niets te verzinnen en te zeggen dat het van het web komt. De gewone foutmelding voor mislukte plekken vervalt dan. Onder het antwoord staat een eigen notitie ("deze zaken komen van het web, niet van de kaart, niet gecontroleerd") en de gevonden pagina's staan bij de bronnen. Lukt webzoeken niet (sleutel zonder toegang), dan valt de bestaande terugval op eigen kennis in werking met de instructie geen zaken te verzinnen. In de andere standen verandert er niets.</p>
@@ -16617,6 +17002,34 @@ const DEV_NOTES_CONTENT = {
       <p><b>Filters:</b> data comes from Overpass (<code>osmWalkOverpass()</code>) and is kept for 30 days (<code>nearby_tags_v1</code>). Playground (<code>leisure=playground</code>, 300 m) and stop (<code>highway=bus_stop</code>, <code>railway=station|halt|tram_stop</code>, 500 m) in 1 request per 20 routes; the first 60 in the sorting. Surface: per route (the first 20) sample points about every 250 m (6 to 14), per point the nearest way within 15 m (<code>out tags geom</code>) and its class from <code>surface</code>, otherwise <code>tracktype</code> or <code>highway</code>; a path or footway without <code>surface</code> does not count. At least 5 known points and 60% of the points known, otherwise no statement; "in rain" = at least 70% paved. A route that is only a link has no track and gets no surface label. If a request fails a message appears and nothing is saved.</p>
       <p><b>Own places:</b> <code>plekken/index.json</code> (<code>regions[].places[]</code> with name, text, lat, lon, foto, fotoBron, mode, gecontroleerd) is loaded at startup; <code>nrPlacesNear()</code> keeps places of this activity within 40 km; the pop-up shows the three nearest. Without a filter and without a length group they show as "📍 Own tips" above the list; a tap opens the place in Google Maps. The file holds ten places in Limburg as a starter list (no date in <code>gecontroleerd</code>, so shown as "not checked yourself yet", with a Maps search text in <code>maps</code>); the rest comes from you, the app invents nothing.</p>
       <p><b>Texts and test:</b> all new texts exist in NL and EN, Help and <code>plekken/README.md</code> are extended. <b>Test suite:</b> new file <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> one selector is adjusted to the new row structure. Version 2.497 / versionCode 116.</p>
+    </section>
+    <section>
+      <h3>🛠️ Round 177: setting for the assistant wait time and the LocationIQ map style</h3>
+      <p><b>Wait time as a setting.</b> New field <code>appSettings.assistantWaitSec</code> (Settings, <code>#settingAssistantWait</code>, 20 to 180 seconds, default 60; also in the defaults and in "reset everything"). <code>assistantWaitScale()</code> returns the factor (value divided by 60). It scales the base values from Round 175: <code>assistantOverpass()</code> (time per server and total budget), <code>assistantGemini()</code> (time per attempt and total budget, also for the plan and web calls that pass their own values) and the server limit in the places query (<code>assistantServerLimitSec()</code>, 25 s at 60, between 15 and 60). At the default value all numbers equal those of Round 175.</p>
+      <p><b>LocationIQ map style.</b> New style <code>locationiq</code> in <code>setMapStyle()</code>: tiles from <code>https://{s}-tiles.locationiq.com/v3/streets/r/{z}/{x}/{y}.png?key=…</code> (subdomains a, b and c) with your own key from <code>appSettings.locationIqKey</code> (Settings, <code>#locationIqKeyInput</code>); the normal OpenStreetMap map follows as a fallback. Without a key there is a message and the normal map. The key is part of the style's cache key, so a new key reloads the map. The attribution is "LocationIQ · OpenStreetMap". The tile URL and style names (streets, light and dark exist) come from LocationIQ's documentation; the free daily limit is 5,000 requests per IP in the sources I found, but whether map tiles count towards it is not confirmed. Tile loading was not tested against the real server.</p>
+      <p><b>No offline saving.</b> The "Save map offline" button refuses for this style, because hundreds of tiles would use up the daily limit.</p>
+
+    </section>
+    <section>
+      <h3>🛠️ Round 176: Webcams map layer (Windy, own key)</h3>
+      <p><b>Source and key.</b> The layer uses the Windy Webcams API v3: list at <code>https://api.windy.com/webcams/api/v3/webcams?nearby=lat,lon,radius&amp;limit=50&amp;include=images,location,urls</code> (radius in km, at most 250, derived from the visible map) and a single webcam at <code>…/webcams/{webcamId}?include=images,location,urls</code>. The key comes from <code>appSettings.windyKey</code> (new field in Settings, <code>#windyKeyInput</code>, also in the defaults and in "reset everything") and is sent in the header <code>x-windy-api-key</code>, never in the URL. Without a key nothing is requested and a message follows.</p>
+      <p><b>Network.</b> <code>phWebcamGet()</code> uses <code>CapacitorHttp.get()</code> in the app (Android's own network layer, so no CORS) and a normal <code>fetchWithTimeout()</code> with the key header in the browser. Whether Windy allows CORS in a browser was not checked; the documentation says nothing about it. Errors get their own message: 401 or 403 (key refused or not active yet), 429 (too many requests), anything else as a general network error.</p>
+      <p><b>Expiring image links.</b> The image links of the free tier are temporary (about 10 minutes; after that HTTP 401). So <code>phWebcamsCache</code> keeps a list for at most <code>PH_WEBCAM_FRESH_MS</code> (8 minutes), an older list is fetched again when the map moves, and a tap on a camera first requests that single webcam again if the list is older than 1 minute and replaces the image in the open popup. The popup is a DOM element (<code>phWebcamPopup()</code>), not HTML text.</p>
+      <p><b>Safety.</b> Title and place are set as text (no HTML). An image is only loaded and a link only shown if the address is on <code>windy.com</code> (<code>phWindyOk()</code>); a webcam without a position is skipped. Every popup shows a link to the camera's Windy page, as the free terms ask.</p>
+      <p><b>Map layers sheet.</b> New row <code>webcams</code> in <code>MAP_LAYERS_OVERLAY_OPTIONS_BY_MODE</code> (walking and cycling), explanation in <code>ML_HINT_TEXTS.overlay</code>, off by default (<code>appSettings.overlays.webcams</code>, in the three places with the default layers). <code>phApplySpecialOverlays()</code> and the map-move listener (0.9 s after the map moves) load the layer together with stops and photos.</p>
+
+    </section>
+    <section>
+      <h3>🛠️ Round 175: back to start with a route, off-route choices, longer timeouts and new map layers</h3>
+      <p><b>↩️ with a loaded route.</b> The click handler called <code>addPinToRoute(false)</code> with the start point as a new pin. That function inserts a point after the geographically nearest route point and keeps all existing points, so the whole route (including points already walked) was recalculated: a route [1, 📍, 2 … 9] instead of [here, start]. Reproduced with a loop of 9 points. Now the button opens <code>#backToStartChoiceModal</code> for every route and everything goes through <code>freeBackToStart(mode)</code>, which clears route, GPX flag, <code>importedTrack</code> and pins and builds [here, start] (shortest way) or loads the reversed track (same way back).</p>
+      <p><b>The start point stays.</b> <code>startNav()</code> overwrote <code>navBreadcrumbs[0]</code> on every Start, so a second Start put the "start point" at your current position (the second press therefore just added your own position). New variable <code>navOrigin</code> {lat, lon, sig, pending} keeps the first start point as long as the route (first and last point, via <code>routeOriginSig()</code>) stays the same; <code>backToStartPoint()</code> reads it. After a return trip <code>navOrigin</code> gets <code>pending</code>: the next Start takes over the signature of the new return route but keeps the original point. Clear and a new GPX import (<code>finalizeGpxImport()</code>) reset <code>navOrigin</code> to null.</p>
+      <p><b>Off-route choices.</b> <code>#offRouteBanner</code> can now be tapped (<code>openOffRouteChoice()</code>, only when <code>navActive</code> and <code>isOffRoute</code>) and opens <code>#offRouteChoiceModal</code>: to the next point (<code>rerouteFromCurrentPosition(false)</code>, unchanged: it always looks for the way to <code>route[navTargetIndex]</code>), skip this point (<code>navTargetIndex++</code>, <code>updateProgressUI()</code>, <code>highlightTarget()</code>, then recalculate; not for <code>routeIsFromGpx</code>, where progress follows the line and not the waypoints), or back to start (<code>freeBackToStart('shortest')</code>).</p>
+      <p><b>Timeouts.</b> Assistant Overpass: 20 s per server (was 12 s), 60 s in total (was 40 s), server limit in the query 25 s (was 15 s; a client wait longer than the server limit made no sense: the client gave up before the server). <code>assistantGemini()</code>: 40 s per attempt (<code>perTryMs</code>, was 25 s), 70 s in total (was 45 s); web mode even had only 30 s in total (<code>budgetMs</code> now 70 s, 45 s per attempt, since Google Search makes an answer slower); the plan step stays short (15 s per attempt, 35 s in total). The fifth Overpass server (<code>openstreetmap.ru</code>) stays in the list as a last reserve; <code>osmWalkOverpass()</code> and the routes are untouched.</p>
+      <p><b>Base maps.</b> <code>TILE_PROVIDERS_TOPLUS</code> (BKG TopPlusOpen, WEBMERCATOR, zoom 0-18, dl-de/by-2-0), <code>TILE_PROVIDERS_VLORTHO</code> (layer <code>omzrgb24vl</code>, 2024) and <code>TILE_PROVIDERS_VLGRB</code> (layer <code>grb_bsk</code>), the Flemish ones through KVP addresses of <code>geo.api.vlaanderen.be</code> with <code>tilematrixset=GoogleMapsVL</code> and an empty style id. Addresses, layer names, zoom range and terms were read from the official documentation; the tiles themselves could not be loaded in the development environment, so CORS and rendering are untested. Each source falls back to OpenStreetMap or Esri.</p>
+      <p><b>Overlays.</b> Waymarked Trails got <code>riding</code> and <code>slopes</code> in <code>OVERLAY_LAYERS</code>. New in <code>phApplySpecialOverlays()</code> (called from <code>applyOverlaySettings()</code>): <code>radar</code> (<code>phRadarRefresh()</code>, latest <code>radar.past</code> image from RainViewer, source zoom 7, every 10 min), <code>steep</code> (own MapLibre protocol <code>phslope://</code>; <code>phSlopeLoad()</code> fetches a Terrarium tile, <code>phTerrariumElev()</code> decodes elevation = R·256 + G + B/256 − 32768, <code>phSlopeRGBA()</code> computes the angle per pixel from the difference with neighbouring pixels and the real pixel size at that latitude; no neighbouring tiles, so edge pixels only use neighbours inside the tile; source zoom max 14, an empty tile below zoom 9, 160 tiles in memory), <code>stops</code> (<code>phLoadStops()</code>, Overpass query per map view via <code>assistantOverpass()</code>, from zoom 14, max 300) and <code>photos</code> (<code>phLoadPhotos()</code>, Wikimedia Commons <code>generator=geosearch</code>, namespace 6, from zoom 13, only wikimedia.org addresses, all text through <code>phEsc()</code>). Stops and photos reload 0.9 s after the map moves and not while a popup is open.</p>
+      <p><b>Fixed stacking bug.</b> A base map re-added after a style change ended up on top of the overlays (the route networks vanished under the new map). <code>MLA.tileLayer()</code> got <code>options.isBase</code>: a base map goes under all existing tile layers, overlays go above it.</p>
+      <p><b>Not built, with reason.</b> Slope aspect (little use for walkers; the computation is there), webcams (needs a key of your own), closures and notices (OpenStreetMap knows them incompletely and out of date) and ATHM and avalanche info (alpine data without a free source).</p>
+
     </section>
     <section>
       <h3>🛠️ Round 174: searching via Google when OpenStreetMap finds nothing (web mode)</h3>
@@ -25386,7 +25799,7 @@ ${GARMIN_MENU_BTN_JS}
 </body>
 </html>`;
 }
-const APP_VERSION_TEXT = 'v2.508 · 7 nov';
+const APP_VERSION_TEXT = 'v2.511 · 7 nov';
 $('homeVersionFooter').textContent = APP_VERSION_TEXT;
 function buildGarminHubHtml(){
   // Dit is Gemini's keuzescherm.html, ongewijzigd qua opbouw/stijl — enkel: (1) een derde grote tegel
@@ -26721,6 +27134,7 @@ async function loadSettings(){
   $('settingPosUpdateInterval').value = appSettings.posUpdateIntervalSec || 1;
   $('settingMapRecenterDelay').value = appSettings.mapRecenterDelaySec || 6;
   $('settingOverpassSurfaceTimeout').value = appSettings.overpassSurfaceTimeoutSec || 15;
+  $('settingAssistantWait').value = appSettings.assistantWaitSec || 60;
   selectRadio('routingWeighting', appSettings.routingWeighting || 'off', 'off');
   $('settingShowWindInNav').checked = !!appSettings.showWindInNav;
   $('settingRainWatch').checked = appSettings.rainWatchOn !== false;
@@ -26775,6 +27189,8 @@ async function loadSettings(){
   $('geoapifyKeyInput').value = appSettings.geoapifyKey || '';
   $('plantnetKeyInput').value = appSettings.plantnetKey || '';
   $('geminiKeyInput').value = appSettings.geminiKey || '';
+  $('windyKeyInput').value = appSettings.windyKey || '';
+  $('locationIqKeyInput').value = appSettings.locationIqKey || '';
   assistantModeShow();
   $('groqKeyInput').value = appSettings.groqKey || '';
   $('otmKeyInput').value = appSettings.otmKey || '';
@@ -26821,6 +27237,8 @@ $('geoapifyKeyInput').addEventListener('change', (e) => { appSettings.geoapifyKe
 $('googleTtsKeyInput').addEventListener('change', (e) => { appSettings.googleTtsKey = e.target.value.trim(); saveSettings(); });
 $('plantnetKeyInput').addEventListener('change', (e) => { appSettings.plantnetKey = e.target.value.trim(); saveSettings(); });
 $('geminiKeyInput').addEventListener('change', (e) => { appSettings.geminiKey = e.target.value.trim(); saveSettings(); });
+$('locationIqKeyInput').addEventListener('change', (e) => { appSettings.locationIqKey = e.target.value.trim(); saveSettings(); if (appSettings.mapStyle === 'locationiq') setMapStyle(appSettings.mapStyle, appSettings.thunderforestKey, appSettings.cartoKey); });
+$('windyKeyInput').addEventListener('change', (e) => { appSettings.windyKey = e.target.value.trim(); saveSettings(); phWebcamsCache.clear(); if (phOverlayOn('webcams')) phLoadWebcams(); });
 document.querySelectorAll('input[name="assistantMode"]').forEach(r => r.addEventListener('change', () => { if (r.checked){ appSettings.assistantMode = r.value; saveSettings(); } }));
 $('groqKeyInput').addEventListener('change', (e) => { appSettings.groqKey = e.target.value.trim(); saveSettings(); });
 $('otmKeyInput').addEventListener('change', (e) => { appSettings.otmKey = e.target.value.trim(); saveSettings(); });
@@ -26893,11 +27311,11 @@ function rerouteCurrentRouteIfAny(){
 // rest van de app, inclusief de hele routeringspijplijn, ongewijzigd blijft lezen) telkens naar de juiste
 // van de twee. Fietstype/lagen blijven zoals voorheen 1 gedeelde/type-gebonden instelling (geen wandel-
 // equivalent nodig: fietstype is enkel relevant bij fietsen, en de laag-vinkjes zijn al zelf per netwerktype). ----------
-const MAP_LAYERS_STYLE_OPTIONS_BY_MODE = { fiets:['standard', 'cyclosm', 'thunderforest', 'satellite'], wandel:['standard', 'opentopo', 'outdoors', 'satellite'] };
-const MAP_LAYERS_STYLE_ICONS = { standard:'🗺️', cyclosm:'🚴', thunderforest:'🚵', opentopo:'⛰️', outdoors:'🏔️', satellite:'🛰️' };
-const MAP_LAYERS_STYLE_KEYS = { standard:'mlStyleStandard', cyclosm:'mlStyleCyclosm', thunderforest:'mlStyleThunder', opentopo:'mlStyleTopo', outdoors:'mlStyleOutdoors', satellite:'mlStyleSatellite' };
-const MAP_LAYERS_OVERLAY_OPTIONS_BY_MODE = { fiets:['cycling', 'mtb'], wandel:['hiking'] };
-const MAP_LAYERS_OVERLAY_KEYS = { cycling:'settingsOverlayCycling', hiking:'settingsOverlayHiking', mtb:'settingsOverlayMtb' }; // hergebruikt dezelfde tekst als de vroegere Instellingen-vinkjes
+const MAP_LAYERS_STYLE_OPTIONS_BY_MODE = { fiets:['standard', 'cyclosm', 'thunderforest', 'satellite', 'toplus', 'vlortho', 'vlgrb', 'locationiq'], wandel:['standard', 'opentopo', 'outdoors', 'satellite', 'toplus', 'vlortho', 'vlgrb', 'locationiq'] };
+const MAP_LAYERS_STYLE_ICONS = { standard:'🗺️', cyclosm:'🚴', thunderforest:'🚵', opentopo:'⛰️', outdoors:'🏔️', satellite:'🛰️', toplus:'🏞️', vlortho:'🛩️', vlgrb:'🏘️', locationiq:'📮' };
+const MAP_LAYERS_STYLE_KEYS = { standard:'mlStyleStandard', cyclosm:'mlStyleCyclosm', thunderforest:'mlStyleThunder', opentopo:'mlStyleTopo', outdoors:'mlStyleOutdoors', satellite:'mlStyleSatellite', toplus:'mlStyleToplus', vlortho:'mlStyleVlortho', vlgrb:'mlStyleVlgrb', locationiq:'mlStyleLocationIq' };
+const MAP_LAYERS_OVERLAY_OPTIONS_BY_MODE = { fiets:['cycling', 'mtb', 'riding', 'radar', 'stops', 'photos', 'webcams', 'steep', 'slopes'], wandel:['hiking', 'riding', 'radar', 'stops', 'photos', 'webcams', 'steep', 'slopes'] };
+const MAP_LAYERS_OVERLAY_KEYS = { cycling:'settingsOverlayCycling', hiking:'settingsOverlayHiking', mtb:'settingsOverlayMtb', riding:'mlOvRiding', slopes:'mlOvSlopes', radar:'mlOvRadar', steep:'mlOvSteep', stops:'mlOvStops', photos:'mlOvPhotos', webcams:'mlOvWebcams' }; // hergebruikt dezelfde tekst als de vroegere Instellingen-vinkjes
 const MAP_LAYERS_BIKETYPE_OPTIONS = ['regular', 'road', 'mountain'];
 const MAP_LAYERS_BIKETYPE_ICONS = { regular:'🚲', road:'🚴', mountain:'🚵' };
 const MAP_LAYERS_BIKETYPE_KEYS = { regular:'bikeTypeRegular', road:'bikeTypeRoad', mountain:'bikeTypeMountain' }; // hergebruikt dezelfde korte labels als de rondrit-generator-tegels
@@ -27002,12 +27420,23 @@ const ML_HINT_TEXTS = {
     opentopo:     { nl:'OpenTopoMap: topografische kaart met hoogtelijnen, ideaal voor wandelen in natuur of bergen.', en:'OpenTopoMap: topographic map with contour lines, ideal for hiking in nature or mountains.' },
     outdoors:     { nl:'Outdoors: wandelpaden, natuurgebieden en terreinreliëf extra duidelijk in beeld.', en:'Outdoors: hiking paths, nature areas and terrain relief shown extra clearly.' },
     satellite:    { nl:'Satelliet: echte luchtfoto\'s i.p.v. een getekende kaart — handig om het terrein/de begroeiing zelf te zien.', en:'Satellite: real aerial imagery instead of a drawn map — handy to see the actual terrain/vegetation.' },
+    toplus:       { nl:'TopPlusOpen: open topografische kaart van het Duitse Bundesamt (BKG), netjes leesbaar — fijn aan de Moezel en in de rest van Duitsland. Buiten Duitsland is de kaart minder gedetailleerd.', en:'TopPlusOpen: open topographic map by the German BKG, clean and readable — nice along the Moselle and elsewhere in Germany. Less detailed outside Germany.' },
+    vlortho:      { nl:'Luchtfoto Vlaanderen: de officiële luchtfoto\'s van Digitaal Vlaanderen (2024). Werkt enkel in Vlaanderen en Brussel.', en:'Aerial Flanders: the official aerial photos from Digitaal Vlaanderen (2024). Works only in Flanders and Brussels.' },
+    locationiq:   { nl:'Straten met adressen (LocationIQ): kaart op basis van OpenStreetMap waarop straten en huisnummers goed leesbaar zijn, zoals in een stratenkaart-app. Vraagt een gratis sleutel in Instellingen en internet; het gratis plan heeft een daglimiet (of kaartblokjes daarin meetellen heb ik niet kunnen nagaan). Is de limiet op, dan valt de kaart terug op de gewone.', en:'Streets with addresses (LocationIQ): a map based on OpenStreetMap where streets and house numbers are easy to read, like a street-map app. Needs a free key in Settings and internet; the free plan has a daily limit (whether map tiles count towards it could not be checked). When the limit is reached the map falls back to the normal one.' },
+    vlgrb:        { nl:'GRB Vlaanderen: de zeer gedetailleerde grootschalige basiskaart van Vlaanderen (gebouwen, percelen, wegen). Werkt enkel in Vlaanderen.', en:'GRB Flanders: the very detailed large-scale base map of Flanders (buildings, parcels, roads). Works only in Flanders.' },
   },
   overlay: {
     _generic: { nl:'Extra laag: toont officiële fiets-/wandelroutes bovenop de kaart.', en:'Extra layer: shows official cycling/walking routes on top of the map.' },
     cycling:  { nl:'Fietsroutenetwerk: toont het officiële fietsknooppuntennetwerk bovenop de kaart.', en:'Cycling route network: shows the official node network for cyclists on top of the map.' },
     hiking:   { nl:'Wandelroutenetwerk: toont officiële wandelknooppunten/-paden bovenop de kaart.', en:'Hiking route network: shows official walking nodes/paths on top of the map.' },
     mtb:      { nl:'MTB-routenetwerk: toont mountainbike-specifieke routes/paden bovenop de kaart.', en:'MTB route network: shows mountain-bike-specific routes/trails on top of the map.' },
+    riding:   { nl:'Ruiterroutes: toont de gemarkeerde paardrijroutes (Waymarked Trails) bovenop de kaart.', en:'Riding routes: shows the marked horse-riding routes (Waymarked Trails) on top of the map.' },
+    slopes:   { nl:'Pistes en langlauf: toont skipistes en langlaufsporen (Waymarked Trails). Vooral nuttig in de bergen in de winter.', en:'Slopes and cross-country: shows ski slopes and cross-country trails (Waymarked Trails). Mostly useful in the mountains in winter.' },
+    radar:    { nl:'Regenradar: laatste echte radarbeeld van RainViewer bovenop de kaart, ververst elke 10 minuten. Heeft internet nodig en is grof (ongeveer 1 km).', en:'Rain radar: the latest real radar image from RainViewer on top of the map, refreshed every 10 minutes. Needs internet and is coarse (about 1 km).' },
+    steep:    { nl:'Hellingskaart: kleurt hoe steil het terrein is (geel vanaf 6°, oranje 10°, rood 15°, paars 25°), berekend uit gratis hoogtedata. Heeft internet nodig; de data is grof (tientallen meters), dus kleine hellingen of taluds kunnen ontbreken.', en:'Slope map: colours how steep the terrain is (yellow from 6°, orange 10°, red 15°, purple 25°), computed from free elevation data. Needs internet; the data is coarse (tens of metres), so small slopes or embankments can be missing.' },
+    stops:    { nl:'Haltes en stations: bus-, tram- en treinhaltes uit OpenStreetMap, vanaf zoom 14. Geen lijnen of dienstregeling, enkel de plek (en de lijnnummers als OpenStreetMap die kent).', en:'Stops and stations: bus, tram and train stops from OpenStreetMap, from zoom 14. No lines or timetables, just the location (and line numbers when OpenStreetMap has them).' },
+    webcams:  { nl:'Webcams: livebeelden van webcams in de buurt (Windy). Vraagt een gratis sleutel in Instellingen en internet; de beelden zijn klein, vernieuwen om de paar minuten en op het platteland zijn er weinig. Tik op een camera voor het laatste beeld.', en:'Webcams: recent images from webcams nearby (Windy). Needs a free key in Settings and internet; the images are small, refresh every few minutes and cameras are sparse in the countryside. Tap a camera for the latest image.' },
+    photos:   { nl:'Foto\'s: foto\'s met GPS-positie uit Wikimedia Commons, vanaf zoom 13. Op het platteland zijn er weinig; tik op een foto voor de maker en licentie.', en:'Photos: geotagged photos from Wikimedia Commons, from zoom 13. Sparse in the countryside; tap a photo for the author and licence.' },
   },
   biketype: {
     _generic: { nl:'Fietstype: bepaalt welke wegen de routering voor jou verkiest.', en:'Bike type: determines which roads the routing engine prefers for you.' },
@@ -27612,6 +28041,11 @@ $('settingShowWindInNav').addEventListener('change', (e) => {
     loadWeatherAndSun().then(() => updateNavWindLine()).catch(() => { /* geen internet of dienst niet bereikbaar, "–" blijft gewoon staan */ });
   }
 });
+$('settingAssistantWait').addEventListener('change', (e) => {
+  appSettings.assistantWaitSec = Math.max(20, Math.min(180, parseInt(e.target.value) || 60));
+  e.target.value = appSettings.assistantWaitSec;
+  saveSettings();
+});
 $('settingOverpassSurfaceTimeout').addEventListener('change', (e) => {
   appSettings.overpassSurfaceTimeoutSec = Math.max(5, Math.min(40, parseInt(e.target.value) || 15));
   saveSettings();
@@ -28051,12 +28485,12 @@ $('settingsResetBtn').addEventListener('click', () => {
   // Native app: ook na een volledige reset niet terugvallen op de daar niet meer kiesbare Standaard-stijl.
   const resetTheme = isNativeApp() ? 'garmin' : 'default';
   appSettings = {
-    theme:resetTheme, showCompassBtn:true, compassNorthHaptic:true, compassRadarAltStyle:false, orsKey:'', graphhopperKey:'', geoapifyKey:'', plantnetKey:'', geminiKey:'', groqKey:'', otmKey:'', bikeType:'regular', mapStyle:'standard', mapStyleBike:'standard', mapStyleWalk:'standard', thunderforestKey:'', cartoKey:'', googleTtsKey:'', mapTilerKey:'',
+    theme:resetTheme, showCompassBtn:true, compassNorthHaptic:true, compassRadarAltStyle:false, orsKey:'', graphhopperKey:'', geoapifyKey:'', plantnetKey:'', geminiKey:'', windyKey:'', locationIqKey:'', groqKey:'', otmKey:'', bikeType:'regular', mapStyle:'standard', mapStyleBike:'standard', mapStyleWalk:'standard', thunderforestKey:'', cartoKey:'', googleTtsKey:'', mapTilerKey:'',
     audioSrcWikipedia:true, audioSrcWikivoyage:true, audioSrcNature:true, audioSrcOtm:false, historyAudioRadiusM:150,
     dashTextSize:'normal', dashBold:true, largeNodesAccessibility:false, offRouteDist:35, autoReroute:false, silentReroute:false,
-    overlays:{ cycling:false, hiking:false, mtb:false },
+    overlays:{ cycling:false, hiking:false, mtb:false, riding:false, slopes:false, radar:false, steep:false, stops:false, photos:false, webcams:false },
     poiLayers:{ cafe:false, restaurant:false, bakery:false, supermarket:false, pharmacy:false, bike:false, water:false, toilet:false, money:false, camping:false, charging:false, playground:false, parking:false, hotel:false }, showPoiDetails:false,
-    showWindDirection:true, autoPause:false, redNavDot:false, topOffsetPx:0, tabGapPx:0, userName:'', bodyWeightKg:null, bodyHeightCm:null, bodyAge:null, bodyGender:'', spotifyClientId:'', stravaClientId:'', stravaClientSecret:'', voiceOnlyMode:false, routeColorMode:'off', showWindInNav:false, rainWatchOn:true, eatReminderOn:false, eatIntervalMin:45, drinkReminderOn:false, drinkIntervalMin:20, segmentPrOn:true, darkArrivalWarning:true, quietRoutingMode:false, historyAudioOn:false, audioGuideFullArticle:false, birdGeoFilterOn:true, shakeToSurpriseOn:false, shakeKm:30, vertrekFromGps:false, avoidBufferM:18, maxOverlapPct:8, lowerGpsAccuracy:false, disableMapRotation:false, posUpdateIntervalSec:1, mapRecenterDelaySec:6, overpassSurfaceTimeoutSec:15, routingWeighting:'off', navType:'active', fallDetectionOn:false, fallSensitivity:3, sosContactNumber:'', sosContactName:'', autoPauseRunCoach:false, routePreference:'balanced', routeLineColor:'#e2a13c', language:'en', homeBgDim:35, map3dTiltOn:false, speedSmoothingSec:0,
+    showWindDirection:true, autoPause:false, redNavDot:false, topOffsetPx:0, tabGapPx:0, userName:'', bodyWeightKg:null, bodyHeightCm:null, bodyAge:null, bodyGender:'', spotifyClientId:'', stravaClientId:'', stravaClientSecret:'', voiceOnlyMode:false, routeColorMode:'off', showWindInNav:false, rainWatchOn:true, eatReminderOn:false, eatIntervalMin:45, drinkReminderOn:false, drinkIntervalMin:20, segmentPrOn:true, darkArrivalWarning:true, quietRoutingMode:false, historyAudioOn:false, audioGuideFullArticle:false, birdGeoFilterOn:true, shakeToSurpriseOn:false, shakeKm:30, vertrekFromGps:false, avoidBufferM:18, maxOverlapPct:8, lowerGpsAccuracy:false, disableMapRotation:false, posUpdateIntervalSec:1, mapRecenterDelaySec:6, overpassSurfaceTimeoutSec:15, assistantWaitSec:60, routingWeighting:'off', navType:'active', fallDetectionOn:false, fallSensitivity:3, sosContactNumber:'', sosContactName:'', autoPauseRunCoach:false, routePreference:'balanced', routeLineColor:'#e2a13c', language:'en', homeBgDim:35, map3dTiltOn:false, speedSmoothingSec:0,
     liveLocationMode:'off', firebaseDatabaseUrl:'', firebaseAuthToken:'',
     bundledCountries:{ be:true, nl:false }, routingEngine:'brouter', routingEngineBike:'brouter', routingEngineWalk:'brouter'
   };
@@ -28099,6 +28533,7 @@ $('settingsResetBtn').addEventListener('click', () => {
   $('settingPosUpdateInterval').value = 1;
   $('settingMapRecenterDelay').value = 6;
   $('settingOverpassSurfaceTimeout').value = 15;
+  $('settingAssistantWait').value = 60;
   const routingWeightingOffRadio = document.querySelector('input[name="routingWeighting"][value="off"]');
   if (routingWeightingOffRadio) routingWeightingOffRadio.checked = true;
   $('settingShowWindInNav').checked = false;
@@ -28145,6 +28580,8 @@ $('settingsResetBtn').addEventListener('click', () => {
   $('geoapifyKeyInput').value = '';
   $('plantnetKeyInput').value = '';
   $('geminiKeyInput').value = '';
+  $('windyKeyInput').value = '';
+  $('locationIqKeyInput').value = '';
   assistantModeShow();
   $('groqKeyInput').value = '';
   $('graphhopperKeyInput').value = '';
@@ -29176,6 +29613,7 @@ setupRouteListDrag();
 
 $('clearBtn').addEventListener('click', () => {
   cancelManualDetourPinMode();
+  navOrigin = null; // Ronde 175
   const ids = [...new Set(route.map(r => r.id))];
   route.length = 0;
   arrivalActual = [];
@@ -31874,15 +32312,11 @@ function clearFuelReminders(){
 // uitzondering route[0] als er toen nog geen GPS-fix was. Nu hergebruikt als "startpunt" voor dit knopje,
 // met route[0] als terugval voor het (zeldzame) geval dat er zelfs geen navBreadcrumbs is.
 const backToStartBtnEl = document.getElementById('backToStartBtn');
+// Ronde 175: ook MET een geladen route opent ↩️ nu de keuze (kortste weg / zelfde weg terug). Vroeger werd het startpunt als extra punt in je bestaande route gezet,
+// waardoor de héle route opnieuw berekend werd (alle punten bleven erin, dus een veel langere route dan "terug naar start").
 if (backToStartBtnEl) backToStartBtnEl.addEventListener('click', () => {
-  if (!route.length){ if (navActive && navFreeMode) openModal('backToStartChoiceModal'); return; } // Ronde 118: vrije wandeling/rit zonder route: kies kortste weg of eigen spoor terug
-  const startPoint = (navBreadcrumbs && navBreadcrumbs.length) ? navBreadcrumbs[0] : route[0];
-  stopNav();
-  pinLatLng = { lat: startPoint.lat, lon: startPoint.lon };
-  if (pinMarker) map.removeLayer(pinMarker);
-  pinMarker = MLA.marker([startPoint.lat, startPoint.lon]).addTo(map);
-  addPinToRoute(false);
-  toast(tr('toastBackToStart'), 3000);
+  if (!navActive) return;
+  openModal('backToStartChoiceModal');
 });
 
 // ---------- Ronde 118: "Terug naar start" zonder geladen route/GPX (vrije modus) ----------
@@ -31894,6 +32328,14 @@ if (backToStartBtnEl) backToStartBtnEl.addEventListener('click', () => {
 function freeWalkStartPoint(){
   const src = (navTrack && navTrack.length) ? navTrack : navBreadcrumbs;
   return (src && src.length && Number.isFinite(src[0].lat)) ? { lat: src[0].lat, lon: src[0].lon } : null;
+}
+// Ronde 175: het startpunt voor ↩️: in vrije modus het begin van je spoor; met een route het bewaarde startpunt van die route (navOrigin), anders je laatste Start-positie of route[0].
+function backToStartPoint(){
+  if (navFreeMode) return freeWalkStartPoint();
+  if (navOrigin && Number.isFinite(navOrigin.lat)) return { lat: navOrigin.lat, lon: navOrigin.lon };
+  if (navBreadcrumbs && navBreadcrumbs.length && Number.isFinite(navBreadcrumbs[0].lat)) return { lat: navBreadcrumbs[0].lat, lon: navBreadcrumbs[0].lon };
+  if (route.length) return { lat: route[0].lat, lon: route[0].lon };
+  return freeWalkStartPoint();
 }
 function freeWalkRetracePoints(){
   const src = (navTrack && navTrack.length > 1) ? navTrack : navBreadcrumbs;
@@ -31907,19 +32349,22 @@ function freeWalkRetracePoints(){
 }
 async function freeBackToStart(mode){
   closeModal('backToStartChoiceModal');
-  if (!(navActive && navFreeMode)) return;
-  const start = freeWalkStartPoint();
+  if (!navActive) return;
+  const start = backToStartPoint();
   if (!start){ toast(tr('toastBackToStartNoStart'), 4500); return; }
   const retrace = mode === 'retrace' ? freeWalkRetracePoints() : null;
   if (mode === 'retrace' && retrace.length < 2){ toast(tr('toastBackToStartNoTrack'), 4500); return; }
   const here = (lastPosition && lastPosition.coords && Number.isFinite(lastPosition.coords.latitude)) ? { lat: lastPosition.coords.latitude, lon: lastPosition.coords.longitude } : null;
   if (mode !== 'retrace' && !here){ toast(tr('toastBackToStartNoGps'), 4500); return; }
   if (mode !== 'retrace' && haversine(here.lat, here.lon, start.lat, start.lon) < 15){ toast(tr('toastBackToStartAlreadyThere'), 4000); return; }
+  const keepOrigin = navFreeMode ? null : { lat: start.lat, lon: start.lon, sig: null, pending: true };
   stopNav();
   Object.values(pinMarkers).forEach(m => map.removeLayer(m)); pinMarkers = {};
   route.length = 0;
+  routeIsFromGpx = false; importedTrack = []; arrivalActual = []; actualRouteKm = null;   // Ronde 175: ook een GPX-route volledig loslaten
   if (mode === 'retrace'){
     finalizeGpxImport(retrace, true); // zonder het GPX-analysevenster: dit is je eigen spoor
+    navOrigin = keepOrigin;
     toast(tr('toastBackToStartRetrace'), 5000);
     return;
   }
@@ -31927,12 +32372,34 @@ async function freeBackToStart(mode){
   pinLatLng = { lat: start.lat, lon: start.lon };
   if (pinMarker) map.removeLayer(pinMarker);
   pinMarker = MLA.marker([start.lat, start.lon]).addTo(map);
+  navOrigin = keepOrigin;
   toast(tr('toastBackToStart'), 3000);
   await addPinToRoute(false);
 }
 $('backToStartShortestBtn').addEventListener('click', () => freeBackToStart('shortest'));
 $('backToStartRetraceBtn').addEventListener('click', () => freeBackToStart('retrace'));
 $('backToStartCancelBtn').addEventListener('click', () => closeModal('backToStartChoiceModal'));
+
+// ---------- Ronde 175: tik op "Je wijkt af van de route" voor keuzes ----------
+// Herberekenen (rerouteFromCurrentPosition) zoekt altijd de weg naar het VOLGENDE routepunt. Wie bewust een ander (korter) pad nam, kon dat tot nu toe niet aangeven.
+function openOffRouteChoice(){
+  if (!navActive || !isOffRoute) return;
+  const canSkip = !routeIsFromGpx && navTargetIndex < route.length - 1;
+  $('offRouteSkipBtn').style.display = canSkip ? '' : 'none';
+  openModal('offRouteChoiceModal');
+}
+$('offRouteBanner').addEventListener('click', openOffRouteChoice);
+$('offRouteBanner').addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openOffRouteChoice(); } });
+$('offRouteNextBtn').addEventListener('click', () => { closeModal('offRouteChoiceModal'); rerouteFromCurrentPosition(false); });
+$('offRouteSkipBtn').addEventListener('click', () => {
+  closeModal('offRouteChoiceModal');
+  if (!navActive || routeIsFromGpx || navTargetIndex >= route.length - 1) return;
+  navTargetIndex++;   // zelfde stappen als bij het bereiken van een punt, maar zonder aankomsttijd
+  updateProgressUI(); updateNodeTimesUI(); highlightTarget();
+  rerouteFromCurrentPosition(false);
+});
+$('offRouteStartBtn').addEventListener('click', () => { closeModal('offRouteChoiceModal'); freeBackToStart('shortest'); });
+$('offRouteCancelBtn').addEventListener('click', () => closeModal('offRouteChoiceModal'));
 
 // ---------- Route delen via link: geen server nodig, de route zelf zit gecodeerd in de link ----------
 let pendingSharedRoute = null;
@@ -33284,6 +33751,13 @@ function startNav(){
     ? [{ lat: lastPosition.coords.latitude, lon: lastPosition.coords.longitude, t: Date.now() }]
     : (navFreeMode ? [] : [{ lat: route[0].lat, lon: route[0].lon, t: Date.now() }]);
   lastBreadcrumbTime = Date.now();
+  // Ronde 175: startpunt van de route bewaren over meerdere Start-drukken (zie navOrigin).
+  if (navFreeMode || !navBreadcrumbs.length) navOrigin = null;
+  else {
+    const sigNow = routeOriginSig();
+    if (navOrigin && navOrigin.pending){ navOrigin.sig = sigNow; navOrigin.pending = false; }
+    else if (!navOrigin || navOrigin.sig !== sigNow) navOrigin = { lat: navBreadcrumbs[0].lat, lon: navBreadcrumbs[0].lon, sig: sigNow, pending: false };
+  }
   navTrack = navBreadcrumbs.length ? [{ lat: navBreadcrumbs[0].lat, lon: navBreadcrumbs[0].lon, t: navBreadcrumbs[0].t }] : [];
   lastRideChips = [];
   totalPausedMs = 0;
@@ -42310,7 +42784,7 @@ async function assistantGemini(prompt, opts){
   if (opts.system) body.systemInstruction = { parts:[{ text:opts.system }] };
   if (opts.web) body.tools = [{ google_search:{} }];   // webzoeken (grounding): enkel met een betaalde sleutel
   const chain = Array.isArray(opts.models) && opts.models.length ? opts.models : GEMINI_MODEL_CHAIN;
-  const t0 = Date.now(), end = t0 + (opts.budgetMs || 45000);
+  const wScale = assistantWaitScale(), t0 = Date.now(), end = t0 + (opts.budgetMs || 70000) * wScale, perTryMs = (opts.perTryMs || 40000) * wScale;
   let last = { reason:'network' }, tries = 0;
   for (let pass = 0; pass < 2; pass++){
     if (pass) await new Promise(r => setTimeout(r, 1200));
@@ -42321,7 +42795,7 @@ async function assistantGemini(prompt, opts){
       let r;
       try{
         r = await fetchWithTimeout(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(key)}`,
-          { method:'POST', headers:{ 'Content-Type':'application/json' }, body:JSON.stringify(body) }, 25000);
+          { method:'POST', headers:{ 'Content-Type':'application/json' }, body:JSON.stringify(body) }, perTryMs);
       }catch(e){ last = { reason: e && e.name === 'AbortError' ? 'timeout' : 'network', model }; continue; }
       if (r.ok){
         const j = await r.json().catch(() => null);
@@ -42464,7 +42938,10 @@ async function assistantGeocode(name){
 }
 // Plekken in de buurt uit OpenStreetMap (eten, drinken, apotheek, winkel, fietsenmaker) met openingsuren.
 const assistantPoiCache = new Map();
-let assistantOpHedgeMs = 3500, assistantOpTimeoutMs = 12000, assistantOpBudgetMs = 40000, assistantOpRetryMs = 1500;   // let: aanpasbaar in tests
+let assistantOpHedgeMs = 3500, assistantOpTimeoutMs = 20000, assistantOpBudgetMs = 60000, assistantOpRetryMs = 1500;   // let: aanpasbaar in tests
+// Ronde 176: de instelling "Assistent: hoe lang wachten" (assistantWaitSec, 20-180 s, standaard 60) schaalt alle wachttijden van de assistent mee (1 = de standaardwaarden hierboven en bij assistantGemini()).
+function assistantWaitScale(){ const v = Number(appSettings && appSettings.assistantWaitSec); return (Number.isFinite(v) ? Math.max(20, Math.min(180, v)) : 60) / 60; }
+function assistantServerLimitSec(){ return Math.max(15, Math.min(60, Math.round(25 * assistantWaitScale()))); }
 // Overpass voor de assistent: de eerste server krijgt een voorsprong van 3,5 s; blijft hij stil, dan start de volgende er ÓÓK bij (de eerste die antwoordt wint, de rest wordt afgebroken). Een trage server kost zo geen 12 s meer; faalt er een, dan start de volgende meteen.
 async function assistantOverpass(query, onStatus, shouldStop){
   const stopped = () => { try{ return typeof shouldStop === 'function' && shouldStop(); }catch(e){ return false; } };
@@ -42485,12 +42962,12 @@ async function assistantOverpass(query, onStatus, shouldStop){
     const giveUp = () => { const e = new Error(osmWalkT('alle servers mislukt', 'all servers failed') + ' (' + errs.slice(-eps.length).join(' · ') + ')'); e.osmErrors = errs; finish(reject, e); };
     const launch = () => {
       if (done) return;
-      if (started >= maxStarts || Date.now() - t0 > assistantOpBudgetMs){ if (!running) giveUp(); return; }
+      if (started >= maxStarts || Date.now() - t0 > assistantOpBudgetMs * assistantWaitScale()){ if (!running) giveUp(); return; }
       if (started === eps.length && !waited){ waited = true; if (!running){ say(osmWalkT('Servers druk — even wachten en opnieuw proberen…', 'Servers busy — waiting briefly, then retrying…')); hedge = setTimeout(launch, assistantOpRetryMs); return; } }
       const ep = eps[started % eps.length], host = ep.split('/')[2]; started++; running++;
       say(osmWalkT('Zoeken via ', 'Searching via ') + host + '…');
       const ctl = new AbortController(); ctls.add(ctl);
-      const timer = setTimeout(() => ctl.abort(), assistantOpTimeoutMs);
+      const timer = setTimeout(() => ctl.abort(), assistantOpTimeoutMs * assistantWaitScale());
       fetch(ep + '?data=' + encodeURIComponent(query), { signal: ctl.signal })
         .then(async res => { if (!res.ok) throw new Error('HTTP ' + res.status); const j = await res.json(); osmWalkLastGoodEndpoint = ep; finish(resolve, j); })
         .catch(e => { if (!done) errs.push(host + ': ' + (e && e.name === 'AbortError' ? 'time-out' : (e && e.message) || 'fout')); })
@@ -42606,7 +43083,7 @@ async function assistantPois(type, ll, openNow, when, name, onStatus, shouldStop
     const ckey = [radius, ll.lat.toFixed(3), ll.lon.toFixed(3), sels.join('')].join('|'), hit = assistantPoiCache.get(ckey);
     let data;
     if (hit && Date.now() - hit.t < 5 * 60 * 1000) data = hit.data;
-    else { data = await assistantOverpass(`[out:json][timeout:15];(${sels.map(f => `node${f}${a};way${f}${a};`).join('')});out center tags 500;`, onStatus, shouldStop); assistantPoiCache.set(ckey, { t:Date.now(), data }); if (assistantPoiCache.size > 12) assistantPoiCache.delete(assistantPoiCache.keys().next().value); }
+    else { data = await assistantOverpass(`[out:json][timeout:${assistantServerLimitSec()}];(${sels.map(f => `node${f}${a};way${f}${a};`).join('')});out center tags 500;`, onStatus, shouldStop); assistantPoiCache.set(ckey, { t:Date.now(), data }); if (assistantPoiCache.size > 12) assistantPoiCache.delete(assistantPoiCache.keys().next().value); }
     const all = [];
     (data.elements || []).forEach(e => {
       const lat = e.lat != null ? e.lat : e.center && e.center.lat, lon = e.lon != null ? e.lon : e.center && e.center.lon, t = e.tags || {};
@@ -42891,7 +43368,7 @@ async function nrChatSend(text){
       `- routes: true als de gebruiker routes, wandelingen of fietstochten in de buurt wil zien of wijzigen.\n- filters: rain = ook bij regen goed (verharde ondergrond), kids = met kinderen (speeltuin dichtbij), pt = bereikbaar met trein of bus, fav = enkel uit het lijstje van de gebruiker. Zet een filter ALLEEN aan als de vraag zelf erom vraagt. Neem de nu actieve filters (${active}) enkel over als de vraag duidelijk een verfijning van de vorige is (bv. \"iets korter\", \"en ook met de trein\"); bij een nieuw onderwerp staan alle filters uit.\n` +
       `- maxKm: maximale lengte in km als de gebruiker die noemt (ook "iets korter" = kleiner dan de vorige), anders null.\n- place: de plaatsnaam als de gebruiker een andere plaats dan zijn eigen positie noemt, anders null.\n- weather: true als de gebruiker naar het weer vraagt (nu, straks, morgen, gaat het regenen).\n- poi: een zaak of plek in de buurt zoeken. type is een van: ${Object.keys(AST_POI).map(k => k + ' (' + AST_POI[k].nl + (AST_POI[k].subs ? '; sub: ' + Object.keys(AST_POI[k].subs).join(', ') : '') + ')').join('; ')}. Kies het meest passende type. sub = enkel als de gebruiker een bepaalde soort wil (bv. \"een restaurant\" of \"iets beters dan een frituur\" = type eten, sub restaurant; \"een kledingwinkel\" = winkel, sub kleding; \"een camping\" = overnachten, sub camping), anders null. terms = wat de gebruiker specifiek noemt: een gerecht, keuken of kenmerk (steak, pizza, sushi, vegetarisch, terras, taverne, brasserie, rolstoeltoegankelijk…), kort, in de taal van de gebruiker, hoogstens 4; een lege lijst als er niets specifieks is. Woorden over smaak of kwaliteit (lekker, goed, mooi, gezellig, goedkoop, beste) zijn GEEN term: de app heeft geen recensies, dus laat ze weg. more = true als de gebruiker na een eerdere lijst nog andere of meer opties wil (\"heb je er nog andere\", \"nog meer\", \"iets anders\"), anders false. Een taverne of brasserie is type eten met terms [\"taverne\"]; een kroeg is type drinken, sub kroeg. openNow = true bij \"open\", \"nu\" of \"vanavond nog\"; name = de naam van een bepaalde zaak als de gebruiker die noemt (bv. Delhaize, Apotheek Peeters), anders null; ook voor een adres of openingsuren van een bepaalde zaak is dit een poi-vraag. radiusKm = de straal in km als de gebruiker die noemt of aangeeft (\"ruimere buurt\" = 5, \"verder weg\" of \"in de streek\" = 10, \"dichtbij\" of \"te voet\" = 1), anders null. Vraagt de gebruiker een wandeling of fietstocht langs een speeltuin of halte, dan zijn dat routes met filter kids of pt en geen poi. poi is null als het om routes, het weer of iets anders gaat.\n- local: true als de vraag over de omgeving van de gebruiker gaat (wat is er te doen, wat is er te zien) zonder dat hij een plaats noemt.\n- wiki: het zoekwoord voor een encyclopedie (Wikipedia) als de gebruiker uitleg of feiten wil over een onderwerp, ding, plaats of streek (bv. "straalmotor", "Hoge Venen", "Moezel"); kort, in de taal van het onderwerp. null voor routes, weer, plekken in de buurt, openingsuren of een gesprek zonder onderwerp. travel = true als het een reisbestemming of streek is om te bezoeken (dan kijkt de app ook in de reisgids Wikivoyage).\n- keywords: 4 tot 8 korte zoekwoorden voor in brochures, in het Nederlands, Duits en Engels, zonder leestekens.\n` +
       (prev ? `Eerder in het gesprek:\n${prev}\n` : '') + `Vraag van de gebruiker: """${text}"""`;
-    const pr = await assistantGemini(planPrompt, { json:true, temperature:0, models:GEMINI_PLAN_CHAIN, onTry:(t) => nrProgDetail(t.tries > 1 ? nrT('poging ' + t.tries + ' · ' + t.model, 'attempt ' + t.tries + ' · ' + t.model) : '') });
+    const pr = await assistantGemini(planPrompt, { json:true, temperature:0, models:GEMINI_PLAN_CHAIN, perTryMs:15000, budgetMs:35000, onTry:(t) => nrProgDetail(t.tries > 1 ? nrT('poging ' + t.tries + ' · ' + t.model, 'attempt ' + t.tries + ' · ' + t.model) : '') });
     if (!alive()) return;
     if (!pr.ok){ reply({ text:assistantErrText(pr.reason), error:true, keyBtn: pr.reason === 'invalid-key', note: pr.reason === 'invalid-key' ? '' : failNoteOf(pr), retry: pr.reason === 'invalid-key' ? '' : text }); return; }
     const pj = assistantJson(pr.text) || {};
@@ -43038,7 +43515,7 @@ async function nrChatSend(text){
     const prompt = `BRONNEN\n${lines.join('\n')}\n\n${context ? 'CONTEXT\n' + context + '\n\n' : ''}${hist ? 'EERDER IN HET GESPREK (enkel om te snappen waar de vraag naar verwijst, geen bron)\n' + hist + '\n\n' : ''}VRAAG: """${text}"""`;
     let ar, webNote = '';
     if (mode === 'web'){
-      ar = await assistantGemini(prompt, { system:sys, web:true, temperature:0.3, maxTokens:3000, budgetMs:30000, onTry });
+      ar = await assistantGemini(prompt, { system:sys, web:true, temperature:0.3, maxTokens:3000, budgetMs:70000, perTryMs:45000, onTry });
       if (!alive()) return;
       if (!ar.ok && ar.reason !== 'no-key'){
         // geen toegang tot webzoeken (bv. een gratis sleutel): antwoord uit eigen kennis en zeg dat eerlijk
