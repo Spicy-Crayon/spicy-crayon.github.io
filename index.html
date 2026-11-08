@@ -1740,6 +1740,8 @@
   }
   #mapLayersBackdrop.show #mapLayersSheet{ transform:translateY(0); }
   /* v2.512 (gemeld: het streepje scrolde mee naar boven): het handvat is nu een vaste strook bovenaan die blijft staan terwijl de inhoud eronder scrolt, met 5px marge onder het streepje. */
+  @keyframes analyseMePulse{ 0%{ box-shadow:0 0 0 0 rgba(59,130,246,0.55); } 100%{ box-shadow:0 0 0 14px rgba(59,130,246,0); } }
+  .analyse-me-dot{ width:18px; height:18px; border-radius:50%; background:#3b82f6; border:3px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,0.45); animation:analyseMePulse 1.8s ease-out infinite; }
   #mapLayersSheetHandle{ position:sticky; top:0; z-index:5; margin:0 -18px 7px; padding:14px 0 5px; background:var(--green-900); }
   #mapLayersSheetHandle::before{ content:''; display:block; width:36px; height:4px; background:rgba(255,255,255,0.25); border-radius:2px; margin:0 auto; }
   body.theme-garmin #mapLayersSheetHandle{ background:#0f172a; }
@@ -5445,6 +5447,8 @@
 <div id="navHexButtons">
   <button id="navHexGroupRouteBtn" class="tab-hex" title="Route-opties" data-i18n-title="titleNavHexGroupRoute">🧰</button>
   <button id="roadClosedBtn" class="tab-hex" title="Afsluiting — omweg zoeken" data-i18n-title="titleRoadClosed">🚧</button>
+  <!-- Ronde 179 (GEVRAAGD: "route afsluiting en edit apart als icoon"): pinnen verplaatsen onderweg zonder de afsluit-vraag; zie navEditRouteBtn-handler -->
+  <button id="navEditRouteBtn" class="tab-hex" title="Route bewerken" data-i18n-title="titleNavEditRoute">✏️</button>
   <!-- Ronde 31: knooppunten overzicht, ook bereikbaar tijdens actieve navigatie (waar de live km-tot-
        eerstvolgend-punt het meest zinvol is) -->
   <button id="navNodeOverviewBtn" class="tab-hex" title="Knooppunten overzicht" data-i18n-title="nodeOverviewTitle">🔢</button>
@@ -6507,7 +6511,14 @@ MLA.createMap = function(containerId, opts){
     wireRawEvents(g);
     wireFeatureMouse(g);
     let restoreTimer = null;
-    g.on('error', (ev) => { try{ console.warn('[kaart] ' + ((ev && ev.error && ev.error.message) || (ev && ev.message) || 'onbekende fout') + (ev && ev.sourceId ? ' (bron ' + ev.sourceId + ')' : '')); }catch(e){} });
+    g.on('error', (ev) => {
+      try{
+        const msg = (ev && ev.error && ev.error.message) || (ev && ev.message) || 'onbekende fout';
+        console.warn('[kaart] ' + msg + (ev && ev.sourceId ? ' (bron ' + ev.sourceId + ')' : ''));
+        // Ronde 179: tegelfouten tellen (voor het Logboek bij een mislukte kaartbron, zie useTileProvider())
+        if (ev && ev.sourceId && String(ev.sourceId).startsWith('tl_')){ window.__tileErrStats = window.__tileErrStats || { n:0, last:'' }; window.__tileErrStats.n++; window.__tileErrStats.last = String(msg).slice(0, 120); }
+      }catch(e){}
+    });
     g.on('webglcontextlost', () => {
       if (g !== glMap) return;
       console.warn('[kaart] WebGL-context verloren');
@@ -6544,7 +6555,7 @@ MLA.createMap = function(containerId, opts){
   MLA.tileLayer = function(urlTemplate, options){
     options = options || {};
     const id = nextId('tl');
-    let attached = false, glMapRef = null, onSourceDataRef = null;
+    let attached = false, glMapRef = null, onSourceDataRef = null, onTileOkRef = null;
     const emitter = MLA.makeEmitter();
     function resolvedTiles(){ return otResolveTiles(urlTemplate, options.subdomains || ''); }   // Ronde 165: opgeslagen tegels (offline) eerst, anders gewoon https
     const layer = {
@@ -6602,6 +6613,16 @@ MLA.createMap = function(containerId, opts){
           }
         };
         glMap.on('sourcedata', onSourceDataRef);
+        // Ronde 179 (GEMELD: witte kaart + "Kaarttegels laden niet via deze bron" op een trage verbinding): 'tileload' hierboven betekent enkel "bron klaar met
+        // laden" (ook als elke tegel faalde) en het vangnet hieronder vuurt na 1,5 s sowieso. Voor de bewaking in useTileProvider() is dus een EERLIJK signaal nodig:
+        // 'tileok' vuurt zodra MapLibre voor deze bron echt één tegel binnen heeft (data-gebeurtenis mét tile, zonder fout).
+        onTileOkRef = (e) => {
+          if (e.sourceId === id && e.tile && glMap.getSource(id)){
+            glMap.off('sourcedata', onTileOkRef); onTileOkRef = null;
+            emitter.fire('tileok', {});
+          }
+        };
+        glMap.on('sourcedata', onTileOkRef);
         // Vangnet: als de bron sneller "geladen" meldt dan er ooit een echte tegel binnenkomt (bv. lege OSM-tile
         // aan de rand van gedekt gebied), toch minstens 1x tileload seinen zodat useTileProvider()'s watchdog
         // niet nodeloos naar de volgende bron doorschakelt terwijl deze bron in werkelijkheid prima werkt.
@@ -6610,6 +6631,7 @@ MLA.createMap = function(containerId, opts){
       _detach(glMap){
         if (!attached) return;
         if (onSourceDataRef){ try{ glMap.off('sourcedata', onSourceDataRef); }catch(e){} onSourceDataRef = null; }
+        if (onTileOkRef){ try{ glMap.off('sourcedata', onTileOkRef); }catch(e){} onTileOkRef = null; }
         try{ if (glMap.getLayer(id)) glMap.removeLayer(id); }catch(e){}
         try{ if (glMap.getSource(id)) glMap.removeSource(id); }catch(e){}
         attached = false;
@@ -7044,10 +7066,31 @@ window.addEventListener('offline', () => {
 window.addEventListener('online', () => {
   if (offlineNoticeShown){ toast(tr('toastBackOnline'), 3500); }
   offlineNoticeShown = false;
+  // Ronde 179 (GEMELD: kaart werd wit, "denk door connectie"): bij elke online-gebeurtenis werd de HELE tegellaag weggegooid en opnieuw opgebouwd -- op een
+  // wisselende/trage verbinding (die vaak online/offline flapt) betekende elke flap dus opnieuw een lege kaart. Nu enkel opnieuw proberen als de huidige
+  // bron nog NIETS had geladen; werkt de bron, dan laat MapLibre zelf de ontbrekende tegels bij de volgende kaartbeweging opnieuw ophalen.
+  if (tileProviderWorks()){ try{ map._gl && map._gl.triggerRepaint && map._gl.triggerRepaint(); }catch(e){} return; }
   tileProviderIndex = 0;
-  useTileProvider(0); // meteen opnieuw proberen i.p.v. te wachten tot de volgende toevallige kaartactie
+  useTileProvider(0);
 });
+// Ronde 179: welke tegelbronnen hebben in deze sessie al ECHT een tegel geleverd ('tileok')? Een bron die ooit werkte wordt nooit meer automatisch weggegooid
+// voor een andere: een trage verbinding is geen kapotte bron.
+const tileOkUrls = new Set();
+let tileRetryTimer = null;
+function tileProviderWorks(){
+  const p = activeTileProviders[tileProviderIndex];
+  return !!(p && currentTileLayer && tileOkUrls.has(p.url));
+}
+function tileSlowNetwork(){
+  try{
+    const c = navigator.connection; if (!c) return false;
+    return !!(c.saveData || /(^|-)2g$/.test(c.effectiveType || '') || (typeof c.downlink === 'number' && c.downlink > 0 && c.downlink < 0.4));
+  }catch(e){ return false; }
+}
+function tileWatchdogMs(){ return tileSlowNetwork() ? 25000 : 10000; }
 function useTileProvider(index){
+  clearTimeout(tileRetryTimer);
+  tileProviderIndex = index;
   if (currentTileLayer) map.removeLayer(currentTileLayer);
   if (index === 0 && navigator.onLine === false && !offlineNoticeShown){
     offlineNoticeShown = true;
@@ -7064,28 +7107,34 @@ function useTileProvider(index){
   // randen te geven, dus die ondergrens (en de bovengrens voor een groot scherm) staan nu allebei hoger.
   const viewportPx = Math.max(window.innerWidth, window.innerHeight);
   const dynamicKeepBuffer = Math.min(14, Math.max(10, Math.ceil((viewportPx / 256) * 0.9)));
-  currentTileLayer = MLA.tileLayer(p.url, { ...p.options, keepBuffer: dynamicKeepBuffer, isBase:true }).addTo(map);
+  const layer = MLA.tileLayer(p.url, { ...p.options, keepBuffer: dynamicKeepBuffer, isBase:true });
+  currentTileLayer = layer.addTo(map);
   document.getElementById('mapAttribution').textContent = p.options.attribution;
 
-  let anyTileLoaded = false;
-  currentTileLayer.on('tileload', () => { anyTileLoaded = true; });
+  let gotTile = tileOkUrls.has(p.url);
+  layer.on('tileok', () => { gotTile = true; tileOkUrls.add(p.url); offlineNoticeShown = false; clearTimeout(tileRetryTimer); });
 
   clearTimeout(tileWatchdog);
+  // Ronde 179: de wachttijd was vast 5 s en keek naar 'tileload' (dat het vangnet in MLA.tileLayer na 1,5 s sowieso vuurt, dus de bewaking sloeg nooit aan bij
+  // een trage verbinding of sloeg te vroeg toe zonder reden). Nu: 10 s (25 s bij een merkbaar trage verbinding) en kijken naar een ECHTE geladen tegel.
   tileWatchdog = setTimeout(() => {
-    if (!anyTileLoaded && index < activeTileProviders.length - 1){
+    if (layer !== currentTileLayer) return; // intussen een andere bron/stijl gekozen
+    if (gotTile){ offlineNoticeShown = false; return; }
+    try{ const st = window.__tileErrStats; if (typeof addToLog === 'function') addToLog(`🗺️ Kaartbron ${index + 1}/${activeTileProviders.length} (${(p.url.split('/')[2] || '?')}): geen tegel binnen ${Math.round(tileWatchdogMs() / 1000)} s` + (st ? ` · ${st.n} tegelfouten, laatste: ${st.last}` : '') + ` · online=${navigator.onLine}`); }catch(e){}
+    if (index < activeTileProviders.length - 1){
       toast(tr('toastTilesWrongSource'), 3500);
       tileProviderIndex = index + 1;
       useTileProvider(tileProviderIndex);
-    } else if (!anyTileLoaded){
-      // Alle bronnen geprobeerd, nog steeds niets geladen -- ook zonder dat navigator.onLine dit al wist te
-      // voorspellen (zie hierboven) behandelen we dit verder hetzelfde als "offline": geen herhaalde meldingen
-      // meer tonen zolang dit zo blijft, en de 'online'-listener probeert later gewoon opnieuw.
-      offlineNoticeShown = true;
-      toast(tr('toastTilesKeepFailing'), 6000);
     } else {
-      offlineNoticeShown = false;
+      // Alle bronnen geprobeerd, nog steeds niets geladen. Geen herhaalde meldingen zolang dit zo blijft; wel elke 20 s stil opnieuw proberen vanaf de eerste bron
+      // (een kaart die uiteindelijk toch laadt is beter dan voor altijd wit blijven staan tot je de app herstart).
+      if (!offlineNoticeShown){ offlineNoticeShown = true; toast(tr('toastTilesKeepFailing'), 6000); }
+      tileRetryTimer = setTimeout(() => {
+        if (layer !== currentTileLayer || tileProviderWorks() || navigator.onLine === false) return;
+        tileProviderIndex = 0; useTileProvider(0);
+      }, 20000);
     }
-  }, 5000);
+  }, tileWatchdogMs());
 }
 let lastAppliedMapStyleKey = null;
 function setMapStyle(style, thunderforestKey, cartoKey){
@@ -7633,9 +7682,30 @@ async function phLoadPhotos(){
   let pages = phPhotosCache.get(key);
   if (!pages){
     const url = 'https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&generator=geosearch&ggscoord=' + c.lat.toFixed(5) + '%7C' + c.lng.toFixed(5) + '&ggsradius=' + radius + '&ggsnamespace=6&ggsprimary=all&ggslimit=40&prop=coordinates%7Cimageinfo&coprimary=all&iiprop=url%7Cextmetadata&iiurlwidth=260&iiextmetadatafilter=Artist%7CLicenseShortName&colimit=40';
-    try{ const res = await fetchWithTimeout(url, {}, 9000); if (!res.ok) throw new Error('HTTP ' + res.status); const j = await res.json(); if (j && j.error) throw new Error('API ' + (j.error.code || '')); pages = Object.values((j && j.query && j.query.pages) || {}); }
-    catch(e){ if (my === phPhotosToken) phToastOnce('photosFail', phT('Foto’s laden is niet gelukt (internet nodig).', 'Could not load photos (needs internet).') + ' ' + String((e && e.message) || '').slice(0, 40), 4500); return; }
-    phPhotosCache.set(key, pages); if (phPhotosCache.size > 20) phPhotosCache.delete(phPhotosCache.keys().next().value);
+    // Ronde 179 (GEMELD: "cirrussearch-too-busy-error", daarna "Geen foto's gevonden" terwijl er 100 m verderop wel een foto bestaat): Commons-zoekservers zijn soms even overbelast. Dat is een
+    // tijdelijke fout aan de serverkant: we proberen daarom tot 3x (na 1,5 s en 4 s) en tonen daarna een begrijpelijke melding. Een LEGE uitkomst bewaren we niet in de cache
+    // (een overbelaste server geeft soms stilletjes niets terug), zodat de volgende verschuiving van de kaart het gewoon opnieuw probeert.
+    let lastErr = null;
+    for (let attempt = 0; attempt < 3 && pages == null; attempt++){
+      if (attempt > 0){ await new Promise(r => setTimeout(r, attempt === 1 ? 1500 : 4000)); if (my !== phPhotosToken || !phOverlayOn('photos')) return; }
+      try{
+        const res = await fetchWithTimeout(url, {}, 9000);
+        if (!res.ok){ const e = new Error('HTTP ' + res.status); e.transient = (res.status === 429 || res.status >= 500); throw e; }
+        const j = await res.json();
+        if (j && j.error){ const code = String(j.error.code || ''); const e = new Error('API ' + code); e.transient = /busy|overload|maxlag|ratelimit|timeout|unavailable/i.test(code); throw e; }
+        pages = Object.values((j && j.query && j.query.pages) || {});
+      }catch(e){ lastErr = e; if (!(e && e.transient) && !(e && /abort|timeout|network|failed to fetch/i.test(String(e.message || e.name || '')))) break; }
+    }
+    if (pages == null){
+      if (my === phPhotosToken){
+        const busy = lastErr && lastErr.transient;
+        phToastOnce('photosFail', busy
+          ? phT('📷 Wikimedia Commons is op dit moment overbelast (fout aan hun kant). Even wachten en de kaart een stukje verschuiven om opnieuw te proberen.', '📷 Wikimedia Commons is overloaded right now (a problem on their side). Wait a moment and nudge the map to try again.')
+          : phT('Foto’s laden is niet gelukt (internet nodig).', 'Could not load photos (needs internet).') + ' ' + String((lastErr && lastErr.message) || '').slice(0, 40), 5500);
+      }
+      return;
+    }
+    if (pages.length) { phPhotosCache.set(key, pages); if (phPhotosCache.size > 20) phPhotosCache.delete(phPhotosCache.keys().next().value); }
   }
   if (my !== phPhotosToken || !phOverlayOn('photos')) return;
   photosLayer.clearLayers();
@@ -7752,6 +7822,7 @@ const walkedBeforeLine = MLA.polyline([], { color:'#8a8a8a', weight:5, opacity:0
 let walkedBeforePts = [];
 function clearWalkedBefore(){
   walkedBeforePts = [];
+  analysisWalked = []; analysisRerouted = false; analysisEleSrc = null;
   try{ walkedBeforeLine.setLatLngs([]); }catch(e){ /* kaart nog niet klaar */ }
   if (typeof NAVTRACK !== 'undefined') NAVTRACK.reroute = null;
 }
@@ -8875,14 +8946,14 @@ const NAVTRACK_LOOP_GAP_M = 300;   // einde en begin dichter dan dit bij elkaar 
 const NAVTRACK = { on:false, sig:'', la:null, lo:null, cum:null, dBuf:null, tBuf:null, total:0, closed:false,
   inited:false, justInited:false, along:0, alongU:0, base:0, anchorG:0, keepG:null, forceReset:false,
   d:Infinity, index:1, t:0, hist:[], prevT:0, fixKey:'', posObj:null, wpAlong:null, wpSig:'', greyKey:'', reroute:null };
-const NAVGPS = { m:0, last:null, t:0 };
+const NAVGPS = { m:0, last:null, t:0, lastG:null, lastOn:false, doneBase:0 };
 function navTrackFullReset(){
   const T = NAVTRACK;
   T.on = false; T.sig = ''; T.inited = false; T.justInited = false; T.keepG = null; T.forceReset = false;
   T.hist = []; T.prevT = 0; T.fixKey = ''; T.posObj = null; T.wpAlong = null; T.wpSig = ''; T.greyKey = '';
   T.alongU = 0; T.along = 0; T.base = 0; T.anchorG = 0; T.d = Infinity;
   clearWalkedBefore();
-  NAVGPS.m = 0; NAVGPS.last = null; NAVGPS.t = 0;
+  NAVGPS.m = 0; NAVGPS.last = null; NAVGPS.t = 0; NAVGPS.lastG = null; NAVGPS.lastOn = false; NAVGPS.doneBase = 0;
 }
 // Volgende positie opnieuw ankeren op km 0 (bv. na het omkeren van de richting onderweg).
 function navTrackRequestReset(){ NAVTRACK.forceReset = true; NAVTRACK.inited = false; NAVTRACK.hist = []; NAVTRACK.wpAlong = null; NAVTRACK.wpSig = ''; clearWalkedBefore(); }
@@ -9115,7 +9186,23 @@ function navGpsAccumulate(lat, lon, accuracy){
   if (d < thr) return;
   const dt = Math.max(0.5, (now - S.t) / 1000);
   const maxV = appMode === 'wandel' ? 8 : 25;
-  if (d / dt <= maxV) S.m += d; // onmogelijke sprongen (GPS-teleport) tellen niet mee
+  // Ronde 181: "afgelegd" is nu deze teller. Ruis in de GPS-positie maakt losse stappen te lang (bij +-6 m ruis gaf 2 km lopen 2,26 km). Zolang je op de lijn loopt en de voortgang langs de lijn
+  // redelijk past bij de GPS-stap, tellen we daarom het verschil in voortgang langs de lijn (ruis valt daar over de stappen heen weg). Past dat niet (een overgeslagen zijpad: de voortgang
+  // springt vooruit; of echt teruglopen), dan telt de GPS-stap. Naast de lijn telt altijd de GPS-stap.
+  let add = d;
+  try{
+    const T = NAVTRACK;
+    if (navActive && !navFreeMode) navTrackSync();
+    if (navActive && !navFreeMode && T.on && T.inited){
+      const G = T.alongU + T.base, onLine = T.d <= 30;
+      if (S.lastG != null && S.lastOn && onLine){
+        const da = G - S.lastG;
+        if (da >= -15 && da <= d * 1.6 + 10) add = da;
+      }
+      S.lastG = G; S.lastOn = onLine;
+    } else { S.lastG = null; S.lastOn = false; }
+  }catch(e){ add = d; }
+  if (d / dt <= maxV) S.m = Math.max(0, S.m + add); // onmogelijke sprongen (GPS-teleport) tellen niet mee
   S.last = { lat, lon }; S.t = now;
 }
 // Afslag-instructies uit de GEOMETRIE van de lijn zelf (GPX), zodat ze altijd overeenkomen met wat op de kaart
@@ -9908,6 +9995,20 @@ function finalizeGpxImport(pts, skipAnalysis){
   mapUserEngaged = true;
   lastElevationProfile = null; // oude grafiek is niet meer geldig
   renderRoute();
+  // Ronde 179 (GEMELD: na het opnieuw laden van de GPX midden in de wandeling klopte de totale afstand niet meer: 6,2 km werd 7,9 km, later 13,7 en 20,7 km): een NIEUWE track tijdens
+  // een lopende navigatie liet de tracker het oude "afgelegd" meeslepen (de oude lijn was herschikt vanaf jouw startplek, de nieuwe niet), waardoor afgelegd + rest niet meer
+  // optelden tot de lengte van het bestand. Nu gedraagt het laden zich als "richting omkeren": een lus wordt herschikt vanaf jouw positie, km 0 = nu, alles begint opnieuw.
+  if (navActive && !navFreeMode && lastPosition){
+    try{
+      const rot = gpxRotatedLoopPts(pts, lastPosition.coords.latitude, lastPosition.coords.longitude);
+      applyActiveGpxTrack(rot || pts);
+      navTrackRequestReset();
+      traveledRouteLine.setLatLngs([]);
+      navTargetIndex = 0;
+      snapNavTargetIndexToPosition();
+      drawRoutePath(true).then(renderRoute).finally(updateProgressUI);
+    }catch(e){ addToLog('GPX herladen tijdens navigatie: ' + (e && e.message)); }
+  }
   if (!skipAnalysis) showGpxAnalysisModal(pts, waypoints, hasEle);
 }
 $('gpxDirForwardBtn').addEventListener('click', () => {
@@ -10044,6 +10145,7 @@ function reverseActiveGpxDirection(){
   }
   applyActiveGpxTrack(pts);
   navTrackRequestReset();          // km 0 = je huidige positie op de nieuwe lijn; alles opnieuw vanaf 0
+  NAVGPS.doneBase = NAVGPS.m;      // Ronde 181: ook 'afgelegd' (echt gelopen meters) begint opnieuw; de totale GPS-afstand (gemiddelde snelheid, statistieken) loopt door
   traveledRouteLine.setLatLngs([]);
   navTargetIndex = 0;              // de tracker zet dit bij de eerstvolgende positie op het juiste wegpunt (zie renderPosition())
   if (navActive && lastPosition) snapNavTargetIndexToPosition();
@@ -11112,6 +11214,8 @@ function traveledDistanceKmFromBreadcrumbs(pts){
   return km;
 }
 function traveledKmEstimate(){
+  // Ronde 180: dezelfde GPS-teller als 'afgelegd' op het dashboard, zodat de samenvatting en de statistieken dat getal tonen (het kruimelspoor van 12 s sneed bochten af).
+  if (NAVGPS.m >= 100) return NAVGPS.m / 1000;
   if (navBreadcrumbs && navBreadcrumbs.length > 1) return traveledDistanceKmFromBreadcrumbs(navBreadcrumbs);
   if (arrivalActual.length > 0) return actualRouteKm != null ? actualRouteKm : straightLineKm();
   if (navBreadcrumbs && navBreadcrumbs.length === 1 && lastPosition){
@@ -13049,7 +13153,7 @@ const TRANSLATIONS = {
   toastNoNewNodes: { nl:'Geen nieuwe knooppunten in dit gebied', en:'No new nodes in this area' },
   toastNoWalkNodes: { nl:'Geen wandelknooppunten hier — die bestaan in OSM enkel binnen specifieke wandelnetwerken (natuurgebieden, provinciedomeinen), niet overal zoals fietsknooppunten. Probeer een bekend wandelgebied, of importeer een GPX/dataset.', en:'No walking nodes here — in OSM these only exist within specific walking networks (nature reserves, provincial estates), not everywhere like cycling nodes. Try a known hiking area, or import a GPX/dataset.' },
   toastGraphhopperDown: { nl:'GraphHopper niet bereikbaar, val terug op standaard routering.', en:'GraphHopper unavailable, falling back to standard routing.' },
-  toastTilesKeepFailing: { nl:'Kaarttegels blijven laden mislukken. Probeer een andere browser (bv. Chrome) of check je internetverbinding.', en:'Map tiles keep failing to load. Try a different browser (e.g. Chrome) or check your internet connection.' },
+  toastTilesKeepFailing: { nl:'Kaarttegels laden niet. Waarschijnlijk te weinig bereik of internet; de app probeert het automatisch opnieuw. Je route en positie blijven werken.', en:'Map tiles are not loading. Probably weak signal or internet; the app keeps retrying automatically. Your route and position keep working.' },
   toastTilesWrongSource: { nl:'Kaarttegels laden niet via deze bron, andere kaartbron proberen…', en:'Tiles won\'t load from this source, trying another map source…' },
   // Ronde 80 (GEMELD: "groen scherm is er altijd als je geen internet hebt, mss eerst check doen en bericht
   // geven"): vroeger enkel een toastTilesKeepFailing-melding NA het volledig doorlopen van alle kaartbronnen
@@ -13102,9 +13206,9 @@ const TRANSLATIONS = {
   toastArrivedAt: { nl:'🎉 Je bent aangekomen op ', en:'🎉 You have arrived at ' },
   toastRerouteUpdated: { nl:'🔄 Route bijgewerkt met de nieuwe routerings-instelling.', en:'🔄 Route updated with the new routing setting.' },
   toastPressEditFirst: { nl:'✏️ Druk eerst op "Edit" om je route te kunnen wijzigen.', en:'✏️ Press "Edit" first to be able to change your route.' },
-  toastPinBlockedNav: { nl:'📍 Nieuwe punten zetten kan niet tijdens navigatie — gebruik "Weg afgesloten" voor een omweg onderweg.', en:'📍 Placing new points isn\u2019t possible during navigation — use "Road closed" for a detour on the go.' },
+  toastPinBlockedNav: { nl:'📍 Nieuwe punten zetten kan niet zomaar tijdens navigatie — tik op ✏️ (route bewerken) of gebruik 🚧 "Weg afgesloten" voor een omweg onderweg.', en:'📍 Placing new points isn\u2019t possible during navigation as such — tap ✏️ (edit route) or use 🚧 "Road closed" for a detour on the go.' },
   toastVertrekBlockedNav: { nl:'🚴 Vertrekpunt wisselen kan niet tijdens navigatie.', en:'🚴 Changing the starting point isn\u2019t possible during navigation.' },
-  toastDragBlockedDuringNav: { nl:'📍 Punten verslepen kan niet tijdens navigatie (kan verkeerd uitpakken door de kaart-rotatie) — stop de navigatie eerst, of gebruik "Weg afgesloten" voor een omweg onderweg.', en:'📍 Dragging points isn\u2019t possible during navigation (can go wrong due to map rotation) — stop navigation first, or use "Road closed" for a detour on the go.' },
+  toastDragBlockedDuringNav: { nl:'📍 Punten verslepen kan niet zomaar tijdens navigatie (de kaart draait mee) — tik eerst op ✏️ (route bewerken), of stop de navigatie.', en:'📍 Dragging points isn\u2019t possible during navigation as such (the map rotates) — tap ✏️ (edit route) first, or stop navigation.' },
   toastBrouterNoShortestDiff: { nl:'ℹ️ Bij BRouter geven "Kortste" en "Evenwichtig" hetzelfde resultaat (geen apart kortste-profiel beschikbaar op hun gratis server). Wil je een écht ander resultaat, schakel dan over naar Valhalla, OpenRouteService of GraphHopper.', en:'ℹ️ With BRouter, "Shortest" and "Balanced" give the same result (no separate shortest profile available on their free server). For a genuinely different result, switch to Valhalla, OpenRouteService or GraphHopper.' },
   toastZoomForPoi: { nl:'🔍 Zoom verder in om interessante plekken te zien (werkt vanaf straatniveau).', en:'🔍 Zoom in further to see points of interest (works from street level).' },
 
@@ -13179,6 +13283,8 @@ const TRANSLATIONS = {
   titleTabMap: { nl:'Kaart', en:'Map' },
   titleTabDash: { nl:'Dashboard', en:'Dashboard' },
   titleRoadClosed: { nl:'Afsluiting — omweg zoeken', en:'Closure — find a detour' },
+  titleNavEditRoute: { nl:'Route bewerken (punten verplaatsen)', en:'Edit route (move points)' },
+  toastEditRouteHint: { nl:'✏️ Route bewerken: sleep een 📍 naar een nieuwe plek. Enkel het stuk dat nog voor je ligt wordt opnieuw berekend, vanaf waar je nu staat. Tik op ▶ Hervat om verder te gaan.', en:'✏️ Edit route: drag a 📍 to a new spot. Only the part still ahead of you is recalculated, from where you are now. Tap ▶ Resume to carry on.' },
   titleFoodBreak: { nl:'Pauze zoeken', en:'Find a break' },
   titleNavRestPoints: { nl:'Rustpunten zoeken', en:'Find rest points' },
   titleNavNatureSpotter: { nl:'Natuurspotter', en:'Nature spotter' },
@@ -13389,6 +13495,8 @@ const HELP_CONTENT = {
       <p><b>📊 GPX-analyse</b> — na het inladen van een GPX zie je in één oogopslag de naam, de afstand, een klein hoogteprofiel, stijgen, dalen, laagste en hoogste punt, het aantal punten en (alleen als die geloofwaardig is) de duur. Start en einde hebben een knop "Kopieer" voor de coördinaten.</p>
       <p><b>⛰️ Hoogtevenster</b> — het venster is zo hoog als de inhoud en toont onder de grafiek de opvallendste stukken: langste klim, langste afdaling, hoogste en laagste punt, met de kilometers waar ze zitten.</p>
       <p><b>🧭 Analyse-menu</b> — de tabbladen (Wegdek, Wind, Hoogte, Helling, Logs, Snelheid) staan als icoon met een kort woord onderaan; bovenaan staat de volledige naam van het tabblad waar je op zit.</p>
+      <p><b>📍 Jij op de Analyse-pagina</b> — tijdens een navigatie staat op elk tabblad van Analyse een blauwe bol op de kaart: dat ben jij. Op Hoogte en Helling zit de rode bol in de grafiek op jouw plek en je kunt hem nog steeds zelf verslepen om een ander punt te bekijken (na 15 seconden zonder aanraking springt hij terug naar jou). Op Wegdek, Wind en Snelheid staat een stippellijn met een blauwe bol op de balk.</p>
+      <p><b>✏️ Route bewerken tijdens navigatie</b> — naast 🚧 (weg afgesloten) staat nu een apart knopje ✏️. Daarmee pauzeer je de navigatie, kun je de punten van de route verslepen of toevoegen en tik je daarna op "Hervat". De route wordt dan opnieuw berekend vanaf waar je nu bent, enkel naar de punten die nog voor je liggen.</p>
       <p><b>💬 Meldingen</b> — het gele ballonnetje met oogjes en sterretjes is een melding van de app. Heeft het een ⓘ erachter, dan kun je het aantikken voor meer uitleg.</p>
       <p><b>🌿 Leuke routes bij jou</b> — als je op Wandelen of Fietsen tikt, toont de app (standaard hooguit 1x per dag per soort) de routes in de buurt: eerst je eigen GPX-routes en links met coördinaten, dan bewegwijzerde routes uit OpenStreetMap. De pop-up gaat meteen open en laat met knipperende gele puntjes zien welke stap bezig is (je positie bepalen, eigen routes en links ophalen, routes uit OpenStreetMap zoeken); zodra er routes zijn komt de lijst ervoor in de plaats. Lukt het niet (geen toestemming voor locatie, je positie niet gevonden, geen verbinding) dan blijft de pop-up staan met een uitleg en een knop "Opnieuw proberen", en is er echt niets in de buurt, dan staat er "Geen routes gevonden in de buurt.". Lukt alleen een verse positie niet (bijvoorbeeld binnen zonder GPS-signaal) maar kent de app nog een eerdere positie van je, dan gebruikt ze die en staat er boven de lijst in oranje dat de positie niet vers is; zo'n lijst telt niet als getoond voor vandaag, zodat de volgende tik opnieuw een verse positie probeert. De uitleg bij een mislukking hangt van de oorzaak af (geen toestemming, Locatie staat uit, geen signaal op tijd) en noemt de foutcode van de telefoon. Bij elke route staat de lengte en de afstand tot het startpunt ("hiervandaan"; bij OpenStreetMap-routes bij benadering, met ≈). Bovenaan filter je op lengte (wandelen: ≤ 2, 2–4, 4–6 en 6+ km; fietsen: ≤ 10, 10–15, 15–20 en 20+ km) en sorteer je op "Kortste eerst" (bij gelijke lengte de dichtstbijzijnde start), "Dichtstbij start" of "Leukste". De pop-up heeft een vaste hoogte: komen er routes bij, dan scroll je erin. Tik een route voor het detailscherm: routekaartje (is een route enkel een link, dus zonder GPX, dan staat daar een eigen kaartje uit je index.json met de velden kaart, kaartBron en kaartUrl, en heb je dat niet, een van vijf tekeningen die per route afwisselen), lengte, tijd en hoogteverschil, en foto's (een eigen foto uit je index.json met de velden foto en fotoBron, anders foto's van Wikimedia Commons die langs de route zijn genomen, anders een foto van de omgeving uit Wikipedia; altijd met maker en licentie, tik een foto voor de bronpagina). In het detail staat ook "Dieren en planten", in twee rijen (Dieren, Planten): per rij de soortenlijst van de pagina van het Natuurpunt-gebied (enkel in de app), en staat daar niets voor die rij, dan de meest waargenomen soorten binnen 1 km van de start; telkens met foto, maker en licentie via iNaturalist. X is een rangschikking op signalen (eigen routes, dichtbij, passende lengte, "gedaan" telt lager), geen populariteitslijst. Sluiten kan met ✕, "Later" of naast de kaart tikken; uitzetten met de schakelaar "Toon bij openen" of in Instellingen. Wil je haar elke keer zien, zet dan in Instellingen (🧭 Onderweg &amp; navigatie) het vinkje "Elke keer tonen, niet maar 1x per dag" aan.</p>
       <p><b>⭐ Mijn lijstje, filters en eigen tips</b> — bij elke route in "Leuke routes bij jou" staat rechts een ster: tik erop om de route in je lijstje te bewaren (nog een keer tikken haalt hem eruit; in het detailscherm staat dezelfde ster bovenaan). Je lijstje blijft op je telefoon en werkt ook zonder positie of verbinding. Op het keuzescherm opent de knop "⭐ Mijn lijstje" al je bewaarde routes, wandelen en fietsen samen, de laatst bewaarde eerst; de afstand zie je zodra de app je positie kent. In de pop-up zelf staat een tweede rij filters: "⭐ Lijst" toont enkel je bewaarde routes van deze soort (ook als ze verder weg liggen), "☔ Bij regen" routes die vooral over verharde ondergrond lopen, "👨‍👩‍👧 Kids" routes met een speeltuin op hooguit 300 m en "🚆 OV" routes met een halte op hooguit 500 m. Het zijn schattingen uit OpenStreetMap, geen zekerheid: een speeltuin of halte die daar niet op staat, ontbreekt ook hier. Bij elke route staat waarom hij past (bijvoorbeeld "≈ 85% verhard" of "speeltuin op 150 m bij de start"; bij een route uit OpenStreetMap geldt de plek bij het midden van de route). De ondergrond wordt gemeten op ongeveer elke 250 m langs het spoor; blijft er te weinig bekend over (paden zonder gegevens), dan krijgt de route geen label. Routes zonder gegevens vallen onder een actief filter weg, en onder de lijst staat hoeveel routes er gecontroleerd zijn (de eerste volgens je sortering, niet alle). Kiezen van een filter haalt de gegevens op; dat kan even duren en lukt het niet, dan staat er een melding. Bovenaan de lijst staan, zonder filter, "📍 Eigen tips": plekken die jijzelf kent en gecontroleerd hebt, met een foto en een zin, de drie dichtstbijzijnde binnen 40 km van je positie (ze staan in <code>plekken/index.json</code>, zie <code>plekken/README.md</code>). Onder de vier activiteiten op het keuzescherm staat een seizoenstip, elke dag een andere uit twee per maand (of je eigen tips uit <code>plekken/index.json</code>).</p>
@@ -13572,6 +13680,8 @@ const HELP_CONTENT = {
       <p><b>📊 GPX analysis</b> — after loading a GPX you see at a glance the name, the distance, a small elevation profile, ascent, descent, lowest and highest point, the number of points and (only when it is believable) the duration. Start and end have a "Copy" button for the coordinates.</p>
       <p><b>⛰️ Elevation window</b> — the window is as tall as its content and shows the highlights under the chart: longest climb, longest descent, highest and lowest point, with the kilometres where they are.</p>
       <p><b>🧭 Analysis menu</b> — the tabs (Surface, Wind, Elevation, Slope, Logs, Speed) are an icon with a short word at the bottom; the top shows the full name of the tab you are on.</p>
+      <p><b>📍 You on the Analysis page</b> — during navigation every Analysis tab shows a blue dot on the map: that is you. On Elevation and Slope the red dot in the chart sits at your position and you can still drag it to inspect another point (after 15 seconds without touching it, it jumps back to you). On Surface, Wind and Speed a dashed line with a blue dot marks you on the bar.</p>
+      <p><b>✏️ Edit the route during navigation</b> — next to 🚧 (road closed) there is now a separate ✏️ button. It pauses the navigation so you can drag or add route points, then tap "Resume". The route is recalculated from where you are now, only towards the points still ahead of you.</p>
       <p><b>💬 Notifications</b> — the yellow bubble with eyes and sparkles is a message from the app. If it has an ⓘ after it, you can tap it for more explanation.</p>
       <p><b>🌿 Nice routes near you</b> — when you tap Walking or Cycling, the app shows (by default once a day per activity at most) the routes nearby: first your own GPX routes and links with coordinates, then waymarked routes from OpenStreetMap. The pop-up opens at once and shows with blinking yellow dots which step is busy (finding your position, fetching your own routes and links, searching routes in OpenStreetMap); as soon as there are routes the list takes its place. If it does not work (no permission for location, your position not found, no connection) the pop-up stays with an explanation and a "Try again" button, and if there is really nothing nearby it says "No routes found nearby.". If only a fresh position fails (for example indoors without a GPS signal) but the app knows an earlier position of yours, it uses that one and an orange line above the list says the position is not fresh; such a list does not count as shown for today, so the next tap tries a fresh position again. The explanation for a failure depends on the cause (no permission, Location is off, no signal in time) and names the error code of the phone. Each route shows its length and the distance to its start ("from here"; approximate for OpenStreetMap routes, marked ≈). At the top you filter by length (walking: ≤ 2, 2–4, 4–6 and 6+ km; cycling: ≤ 10, 10–15, 15–20 and 20+ km) and sort by "Shortest first" (for equal lengths the nearest start), "Nearest start" or "Nicest". The pop-up has a fixed height: when routes are added you scroll inside it. Tap a route for the detail screen: route map (if a route is only a link, so without GPX, it shows your own map image from your index.json with the fields kaart, kaartBron and kaartUrl, and without that one of five drawings that alternate per route), length, time and elevation, and photos (your own photo from your index.json with the fields foto and fotoBron, otherwise photos from Wikimedia Commons taken along the route, otherwise a photo of the surroundings from Wikipedia; always with author and licence, tap a photo for the source page). The detail also has "Animals and plants", in two rows (Animals, Plants): per row the species list from the page of the Natuurpunt area (app only), and if that has nothing for the row, the most observed species within 1 km of the start; each with a photo, author and licence via iNaturalist. From there you open the route on the map. "Nicest" is a ranking on signals (own routes, closeness, fitting length, "done" ranks lower), not a popularity list. Close with ✕, "Later" or by tapping outside the card; turn it off with the switch "Show when opening" or in Settings. To see it every time, turn on "Show every time, not just once a day" in Settings (🧭 On the road &amp; navigation).</p>
       <p><b>⭐ My list, filters and own tips</b> — every route in "Nice routes near you" has a star on the right: tap it to save the route to your list (tap again to remove it; the detail screen has the same star at the top). Your list stays on your phone and also works without a position or connection. On the start screen the "⭐ My list" button opens all your saved routes, walking and cycling together, last saved first; you see the distance once the app knows your position. The pop-up itself has a second row of filters: "⭐ List" shows only your saved routes of this activity (even if they are further away), "☔ In rain" routes that mostly run on paved surface, "👨‍👩‍👧 Kids" routes with a playground within 300 m and "🚆 Transit" routes with a stop within 500 m. These are estimates from OpenStreetMap, not a guarantee: a playground or stop that is not on there is missing here too. Every route shows why it fits (for example "≈ 85% paved" or "playground 150 m away near the start"; for an OpenStreetMap route the spot near the middle of the route counts). The surface is measured at about every 250 m along the track; if too little is known (paths without data) the route gets no label. Routes without data drop out under an active filter, and below the list it says how many routes were checked (the first ones in your sorting, not all). Choosing a filter fetches the data; that can take a moment and if it fails a message appears. At the top of the list, without a filter, "📍 Own tips" shows places you know yourself and have checked, with a photo and a sentence, the three nearest within 40 km of your position (they live in <code>plekken/index.json</code>, see <code>plekken/README.md</code>). Below the four activities on the start screen is a seasonal tip, a different one each day out of two per month (or your own tips from <code>plekken/index.json</code>).</p>
@@ -15299,6 +15409,40 @@ const DEV_NOTES_CONTENT = {
       <p><b>Teksten en test:</b> alle nieuwe teksten bestaan in NL en EN, Help en <code>plekken/README.md</code> zijn aangevuld. <b>Testsuite:</b> nieuw bestand <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> is een kiezer aangepast aan de nieuwe rijopbouw. Versie 2.497 / versionCode 116.</p>
     </section>
     <section>
+      <h3>🛠️ Ronde 182: hoogte-, helling-, wegdek- en winddata na een omleiding</h3>
+      <p><b>Probleem.</b> Na een herberekening, een verplaatste pin (✏️) of een omleiding (🚧) bleef de analyse bij de oorspronkelijke GPX horen. <code>getElevationSourcePoints()</code> gaf <code>importedTrack</code> terug zolang die gevuld was, en na <code>replanRemainingRoute()</code> (die de GPX loslaat) bestond de lijn nog maar uit het stuk dat nog voor je lag, zonder wat je al liep. De grafieken klopten dan niet met de lijn op de kaart.</p>
+      <p><b>Oplossing.</b> <code>noteAnalysisRouteReplaced()</code> bewaart bij elke vervanging van de route het stuk dat je al liep (<code>analysisWalked</code>, met hoogtes uit de oorspronkelijke GPX waar die bestaan, via <code>analysisEleFromSrc()</code>: dichtstbijzijnd punt binnen 25 m). Daarna bestaat de analyselijn uit dat stuk plus de nieuwe <code>routeLine</code>. <code>routeSignature()</code> krijgt dan een eigen sleutel (<code>rr:</code>, aantal gelopen punten, laatste gelopen punt en enkele punten van de nieuwe lijn), zodat het hoogteprofiel en de wegdekcache opnieuw worden opgebouwd. Hoogte, helling, wegdek, logs en wind gebruiken nu allemaal <code>getElevationSourcePoints()</code> (wind las voorheen <code>routeLine</code> rechtstreeks). Punten zonder hoogte krijgen die zoals voorheen online via <code>fetchElevations()</code>. <code>clearWalkedBefore()</code> wist alles bij een nieuwe sessie, een nieuwe track of het omkeren van de richting.</p>
+      <p><b>Teksten en test.</b> Tests 13 en 14 in <code>test_round179_walk_fixes.js</code>.</p>
+    </section>
+    <section>
+      <h3>🛠️ Ronde 181: afgelegd = echt gelopen meters</h3>
+      <p><b>Wat veranderde.</b> <code>computeProgressKm()</code> berekende "afgelegd" als de plek langs de routelijn (<code>T.alongU + T.base − T.anchorG</code>). Een heen-en-terug-stuk dat je oversloeg telde daardoor als gelopen, en na een omleiding of een verplaatste pin bleef dat overgeslagen deel in "afgelegd" en dus in het totaal zitten. Nu is "afgelegd" de echt gelopen GPS-afstand (<code>NAVGPS.m</code>, dezelfde gefilterde teller die al voor de gemiddelde snelheid diende: stappen onder max(4 m, helft van de nauwkeurigheid) en onmogelijke sprongen tellen niet). "Nog te gaan" blijft de afstand langs de (eventueel nieuwe) lijn vanaf je positie, en het totaal is afgelegd plus nog te gaan. Na een herberekening, een verplaatste pin of een ander afgeslagen weg is het totaal dus wat je liep plus de nieuwe route.</p>
+      <p><b>Ruis.</b> Losse GPS-stappen worden door ruis te lang (bij ±6 m ruis gaf 2 km lopen 2,26 km). <code>navGpsAccumulate()</code> telt daarom, zolang je binnen 30 m van de lijn loopt en de voortgang langs de lijn past bij de GPS-stap (verschil tussen −15 m en 1,6 keer de stap plus 10 m), het verschil in voortgang langs de lijn: dat telescopeert en de ruis valt weg. Een overgeslagen zijpad (de voortgang springt vooruit), echt teruglopen of een stuk naast de lijn telt als GPS-stap. <b>Omkeren van de richting</b> zet het getal "afgelegd" opnieuw op 0 (<code>NAVGPS.doneBase</code>, zoals voorheen km 0 = nu); de totale GPS-afstand voor gemiddelde snelheid en statistieken loopt door.</p>
+      <p><b>Wat gelijk bleef.</b> De voortgang langs de lijn (<code>navProgressDomainM()</code>, <code>navDoneM()</code>) blijft de positie op de lijn en stuurt de afslagbanner, het hoogteprofiel en de grijze lijn aan. Alleen de getallen "afgelegd", "totaal", de kilometersignalen en de voortgangsbalk gebruiken de echt gelopen afstand.</p>
+      <p><b>Statistieken.</b> <code>traveledKmEstimate()</code> (samenvatting en geschiedenis) gebruikt dezelfde teller zodra die minstens 100 m telt; daaronder blijft het kruimelspoor van 12 s de terugval. Het kruimelspoor sneed bochten af en liet stappen onder de pauzedrempel weg, waardoor de samenvatting iets lager kon uitkomen dan het dashboard. <code>actualRouteKm</code> wordt na een herberekening gezet op gelopen plus de lengte van de nieuwe lijn.</p>
+      <p><b>Gevolg voor een herladen GPX.</b> Laad je tijdens de wandeling opnieuw een GPX, dan blijft "afgelegd" wat je liep en is de rest het hele rondje vanaf jouw positie (de lus wordt vanaf jou herschikt). Het totaal is dan gelopen plus een heel rondje, ook als je al een stuk van dat rondje liep. De app weet niet dat het om dezelfde track gaat.</p>
+      <p><b>Teksten en test.</b> Test 12 in <code>test_round179_walk_fixes.js</code>.</p>
+    </section>
+    <section>
+      <h3>🛠️ Ronde 180: overlappende percentages in de hoogtegrafiek en een traag tabblad in Analyse</h3>
+      <p><b>Percentage-labels.</b> <code>renderElevationChart()</code> zette bij elk klim- of dalstuk een label boven het hoogste punt, zonder te kijken of er al een label stond. Bij stukken vlak na elkaar liepen ze door elkaar (bijvoorbeeld "+12" over "−9,1%"). Nu worden de labels op volgorde van steilte geplaatst; past een label niet naast de al geplaatste (breedte uit het aantal tekens geschat), dan komt het een rij hoger (maximaal drie rijen, één rij in de compacte dashboardgrafiek), anders blijft het weg. De volledige lijst staat in de tabel onder de grafiek. Labels blijven binnen de randen van de grafiek. Daarnaast hadden de steilste stukken een donkergroene of donkerrode kleur, bijna onleesbaar op de donkere achtergrond; <code>gradientLabelColor()</code> maakt die kleur voor tekst 50% lichter.</p>
+      <p><b>Traag tabblad.</b> <code>loadAnalyseTab()</code> kon een verouderde aanvraag nog laten schrijven nadat je van tabblad gewisseld was: het Wegdek-tabblad wacht tot 28 s op wegdekgegevens, en als dat na het wisselen naar Hoogte binnenkwam, stond de titel Hoogte boven de Wegdek-balk. Elke aanvraag heeft nu een nummer (<code>analyseTabToken</code>); na elke wachtstap schrijft een verouderde aanvraag niets meer.</p>
+      <p><b>Overgeslagen zijpad.</b> De voortgang is de positie langs de routelijn, niet het aantal gelopen meters. Een heen-en-terug-stuk (bijvoorbeeld 300 m naar een uitzichtpunt) dat je laat liggen telt daarom als afgelegd zodra je ruim 60 m voorbij de aftakking bent: afgelegd springt dan 600 m vooruit en de rest klopt. Totaal en rest blijven correct, enkel het afgelegde is hoger dan wat je echt liep. Dat is bewust zo en is niet aangepast.</p>
+      <p><b>Teksten en test.</b> Test 11 in <code>test_round179_walk_fixes.js</code>.</p>
+    </section>
+    <section>
+      <h3>🛠️ Ronde 179: kaarttegels op trage verbinding, route bewerken tijdens navigatie, GPX herladen, positie op de Analyse-pagina en foto's van Commons</h3>
+      <p><b>Kaarttegels (witte kaart).</b> De bewaking van de tegels (<code>useTileProvider()</code>) wachtte vast 5 s op een eerste tegel en schakelde dan naar de volgende bron, met de toast "Kaarttegels laden niet via deze bron". Op een zeer trage verbinding (0,1 KB/s) duurt een tegel veel langer dan 5 s, dus werd er steeds van bron gewisseld en de hele laag opnieuw opgebouwd terwijl de kaart wit bleef. Daarnaast bouwde elke <code>'online'</code>-gebeurtenis de laag opnieuw op, ook als de bron prima werkte, en betekende het signaal <code>tileload</code> soms enkel dat de vangnet-timer (1,5 s) afliep. Nu geeft <code>MLA.tileLayer</code> een gebeurtenis <code>tileok</code> bij de eerste echt geladen tegel; die bepaalt of een bron werkt (<code>tileOkUrls</code>, <code>tileProviderWorks()</code>). De wachttijd is 10 s, of 25 s bij een trage verbinding (<code>tileSlowNetwork()</code>: <code>navigator.connection</code> met saveData, 2g of downlink onder 0,4). Na de laatste bron wordt de melding één keer getoond en probeert de app na 20 s opnieuw vanaf de eerste bron. De melding noemt geen andere browser meer. Een <code>'online'</code>-gebeurtenis laat een werkende bron met rust.</p>
+      <p><b>Route bewerken tijdens navigatie.</b> Pinnen verslepen kan alleen als de navigatie gepauzeerd is (<code>navPausedForDetour</code>); dat gebeurde enkel via 🚧, zonder dat dat duidelijk was. Er is nu een apart knopje <code>#navEditRouteBtn</code> (✏️) in dezelfde groep als 🚧 (<code>NAV_HEX_GROUP_ROUTE_IDS</code>), dat <code>pauseNavForDetour()</code> aanroept en uitleg toont. De meldingen <code>toastPinBlockedNav</code> en <code>toastDragBlockedDuringNav</code> verwijzen ernaar.</p>
+      <p><b>12 km in plaats van 5 na het verplaatsen van een pin.</b> Na het verslepen herberekende <code>drawRoutePath()</code> de route door alle wegpunten van <code>route[]</code>, ook de punten die je al gepasseerd was. De route liep dus eerst terug naar het begin en de totale lengte werd ongeveer verdubbeld. Nu leidt <code>drawRoutePath()</code> tijdens de pauze door naar <code>replanRemainingRoute()</code>: dat plant van je positie naar <code>route[navTargetIndex]</code> en verder door de resterende punten, behoudt de al gelopen lijn, voegt de afslagen samen en zet <code>NAVTRACK.reroute</code>. Zonder verbinding wordt het stuk met rechte lijnen tussen de resterende punten getekend.</p>
+      <p><b>GPX herladen tijdens de wandeling.</b> <code>finalizeGpxImport()</code> liet de tracker het oude "afgelegd" meeslepen (<code>T.keepG</code>), terwijl de oude lijn bij Start herschikt was vanaf jouw plek en de nieuwe niet. Afgelegd en rest telden daardoor niet meer op tot de lengte van het bestand (bijvoorbeeld 2,2 km afgelegd en 4,1 km rest bij een lus van 7,07 km). Nu gedraagt een nieuwe GPX tijdens een lopende navigatie zich als "richting omkeren": een lus wordt herschikt vanaf jouw positie (<code>gpxRotatedLoopPts()</code>), <code>applyActiveGpxTrack()</code> en <code>navTrackRequestReset()</code> zetten km 0 op dit punt.</p>
+      <p><b>Hoogte- en hellinggrafiek.</b> De afstanden van het profiel werden berekend langs de uitgedunde monsterpunten (maximaal 120), waardoor bochten werden afgesneden en het profiel ongeveer 5% te kort was; nu komt <code>distKm</code> uit de cumulatieve afstand langs de volledige lijn (<code>cumAllKm</code>). De sleutel van de profielcache (<code>routeSignature()</code>) bevat nu ook de richting en het begin- en eindpunt. De bol op het dashboard en de klimweergave gebruiken <code>liveProfileKm()</code>, dat je positie op het profiel zelf projecteert (<code>polyProjectWithHint()</code>, met de vorige stand als hint zodat een lus de goede helft kiest).</p>
+      <p><b>Positie op de Analyse-pagina.</b> De rode bol op de Analyse-kaart was een versleepbare inspectiebol die op het begin van het profiel stond, niet jouw positie. Nu zet <code>updateAnalyseLive()</code> (aangeroepen vanuit <code>renderPosition()</code>) op elk tabblad een blauwe bol (<code>.analyse-me-dot</code>) op jouw plek. Op Hoogte en Helling volgt de rode bol jouw positie, tenzij je hem de laatste 15 s zelf versleepte (<code>analyseDotTouchedAt</code>). Op Wegdek, Wind en Snelheid tekent dezelfde functie een markering (<code>.analyse-live-mark</code>) op de balk, op basis van <code>analyseBarCtx</code>. De kaart van Wegdek stond te ver uitgezoomd omdat de eerste inpassing gebeurde voordat de legenda en grafiek hun hoogte hadden; <code>analyseFit()</code> past de kaart nu direct, na 160 ms en na 700 ms opnieuw in.</p>
+      <p><b>Afslagbanner.</b> De banner hangt aan de voortgang langs de lijn. Sla je een bocht af (of blijft de projectie even op het hoekpunt hangen), dan schuift die voortgang niet door en blijft "Over 25 m: links afslaan" staan. Vangnet: <code>applyManeuverPassGuard()</code> beschouwt een afslag als genomen als hij nog binnen 60 m langs de lijn ligt, je er in vogelvlucht binnen 35 m bent geweest en je je nu 25 m van het dichtste punt bevindt (GPS-nauwkeurigheid beter dan 25 m). Een afslag die ver langs de lijn nog moet komen telt nooit.</p>
+      <p><b>Foto's van Wikimedia Commons.</b> De melding "cirrussearch-too-busy-error" komt van de servers van Commons (overbelast). <code>phLoadPhotos()</code> probeert nu tot drie keer (na 1,5 s en 4 s) bij een tijdelijke fout, toont een duidelijke melding als dat niet lukt en bewaart een lege uitkomst niet meer in de cache.</p>
+      <p><b>Teksten en test.</b> Alle nieuwe teksten bestaan in NL en EN. Nieuw testbestand <code>test_round179_walk_fixes.js</code>.</p>
+    </section>
+    <section>
       <h3>🛠️ Ronde 178: schuine popups, Wikimedia-foto's, volgorde in Instellingen en vast handvat in Kaartopties</h3>
       <p><b>Schuine popup bij het openen.</b> De luisteraar <code>map.on('popupopen')</code> voegde bij een gedraaide kaart <code>rotate(-lastMapRotation)</code> toe aan de transform van de popup. Dat stamt uit de tijd dat de kaart met een CSS-transform draaide. Sinds de kaart een echte MapLibre-bearing gebruikt houdt MapLibre popups zelf al rechtop, dus de extra draai zette ze juist scheef. Bij de eerstvolgende kaartbeweging herberekent MapLibre de transform van de popup en verdween de draai, wat het gemelde gedrag verklaart (scheef bij het openen, recht na bewegen). De extra rotatie is verwijderd; <code>aPoiPopupIsOpen</code> blijft gelijk.</p>
       <p><b>Wikimedia-foto's.</b> <code>phLoadPhotos()</code> gebruikte een zoekstraal van minstens 300 m rond het kaartmidden en vroeg enkel primaire coördinaten. Bij ver inzoomen viel een foto die op Commons wel te zien is dus vaak buiten de straal. Nu is de straal minstens 1000 m (hoogstens 10 km) en vraagt de aanvraag <code>ggsprimary=all</code> en <code>coprimary=all</code>, zodat ook bestanden met een niet-primaire coördinaat meekomen. Een foutmelding van de API (<code>error</code> in het antwoord) en de HTTP-status komen nu in de melding; een geldig maar leeg antwoord geeft een eigen melding ("geen foto's met locatie gevonden"). De oorzaak van de lege laag op het toestel kon niet met zekerheid worden vastgesteld: de Commons-server was in de ontwikkelomgeving niet bereikbaar, dus dit is een verbetering op grond van de documentatie van de zoekopdracht en niet bevestigd tegen echte antwoorden.</p>
@@ -17014,6 +17158,40 @@ const DEV_NOTES_CONTENT = {
       <p><b>Filters:</b> data comes from Overpass (<code>osmWalkOverpass()</code>) and is kept for 30 days (<code>nearby_tags_v1</code>). Playground (<code>leisure=playground</code>, 300 m) and stop (<code>highway=bus_stop</code>, <code>railway=station|halt|tram_stop</code>, 500 m) in 1 request per 20 routes; the first 60 in the sorting. Surface: per route (the first 20) sample points about every 250 m (6 to 14), per point the nearest way within 15 m (<code>out tags geom</code>) and its class from <code>surface</code>, otherwise <code>tracktype</code> or <code>highway</code>; a path or footway without <code>surface</code> does not count. At least 5 known points and 60% of the points known, otherwise no statement; "in rain" = at least 70% paved. A route that is only a link has no track and gets no surface label. If a request fails a message appears and nothing is saved.</p>
       <p><b>Own places:</b> <code>plekken/index.json</code> (<code>regions[].places[]</code> with name, text, lat, lon, foto, fotoBron, mode, gecontroleerd) is loaded at startup; <code>nrPlacesNear()</code> keeps places of this activity within 40 km; the pop-up shows the three nearest. Without a filter and without a length group they show as "📍 Own tips" above the list; a tap opens the place in Google Maps. The file holds ten places in Limburg as a starter list (no date in <code>gecontroleerd</code>, so shown as "not checked yourself yet", with a Maps search text in <code>maps</code>); the rest comes from you, the app invents nothing.</p>
       <p><b>Texts and test:</b> all new texts exist in NL and EN, Help and <code>plekken/README.md</code> are extended. <b>Test suite:</b> new file <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> one selector is adjusted to the new row structure. Version 2.497 / versionCode 116.</p>
+    </section>
+    <section>
+      <h3>🛠️ Round 182: elevation, slope, surface and wind data after a detour</h3>
+      <p><b>Problem.</b> After a recalculation, a moved pin (✏️) or a detour (🚧) the analysis stayed tied to the original GPX. <code>getElevationSourcePoints()</code> returned <code>importedTrack</code> as long as it was filled, and after <code>replanRemainingRoute()</code> (which lets go of the GPX) the line consisted only of the part still ahead of you, without what you had already walked. The charts then did not match the line on the map.</p>
+      <p><b>Solution.</b> <code>noteAnalysisRouteReplaced()</code> keeps the part you already walked every time the route is replaced (<code>analysisWalked</code>, with elevations from the original GPX where they exist, via <code>analysisEleFromSrc()</code>: nearest point within 25 m). The analysis line then consists of that part plus the new <code>routeLine</code>. <code>routeSignature()</code> then gets its own key (<code>rr:</code>, number of walked points, last walked point and a few points of the new line), so the elevation profile and the surface cache are rebuilt. Elevation, slope, surface, logs and wind now all use <code>getElevationSourcePoints()</code> (wind used to read <code>routeLine</code> directly). Points without elevation get it online via <code>fetchElevations()</code> as before. <code>clearWalkedBefore()</code> clears everything on a new session, a new track or reversing the direction.</p>
+      <p><b>Texts and test.</b> Tests 13 and 14 in <code>test_round179_walk_fixes.js</code>.</p>
+    </section>
+    <section>
+      <h3>🛠️ Round 181: travelled = metres actually walked</h3>
+      <p><b>What changed.</b> <code>computeProgressKm()</code> calculated "travelled" as the position along the route line (<code>T.alongU + T.base − T.anchorG</code>). A there-and-back stretch you skipped therefore counted as walked, and after a detour or a moved pin that skipped part stayed in "travelled" and so in the total. Now "travelled" is the GPS distance actually walked (<code>NAVGPS.m</code>, the same filtered counter already used for the average speed: steps under max(4 m, half the accuracy) and impossible jumps do not count). "Remaining" stays the distance along the (possibly new) line from your position, and the total is travelled plus remaining. After a recalculation, a moved pin or a different road taken, the total is therefore what you walked plus the new route.</p>
+      <p><b>Noise.</b> Single GPS steps become too long because of noise (with ±6 m noise, walking 2 km gave 2.26 km). While you are within 30 m of the line and the progress along the line fits the GPS step (difference between −15 m and 1.6 times the step plus 10 m), <code>navGpsAccumulate()</code> therefore counts the difference in progress along the line: that telescopes and the noise cancels out. A skipped side path (progress jumps ahead), really walking back, or a stretch beside the line counts as the GPS step. <b>Reversing the direction</b> resets the "travelled" number to 0 (<code>NAVGPS.doneBase</code>, as before km 0 = now); the total GPS distance used for average speed and statistics keeps running.</p>
+      <p><b>What stayed the same.</b> Progress along the line (<code>navProgressDomainM()</code>, <code>navDoneM()</code>) remains the position on the line and drives the turn banner, the elevation profile and the grey line. Only the numbers "travelled", "total", the kilometre signals and the progress bar use the distance actually walked.</p>
+      <p><b>Statistics.</b> <code>traveledKmEstimate()</code> (summary and history) uses the same counter once it has reached 100 m; below that the 12 s breadcrumb trail remains the fallback. The breadcrumb trail cut corners and left out steps under the pause threshold, so the summary could come out a little lower than the dashboard. After a recalculation <code>actualRouteKm</code> is set to walked plus the length of the new line.</p>
+      <p><b>Consequence for a reloaded GPX.</b> If you load a GPX again during the walk, "travelled" stays what you walked and the remainder is the whole lap from your position (the loop is reordered from you). The total is then walked plus a whole lap, even if you already walked part of that lap. The app does not know it is the same track.</p>
+      <p><b>Texts and test.</b> Test 12 in <code>test_round179_walk_fixes.js</code>.</p>
+    </section>
+    <section>
+      <h3>🛠️ Round 180: overlapping percentages in the elevation chart and a slow tab in Analysis</h3>
+      <p><b>Percentage labels.</b> <code>renderElevationChart()</code> put a label above the highest point of every climb or descent without checking whether one was already there. For segments close together they overlapped (for example "+12" over "−9.1%"). Labels are now placed in order of steepness; if a label does not fit next to those already placed (width estimated from the number of characters), it moves up one row (at most three rows, one row in the compact dashboard chart), otherwise it is left out. The full list is in the table below the chart. Labels stay within the edges of the chart. In addition the steepest segments had a dark green or dark red colour, almost unreadable on the dark background; <code>gradientLabelColor()</code> makes that colour 50% lighter for text.</p>
+      <p><b>Slow tab.</b> <code>loadAnalyseTab()</code> could let an outdated request write after you had switched tabs: the Surface tab waits up to 28 s for surface data, and if that arrived after switching to Elevation, the title said Elevation above the Surface bar. Each request now has a number (<code>analyseTabToken</code>); after every wait step an outdated request writes nothing.</p>
+      <p><b>Skipped side path.</b> Progress is the position along the route line, not the number of metres walked. An out-and-back stretch (for example 300 m to a viewpoint) that you skip therefore counts as done once you are well over 60 m past the junction: travelled jumps ahead 600 m and the remainder stays correct. Total and remaining stay right, only the travelled figure is higher than what you actually walked. This is by design and was not changed.</p>
+      <p><b>Texts and test.</b> Test 11 in <code>test_round179_walk_fixes.js</code>.</p>
+    </section>
+    <section>
+      <h3>🛠️ Round 179: map tiles on a slow connection, editing the route during navigation, reloading a GPX, position on the Analysis page and Commons photos</h3>
+      <p><b>Map tiles (white map).</b> The tile watchdog (<code>useTileProvider()</code>) waited a fixed 5 s for a first tile and then switched to the next source with the toast "Tiles won't load from this source". On a very slow connection (0.1 KB/s) a tile takes far longer than 5 s, so it kept switching sources and rebuilding the whole layer while the map stayed white. In addition every <code>'online'</code> event rebuilt the layer even when the source worked fine, and the <code>tileload</code> signal sometimes only meant that the safety-net timer (1.5 s) had expired. Now <code>MLA.tileLayer</code> fires a <code>tileok</code> event on the first really loaded tile; that decides whether a source works (<code>tileOkUrls</code>, <code>tileProviderWorks()</code>). The wait is 10 s, or 25 s on a slow connection (<code>tileSlowNetwork()</code>: <code>navigator.connection</code> with saveData, 2g or downlink below 0.4). After the last source the message is shown once and the app retries from the first source after 20 s. The message no longer mentions another browser. An <code>'online'</code> event leaves a working source alone.</p>
+      <p><b>Editing the route during navigation.</b> Pins can only be dragged while navigation is paused (<code>navPausedForDetour</code>); that only happened through 🚧, without it being clear. There is now a separate button <code>#navEditRouteBtn</code> (✏️) in the same group as 🚧 (<code>NAV_HEX_GROUP_ROUTE_IDS</code>) that calls <code>pauseNavForDetour()</code> and shows an explanation. The messages <code>toastPinBlockedNav</code> and <code>toastDragBlockedDuringNav</code> point to it.</p>
+      <p><b>12 km instead of 5 after moving a pin.</b> After a drag, <code>drawRoutePath()</code> recalculated the route through all waypoints of <code>route[]</code>, including the ones you had already passed. The route first ran back to the start and the total length roughly doubled. Now, during the pause, <code>drawRoutePath()</code> hands over to <code>replanRemainingRoute()</code>: it plans from your position to <code>route[navTargetIndex]</code> and on through the remaining points, keeps the line already walked, merges the turn instructions and sets <code>NAVTRACK.reroute</code>. Without a connection, the part is drawn with straight lines between the remaining points.</p>
+      <p><b>Reloading the GPX during the walk.</b> <code>finalizeGpxImport()</code> let the tracker carry the old "travelled" distance along (<code>T.keepG</code>), while the old line had been reordered from your position at Start and the new one had not. Travelled and remaining therefore no longer added up to the length of the file (for example 2.2 km travelled and 4.1 km remaining on a 7.07 km loop). Now a new GPX during a running navigation behaves like "reverse direction": a loop is reordered from your position (<code>gpxRotatedLoopPts()</code>), and <code>applyActiveGpxTrack()</code> and <code>navTrackRequestReset()</code> put km 0 at this point.</p>
+      <p><b>Elevation and slope charts.</b> The profile distances were computed along the thinned sample points (at most 120), which cut corners and made the profile about 5% too short; <code>distKm</code> now comes from the cumulative distance along the full line (<code>cumAllKm</code>). The profile cache key (<code>routeSignature()</code>) now also contains the direction and the start and end points. The dot on the dashboard and the climb view use <code>liveProfileKm()</code>, which projects your position onto the profile itself (<code>polyProjectWithHint()</code>, with the previous value as a hint so a loop picks the right half).</p>
+      <p><b>Position on the Analysis page.</b> The red dot on the Analysis map was a draggable inspection dot that sat at the start of the profile, not at your position. Now <code>updateAnalyseLive()</code> (called from <code>renderPosition()</code>) puts a blue dot (<code>.analyse-me-dot</code>) at your position on every tab. On Elevation and Slope the red dot follows your position unless you dragged it in the last 15 s (<code>analyseDotTouchedAt</code>). On Surface, Wind and Speed the same function draws a marker (<code>.analyse-live-mark</code>) on the bar, based on <code>analyseBarCtx</code>. The Surface map was zoomed out too far because the first fit happened before the legend and chart had their height; <code>analyseFit()</code> now fits immediately, again after 160 ms and after 700 ms.</p>
+      <p><b>Turn banner.</b> The banner depends on progress along the line. If you cut a corner (or the projection stays on the corner point for a while), that progress does not advance and "In 25 m: turn left" stays. Safety net: <code>applyManeuverPassGuard()</code> treats a turn as taken if it is still within 60 m along the line, you have been within 35 m of it as the crow flies and you are now 25 m from the closest point (GPS accuracy better than 25 m). A turn that is still far ahead along the line never counts.</p>
+      <p><b>Wikimedia Commons photos.</b> The message "cirrussearch-too-busy-error" comes from the Commons servers (overloaded). <code>phLoadPhotos()</code> now tries up to three times (after 1.5 s and 4 s) on a temporary error, shows a clear message if that fails and no longer caches an empty result.</p>
+      <p><b>Texts and test.</b> All new texts exist in NL and EN. New test file <code>test_round179_walk_fixes.js</code>.</p>
     </section>
     <section>
       <h3>🛠️ Round 178: tilted popups, Wikimedia photos, order in Settings and a fixed handle in Map options</h3>
@@ -25819,7 +25997,7 @@ ${GARMIN_MENU_BTN_JS}
 </body>
 </html>`;
 }
-const APP_VERSION_TEXT = 'v2.512 · 7 nov';
+const APP_VERSION_TEXT = 'v2.516 · 8 nov';
 $('homeVersionFooter').textContent = APP_VERSION_TEXT;
 function buildGarminHubHtml(){
   // Dit is Gemini's keuzescherm.html, ongewijzigd qua opbouw/stijl — enkel: (1) een derde grote tegel
@@ -28687,7 +28865,40 @@ $('menuSwitchModeBtn').addEventListener('click', () => {
 // ---------- Hoogteprofiel ----------
 
 // Welke punten analyseren we? Bij voorkeur een geïmporteerde GPX-track, anders de getekende (fietspad-)route.
+// Ronde 181 (GEVRAAGD: na een omleiding of verplaatste pin moeten ook de hoogte-, helling-, wegdek- en windgegevens bij de nieuwe route horen): zodra de route onderweg vervangen is
+// (herberekening, ✏️/🚧, andere weg), bestaat de te analyseren lijn uit het stuk dat je al liep (analysisWalked, met hoogtes uit de oorspronkelijke GPX waar die er waren) gevolgd door
+// de nieuwe lijn. Zo klopt de grafiek met "wat ik liep + wat ik nog ga lopen" en horen alle tabbladen bij dezelfde lijn. clearWalkedBefore() wist dit bij een nieuwe sessie of track.
+let analysisWalked = [], analysisRerouted = false, analysisEleSrc = null;
+function analysisEleFromSrc(la, lo){
+  const src = analysisEleSrc; if (!src || src.length < 2) return null;
+  const latM = 111320, lonM = 111320 * Math.cos(la * Math.PI / 180);
+  let best = null, bd = 25;
+  for (let i = 0; i < src.length; i++){
+    if (src[i].ele == null) continue;
+    const d = Math.hypot((src[i].lat - la) * latM, (src[i].lon - lo) * lonM);
+    if (d < bd){ bd = d; best = src[i].ele; }
+  }
+  return best;
+}
+function noteAnalysisRouteReplaced(walkedOld, endLat, endLon){
+  try{
+    if (importedTrack.length > 1) analysisEleSrc = importedTrack.map(p => ({ lat:p.lat, lon:p.lon, ele:p.ele }));
+    const add = (walkedOld || []).map(q => ({ lat:q[0], lon:q[1], ele:analysisEleFromSrc(q[0], q[1]) }));
+    if (Number.isFinite(endLat) && Number.isFinite(endLon)) add.push({ lat:endLat, lon:endLon, ele:analysisEleFromSrc(endLat, endLon) });
+    analysisWalked = analysisWalked.concat(add);
+    analysisRerouted = true;
+    lastElevationProfile = null; lastElevationProfileKey = null;
+  }catch(e){}
+}
 function getElevationSourcePoints(){
+  if (analysisRerouted && routeLine){
+    const ll = routeLine.getLatLngs();
+    if (ll.length > 1){
+      const tail = ll.map(p => ({ lat:p.lat, lon:(p.lng != null ? p.lng : p.lon), ele:null }));
+      tail.forEach(p => { p.ele = analysisEleFromSrc(p.lat, p.lon); });
+      return analysisWalked.map(p => ({ lat:p.lat, lon:p.lon, ele:p.ele })).concat(tail);
+    }
+  }
   if (importedTrack.length > 1) return importedTrack.map(p => ({ lat:p.lat, lon:p.lon, ele:p.ele }));
   if (route.length >= 1){
     const latlngs = routeLine.getLatLngs();
@@ -28746,9 +28957,16 @@ async function fetchElevations(points){
 }
 
 async function buildElevationProfile(){
-  let pts = getElevationSourcePoints();
-  if (pts.length < 2) throw new Error(curLang()==='en' ? 'no route or GPX track to analyse' : 'geen route of GPX-track om te analyseren');
-  pts = sampleEvenly(pts, 120);
+  const allPts = getElevationSourcePoints();
+  if (allPts.length < 2) throw new Error(curLang()==='en' ? 'no route or GPX track to analyse' : 'geen route of GPX-track om te analyseren');
+  // Ronde 179 (GEMELD: bol op de hoogtegrafiek stond niet waar ik was): de grafiek wordt op max. 120 punten gesampled, maar de afstand werd tot nu toe langs die
+  // 120 rechte stukjes gemeten (bij mijn GPX 6,69 km i.p.v. 7,07 km: 5% te kort, dus de bol liep steeds verder achter). De afstand komt nu uit de VOLLEDIGE lijn.
+  const cumAllKm = [0];
+  for (let i = 1; i < allPts.length; i++) cumAllKm.push(cumAllKm[i-1] + haversine(allPts[i-1].lat, allPts[i-1].lon, allPts[i].lat, allPts[i].lon) / 1000);
+  let sampleIdx;
+  if (allPts.length <= 120) sampleIdx = allPts.map((_, i) => i);
+  else { const step = (allPts.length - 1) / 119; sampleIdx = Array.from({ length:120 }, (_, i) => Math.round(i * step)); }
+  let pts = sampleIdx.map(i => allPts[i]);
 
   if (pts.some(p => p.ele == null)){
     const eles = await fetchElevations(pts);
@@ -28761,10 +28979,7 @@ async function buildElevationProfile(){
     return w.reduce((s,x) => s + x.ele, 0) / w.length;
   });
 
-  const distKm = [0];
-  for (let i = 1; i < pts.length; i++){
-    distKm.push(distKm[i-1] + haversine(pts[i-1].lat, pts[i-1].lon, pts[i].lat, pts[i].lon) / 1000);
-  }
+  const distKm = sampleIdx.map(i => cumAllKm[i]);
 
   let ascent = 0, descent = 0;
   for (let i = 1; i < smoothed.length; i++){
@@ -28776,15 +28991,28 @@ async function buildElevationProfile(){
 }
 
 // Signatuur van de huidige route/track, om te weten of een eerder opgebouwd hoogteprofiel nog geldig is
+// Ronde 179: de oude sleutel (aantal punten + eerste punt) was gelijk voor een heen- en een teruggelopen, vanaf dezelfde plek herschikte lus (zelfde aantal punten,
+// zelfde beginpunt) -- zo kon een grafiek/wegdek-resultaat van de ANDERE richting hergebruikt worden. Nu tellen ook het tweede, middelste en laatste punt mee.
 function routeSignature(){
-  if (importedTrack.length > 1) return 'gpx:' + importedTrack.length + ':' + importedTrack[0].lat + ',' + importedTrack[0].lon;
-  return 'route:' + route.map(r => r.id).join(',');
+  const q = (p) => (+p.lat).toFixed(5) + ',' + (+(p.lon != null ? p.lon : p.lng)).toFixed(5);
+  if (analysisRerouted && typeof routeLine !== 'undefined' && routeLine){
+    const rl = routeLine.getLatLngs();
+    if (rl.length > 1) return 'rr:' + analysisWalked.length + ':' + (analysisWalked.length ? q(analysisWalked[analysisWalked.length - 1]) : '') + ':' + rl.length + ':' + [0, 1, rl.length >> 1, rl.length - 2, rl.length - 1].map(i => q(rl[i])).join('|');
+  }
+  if (importedTrack.length > 1){
+    const n = importedTrack.length;
+    return 'gpx:' + n + ':' + [0, 1, n >> 1, n - 2, n - 1].map(i => q(importedTrack[i])).join('|');
+  }
+  let sig = 'route:' + route.map(r => r.id).join(',');
+  const ll = (typeof routeLine !== 'undefined' && routeLine) ? routeLine.getLatLngs() : [];
+  if (ll.length > 1) sig += ':' + ll.length + ':' + [1, ll.length >> 1, ll.length - 2].map(i => q(ll[i])).join('|');
+  return sig;
 }
 let lastElevationProfileKey = null;
 
 async function ensureElevationProfile(){
   const key = routeSignature();
-  if (key === 'route:' || key.startsWith('gpx:0')) return null; // geen route/track
+  if (importedTrack.length <= 1 && route.length === 0) return null; // geen route/track
   if (lastElevationProfile && lastElevationProfileKey === key) return lastElevationProfile;
   const profile = await buildElevationProfile();
   lastElevationProfile = profile;
@@ -28794,6 +29022,13 @@ async function ensureElevationProfile(){
 
 // Kleur per segment: strikt gescheiden bij 0% — dalen (≤0%) blijft altijd groentinten,
 // stijgen (>0%) start geel en loopt via oranje naar donkerrood. Geen vermenging over de grens.
+// Ronde 179: de steilste stukken hebben een donkergroene of donkerrode lijnkleur; als tekst op de donkere grafiek waren die bijna onleesbaar (bv. "−14,7%"). Voor labels wordt de kleur lichter gemaakt.
+function gradientLabelColor(gradPercent){
+  const m = /rgb\((\d+),(\d+),(\d+)\)/.exec(gradientColor(gradPercent));
+  if (!m) return '#fff';
+  const c = [1,2,3].map(i => Math.round(+m[i] + (255 - +m[i]) * 0.5));
+  return `rgb(${c[0]},${c[1]},${c[2]})`;
+}
 function gradientColor(gradPercent){
   const g = Math.max(-12, Math.min(12, gradPercent));
   const stops = g <= 0
@@ -28812,6 +29047,44 @@ function gradientColor(gradPercent){
 }
 
 const chartProjections = {}; // svgId -> { x(km), y(ele), maxDist } — voor de live positie-stip
+
+// Ronde 179 (GEMELD: de bol op de hoogte-/helling-/wegdek-pagina stond niet waar ik stond; na herladen of een herberekening liep de afstand uit de pas): de positie op een
+// grafiek werd afgeleid uit "afgelegd langs de lijn" (NAVTRACK), een afstand in het domein van de LIJN. Na een herberekening/omleiding of een herladen GPX verschuift dat
+// domein (de lijn begint dan elders), terwijl de grafiek van de oorspronkelijke track blijft. Nu wordt de GPS-positie rechtstreeks op de grafiek-lijn geprojecteerd; enkel
+// bij een lijn die over zichzelf heen loopt (lus, heen-en-terug) beslist de vorige positie welke passage bedoeld wordt.
+function polyProjectWithHint(la, lo, cumM, lat, lon, hintM){
+  const n = la.length; if (n < 2) return null;
+  const latM = 111320, lonM = 111320 * Math.cos(lat * Math.PI / 180);
+  const cand = []; let minD = Infinity;
+  for (let i = 1; i < n; i++){
+    const ax = (lo[i-1] - lon) * lonM, ay = (la[i-1] - lat) * latM, bx = (lo[i] - lon) * lonM, by = (la[i] - lat) * latM;
+    const dx = bx - ax, dy = by - ay, len2 = dx*dx + dy*dy;
+    let t = len2 > 0 ? -(ax*dx + ay*dy) / len2 : 0; t = Math.max(0, Math.min(1, t));
+    const px = ax + dx*t, py = ay + dy*t, d = Math.sqrt(px*px + py*py);
+    cand.push([d, cumM[i-1] + (cumM[i] - cumM[i-1]) * t]);
+    if (d < minD) minD = d;
+  }
+  if (minD > 150) return null; // niet op de lijn
+  const thr = minD + 30;
+  let best = null, bestScore = Infinity;
+  for (const [d, along] of cand){
+    if (d > thr) continue;
+    const score = hintM != null ? Math.abs(along - hintM) : d;
+    if (score < bestScore){ bestScore = score; best = along; }
+  }
+  return best;
+}
+let liveKmMemo = { profile:null, m:null };
+function liveProfileKm(profile){
+  const fallback = navElevationKm();
+  if (!profile || !profile.lat || profile.lat.length < 2 || !lastPosition) return fallback;
+  if (!profile._cumM) profile._cumM = profile.distKm.map(k => k * 1000);
+  const hint = (liveKmMemo.profile === profile && liveKmMemo.m != null) ? liveKmMemo.m : fallback * 1000;
+  const m = polyProjectWithHint(profile.lat, profile.lon, profile._cumM, lastPosition.coords.latitude, lastPosition.coords.longitude, hint);
+  if (m == null) return fallback;
+  liveKmMemo = { profile, m };
+  return m / 1000;
+}
 
 // Vindt betekenisvolle klim-/dalstukken via een zigzag-filter: enkel richtingswissels van minstens
 // minSwingM hoogtemeters tellen mee, zodat kleine punt-tot-punt ruis een echte klim niet fragmenteert.
@@ -28862,7 +29135,7 @@ function updateClimbPro(){
   const climbs = getClimbs(lastElevationProfile);
   if (!climbs.length){ section.classList.add('hidden'); return; }
 
-  const doneKm = navActive ? navElevationKm() : 0;
+  const doneKm = navActive ? liveProfileKm(lastElevationProfile) : 0;
   const idx = climbs.findIndex(c => doneKm < c.endKm);
   if (idx === -1){ section.classList.add('hidden'); return; } // alle klimmen al gehad
 
@@ -28953,13 +29226,28 @@ function renderElevationChart(profile, svgId='elevationSvg', wrapId='elevationCh
   let gradSegs = computeGradientSegments(profile, compact ? 15 : 8, compact ? 4 : 2);
   if (compact) gradSegs = gradSegs.sort((a,b) => Math.abs(b.avgGrad) - Math.abs(a.avgGrad)).slice(0, 2);
   if (!opts.skipLabels){
-    gradSegs.forEach(seg => {
+    // Ronde 179 (GEMELD: percentages in de hoogtegrafiek liepen door elkaar, bv. "+12" over "−9,1%" en "−4,x" over "+3,5%"): labels worden nu gekozen en geplaatst op volgorde van
+    // belang (steilste eerst). Past een label niet naast de al geplaatste (breedte geschat uit het aantal tekens), dan komt het een rij hoger; past het ook daar niet, dan blijft
+    // het weg (het volledige overzicht staat in de tabel onder de grafiek). Labels blijven ook binnen de randen van de grafiek.
+    const fs = compact ? 9 : 12, sw = compact ? 2 : 3, rowH = fs + 3, maxRows = compact ? 1 : 3;
+    const placed = [];
+    const hits = (a, b) => a.x1 < b.x2 + 3 && a.x2 > b.x1 - 3 && a.y1 < b.y2 && a.y2 > b.y1;
+    gradSegs.slice().sort((a, b) => Math.abs(b.avgGrad) - Math.abs(a.avgGrad)).forEach(seg => {
       const midKm = (seg.startKm + seg.endKm) / 2;
       const topEle = Math.max(seg.startEle, seg.endEle);
-      const lx = x(midKm), ly = y(topEle) - (compact ? 6 : 9);
       const sign = seg.avgGrad > 0 ? '+' : '−';
-      const fs = compact ? 9 : 12, sw = compact ? 2 : 3;
-      gradLabels += `<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" font-size="${fs}" font-weight="800" fill="${gradientColor(seg.avgGrad)}" stroke="rgba(15,61,41,0.85)" stroke-width="${sw}" paint-order="stroke" stroke-linejoin="round">${sign}${Math.abs(seg.avgGrad).toFixed(1)}%</text>`;
+      const txt = sign + Math.abs(seg.avgGrad).toFixed(1) + '%';
+      const halfW = txt.length * fs * 0.34 + sw;
+      let lx = x(midKm); lx = Math.max(pad.l + halfW, Math.min(w - pad.r - halfW, lx));
+      for (let row = 0; row < maxRows; row++){
+        const ly = y(topEle) - (compact ? 6 : 9) - row * rowH;
+        if (ly - fs < 2) break;
+        const box = { x1: lx - halfW, x2: lx + halfW, y1: ly - fs, y2: ly + 3 };
+        if (placed.some(q => hits(box, q))) continue;
+        placed.push(box);
+        gradLabels += `<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" font-size="${fs}" font-weight="800" fill="${gradientLabelColor(seg.avgGrad)}" stroke="rgba(8,20,14,0.9)" stroke-width="${sw}" paint-order="stroke" stroke-linejoin="round">${txt}</text>`;
+        break;
+      }
     });
   }
 
@@ -29068,7 +29356,7 @@ function updateElevationDot(svgId){
     if (dot) dot.remove();
     return;
   }
-  const prog = { done: navElevationKm() };
+  const prog = { done: liveProfileKm(lastElevationProfile) };
   const km = Math.max(0, Math.min(proj.maxDist, prog.done));
   const ele = elevationAtKm(lastElevationProfile, km);
   const cx = proj.x(km), cy = proj.y(ele);
@@ -30559,7 +30847,75 @@ async function planRoadRoute(pts, extraOpts){
   return await fetchRoadRoute(pts, routeOpts);
 }
 let drawRoutePathToken = 0;
+// Ronde 179 (GEMELD met 20 screenshots: "ik verzette de pin 10 meter op hetzelfde pad en plots deed ik 12 km ipv 5, nog 7 km te doen"): tijdens de
+// bewerk-/omweg-pauze plande elke aanroep van drawRoutePath() de route vanaf je positie langs ALLE punten van route[] -- ook de punten die je al voorbij was.
+// Bij een lus van 15 punten betekende dat: van waar je staat terug naar punt 1, en dan de héle lus opnieuw (afgelegd + totaal sloegen op hol).
+// Nu wordt in die pauze enkel het RESTERENDE deel opnieuw gepland: je positie -> het volgende punt (navTargetIndex) -> de rest.
 async function drawRoutePath(fromCurrentLocation){
+  if (navActive && navPausedForDetour && lastPosition && route.length && navTargetIndex < route.length){
+    try{ return await replanRemainingRoute(); }
+    catch(e){ console.warn('[nav] herplannen vanaf positie mislukte, val terug op gewone planning', e); }
+  }
+  return drawRoutePathCore(fromCurrentLocation);
+}
+async function replanRemainingRoute(){
+  if (importedTrack.length > 1) analysisEleSrc = importedTrack.map(p => ({ lat:p.lat, lon:p.lon, ele:p.ele }));
+  detachRouteFromExactGpxTrack(); // een bewerkte GPX gedraagt zich vanaf nu als een gewone via-punten-route
+  const myToken = ++drawRoutePathToken;
+  routeStartsFromGps = true;
+  const here = { lat: lastPosition.coords.latitude, lon: lastPosition.coords.longitude };
+  const targetIdx = navTargetIndex;
+  const rest = route.slice(targetIdx).map(r => ({ lat:r.lat, lon:r.lon }));
+  const doneM = navProgressDomainM();
+  let seg = null, tail = null;
+  try{
+    seg = await withTimeout(planRoadRoute([here, rest[0]]), 25000, 'herplannen');
+    if (rest.length >= 2){
+      try{ tail = await withTimeout(planRoadRoute(rest), 25000, 'herplannen-rest'); }catch(e){ tail = null; }
+    }
+  }catch(e){ seg = null; }
+  if (myToken !== drawRoutePathToken || !navActive || navTargetIndex !== targetIdx) return;
+  let newLine, steps, segLatLng, segDistM, totalAheadM;
+  if (seg){
+    segLatLng = seg.coordsLatLng.map(c => [c[0], c[1]]);
+    segDistM = seg.distanceM;
+    newLine = segLatLng.slice();
+    steps = mergeRerouteSteps([], seg.steps, doneM, seg.distanceM, 0);
+    totalAheadM = seg.distanceM;
+    if (tail){
+      newLine = newLine.concat(tail.coordsLatLng.map(c => [c[0], c[1]]));
+      steps = steps.concat((tail.steps || []).filter(st => st.type !== 'depart').map(st => Object.assign({}, st, { startDistM: doneM + seg.distanceM + st.startDistM })));
+      totalAheadM += tail.distanceM;
+    }
+  } else {
+    // geen routeringsdienst bereikbaar: rechte lijnen, maar enkel door wat nog voor je ligt (nooit meer door de al voorbije punten)
+    const pts = [here, ...rest];
+    newLine = pts.map(q => [q.lat, q.lon]);
+    segLatLng = [newLine[0], newLine[1]];
+    segDistM = haversine(here.lat, here.lon, rest[0].lat, rest[0].lon);
+    totalAheadM = 0;
+    for (let i = 1; i < pts.length; i++) totalAheadM += haversine(pts[i-1].lat, pts[i-1].lon, pts[i].lat, pts[i].lon);
+    steps = [];
+    toast(navigator.onLine === false ? tr('toastNoInternetForRouting') : tr('toastLiveRoutingUnavailable'), 2800);
+  }
+  // het stuk dat je al liep bewaren (grijs) vóór de lijn vervangen wordt, zoals bij een herberekening
+  const walkedOld = navTrackTraveledLatLngs();
+  if (walkedOld.length > 1){
+    walkedBeforePts = walkedBeforePts.concat(walkedOld, [[here.lat, here.lon]]);
+    walkedBeforeLine.setLatLngs(walkedBeforePts);
+  }
+  noteAnalysisRouteReplaced(walkedOld, here.lat, here.lon);
+  routeLine.setLatLngs(newLine);
+  lastRerouteInfo = { len: newLine.length, remStart: segLatLng.length };
+  NAVTRACK.reroute = { len: newLine.length, remStart: segLatLng.length, targetIdx };
+  NAVTRACK.wpAlong = null; NAVTRACK.wpSig = '';
+  routeSteps = steps;
+  actualRouteKm = (Math.max(0, NAVGPS.m - NAVGPS.doneBase) + totalAheadM) / 1000; // Ronde 181: wat je echt liep + de nieuwe rest
+  updateSheetMetaText();
+  applyRouteColoring();
+  updateProgressUI();
+}
+async function drawRoutePathCore(fromCurrentLocation){
   routeStartsFromGps = !!(fromCurrentLocation && lastPosition);
   if (navType === 'passive' && !passiveEditingDone){
     // Passief Pro, nog aan het bewerken: helemaal geen lijn tonen (ook geen rechte-lijn-voorbeeld) —
@@ -30868,11 +31224,17 @@ async function rerouteFromCurrentPosition(isAutomatic){
       walkedBeforePts = walkedBeforePts.concat(walkedOld, [[blocked.lat, blocked.lon]]);
       walkedBeforeLine.setLatLngs(walkedBeforePts);
     }
+    noteAnalysisRouteReplaced(walkedOld, blocked.lat, blocked.lon);
     routeLine.setLatLngs(newLine);
     lastRerouteInfo = { len: newLine.length, remStart: segLatLng.length };
     NAVTRACK.reroute = { len: newLine.length, remStart: segLatLng.length, targetIdx };
     NAVTRACK.wpAlong = null; NAVTRACK.wpSig = '';
     routeSteps = steps;
+    { // Ronde 180: routeafstand na een herberekening = wat je echt liep + de nieuwe lijn vanaf hier
+      let aheadM = 0; const ll = (q) => Array.isArray(q) ? q : [q.lat, (q.lng != null ? q.lng : q.lon)];
+      for (let i = 1; i < newLine.length; i++){ const a = ll(newLine[i-1]), b = ll(newLine[i]); aheadM += haversine(a[0], a[1], b[0], b[1]); }
+      actualRouteKm = (Math.max(0, NAVGPS.m - NAVGPS.doneBase) + aheadM) / 1000; updateSheetMetaText();
+    }
     if (appSettings.routeColorMode && appSettings.routeColorMode !== 'off') applyRouteColoring();
     setOffRoute(false); // je staat weer op de net herberekende route
     ok = true;
@@ -30906,6 +31268,13 @@ $('detourKmManualBtn').addEventListener('click', () => {
   startManualDetourPinMode(km);
 });
 $('resumeNavBtn').addEventListener('click', resumeNavFromDetourPause);
+// Ronde 179: ✏️ = pinnen verplaatsen onderweg. Zelfde pauze als bij een afsluiting (kaart staat stil, pinnen worden sleepbaar, 'Hervat' zet alles terug), maar zonder
+// de "hoeveel km is afgesloten"-vraag. Na het loslaten van een pin wordt enkel het resterende deel van je route herberekend (zie replanRemainingRoute()).
+$('navEditRouteBtn').addEventListener('click', () => {
+  if (!navActive || navFreeMode){ toast(tr('toastNavOnly')); return; }
+  pauseNavForDetour();
+  toast(tr('toastEditRouteHint'), 8000);
+});
 let manualDetourCircle = null;
 let wasMapRotationEnabledBeforePin = false;
 let manualDetourPinClickHandler = null;
@@ -31018,9 +31387,42 @@ function maneuverText(step, isFinalArrival){
 }
 
 // Werkt de afslag-balk bij (navPanel + dashboard) op basis van de afgelegde afstand
+// Ronde 179 (GEMELD: na het te vroeg nemen van een scherpe bocht bleef "Over 25 m: links afslaan" meer dan een minuut staan terwijl de kaartpositie klopte): de banner
+// hangt aan de voortgang LANGS de lijn. Snijd je een bocht af (of blijft de projectie even op het hoekpunt hangen), dan schuift die voortgang niet door en blijft de afslag
+// "komend". Vangnet, bewust voorzichtig: ligt de afslag nog binnen 60 m langs de lijn, ben je er in vogelvlucht binnen 35 m geweest en verwijder je je nu 25 m van het dichtste
+// punt (met een bruikbare GPS-nauwkeurigheid), dan geldt hij als genomen en tonen we de volgende. Een afslag die ver langs de lijn nog moet komen telt nooit (lus die zichzelf kruist).
+let maneuverGuard = { key:null, near:false, minD:Infinity, done:new Set(), steps:null };
+function applyManeuverPassGuard(maneuver){
+  try{
+    if (!maneuver || !navActive || navFreeMode || !lastPosition || !NAVTRACK.on || !NAVTRACK.inited) return maneuver;
+    if (maneuverGuard.steps !== routeSteps){ maneuverGuard = { key:null, near:false, minD:Infinity, done:new Set(), steps:routeSteps }; }
+    for (let hop = 0; hop < 3 && maneuver; hop++){
+      const step = maneuver.step, key = Math.round(step.startDistM);
+      if (isFinalArrivalStep(step)) return maneuver;
+      if (maneuverGuard.done.has(key)){ maneuver = nextManeuver(step.startDistM + 6); continue; }
+      if (maneuverGuard.key !== key){ maneuverGuard.key = key; maneuverGuard.near = false; maneuverGuard.minD = Infinity; }
+      if (maneuver.distM > 60) return maneuver;
+      const acc = lastPosition.coords.accuracy;
+      const pt = navTrackPointAt(step.startDistM - NAVTRACK.base);
+      const d = haversine(lastPosition.coords.latitude, lastPosition.coords.longitude, pt[0], pt[1]);
+      if (d <= 35) maneuverGuard.near = true;
+      if (maneuverGuard.near){
+        if (d < maneuverGuard.minD) maneuverGuard.minD = d;
+        else if (d >= maneuverGuard.minD + 25 && d >= 25 && !(acc > 25)){
+          maneuverGuard.done.add(key);
+          addToLog('Afslag als genomen beschouwd (vogelvlucht): stap @' + key + ' m, dichtst ' + Math.round(maneuverGuard.minD) + ' m, nu ' + Math.round(d) + ' m');
+          maneuver = nextManeuver(step.startDistM + 6); continue;
+        }
+      }
+      return maneuver;
+    }
+  }catch(e){}
+  return maneuver;
+}
 function updateTurnBanners(){
   // Ronde 107: de instructies zijn uitgedrukt in afstand langs de lijn (G-domein), dus ook de positie wordt zo gemeten.
-  const maneuver = routeSteps.length ? nextManeuver(navProgressDomainM()) : null;
+  let maneuver = routeSteps.length ? nextManeuver(navProgressDomainM()) : null;
+  maneuver = applyManeuverPassGuard(maneuver);
 
   const setBanner = (bannerId, arrowId, textId) => {
     const banner = $(bannerId);
@@ -33661,6 +34063,7 @@ function updateNavHexButtonsVisibility(){
   // Ronde 119: ↩️ (terug naar start) bestaat nu ook in vrije modus, bij wandelen EN fietsen -> de balk is altijd zichtbaar tijdens navigatie.
   $('navHexButtons').classList.add('show');
   $('roadClosedBtn').style.display = navFreeMode ? 'none' : '';
+  $('navEditRouteBtn').style.display = navFreeMode ? 'none' : '';
   $('foodBreakBtn').style.display = navFreeMode ? 'none' : '';
   $('backToStartBtn').style.display = ''; // Ronde 118: ook in vrije modus (wandelen zonder GPX): kortste weg of zelfde weg terug, zie freeBackToStart()
   // Rustpunten/Natuurspotter tijdens navigatie: enkel bij wandelen (zelfde scope als op het opzetscherm).
@@ -33686,7 +34089,7 @@ function updateNavHexButtonsVisibility(){
 // toont/verbergt 🚧🔢🔄↩️ (route-aanpassingen), navHexGroupOnderwegBtn toont/verbergt ☕🪑🦉 (onderweg pauzeren/
 // verkennen) -- precies de 2 categorieën waarin de 7 knopjes al verdeeld stonden qua betekenis.
 let navHexGroupRouteExpanded = false, navHexGroupOnderwegExpanded = false;
-const NAV_HEX_GROUP_ROUTE_IDS = ['roadClosedBtn', 'navNodeOverviewBtn', 'navReverseDirBtn', 'backToStartBtn'];
+const NAV_HEX_GROUP_ROUTE_IDS = ['roadClosedBtn', 'navEditRouteBtn', 'navNodeOverviewBtn', 'navReverseDirBtn', 'backToStartBtn'];
 const NAV_HEX_GROUP_ONDERWEG_IDS = ['foodBreakBtn', 'navRestPointsBtn', 'navNatureSpotterBtn'];
 function applyNavHexGroupCollapse(){
   const applyGroup = (ids, groupBtnId, expanded) => {
@@ -34346,6 +34749,7 @@ function renderPosition(){
     if ($('dashboardPanel').classList.contains('show')) updateElevationDot('dashElevationSvg');
   }
   if ($('dashboardPanel').classList.contains('show')) updateClimbPro();
+  if (navActive) updateAnalyseLive();
   if (navActive && !navFreeMode) updateTurnBanners(); // vrije modus heeft geen routeSteps om tegen te toetsen
 
   if (!navActive) return;
@@ -34707,7 +35111,10 @@ function computeProgressKm(){
   if (navActive && !navFreeMode && lastPosition && route.length > 0 && navTrackSync()){
     const T = NAVTRACK;
     if (T.inited){
-      const done = Math.max(0, T.alongU + T.base - T.anchorG) / 1000;
+      // Ronde 180 (GEVRAAGD: "ik wil wat ik liep + de nieuw berekende af te leggen weg"): afgelegd = de ECHT gelopen meters (de GPS-teller NAVGPS), niet de plek langs de lijn.
+      // Een overgeslagen zijpad of een kortere omleiding telt dus niet mee als gelopen, en na een herberekening is totaal = wat je liep + de nieuwe rest. De rest blijft
+      // de afstand langs de (eventueel nieuwe) lijn vanaf je positie. De voortgang langs de lijn (afslagen, hoogteprofiel, grijze lijn) gebruikt nog steeds de positie (navDoneM()).
+      const done = Math.max(0, NAVGPS.m - NAVGPS.doneBase) / 1000;
       const remaining = Math.max(0, T.total - T.alongU) / 1000;
       return { done, remaining, total: done + remaining };
     }
@@ -41454,6 +41861,55 @@ let freeTrailLine = null;
 let analyseRideEntry = null, analyseWindTabBtn = null, analysePrevImportedTrack = [];
 let analyseMapDot = null;
 let analyseChartDragHandler = null;
+// Ronde 179 (GEMELD: Wegdek/Wind kregen geen bol, Hoogte/Helling toonden een bol op het startpunt, Wegdek-kaart te ver uitgezoomd): tijdens navigatie volgt de Analyse-pagina nu je
+// echte positie. Hoogte/Helling: de rode bol zit op jouw plek (blijft sleepbaar; 15 s na een sleepbeweging neemt hij het weer over). Alle tabs: een blauwe "jij"-bol op de kaart.
+// Wegdek/Wind/Snelheid: bovendien een verticale markering op de balk. De kaart wordt na het tonen van legenda/grafiek opnieuw ingepast (anders mat de eerste inpassing een te kleine kaart).
+let analyseDotTouchedAt = 0, analyseLiveMapDot = null, analyseBarCtx = null;
+function analyseFit(bounds){
+  const go = () => { try{ analyseMapInstance.invalidateSize(); analyseMapInstance.fitBounds(bounds, { padding:[20,20] }); }catch(e){} };
+  go(); setTimeout(go, 160); setTimeout(go, 700);
+}
+function analyseScreenIsOpen(){ const el = $('analyseScreen'); return !!el && !el.classList.contains('hidden'); }
+function updateAnalyseLive(){
+  if (!navActive || navFreeMode || !lastPosition || !analyseScreenIsOpen() || !analyseMapInstance) return;
+  const lat = lastPosition.coords.latitude, lon = lastPosition.coords.longitude;
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return;
+  try{
+    if (!analyseLiveMapDot){
+      analyseLiveMapDot = L.marker([lat, lon], {
+        icon: L.divIcon({ className:'', html:'<div class="analyse-me-dot"></div>', iconSize:[20,20], iconAnchor:[10,10] })
+      }).addTo(analyseMapInstance);
+    } else analyseLiveMapDot.setLatLng([lat, lon]);
+  }catch(e){}
+  const profile = analyseCurrentProfile;
+  if (profile && analyseChartValueFn && Date.now() - analyseDotTouchedAt > 15000){
+    const km = liveProfileKm(profile);
+    const total = profile.distKm[profile.distKm.length - 1] || 1;
+    let idx = 0, bestD = Infinity;
+    for (let i = 0; i < profile.distKm.length; i++){ const d = Math.abs(profile.distKm[i] - km); if (d < bestD){ bestD = d; idx = i; } }
+    updateAnalyseDotByIndex(idx, km / total);
+  }
+  const ctx = analyseBarCtx;
+  if (!ctx){ const old = document.querySelector('#analyseSvg .analyse-live-mark'); if (old) old.remove(); }
+  if (ctx && ctx.total > 0){
+    const hint = ctx.lastAlong != null ? ctx.lastAlong : Math.min(ctx.total, navElevationKm() * 1000);
+    const along = polyProjectWithHint(ctx.la, ctx.lo, ctx.cum, lat, lon, hint);
+    const svg = $('analyseSvg');
+    if (along != null && svg){
+      ctx.lastAlong = along;
+      const vb = svg.viewBox && svg.viewBox.baseVal;
+      const w = (vb && vb.width) || svg.getBoundingClientRect().width || 300, h = (vb && vb.height) || svg.getBoundingClientRect().height || 120;
+      let g = svg.querySelector('.analyse-live-mark');
+      if (!g){
+        g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        g.setAttribute('class', 'analyse-live-mark');
+        g.innerHTML = `<line x1="0" y1="0" x2="0" y2="${h}" stroke="#ffffff" stroke-width="2" stroke-dasharray="4 3" opacity="0.9"/><circle cx="0" cy="${(h * 0.44).toFixed(1)}" r="7" fill="#3b82f6" stroke="#ffffff" stroke-width="2.5"/>`;
+        svg.appendChild(g);
+      }
+      g.setAttribute('transform', `translate(${(along / ctx.total * w).toFixed(1)},0)`);
+    }
+  }
+}
 function setupAnalyseChartDrag(){
   // GEEN teardownAnalyseChartDrag() hier: loadAnalyseTab() heeft die zelf al vóór de tab-branch aangeroepen
   // (dat ruimt de vorige tab netjes op), en de branch heeft ondertussen analyseChartValueFn/analyseCurrentProfile
@@ -41478,14 +41934,15 @@ function setupAnalyseChartDrag(){
     }
     updateAnalyseDotByIndex(idx, frac);
   };
-  svg.addEventListener('pointerdown', e => { handler(e); svg.setPointerCapture(e.pointerId); });
-  svg.addEventListener('pointermove', e => { if (e.pressure > 0 || e.buttons > 0) handler(e); });
+  svg.addEventListener('pointerdown', e => { analyseDotTouchedAt = Date.now(); handler(e); svg.setPointerCapture(e.pointerId); });
+  svg.addEventListener('pointermove', e => { if (e.pressure > 0 || e.buttons > 0){ analyseDotTouchedAt = Date.now(); handler(e); } });
   analyseChartDragHandler = handler;
   // Bol meteen aanmaken (aan het beginpunt), zodat je meteen ziet dat je 'm kan slepen — zowel op de
   // kaart als op de grafiek, altijd gesynchroniseerd via updateAnalyseDotByIndex.
   if (analyseCurrentProfile && analyseCurrentProfile.lat.length){
     updateAnalyseDotByIndex(0, 0);
     analyseMapDot.on('drag', (e) => {
+      analyseDotTouchedAt = Date.now();
       if (!analyseCurrentProfile) return;
       const ll = e.target.getLatLng();
       const profile = analyseCurrentProfile;
@@ -41602,6 +42059,7 @@ function renderSegmentBarChart(coordsLatLng, segments, colorMap, svgId){
     cum.push(cum[i-1] + haversine(la1, lo1, la2, lo2));
   }
   const total = cum[cum.length - 1] || 1;
+  analyseBarCtx = (svgId === 'analyseSvg') ? { la: coordsLatLng.map(c => Array.isArray(c) ? c[0] : c.lat), lo: coordsLatLng.map(c => Array.isArray(c) ? c[1] : c.lng), cum, total, lastAlong: null } : null;
   const barY = h * 0.08, barH = h * 0.72, radius = 3;
   let defs = '', bars = '';
   const seenColors = new Set();
@@ -41661,6 +42119,8 @@ function openAnalyseScreen(rideEntry){
 }
 $('analyseCloseBtn').addEventListener('click', () => {
   $('analyseScreen').classList.add('hidden');
+  if (analyseLiveMapDot && analyseMapInstance){ try{ analyseMapInstance.removeLayer(analyseLiveMapDot); }catch(e){} analyseLiveMapDot = null; }
+  analyseDotTouchedAt = 0;
   if (analyseRideEntry && analyseRideEntry.isHistorical) importedTrack = analysePrevImportedTrack; // teruggeven wat er stond vóór we de oude rit inlaadden
 });
 document.querySelectorAll('.analyse-tab').forEach(tab => {
@@ -41686,7 +42146,17 @@ function showAnalyseLegend(items){
   ).join('');
   $('analyseLegend').style.display = 'flex';
 }
+// Ronde 179: een tabblad dat traag laadt (bv. Wegdek met 28 s time-out op een slechte verbinding) mocht NA het wisselen van tabblad alsnog zijn inhoud over een ander tabblad heen zetten
+// (titel "Hoogte" met de Wegdek-grafiek eronder). Elke aanvraag krijgt een nummer; een verouderde aanvraag schrijft niets meer.
+let analyseTabToken = 0;
 async function loadAnalyseTab(tabName){
+  await loadAnalyseTabCore(tabName);
+  setTimeout(updateAnalyseLive, 150);
+}
+async function loadAnalyseTabCore(tabName){
+  const myTab = ++analyseTabToken;
+  analyseBarCtx = null;
+  { const oldMark = document.querySelector('#analyseSvg .analyse-live-mark'); if (oldMark) oldMark.remove(); }
   setAnalyseTitle(tabName);
   $('analyseMapWrap').style.display = 'none';
   $('analyseChartWrap').style.display = 'none';
@@ -41703,7 +42173,8 @@ async function loadAnalyseTab(tabName){
     $('analysePlaceholder').style.display = 'flex';
     let profile;
     try{ profile = await ensureElevationProfile(); }
-    catch(e){ $('analysePlaceholder').innerHTML = `<div>${tr('analyseElevationFail')}</div>`; return; }
+    catch(e){ if (myTab !== analyseTabToken) return; $('analysePlaceholder').innerHTML = `<div>${tr('analyseElevationFail')}</div>`; return; }
+    if (myTab !== analyseTabToken) return;
     if (!profile || !profile.lat || profile.lat.length < 2){
       $('analysePlaceholder').innerHTML = `<div>${tr('analyseNoRoute')}</div>`;
       return;
@@ -41718,7 +42189,7 @@ async function loadAnalyseTab(tabName){
       L.polyline([[profile.lat[i-1], profile.lon[i-1]], [profile.lat[i], profile.lon[i]]], { color:ELEV_COLORS[cls], weight:5, opacity:0.95 }).addTo(analyseRouteLayer);
     }
     analyseMapInstance.invalidateSize();
-    analyseMapInstance.fitBounds(L.latLngBounds(profile.lat.map((la,i) => [la, profile.lon[i]])), { padding:[20,20] });
+    analyseFit(L.latLngBounds(profile.lat.map((la,i) => [la, profile.lon[i]])));
     analyseCurrentProfile = profile;
     analyseChartValueFn = idx => profile.ele[idx];
     analyseChartMinVal = Math.min(...profile.ele);
@@ -41750,7 +42221,8 @@ async function loadAnalyseTab(tabName){
       // veel zwaardere aanvraag is (alle getagde wegen rond de hele route) die legitiem trager kan zijn. Nu
       // wachten we minstens even lang als het server-timeout dat we zelf opgaven, plus wat marge voor netwerk/parsing.
       try{ result = await fetchSurfaceDataWithFallback(pts.map(p => ({lat:p.lat, lon:p.lon})), pts.map(p => [p.lat, p.lon]), 28000); }
-      catch(e){ $('analysePlaceholder').innerHTML = `<div>${tr('analyseSurfaceFail')}</div>`; return; }
+      catch(e){ if (myTab !== analyseTabToken) return; $('analysePlaceholder').innerHTML = `<div>${tr('analyseSurfaceFail')}</div>`; return; }
+      if (myTab !== analyseTabToken) return;
       // Ronde 138: een benadering (geen enkele bron lukte) of een resultaat zonder kruiscontrole wordt NIET bewaard, zodat
       // heropenen van de tab het opnieuw probeert i.p.v. dezelfde, mogelijk foute "alles groen" te blijven tonen.
       if (!result.approximate && result.crossChecked){ analyseSurfaceCache = result; analyseSurfaceCacheKey = key; }
@@ -41777,7 +42249,7 @@ async function loadAnalyseTab(tabName){
       if (segPts.length >= 2) L.polyline(segPts, { color:SURFACE_COLORS[bucket] || SURFACE_COLORS.unknown, weight:5, opacity:0.95 }).addTo(analyseRouteLayer);
     });
     analyseMapInstance.invalidateSize();
-    analyseMapInstance.fitBounds(L.latLngBounds(result.coordsLatLng), { padding:[20,20] });
+    analyseFit(L.latLngBounds(result.coordsLatLng));
     renderSegmentBarChart(result.coordsLatLng, result.surfaceValues, SURFACE_COLORS, 'analyseSvg');
     showAnalyseLegend([[SURFACE_COLORS.paved, tr('legendPaved')], [SURFACE_COLORS.medium, tr('legendMediumSurface')], [SURFACE_COLORS.unpaved, tr('legendUnpaved')], [SURFACE_COLORS.unknown, tr('legendUnknownSurface')]]);
     return;
@@ -41786,7 +42258,7 @@ async function loadAnalyseTab(tabName){
   if (tabName === 'wind'){
     $('analysePlaceholder').innerHTML = `<div>${tr('analyseLoading')}</div>`;
     $('analysePlaceholder').style.display = 'flex';
-    const latlngs = routeLine.getLatLngs();
+    const latlngs = getElevationSourcePoints().map(p => ({ lat:p.lat, lng:p.lon }));
     if (latlngs.length < 2){
       $('analysePlaceholder').innerHTML = `<div>${tr('analyseNoRoute')}</div>`;
       return;
@@ -41800,6 +42272,7 @@ async function loadAnalyseTab(tabName){
         windDir = d.current && d.current.wind_direction_10m;
       }catch(e){ /* geen wind gekend */ }
     }
+    if (myTab !== analyseTabToken) return;
     if (windDir == null){
       $('analysePlaceholder').innerHTML = `<div>${tr('analyseWindFail')}</div>`;
       return;
@@ -41824,7 +42297,7 @@ async function loadAnalyseTab(tabName){
       L.polyline(coordsLatLng.slice(startIdx, endIdx + 1), { color:WIND_COLORS[cls], weight:5, opacity:0.95 }).addTo(analyseRouteLayer);
     });
     analyseMapInstance.invalidateSize();
-    analyseMapInstance.fitBounds(L.latLngBounds(coordsLatLng), { padding:[20,20] });
+    analyseFit(L.latLngBounds(coordsLatLng));
     renderSegmentBarChart(coordsLatLng, segments, WIND_COLORS, 'analyseSvg');
     showAnalyseLegend([[WIND_COLORS.tail, tr('legendTailwind')], [WIND_COLORS.cross, tr('legendCrosswind')], [WIND_COLORS.head, tr('legendHeadwind')]]);
     return;
@@ -41835,7 +42308,8 @@ async function loadAnalyseTab(tabName){
     $('analysePlaceholder').style.display = 'flex';
     let profile;
     try{ profile = await ensureElevationProfile(); }
-    catch(e){ $('analysePlaceholder').innerHTML = `<div>${tr('analyseElevationFail')}</div>`; return; }
+    catch(e){ if (myTab !== analyseTabToken) return; $('analysePlaceholder').innerHTML = `<div>${tr('analyseElevationFail')}</div>`; return; }
+    if (myTab !== analyseTabToken) return;
     if (!profile || !profile.lat || profile.lat.length < 2){
       $('analysePlaceholder').innerHTML = `<div>${tr('analyseNoRoute')}</div>`;
       return;
@@ -41853,7 +42327,7 @@ async function loadAnalyseTab(tabName){
       L.polyline([[profile.lat[i-1], profile.lon[i-1]], [profile.lat[i], profile.lon[i]]], { color:gradientColor(grads[i-1]), weight:5, opacity:0.95 }).addTo(analyseRouteLayer);
     }
     analyseMapInstance.invalidateSize();
-    analyseMapInstance.fitBounds(L.latLngBounds(profile.lat.map((la,i) => [la, profile.lon[i]])), { padding:[20,20] });
+    analyseFit(L.latLngBounds(profile.lat.map((la,i) => [la, profile.lon[i]])));
     renderSlopeChart(profile, grads, 'analyseSvg');
     analyseChartValueFn = idx => grads[Math.min(idx, grads.length - 1)];
     const maxAbsGrad = Math.max(4, ...grads.map(g => Math.abs(g)));
@@ -41878,6 +42352,7 @@ async function loadAnalyseTab(tabName){
       const built = await withTimeout(buildOverpassBucketFn(pts.map(p => [p.lat, p.lon])), overpassSurfaceTotalMs(), 'Overpass-logs');
       ways = built.ways;
     }catch(e){
+      if (myTab !== analyseTabToken) return;
       // Ronde 138: onderscheid "echt geen wegen gevonden" van "Overpass te traag / niet bereikbaar" (voorheen altijd de eerste melding).
       const reason = (e && e.message) ? e.message : String(e);
       console.info('[wegtype] logs: ' + reason);
@@ -41886,6 +42361,7 @@ async function loadAnalyseTab(tabName){
       const rb = $('analyseLogsRetry'); if (rb) rb.addEventListener('click', () => loadAnalyseTab('logs'));
       return;
     }
+    if (myTab !== analyseTabToken) return;
     $('analysePlaceholder').innerHTML = ways.map((w, i) => {
       const name = w.tags.name || (curLang()==='en' ? '(unnamed way)' : '(naamloze weg)');
       const relevantKeys = ['highway','surface','tracktype','smoothness','sidewalk','maxspeed','cycleway','designation','vehicle','bicycle','oneway:bicycle'];
@@ -41936,7 +42412,7 @@ async function loadAnalyseTab(tabName){
       L.polyline(coordsLatLng.slice(startIdx, endIdx + 1), { color:SPEED_COLORS[cls], weight:5, opacity:0.95 }).addTo(analyseRouteLayer);
     });
     analyseMapInstance.invalidateSize();
-    analyseMapInstance.fitBounds(L.latLngBounds(coordsLatLng), { padding:[20,20] });
+    analyseFit(L.latLngBounds(coordsLatLng));
     renderSegmentBarChart(coordsLatLng, segments, SPEED_COLORS, 'analyseSvg');
     showAnalyseLegend([[SPEED_COLORS.slow, curLang()==='en'?'Slower than avg':'Trager dan gem.'], [SPEED_COLORS.normal, curLang()==='en'?'Around average':'Rond gemiddeld'], [SPEED_COLORS.fast, curLang()==='en'?'Faster than avg':'Sneller dan gem.']]);
     return;
