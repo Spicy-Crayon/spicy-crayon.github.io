@@ -6455,9 +6455,77 @@ MLA.createMap = function(containerId, opts){
       if (mapObj.isGlLost() || mapObj._glNeedsRebuild){ mapObj._glNeedsRebuild = false; return mapObj._swapGl(reason + ': context weg'); }
       glMap.resize(); glMap.triggerRepaint();
       if (/^terug/.test(reason)) mapObj._probeBlank(reason); // niet bij de allereerste pageshow bij het opstarten (tegels nog onderweg)
+      mapObj._probeRouteSoon(reason);
     }catch(e){}
     return false;
   };
+  // Ronde 183 (GEMELD: bij terugkeer naar de kaart -- na Dashboard of na een foto nemen in een andere app -- verdween naast de achtergrond ook de route, en het herstel greep niet in):
+  // de bestaande pixelcontrole zocht naar een volledig transparant canvas, maar mocht pas 1x per 5 min herbouwen (offline zonder tegels is een leeg canvas ook normaal) en wacht op
+  // tegels, wat bij een trage verbinding niet lukt. Deze controle kijkt precies naar wat er MOET staan: de routelijn. Staan er in beeld minstens 3 punten van een zichtbare lijn en
+  // is op geen enkel daarvan een pixel getekend, dan is het canvas stuk (tegels doen er niet toe) en wordt de kaart opnieuw opgebouwd, hooguit 1x per 30 s (en nooit vaker dan _swapGl() toelaat).
+  mapObj._lastRouteSwapAt = 0; mapObj._lastRouteProbe = null; mapObj._routeProbeTimers = [];
+  mapObj._probeRoute = (reason) => {
+    const g = glMap;
+    try{
+      if (!ready || g !== glMap || document.visibilityState !== 'visible') return;
+      const canvas = g.getCanvas(); if (!canvas || !canvas.clientWidth || !canvas.clientHeight) return;
+      if (Date.now() - lastSwapAt < 6000) return; // net herbouwd: laag en data zijn nog onderweg
+      const gl = g.painter && g.painter.context && g.painter.context.gl; if (!gl || !gl.readPixels || (gl.isContextLost && gl.isContextLost())) return;
+      const pts = [];
+      layers.forEach(l => {
+        try{
+          const id = l && l._id; if (!id || !/^ln_/.test(id) || typeof l.getLatLngs !== 'function') return;
+          if (!g.getLayer(id) || g.getLayoutProperty(id, 'visibility') === 'none') return;
+          const op = g.getPaintProperty(id, 'line-opacity'); if (typeof op === 'number' && op < 0.05) return;
+          if (!g.getSource(id) || !g.isSourceLoaded(id)) return;
+          const ll = l.getLatLngs(); if (ll.length < 2) return;
+          // punten langs de getekende lijn (ook tussen de hoekpunten), alleen binnen het beeld
+          const W = canvas.clientWidth, Hh = canvas.clientHeight, inView = (q) => q.x > 6 && q.y > 6 && q.x < W - 6 && q.y < Hh - 6;
+          const stepV = Math.max(1, Math.floor(ll.length / 120));
+          let prev = null;
+          for (let i = 0; i < ll.length && pts.length < 24; i += stepV){
+            const q = g.project([ll[i].lng, ll[i].lat]);
+            if (prev){
+              const n = Math.min(12, Math.floor(Math.hypot(q.x - prev.x, q.y - prev.y) / 40));
+              for (let k = 1; k <= n && pts.length < 24; k++){ const m = { x: prev.x + (q.x - prev.x) * k / (n + 1), y: prev.y + (q.y - prev.y) * k / (n + 1) }; if (inView(m)) pts.push(m); }
+            }
+            if (inView(q)) pts.push(q);
+            prev = q;
+          }
+        }catch(e){}
+      });
+      if (pts.length < 3){ mapObj._lastRouteProbe = { reason, samples: pts.length, blank: null }; return; }
+      let done = false;
+      g.once('render', () => {
+        if (done) return; done = true;
+        try{
+          if (g !== glMap) return;
+          const sc = gl.drawingBufferWidth / canvas.clientWidth, H = gl.drawingBufferHeight, buf = new Uint8Array(4); let opaque = 0;
+          for (const q of pts){ gl.readPixels(Math.round(q.x * sc), Math.round(H - q.y * sc), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, buf); if (buf[3] > 0) opaque++; }
+          const blank = opaque === 0;
+          mapObj._lastRouteProbe = { reason, samples: pts.length, opaque, blank, at: Date.now() };
+          if (blank && Date.now() - mapObj._lastRouteSwapAt > 30000){
+            if (typeof addToLog === 'function') addToLog('🗺️ Routelijn niet getekend terwijl ze in beeld hoort te staan (' + reason + ') — kaart opnieuw opbouwen');
+            if (mapObj._swapGl(reason + ': route niet getekend')) mapObj._lastRouteSwapAt = Date.now();
+          }
+        }catch(e){}
+      });
+      g.triggerRepaint();
+      setTimeout(() => { done = true; }, 1500);
+    }catch(e){}
+  };
+  // Na terugkeer meteen een paar keer kijken (Android heeft even nodig om de GPU weer te geven), en daarna elke 30 s zolang de kaart zichtbaar is.
+  mapObj._probeRouteSoon = (reason) => {
+    mapObj._routeProbeTimers.forEach(clearTimeout);
+    mapObj._routeProbeTimers = [1200, 3500, 8000].map(ms => setTimeout(() => mapObj._probeRoute(reason), ms));
+  };
+  const routeProbeInterval = setInterval(() => {
+    try{
+      const c = glMap && glMap.getContainer && glMap.getContainer();
+      if (!c || !document.body.contains(c)){ clearInterval(routeProbeInterval); return; } // kaart is weggehaald: geen losse timer laten rondzwerven
+      mapObj._probeRoute('periodiek');
+    }catch(e){}
+  }, 30000);
   // Tweede vangnet: de context wordt NIET altijd als "verloren" gemeld (Android kan het canvas/de GPU-buffers stilletjes
   // weggooien terwijl de pagina verborgen is, bv. 10 min op het Dashboard-tabblad). Dan is isGlLost() false en blijft het
   // canvas toch leeg. Daarom kijken we na het terugkeren naar het beeld ECHT naar de pixels: ~1,5 s wachten (tegels laden),
@@ -15409,6 +15477,13 @@ const DEV_NOTES_CONTENT = {
       <p><b>Teksten en test:</b> alle nieuwe teksten bestaan in NL en EN, Help en <code>plekken/README.md</code> zijn aangevuld. <b>Testsuite:</b> nieuw bestand <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> is een kiezer aangepast aan de nieuwe rijopbouw. Versie 2.497 / versionCode 116.</p>
     </section>
     <section>
+      <h3>🛠️ Ronde 183: kaartherstel kijkt naar de routelijn</h3>
+      <p><b>Probleem.</b> Bij terugkeer naar de kaart (van Dashboard, of in de app na een foto in een andere app) kon het canvas leeg blijven: achtergrond en routelijn weg, terwijl pinnen en positiepijl (gewone elementen boven het canvas) bleven staan. De bestaande controle (<code>_probeBlank()</code>) zocht een volledig transparant canvas, wachtte eerst op tegels (op een trage verbinding komen die niet) en mocht maar 1x per 5 minuten herbouwen, omdat een leeg canvas zonder tegels offline ook normaal is. Zo greep het herstel soms niet in.</p>
+      <p><b>Oplossing.</b> <code>_probeRoute()</code> kijkt naar wat er moet staan: de zichtbare lijnlagen (<code>ln_…</code>, zichtbaar, dekking boven 0,05, bron geladen). Er worden tot 24 punten langs de lijn genomen die in beeld liggen (ook tussen de hoekpunten). Zijn er minstens 3 en is op geen enkel punt een pixel getekend (<code>readPixels</code> tijdens het <code>render</code>-event), dan is het canvas stuk, ongeacht tegels, en bouwt <code>_swapGl()</code> de kaart opnieuw op: hooguit 1x per 30 s, nooit binnen 6 s na een herbouw en binnen de bestaande grens van 6 herbouwingen per 10 minuten. De controle draait 1,2 s, 3,5 s en 8 s na elke <code>_checkGl()</code> (tabwissel, terug in de app, pageshow) en daarna elke 30 s zolang de kaart zichtbaar is. De laatste uitslag staat in <code>map._lastRouteProbe</code>; een herbouw komt in het logboek.</p>
+      <p><b>Beperking.</b> Een gezonde kaart wordt niet herbouwd (test 15). Zonder zichtbare route in beeld (minder dan 3 punten) doet de controle niets; dan blijft de oude controle op een leeg canvas over.</p>
+      <p><b>Teksten en test.</b> Test 15 in <code>test_round179_walk_fixes.js</code>.</p>
+    </section>
+    <section>
       <h3>🛠️ Ronde 182: hoogte-, helling-, wegdek- en winddata na een omleiding</h3>
       <p><b>Probleem.</b> Na een herberekening, een verplaatste pin (✏️) of een omleiding (🚧) bleef de analyse bij de oorspronkelijke GPX horen. <code>getElevationSourcePoints()</code> gaf <code>importedTrack</code> terug zolang die gevuld was, en na <code>replanRemainingRoute()</code> (die de GPX loslaat) bestond de lijn nog maar uit het stuk dat nog voor je lag, zonder wat je al liep. De grafieken klopten dan niet met de lijn op de kaart.</p>
       <p><b>Oplossing.</b> <code>noteAnalysisRouteReplaced()</code> bewaart bij elke vervanging van de route het stuk dat je al liep (<code>analysisWalked</code>, met hoogtes uit de oorspronkelijke GPX waar die bestaan, via <code>analysisEleFromSrc()</code>: dichtstbijzijnd punt binnen 25 m). Daarna bestaat de analyselijn uit dat stuk plus de nieuwe <code>routeLine</code>. <code>routeSignature()</code> krijgt dan een eigen sleutel (<code>rr:</code>, aantal gelopen punten, laatste gelopen punt en enkele punten van de nieuwe lijn), zodat het hoogteprofiel en de wegdekcache opnieuw worden opgebouwd. Hoogte, helling, wegdek, logs en wind gebruiken nu allemaal <code>getElevationSourcePoints()</code> (wind las voorheen <code>routeLine</code> rechtstreeks). Punten zonder hoogte krijgen die zoals voorheen online via <code>fetchElevations()</code>. <code>clearWalkedBefore()</code> wist alles bij een nieuwe sessie, een nieuwe track of het omkeren van de richting.</p>
@@ -17158,6 +17233,13 @@ const DEV_NOTES_CONTENT = {
       <p><b>Filters:</b> data comes from Overpass (<code>osmWalkOverpass()</code>) and is kept for 30 days (<code>nearby_tags_v1</code>). Playground (<code>leisure=playground</code>, 300 m) and stop (<code>highway=bus_stop</code>, <code>railway=station|halt|tram_stop</code>, 500 m) in 1 request per 20 routes; the first 60 in the sorting. Surface: per route (the first 20) sample points about every 250 m (6 to 14), per point the nearest way within 15 m (<code>out tags geom</code>) and its class from <code>surface</code>, otherwise <code>tracktype</code> or <code>highway</code>; a path or footway without <code>surface</code> does not count. At least 5 known points and 60% of the points known, otherwise no statement; "in rain" = at least 70% paved. A route that is only a link has no track and gets no surface label. If a request fails a message appears and nothing is saved.</p>
       <p><b>Own places:</b> <code>plekken/index.json</code> (<code>regions[].places[]</code> with name, text, lat, lon, foto, fotoBron, mode, gecontroleerd) is loaded at startup; <code>nrPlacesNear()</code> keeps places of this activity within 40 km; the pop-up shows the three nearest. Without a filter and without a length group they show as "📍 Own tips" above the list; a tap opens the place in Google Maps. The file holds ten places in Limburg as a starter list (no date in <code>gecontroleerd</code>, so shown as "not checked yourself yet", with a Maps search text in <code>maps</code>); the rest comes from you, the app invents nothing.</p>
       <p><b>Texts and test:</b> all new texts exist in NL and EN, Help and <code>plekken/README.md</code> are extended. <b>Test suite:</b> new file <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> one selector is adjusted to the new row structure. Version 2.497 / versionCode 116.</p>
+    </section>
+    <section>
+      <h3>🛠️ Round 183: map recovery looks at the route line</h3>
+      <p><b>Problem.</b> On returning to the map (from Dashboard, or into the app after a photo in another app) the canvas could stay empty: background and route line gone, while pins and the position arrow (plain elements above the canvas) stayed. The existing check (<code>_probeBlank()</code>) looked for a completely transparent canvas, first waited for tiles (which do not arrive on a slow connection) and could rebuild only once per 5 minutes, because an empty canvas without tiles is also normal offline. So the recovery sometimes did not step in.</p>
+      <p><b>Solution.</b> <code>_probeRoute()</code> looks at what must be there: the visible line layers (<code>ln_…</code>, visible, opacity above 0.05, source loaded). Up to 24 points along the line that are in view are taken (also between the vertices). If there are at least 3 and no pixel is drawn at any of them (<code>readPixels</code> during the <code>render</code> event), the canvas is broken, regardless of tiles, and <code>_swapGl()</code> rebuilds the map: at most once per 30 s, never within 6 s of a rebuild and within the existing limit of 6 rebuilds per 10 minutes. The check runs 1.2 s, 3.5 s and 8 s after every <code>_checkGl()</code> (tab switch, back in the app, pageshow) and then every 30 s while the map is visible. The last result is in <code>map._lastRouteProbe</code>; a rebuild appears in the log.</p>
+      <p><b>Limitation.</b> A healthy map is not rebuilt (test 15). Without a visible route in view (fewer than 3 points) the check does nothing; the old check on an empty canvas remains.</p>
+      <p><b>Texts and test.</b> Test 15 in <code>test_round179_walk_fixes.js</code>.</p>
     </section>
     <section>
       <h3>🛠️ Round 182: elevation, slope, surface and wind data after a detour</h3>
@@ -25997,7 +26079,7 @@ ${GARMIN_MENU_BTN_JS}
 </body>
 </html>`;
 }
-const APP_VERSION_TEXT = 'v2.516 · 8 nov';
+const APP_VERSION_TEXT = 'v2.517 · 8 nov';
 $('homeVersionFooter').textContent = APP_VERSION_TEXT;
 function buildGarminHubHtml(){
   // Dit is Gemini's keuzescherm.html, ongewijzigd qua opbouw/stijl — enkel: (1) een derde grote tegel
