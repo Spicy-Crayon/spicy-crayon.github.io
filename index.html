@@ -1742,7 +1742,7 @@
   /* v2.512 (gemeld: het streepje scrolde mee naar boven): het handvat is nu een vaste strook bovenaan die blijft staan terwijl de inhoud eronder scrolt, met 5px marge onder het streepje. */
   @keyframes analyseMePulse{ 0%{ box-shadow:0 0 0 0 rgba(59,130,246,0.55); } 100%{ box-shadow:0 0 0 14px rgba(59,130,246,0); } }
   .analyse-me-dot{ width:18px; height:18px; border-radius:50%; background:#3b82f6; border:3px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,0.45); animation:analyseMePulse 1.8s ease-out infinite; }
-  #mapLayersSheetHandle{ position:sticky; top:0; z-index:5; margin:0 -18px 7px; padding:14px 0 5px; background:var(--green-900); }
+  #mapLayersSheetHandle{ position:sticky; top:0; z-index:5; margin:0 -18px 2px; padding:14px 0 10px; background:var(--green-900); } /* Ronde 184: 5px extra ruimte onder het streepje (padding 5 -> 10, marge 7 -> 2: stilstaand even hoog), zodat gescrolde tegels er niet tegenaan plakken */
   #mapLayersSheetHandle::before{ content:''; display:block; width:36px; height:4px; background:rgba(255,255,255,0.25); border-radius:2px; margin:0 auto; }
   body.theme-garmin #mapLayersSheetHandle{ background:#0f172a; }
   #mapLayersSheetTitle{ font-size:15px; font-weight:900; color:var(--cream); margin-bottom:12px; }
@@ -2270,6 +2270,11 @@
   .reverse-trip-actions{ display:flex; flex-direction:column; gap:8px; margin-top:8px; }
   .reverse-trip-yes{ border:none; background:var(--amber); color:var(--green-900); font-size:14px; font-weight:800; padding:13px; border-radius:12px; }
   .reverse-trip-no{ border:none; background:#eee; color:#555; font-size:13px; font-weight:700; padding:11px; border-radius:12px; }
+  /* Aankomstvenster: "Bekijk rit-analyse" had geen eigen tekstkleur (een <button> erft die niet van de kaart) en een
+     bijna-transparante achtergrond. Onder Garmin-stijl (donkere kaart) gaf dat standaard zwarte tekst op donker, dus
+     nauwelijks leesbaar. Nu een eigen, altijd leesbare kleur in beide stijlen. */
+  #reverseTripAnalyseBtn{ background:rgba(127,127,127,0.16); color:var(--ink); }
+  body.theme-garmin #reverseTripAnalyseBtn{ background:rgba(255,255,255,0.10); color:#f1f5f9; }
   .gpx-dir-grid{ flex-direction:row; gap:10px; }
   .gpx-dir-opt{ flex:1; min-width:0; border:2px solid rgba(0,0,0,0.14); background:#fff; color:#222; border-radius:14px; padding:8px 6px 10px; display:flex; flex-direction:column; align-items:center; gap:6px; font-size:12.5px; font-weight:800; }
   .gpx-dir-opt:active{ border-color:var(--amber); }
@@ -4218,7 +4223,7 @@
       <button id="reverseTripYesBtn" class="reverse-trip-yes" data-i18n="reverseTripYes">↩️ Ja, breng me terug</button>
       <button id="reverseTripNoBtn" class="reverse-trip-no" data-i18n="reverseTripNo">Nee, bedankt</button>
     </div>
-    <button id="reverseTripAnalyseBtn" style="width:100%; margin-top:10px; border:none; border-radius:12px; padding:11px; background:rgba(255,255,255,0.08); font-weight:700;" data-i18n="reverseTripAnalyseBtn">📊 Bekijk rit-analyse</button>
+    <button id="reverseTripAnalyseBtn" style="width:100%; margin-top:10px; border:none; border-radius:12px; padding:11px; font-weight:700;" data-i18n="reverseTripAnalyseBtn">📊 Bekijk rit-analyse</button>
   </div>
 </div>
 
@@ -15477,6 +15482,14 @@ const DEV_NOTES_CONTENT = {
       <p><b>Teksten en test:</b> alle nieuwe teksten bestaan in NL en EN, Help en <code>plekken/README.md</code> zijn aangevuld. <b>Testsuite:</b> nieuw bestand <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> is een kiezer aangepast aan de nieuwe rijopbouw. Versie 2.497 / versionCode 116.</p>
     </section>
     <section>
+      <h3>🛠️ Ronde 184: aankomstvenster, kaartopties-streepje en vastgelopen meedraaien</h3>
+      <p><b>Aankomstvenster.</b> De knop "Bekijk rit-analyse" (<code>#reverseTripAnalyseBtn</code>) had geen eigen tekstkleur en een bijna-transparante achtergrond. Een <code>&lt;button&gt;</code> erft de tekstkleur niet van de omliggende kaart, dus onder Garmin-stijl (donkere kaart) werd het zwarte tekst op donker. De knop heeft nu een vaste kleur per stijl (<code>var(--ink)</code> in Standaard, <code>#f1f5f9</code> in Garmin) en een zichtbare achtergrond.</p>
+      <p><b>Streepje van Kaartopties.</b> <code>#mapLayersSheetHandle</code> is sticky met een dekkende achtergrond, maar de ruimte eronder was een marge (7 px) en geen padding, dus gescrolde tegels werden tot vlak onder het streepje zichtbaar. De onderste padding is 5 px naar 10 px gegaan en de marge van 7 px naar 2 px: in rust is de lade even hoog, bij scrollen blijft er 5 px extra vrij onder het streepje.</p>
+      <p><b>Kaart draait niet mee.</b> <code>renderPosition()</code> draait de kaart alleen als <code>rotDragActive</code> onwaar is. Die vlag wordt sinds de MapLibre-migratie enkel nog gezet door <code>manualRotateTouchEnd()</code> (één vinger blijft over na een 2-vinger-draaigebaar buiten navigatie) en door niets teruggezet, omdat de bijbehorende touchluisteraars uit staan. Een handmatig gedraaide kaart vóór de start kon de vlag dus op true laten staan, waarna het meedraaien de hele wandeling werd overgeslagen. De vlag wordt nu gewist bij <code>startNav()</code> en bij elke tik in <code>renderPosition()</code> (met een Logboekregel). Dit is één bevestigde zwakke plek in de code; of dit de oorzaak was van de melding op het toestel is niet bewezen.</p>
+      <p><b>Diagnose.</b> De Logboekregel "Kaartrichting wijkt af" vermeldt nu ook of de pijl op de route gesnapt was en de GPS-nauwkeurigheid, zodat zwak GPS in heuvels en bos als oorzaak te herkennen is.</p>
+      <p><b>Test.</b> Test 16 in <code>test_round179_walk_fixes.js</code>.</p>
+    </section>
+    <section>
       <h3>🛠️ Ronde 183: kaartherstel kijkt naar de routelijn</h3>
       <p><b>Probleem.</b> Bij terugkeer naar de kaart (van Dashboard, of in de app na een foto in een andere app) kon het canvas leeg blijven: achtergrond en routelijn weg, terwijl pinnen en positiepijl (gewone elementen boven het canvas) bleven staan. De bestaande controle (<code>_probeBlank()</code>) zocht een volledig transparant canvas, wachtte eerst op tegels (op een trage verbinding komen die niet) en mocht maar 1x per 5 minuten herbouwen, omdat een leeg canvas zonder tegels offline ook normaal is. Zo greep het herstel soms niet in.</p>
       <p><b>Oplossing.</b> <code>_probeRoute()</code> kijkt naar wat er moet staan: de zichtbare lijnlagen (<code>ln_…</code>, zichtbaar, dekking boven 0,05, bron geladen). Er worden tot 24 punten langs de lijn genomen die in beeld liggen (ook tussen de hoekpunten). Zijn er minstens 3 en is op geen enkel punt een pixel getekend (<code>readPixels</code> tijdens het <code>render</code>-event), dan is het canvas stuk, ongeacht tegels, en bouwt <code>_swapGl()</code> de kaart opnieuw op: hooguit 1x per 30 s, nooit binnen 6 s na een herbouw en binnen de bestaande grens van 6 herbouwingen per 10 minuten. De controle draait 1,2 s, 3,5 s en 8 s na elke <code>_checkGl()</code> (tabwissel, terug in de app, pageshow) en daarna elke 30 s zolang de kaart zichtbaar is. De laatste uitslag staat in <code>map._lastRouteProbe</code>; een herbouw komt in het logboek.</p>
@@ -17233,6 +17246,14 @@ const DEV_NOTES_CONTENT = {
       <p><b>Filters:</b> data comes from Overpass (<code>osmWalkOverpass()</code>) and is kept for 30 days (<code>nearby_tags_v1</code>). Playground (<code>leisure=playground</code>, 300 m) and stop (<code>highway=bus_stop</code>, <code>railway=station|halt|tram_stop</code>, 500 m) in 1 request per 20 routes; the first 60 in the sorting. Surface: per route (the first 20) sample points about every 250 m (6 to 14), per point the nearest way within 15 m (<code>out tags geom</code>) and its class from <code>surface</code>, otherwise <code>tracktype</code> or <code>highway</code>; a path or footway without <code>surface</code> does not count. At least 5 known points and 60% of the points known, otherwise no statement; "in rain" = at least 70% paved. A route that is only a link has no track and gets no surface label. If a request fails a message appears and nothing is saved.</p>
       <p><b>Own places:</b> <code>plekken/index.json</code> (<code>regions[].places[]</code> with name, text, lat, lon, foto, fotoBron, mode, gecontroleerd) is loaded at startup; <code>nrPlacesNear()</code> keeps places of this activity within 40 km; the pop-up shows the three nearest. Without a filter and without a length group they show as "📍 Own tips" above the list; a tap opens the place in Google Maps. The file holds ten places in Limburg as a starter list (no date in <code>gecontroleerd</code>, so shown as "not checked yourself yet", with a Maps search text in <code>maps</code>); the rest comes from you, the app invents nothing.</p>
       <p><b>Texts and test:</b> all new texts exist in NL and EN, Help and <code>plekken/README.md</code> are extended. <b>Test suite:</b> new file <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> one selector is adjusted to the new row structure. Version 2.497 / versionCode 116.</p>
+    </section>
+    <section>
+      <h3>🛠️ Round 184: arrival window, map options handle and stuck map rotation</h3>
+      <p><b>Arrival window.</b> The "View ride analysis" button (<code>#reverseTripAnalyseBtn</code>) had no text colour of its own and a nearly transparent background. A <code>&lt;button&gt;</code> does not inherit the text colour from the surrounding card, so under Garmin style (dark card) it became black text on dark. The button now has a fixed colour per style (<code>var(--ink)</code> in Standard, <code>#f1f5f9</code> in Garmin) and a visible background.</p>
+      <p><b>Map options handle.</b> <code>#mapLayersSheetHandle</code> is sticky with an opaque background, but the space below it was a margin (7 px), not padding, so scrolled tiles were visible right up to the handle. The bottom padding went from 5 px to 10 px and the margin from 7 px to 2 px: at rest the sheet is the same height, while scrolling leaves 5 px extra free below the handle.</p>
+      <p><b>Map does not rotate.</b> <code>renderPosition()</code> only rotates the map when <code>rotDragActive</code> is false. Since the MapLibre migration that flag is only set by <code>manualRotateTouchEnd()</code> (one finger left after a two-finger rotate outside navigation) and nothing resets it, because the matching touch listeners are off. A manually rotated map before the start could therefore leave the flag true, after which rotation was skipped for the whole walk. The flag is now cleared in <code>startNav()</code> and on every tick in <code>renderPosition()</code> (with a log line). This is one confirmed weak spot in the code; whether it caused the report on the device is not proven.</p>
+      <p><b>Diagnosis.</b> The log line "Kaartrichting wijkt af" now also states whether the arrow was snapped to the route and the GPS accuracy, so weak GPS in hills and forest can be recognised as the cause.</p>
+      <p><b>Test.</b> Test 16 in <code>test_round179_walk_fixes.js</code>.</p>
     </section>
     <section>
       <h3>🛠️ Round 183: map recovery looks at the route line</h3>
@@ -26079,7 +26100,7 @@ ${GARMIN_MENU_BTN_JS}
 </body>
 </html>`;
 }
-const APP_VERSION_TEXT = 'v2.517 · 8 nov';
+const APP_VERSION_TEXT = 'v2.518 · 9 nov';
 $('homeVersionFooter').textContent = APP_VERSION_TEXT;
 function buildGarminHubHtml(){
   // Dit is Gemini's keuzescherm.html, ongewijzigd qua opbouw/stijl — enkel: (1) een derde grote tegel
@@ -34275,6 +34296,7 @@ function startNav(){
   lastAnnouncedKm = 0; // Ronde 87: per-km beep/aankondiging ook per sessie opnieuw vanaf 0
   navRouteReady = false; // pas weer true zodra de GPS-verse route (verderop in deze functie) echt binnen is
   lastMapRotation = 0;
+  rotDragActive = false; // Ronde 184: een vastgebleven 'sleep'-vlag van een handmatig gedraaide kaart van vóór de start mag het meedraaien niet blokkeren
   setMapRotation(0); // kaart al onveranderd/niet-gedraaid laten staan vóór we zo meteen inzoomen op je startpositie
   $('navBtn').innerHTML = '<span class="ic">■</span><span data-i18n="actionStop">Stop</span>';
   translatePage();
@@ -34905,7 +34927,15 @@ function renderPosition(){
     if (rb != null && Math.abs(((rb - travelHeading + 540) % 360) - 180) <= 60){ camHeading = rb; camFromRoute = true; }
   }
   let arrowFollowsMap = false;
-  if (travelHeading != null && !rotDragActive && !navMapUserPanning && !navPausedForDetour && !navNorthPaused){
+  // Ronde 184: rotDragActive hoort sinds de MapLibre-migratie (Ronde 79) enkel nog bij het overblijfsel van het 2-vinger-draaigebaar
+  // BUITEN navigatie (manualRotateTouchEnd() start er een 1-vinger-sleep mee) en wordt door niets meer teruggezet (de rot*-touchluisteraars
+  // zijn uit). Bleef die vlag na zo'n gebaar op true staan, dan sloeg deze voorwaarde de hele wandeling over: de kaart draaide nooit meer mee.
+  // Tijdens navigatie bestaat er geen eigen sleepafhandeling meer, dus de vlag is hier altijd verouderd: wissen en loggen.
+  if (rotDragActive){
+    rotDragActive = false;
+    try{ addToLog('Kaart-meedraaien: een vastgelopen sleep-vlag gewist'); }catch(e){}
+  }
+  if (travelHeading != null && !navMapUserPanning && !navPausedForDetour && !navNorthPaused){
     arrowFollowsMap = true;
     const targetMapRot = -camHeading;
     const mapDelta = ((((targetMapRot - lastMapRotation) % 360) + 540) % 360) - 180; // Ronde 110: JS-% geeft bij negatieve getallen een negatief resultaat; zo altijd in [-180,180)
@@ -34951,7 +34981,7 @@ function renderPosition(){
       navRotMismatchTicks = dd > 40 ? navRotMismatchTicks + 1 : 0;
       if (navRotMismatchTicks >= 10 && Date.now() - navRotMismatchLoggedAt > 300000){
         navRotMismatchLoggedAt = Date.now();
-        addToLog(`Kaartrichting wijkt af: kaart ${Math.round(mb)}°, bedoeld ${Math.round(want)}° (bron ${navHeadingSource}); gepauzeerd door slepen=${navMapUserPanning}, Noord-knop=${navNorthPaused}, omleiding=${navPausedForDetour}, 3D=${appSettings.map3dTiltOn === true}`);
+        addToLog(`Kaartrichting wijkt af: kaart ${Math.round(mb)}°, bedoeld ${Math.round(want)}° (bron ${navHeadingSource}); gepauzeerd door slepen=${navMapUserPanning}, Noord-knop=${navNorthPaused}, omleiding=${navPausedForDetour}, 3D=${appSettings.map3dTiltOn === true}, op route gesnapt=${!!snapped}, GPS-nauwkeurigheid=${Number.isFinite(accuracy) ? Math.round(accuracy) + ' m' : '?'}`);
       }
     }
   }catch(e){ /* geen kaart/bearing beschikbaar: geen diagnose */ }
