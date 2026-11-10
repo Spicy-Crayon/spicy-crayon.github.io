@@ -2559,7 +2559,7 @@
   #nearbyRoutesCard.sgv > .nr-hd, #nearbyRoutesCard.sgv > .nr-chips, #nearbyRoutesCard.sgv > .nr-filters, #nearbyRoutesCard.sgv > .nr-seg, #nearbyRoutesCard.sgv > .nr-status, #nearbyRoutesCard.sgv > .nr-load, #nearbyRoutesCard.sgv > .nr-listwrap, #nearbyRoutesCard.sgv > .nr-foot, #nearbyRoutesCard.sgv > .nr-ask, #nearbyRoutesCard.sgv > .nr-chat, #nearbyRoutesCard.sgv > .nr-detail{ display:none !important; }
   #nearbyRoutesCard.sgv > .nr-sight{ display:flex; }
   #nearbyRoutesCard .nr-sgp{ display:none; flex:1 1 auto; min-height:0; flex-direction:column; }
-  #nearbyRoutesCard .nr-sight[data-v="list"] #nrSgList, #nearbyRoutesCard .nr-sight[data-v="det"] #nrSgDet, #nearbyRoutesCard .nr-sight[data-v="map"] #nrSgMap{ display:flex; }
+  #nearbyRoutesCard .nr-sight[data-v="list"] #nrSgList, #nearbyRoutesCard .nr-sight[data-v="det"] #nrSgDet, #nearbyRoutesCard .nr-sight[data-v="map"] #nrSgMap, #nearbyRoutesCard .nr-sight[data-v="ev"] #nrEvPane{ display:flex; }
   #nearbyRoutesCard .nr-sgh{ flex:0 0 auto; display:flex; align-items:center; gap:10px; padding:14px 16px 6px; }
   #nearbyRoutesCard .nr-sgh .nr-ttl{ margin:0; }
   #nearbyRoutesCard .nr-sgb{ flex:0 0 auto; width:44px; height:44px; border:none; border-radius:50%; background:#f1f5f9; color:#334155; display:flex; align-items:center; justify-content:center; padding:0; }
@@ -2572,6 +2572,36 @@
   #nearbyRoutesCard .nr-sgchips{ flex:0 0 auto; display:flex; gap:8px; overflow-x:auto; padding:0 16px 6px; -webkit-overflow-scrolling:touch; }
   #nearbyRoutesCard .nr-sgf{ flex:0 0 auto; border:none; background:#f1f5f9; color:#334155; border-radius:99px; padding:0 14px; min-height:44px; font:inherit; font-size:13px; font-weight:600; white-space:nowrap; }
   #nearbyRoutesCard .nr-sgf.on{ background:#0f172a; color:#fff; font-weight:700; }
+  /* Ronde 187: evenementen vandaag (Wattedoen) */
+  #nearbyRoutesCard .nr-evrow{ width:100%; display:flex; align-items:center; gap:12px; border:none; text-align:left; background:#eef2ff; color:#0f172a; border-radius:16px; padding:10px 12px; margin:0 0 10px; font:inherit; min-height:60px; box-sizing:border-box; box-shadow:inset 0 0 0 1px #c7d2fe; }
+  #nearbyRoutesCard .nr-evic{ flex:0 0 auto; width:40px; height:40px; border-radius:12px; background:#fff; display:flex; align-items:center; justify-content:center; color:#4f46e5; }
+  #nearbyRoutesCard .nr-evic svg, #nearbyRoutesCard .nr-evph svg{ width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  #nearbyRoutesCard .nr-evtx{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; }
+  #nearbyRoutesCard .nr-evtx b{ font-size:14.5px; font-weight:800; color:#312e81; }
+  #nearbyRoutesCard .nr-evtx small{ font-size:12.5px; color:#4338ca; margin-top:1px; }
+  #nearbyRoutesCard .nr-evch{ flex:0 0 auto; width:20px; height:20px; fill:none; stroke:#94a3b8; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  #nearbyRoutesCard .nr-evsl{ flex:0 0 auto; padding:2px 16px 4px; }
+  #nearbyRoutesCard .nr-evslh{ display:flex; align-items:baseline; justify-content:space-between; gap:8px; font-size:13px; color:#64748b; }
+  #nearbyRoutesCard .nr-evslh b{ font-size:14px; font-weight:800; color:#4338ca; white-space:nowrap; }
+  #nearbyRoutesCard .nr-evsl input[type=range]{ width:100%; height:44px; margin:0; accent-color:#4f46e5; }
+  #nearbyRoutesCard .nr-evticks{ display:flex; justify-content:space-between; font-size:11.5px; color:#94a3b8; margin-top:-6px; }
+  #nearbyRoutesCard .nr-evph{ flex:0 0 auto; width:48px; height:48px; border-radius:14px; background:#eef2ff; color:#4f46e5; display:flex; align-items:center; justify-content:center; }
+  #nearbyRoutesCard .nr-evd{ font-weight:700; color:#4338ca; background:#eef2ff; border-radius:99px; padding:1px 8px; box-shadow:inset 0 0 0 1px #c7d2fe; }
+  #nearbyRoutesCard .nr-evtag{ font-style:normal; font-size:11.5px; font-weight:600; border-radius:6px; padding:1px 6px; background:#eef2ff; color:#4338ca; }
+  #nearbyRoutesCard .nr-evtag.g{ background:#ecfdf5; color:#047857; }
+  #nearbyRoutesCard .nr-evx{ flex:0 0 auto; width:18px; height:18px; fill:none; stroke:#4f46e5; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  #nearbyRoutesCard .nr-evhint{ margin:8px 0; font-size:12.5px; color:#92400e; background:#fffbeb; border-radius:10px; padding:8px 10px; }
+  #nearbyRoutesCard .nr-evmsg{ margin:10px 0; border-radius:16px; background:#f1f5f9; padding:14px; }
+  #nearbyRoutesCard .nr-evmsg.err{ background:#fef2f2; }
+  #nearbyRoutesCard .nr-evmsg b{ font-size:14.5px; font-weight:800; color:#0f172a; }
+  #nearbyRoutesCard .nr-evmsg p{ margin:4px 0 0; font-size:13px; line-height:1.45; color:#475569; }
+  #nearbyRoutesCard .nr-evmsg div{ display:flex; flex-wrap:wrap; gap:8px; }
+  #nearbyRoutesCard .nr-evbtn{ margin-top:10px; border:none; background:#4f46e5; color:#fff; border-radius:99px; padding:0 16px; min-height:44px; font:inherit; font-size:13px; font-weight:700; }
+  #nearbyRoutesCard .nr-evbtn.alt{ background:#e2e8f0; color:#334155; }
+  #nearbyRoutesCard .nr-evsk{ padding:10px 0; } #nearbyRoutesCard .nr-evsk i{ display:block; height:48px; border-radius:14px; background:#e2e8f0; margin:8px 0; }
+  #nearbyRoutesCard .nr-evfoot{ flex:0 0 auto; display:flex; align-items:center; gap:10px; padding:10px 16px 14px; border-top:1px solid #f1f5f9; }
+  #nearbyRoutesCard .nr-evfoot p{ flex:1 1 auto; margin:0; font-size:11.5px; line-height:1.4; color:#64748b; }
+  #nearbyRoutesCard .nr-evfoot button{ flex:0 0 auto; border:none; background:#4f46e5; color:#fff; border-radius:99px; padding:0 14px; min-height:44px; font:inherit; font-size:13px; font-weight:700; }
   #nearbyRoutesCard .nr-sgsort{ flex:0 0 auto; padding:0 16px 2px; font-size:12.5px; color:#64748b; display:flex; align-items:center; gap:6px; }
   #nearbyRoutesCard .nr-sgsb{ border:none; background:none; color:#b45309; font:inherit; font-size:12.5px; font-weight:700; min-height:44px; padding:0 4px; }
   #nearbyRoutesCard .nr-sgitems{ flex:1 1 auto; min-height:0; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch; padding:0 16px; border-top:1px solid #f1f5f9; }
@@ -5606,6 +5636,13 @@
       <div id="nrSgMap" class="nr-sgp">
         <div class="nr-sgmapw"><div id="nrSgMapEl"></div><button type="button" class="nr-sgb nr-sgtopl" data-act="back" id="nrSgBack3"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><span class="nr-sgmtitle" id="nrSgMTitle"></span></div>
         <div id="nrSgMCard" class="nr-sgmcard"></div>
+      </div>
+      <div id="nrEvPane" class="nr-sgp">
+        <div class="nr-sgh"><button type="button" class="nr-sgb" data-act="back" id="nrEvBack"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><p class="nr-ttl"><span id="nrEvTitle"></span><small id="nrEvSub"></small></p></div>
+        <div class="nr-evsl"><div class="nr-evslh"><span id="nrEvSlL"></span><b id="nrEvSlV"></b></div><input type="range" id="nrEvRange" min="1" max="50" step="1" value="20"><div class="nr-evticks"><span>1</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50 km</span></div></div>
+        <div id="nrEvChips" class="nr-sgchips" role="group"></div>
+        <div id="nrEvItems" class="nr-sgitems"></div>
+        <div class="nr-evfoot"><p id="nrEvFoot"></p><button type="button" data-act="evrefresh" id="nrEvRefresh"></button></div>
       </div>
     </div>
     <div id="nrPlaceSheet" class="nr-psheet" role="dialog" aria-modal="true" aria-labelledby="nrPlaceTitle">
@@ -15617,6 +15654,15 @@ const DEV_NOTES_CONTENT = {
       <p><b>Teksten en test:</b> alle nieuwe teksten bestaan in NL en EN, Help en <code>plekken/README.md</code> zijn aangevuld. <b>Testsuite:</b> nieuw bestand <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> is een kiezer aangepast aan de nieuwe rijopbouw. Versie 2.497 / versionCode 116.</p>
     </section>
     <section>
+      <h3>🛠️ Ronde 187: evenementen vandaag in "Leuke wandelingen" (Wattedoen.be)</h3>
+      <p><b>Wat er is.</b> Bij Wandelen staat onder de plaatskiezer een rij "Vandaag in de buurt". Een tik opent een lijst met de evenementen van vandaag binnen een afstand die je met een schuifbalk kiest (1 tot 50 km, standaard 20, onthouden onder <code>nr_ev_km_v1</code>), met filters Alles, Gratis en Kinderen en een knop Vernieuwen. Een tik op een evenement opent de pagina op Wattedoen.be. Er wordt niets geladen vóór je op de rij tikt.</p>
+      <p><b>Bron.</b> <code>nrEvLoad()</code> haalt <code>https://www.wattedoen.be/seek.php?...&amp;loc=&lt;gemeente&gt;</code> op, tot drie pagina's (de volgende pagina komt uit de link met <code>bp=</code>). In de APK gaat dat via <code>CapacitorHttp</code>, dus zonder CORS; in de browser lukt het niet en toont de lijst dat. De gemeente en het land komen van Nominatim (<code>nrEvResolve()</code>, <code>municipality</code> eerst). Buiten België staat er "Alleen in België".</p>
+      <p><b>Uitlezen.</b> <code>nrEvParseHtml()</code> zoekt links naar <code>naam-nummer.shtml</code> en leest per link de tekstdelen: categorie (hoofdletters), titel, labels (Gratis, Kinderen), afstand, datumtekst en plaats. Staat alles in één tekst, dan splitst <code>nrEvSplitGlued()</code> op de afstand. Lukt het uitlezen niet, dan staat er een foutkaart met een knop "Kopieer diagnose" (de eerste link als HTML). De opmaak van Wattedoen is bij het bouwen niet als ruwe HTML gezien, enkel als tekst, dus dit is het eerste wat op de telefoon moet blijken.</p>
+      <p><b>Vandaag.</b> Het dagfilter van de site (<code>?date=1</code>) werkte niet via het webadres. <code>nrEvParseDate()</code> zet de datumtekst om naar een periode ("Donderdag 12 november", "Van 7 tot 15 november", "Van vrijdag 13 november 2026 tot zondag 3 januari 2027", "Vandaag van 6u tot 21u30 ...") en een evenement telt als het vandaag in die periode valt. Ontbreekt het jaar, dan wordt de eerstvolgende datum genomen. Permanente activiteiten hebben geen datum en vallen weg. Een evenement met een lange periode staat erbij als "tot 3 januari".</p>
+      <p><b>Afstand.</b> De kilometers komen van Wattedoen en gelden vanaf de gemeente, niet vanaf je exacte positie. De lijst reikt zo ver als de drie geladen pagina's; staat de schuifbalk verder, dan staat er hoe ver de lijst gaat.</p>
+      <p><b>Test.</b> <code>test_round187_events.js</code>.</p>
+    </section>
+    <section>
       <h3>🛠️ Ronde 186: bezienswaardigheden in "Leuke wandelingen", plaatskiezer en Beluister-fix</h3>
       <p><b>Wat er is.</b> Bij Wandelen staat boven de routes een carrousel "Bezienswaardig in de buurt" (de acht bekendste), met foto, afstand en soort. "Alle N" opent de volledige lijst met filters per soort (kerken, Romeins, kastelen, musea, monumenten, uitzicht, overig) en sorteren op afstand of bekendheid. Een bezienswaardigheid aantikken toont de Wikipedia-inleiding (nl, anders en, anders de) met bron, een minikaart, "Beluister" en "Navigeer vanaf mijn locatie". "Grote kaart" toont de plek en jouw positie; "Alles op kaart" toont alle punten.</p>
       <p><b>Bron.</b> <code>nrSgQuery()</code> vraagt aan OpenStreetMap (Overpass, enkel nodes en vlakken) naam en soort van <code>tourism=attraction|museum|viewpoint</code> en van <code>historic</code>, kerken en gebedshuizen die een <code>wikidata</code>-label hebben. <code>nrSgParse()</code> haalt dubbelen weg (zelfde Wikidata of zelfde naam binnen 250 m) en sorteert op afstand; <code>fame</code> telt Wikipedia-label 2, Wikidata 1 en attraction/museum 1. Straal 3 km, bij minder dan 6 resultaten één keer 8 km, hooguit 80 plekken. <code>nrSgEnrichIds()</code> haalt per batch van 50 de Wikipedia-titels en de naam in je taal uit Wikidata en de foto uit Wikipedia (<code>pageimages</code>), bewaard 30 dagen onder <code>nr_sight_enrich_v1</code>. Als er geen artikel gekoppeld is zoekt <code>nrWikiFindTitle()</code> op naam (artikelen binnen 300 m, daarna opensearch; enkel een titel met een gemeenschappelijk woord telt).</p>
@@ -17400,6 +17446,15 @@ const DEV_NOTES_CONTENT = {
       <p><b>Filters:</b> data comes from Overpass (<code>osmWalkOverpass()</code>) and is kept for 30 days (<code>nearby_tags_v1</code>). Playground (<code>leisure=playground</code>, 300 m) and stop (<code>highway=bus_stop</code>, <code>railway=station|halt|tram_stop</code>, 500 m) in 1 request per 20 routes; the first 60 in the sorting. Surface: per route (the first 20) sample points about every 250 m (6 to 14), per point the nearest way within 15 m (<code>out tags geom</code>) and its class from <code>surface</code>, otherwise <code>tracktype</code> or <code>highway</code>; a path or footway without <code>surface</code> does not count. At least 5 known points and 60% of the points known, otherwise no statement; "in rain" = at least 70% paved. A route that is only a link has no track and gets no surface label. If a request fails a message appears and nothing is saved.</p>
       <p><b>Own places:</b> <code>plekken/index.json</code> (<code>regions[].places[]</code> with name, text, lat, lon, foto, fotoBron, mode, gecontroleerd) is loaded at startup; <code>nrPlacesNear()</code> keeps places of this activity within 40 km; the pop-up shows the three nearest. Without a filter and without a length group they show as "📍 Own tips" above the list; a tap opens the place in Google Maps. The file holds ten places in Limburg as a starter list (no date in <code>gecontroleerd</code>, so shown as "not checked yourself yet", with a Maps search text in <code>maps</code>); the rest comes from you, the app invents nothing.</p>
       <p><b>Texts and test:</b> all new texts exist in NL and EN, Help and <code>plekken/README.md</code> are extended. <b>Test suite:</b> new file <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> one selector is adjusted to the new row structure. Version 2.497 / versionCode 116.</p>
+    </section>
+    <section>
+      <h3>🛠️ Round 187: events today in "Nice walks" (Wattedoen.be)</h3>
+      <p><b>What is new.</b> For Walking, a row "Today nearby" sits under the place picker. A tap opens a list of today's events within a distance you pick with a slider (1 to 50 km, default 20, remembered under <code>nr_ev_km_v1</code>), with filters All, Free and Kids and a Refresh button. A tap on an event opens its page on Wattedoen.be. Nothing is loaded until you tap the row.</p>
+      <p><b>Source.</b> <code>nrEvLoad()</code> fetches <code>https://www.wattedoen.be/seek.php?...&amp;loc=&lt;municipality&gt;</code>, up to three pages (the next page comes from the link with <code>bp=</code>). In the APK this goes through <code>CapacitorHttp</code>, so without CORS; in a browser it fails and the list says so. Municipality and country come from Nominatim (<code>nrEvResolve()</code>, <code>municipality</code> first). Outside Belgium it says "Belgium only".</p>
+      <p><b>Reading.</b> <code>nrEvParseHtml()</code> finds links to <code>name-number.shtml</code> and reads the text parts of each: category (capitals), title, labels (Free, Kids), distance, date text and place. If everything is one text, <code>nrEvSplitGlued()</code> splits on the distance. If reading fails there is an error card with a "Copy diagnostics" button (the first link as HTML). Wattedoen's markup was not seen as raw HTML while building, only as text, so this is the first thing to check on the phone.</p>
+      <p><b>Today.</b> The site's day filter (<code>?date=1</code>) did not work through the address. <code>nrEvParseDate()</code> turns the date text into a period ("Donderdag 12 november", "Van 7 tot 15 november", "Van vrijdag 13 november 2026 tot zondag 3 januari 2027", "Vandaag van 6u tot 21u30 ...") and an event counts when today falls in that period. Without a year the next upcoming date is taken. Permanent activities have no date and drop out. An event with a long period shows "until 3 January".</p>
+      <p><b>Distance.</b> The kilometres come from Wattedoen and are measured from the municipality, not from your exact position. The list reaches as far as the three loaded pages; when the slider is further, a note says how far the list goes.</p>
+      <p><b>Test.</b> <code>test_round187_events.js</code>.</p>
     </section>
     <section>
       <h3>🛠️ Round 186: sights in "Nice walks", place picker and the Listen fix</h3>
@@ -26273,7 +26328,7 @@ ${GARMIN_MENU_BTN_JS}
 </body>
 </html>`;
 }
-const APP_VERSION_TEXT = 'v2.520 · 10 nov';
+const APP_VERSION_TEXT = 'v2.521 · 10 nov';
 $('homeVersionFooter').textContent = APP_VERSION_TEXT;
 function buildGarminHubHtml(){
   // Dit is Gemini's keuzescherm.html, ongewijzigd qua opbouw/stijl — enkel: (1) een derde grote tegel
@@ -43476,7 +43531,7 @@ function nrSightsHtml(){
   else if (sg.status === 'error') body = `<div class="nr-sgmsg">${nrT('Zoeken in OpenStreetMap is niet gelukt. Controleer je verbinding.', 'Searching OpenStreetMap did not work. Check your connection.')} <button type="button" class="nr-sgretry" data-act="retry">${nrT('Opnieuw proberen', 'Try again')}</button></div>`;
   else if (sg.status === 'none') body = `<div class="nr-sgmsg">${nrT('Geen bezienswaardigheden gevonden rond ' + nrSgPlaceName().toLowerCase() + '. Kies een andere plaats.', 'No sights found around ' + nrSgPlaceName() + '. Pick another place.')}</div>`;
   else body = `<div class="nr-sgrow">${nrSgTop(sg.items, NR_SG_CARDS).map(nrSgCardHtml).join('')}</div>`;
-  return `<div class="nr-sgsec">${nrSgPillHtml()}${head}${body}</div>`;
+  return `<div class="nr-sgsec">${nrSgPillHtml()}${nrEvRowHtml()}${head}${body}</div>`;
 }
 function nrRenderSights(){ const el = $('nrSights'); if (el) el.innerHTML = nrSightsHtml(); }
 // ----- Volledige lijst (concept G) -----
@@ -43695,7 +43750,7 @@ function nrSgSearchPlaces(q){
 async function nrSgSetPlace(p){
   const sg = nrState.sg;
   $('nrPlaceSheet').classList.remove('show');
-  sg.place = p ? { name:p.name, lat:p.lat, lon:p.lon } : null; sg.cat = 'all';
+  sg.place = p ? { name:p.name, lat:p.lat, lon:p.lon } : null; sg.cat = 'all'; nrEvReset(); if ($('nrSight').getAttribute('data-v') === 'ev') nrEvLoad(false);
   if (p) nrSgRecentAdd(p);
   nrSgLoad(true);
   const token = nrState.token;
@@ -43712,6 +43767,7 @@ function nrSgWire(){
   $('nrSights').addEventListener('click', (e) => {
     const b = e.target.closest && e.target.closest('button'); if (!b) return;
     if (b.dataset.act === 'place') return nrSgOpenPlaceSheet();
+    if (b.dataset.act === 'ev') return nrEvOpen();
     if (b.dataset.act === 'all') return nrSgOpenList();
     if (b.dataset.act === 'retry') return nrSgLoad(true);
     if (b.dataset.id) nrSgOpenDetail(b.dataset.id, 'card');
@@ -43719,6 +43775,7 @@ function nrSgWire(){
   $('nrSight').addEventListener('click', (e) => {
     const b = e.target.closest && e.target.closest('button, a'); if (!b) return;
     const sg = nrState.sg, act = b.dataset.act;
+    if (nrEvAct(act, b)) return;
     if (act === 'back') return nrSgBack();
     if (act === 'place') return nrSgOpenPlaceSheet();
     if (act === 'sort'){ sg.sort = sg.sort === 'fame' ? 'dist' : 'fame'; return nrSgRenderList(); }
@@ -43746,8 +43803,247 @@ function nrSgWire(){
 function nrSgReset(userLL){
   const sg = nrState.sg;
   sg.tok++; sg.place = null; sg.me = userLL ? { lat:userLL.lat, lon:userLL.lon } : null; sg.cat = 'all'; sg.sort = 'dist'; sg.key = ''; sg.items = []; sg.status = 'idle'; sg.cur = null;
-  nrSgListenStop();
-  nrSgWire();
+  nrSgListenStop(); nrEvReset();
+  nrSgWire(); nrEvWire();
+}
+
+// ===== Ronde 187: evenementen vandaag (Wattedoen.be, enkel België) =====
+// De app leest in de APK (CapacitorHttp, dus zonder CORS) de lijst van Wattedoen.be voor de gemeente van je positie of de gekozen plaats,
+// bepaalt zelf welke evenementen vandaag lopen (het dagfilter van de site werkt niet via het webadres) en toont ze tot 50 km. Er wordt niets geladen vóór je op de rij tikt.
+const NR_EV_HOST = 'https://www.wattedoen.be/', NR_EV_KM_KEY = 'nr_ev_km_v1', NR_EV_TTL_MS = 10 * 60 * 1000, NR_EV_PAGES = 3, NR_EV_KM_MAX = 50;
+const NR_EV_MON = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
+const NR_EV_MON_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+nrState.ev = { status:'idle', items:[], km:20, flt:'all', tok:0, key:'', at:0, reach:0, err:'', diag:'', place:'' };
+let nrEvCache = null;   // { key, items, reach, place, at }: tien minuten bewaard, zodat opnieuw openen geen nieuw verzoek geeft
+const nrEvPlaceCache = new Map();
+const nrEvDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+function nrEvMonIdx(s){ const k = String(s || '').slice(0, 3).toLowerCase(); if (k === 'mrt') return 2; return NR_EV_MON.findIndex(m => m.slice(0, 3) === k); }
+// "Donderdag 12 november", "Van 7 tot 15 november", "Van vrijdag 13 november 2026 tot zondag 3 januari 2027", "Vandaag van 6u tot 21u30 ..." -> { from, to } (dagen) of null.
+function nrEvParseDate(text, now){
+  const t0 = String(text || '').toLowerCase().replace(/\s+/g, ' ').trim(); if (!t0) return null;
+  const today = nrEvDay(now || new Date()), thisYear = today.getFullYear();
+  const t = t0.replace(/\b\d{1,2}\s*u\s*\d{0,2}\b/g, ' ').replace(/\b\d{1,2}[:.]\d{2}\b/g, ' ');
+  const re = /\b(\d{1,2})\b(?:e|ste|de)?\s*(januari|februari|maart|april|mei|juni|juli|augustus|september|oktober|november|december|jan|feb|mrt|apr|jun|jul|aug|sept?|okt|nov|dec)?\b(?:\s+(\d{4})\b)?/g;
+  const list = []; let m;
+  while ((m = re.exec(t))){ if (m[0].length === 0){ re.lastIndex++; continue; } list.push({ d:parseInt(m[1], 10), m:m[2] ? nrEvMonIdx(m[2]) : null, y:m[3] ? parseInt(m[3], 10) : null }); }
+  let carryM = null, carryY = null;
+  for (let i = list.length - 1; i >= 0; i--){ const it = list[i]; if (it.m == null) it.m = carryM; else carryM = it.m; if (it.y == null) it.y = carryY; else carryY = it.y; }
+  const ok = list.filter(it => it.m != null && it.m >= 0 && it.d >= 1 && it.d <= 31);
+  let r = null;
+  if (ok.length){
+    let known = ok.find(it => it.y != null); known = known ? known.y : null;
+    ok.forEach(it => { if (it.y == null) it.y = known != null ? known : thisYear; });
+    let a = new Date(ok[0].y, ok[0].m, ok[0].d), b = new Date(ok[ok.length - 1].y, ok[ok.length - 1].m, ok[ok.length - 1].d);
+    if (known == null){   // geen enkel jaartal: de eerstvolgende datum rond vandaag (niet meer dan ± drie maanden terug)
+      if (a < new Date(today.getTime() - 90 * 86400000)){ a = new Date(a.getFullYear() + 1, a.getMonth(), a.getDate()); b = new Date(b.getFullYear() + 1, b.getMonth(), b.getDate()); }
+    }
+    if (b < a) b = new Date(b.getFullYear() + 1, b.getMonth(), b.getDate());
+    r = { from:a, to:b };
+  }
+  if (/\bvandaag\b/.test(t0)){ r = r || { from:today, to:today }; if (r.from > today) r.from = today; if (r.to < today) r.to = today; }
+  return r;
+}
+const nrEvIsToday = (r, now) => { if (!r) return false; const d = nrEvDay(now || new Date()); return r.from <= d && d <= r.to; };
+function nrEvUntil(r, now){
+  if (!r) return '';
+  const today = nrEvDay(now || new Date()); if (r.to.getTime() === today.getTime() && r.from.getTime() === today.getTime()) return nrT('vandaag', 'today');
+  if (r.from.getTime() === r.to.getTime()) return nrT('vandaag', 'today');
+  const mm = curLang() === 'en' ? NR_EV_MON_EN[r.to.getMonth()] : NR_EV_MON[r.to.getMonth()];
+  return nrT('tot ' + r.to.getDate() + ' ' + mm, 'until ' + mm + ' ' + r.to.getDate());
+}
+const NR_EV_TAG_RE = /^(gratis|kinderen(?:\s*\d+\+?)?|singles|senioren|lgbtqi\+?)$/i;
+const NR_EV_DATEISH = /(vandaag|morgen|maandag|dinsdag|woensdag|donderdag|vrijdag|zaterdag|zondag|elke|\d{1,2}\s*(?:januari|februari|maart|april|mei|juni|juli|augustus|september|oktober|november|december)|\d{4})/i;
+// Alles in één tekst (zonder scheiding tussen de delen): categorie TITEL tags afstand datum plaats
+function nrEvSplitGlued(s){
+  const km = s.match(/(\d+(?:[.,]\d+)?)\s*km\b/);
+  if (!km) return null;
+  let before = s.slice(0, km.index).trim(), after = s.slice(km.index + km[0].length).trim();
+  const out = { km:parseFloat(km[1].replace(',', '.')), tags:[], cat:'', title:'', date:'', place:'' };
+  for (let g = 0; g < 6; g++){ const mt = before.match(/(gratis|kinderen(?:\s*\d+\+?)?|singles|senioren|lgbtqi\+?)\s*$/i); if (!mt) break; out.tags.push(mt[1]); before = before.slice(0, mt.index).trim(); }
+  const c = before.match(/^([A-ZÀ-Ý][A-ZÀ-Ý ,.&\/'’-]*[A-ZÀ-Ý.,])\s+(?=\S)/);
+  if (c && /[A-ZÀ-Ý]{3}/.test(c[1])){ out.cat = c[1].trim(); before = before.slice(c[0].length).trim(); }
+  out.title = before;
+  const dm = after.match(/^(.*(?:januari|februari|maart|april|mei|juni|juli|augustus|september|oktober|november|december)(?:\s+\d{4})?)\s+(.+)$/i) || after.match(/^(vandaag|morgen)\s+(.+)$/i);
+  if (dm){ out.date = dm[1].trim(); out.place = dm[2].trim(); } else out.place = after;
+  return out;
+}
+function nrEvFields(pieces){
+  const clean = pieces.map(p => String(p).replace(/\s+/g, ' ').trim()).filter(Boolean);
+  const kmIdx = clean.findIndex(p => /^\d+(?:[.,]\d+)?\s*km$/i.test(p));
+  let f = null;
+  if (clean.length >= 3 && kmIdx > 0){
+    const tags = [], rest = [];
+    clean.forEach((p, i) => { if (i === kmIdx) return; if (NR_EV_TAG_RE.test(p)) tags.push(p); else rest.push({ p, i }); });
+    let cat = ''; if (rest.length && rest[0].p === rest[0].p.toUpperCase() && /[A-ZÀ-Ý]{3}/.test(rest[0].p)) cat = rest.shift().p;
+    const before = rest.filter(x => x.i < kmIdx).map(x => x.p), after = rest.filter(x => x.i > kmIdx).map(x => x.p);
+    let place = '', date = '';
+    if (after.length){ place = after[after.length - 1]; date = after.slice(0, -1).join(' '); if (!date && NR_EV_DATEISH.test(place)){ date = place; place = ''; } }
+    f = { km:parseFloat(clean[kmIdx].replace(',', '.')), tags, cat, title:before.join(' ').trim(), date, place };
+  } else if (clean.length){
+    f = nrEvSplitGlued(clean.join(' '));
+    if (!f){ const rest = clean.filter(p => !NR_EV_TAG_RE.test(p)); f = { km:null, tags:clean.filter(p => NR_EV_TAG_RE.test(p)), cat:'', title:rest[0] || '', date:'', place:rest.length > 1 ? rest[rest.length - 1] : '' }; }
+  }
+  if (!f || !f.title) return null;
+  const tg = f.tags.join(' ').toLowerCase();
+  return { title:f.title, cat:f.cat, distKm:f.km, free:/gratis/.test(tg), kids:/kinderen/.test(tg), dateText:f.date, place:f.place };
+}
+function nrEvPieces(a){
+  const out = [], w = a.ownerDocument.createTreeWalker(a, 4);   // 4 = NodeFilter.SHOW_TEXT
+  let n; while ((n = w.nextNode())){ const v = String(n.nodeValue || '').replace(/\s+/g, ' ').trim(); if (v) out.push(v); }
+  return out;
+}
+// HTML van een Wattedoen-pagina -> { items, next: paginanummer-link, anchors }
+function nrEvParseHtml(html, page){
+  const doc = new DOMParser().parseFromString(String(html || ''), 'text/html');
+  const best = new Map();
+  doc.querySelectorAll('a[href]').forEach(a => {
+    const h = a.getAttribute('href') || '', m = h.match(/(?:^|\/)([a-z0-9][a-z0-9-]*-\d{4,})\.shtml(?:[?#]|$)/i); if (!m) return;
+    const pieces = nrEvPieces(a); if (!pieces.length) return;
+    const prev = best.get(m[1]); if (!prev || pieces.join('').length > prev.pieces.join('').length) best.set(m[1], { slug:m[1], pieces, html:a.outerHTML });
+  });
+  const items = [];
+  best.forEach(v => { const f = nrEvFields(v.pieces); if (f){ f.slug = v.slug; f.url = NR_EV_HOST + v.slug + '.shtml'; f.range = nrEvParseDate(f.dateText); items.push(f); } });
+  let next = '';
+  const want = (page || 1) + 1;
+  doc.querySelectorAll('a[href]').forEach(a => { if (next) return; const h = a.getAttribute('href') || '', m = h.match(/[?&]bp=(\d+)/); if (m && parseInt(m[1], 10) === want){ try{ next = new URL(h, NR_EV_HOST).href; }catch(e){} } });
+  if (next && !/^https:\/\/www\.wattedoen\.be\//i.test(next)) next = '';
+  return { items, next, sample: best.size ? Array.from(best.values())[0].html : '' };
+}
+async function nrEvGet(url){
+  if (isNativeApp()){
+    const H = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.CapacitorHttp;
+    if (H && typeof H.get === 'function'){
+      const r = await H.get({ url, responseType:'text', headers:{ Accept:'text/html,application/xhtml+xml', 'Accept-Language':'nl-BE,nl;q=0.9' }, connectTimeout:10000, readTimeout:15000 });
+      if (!r || r.status !== 200){ const e = new Error('HTTP ' + (r && r.status)); e.status = r && r.status; throw e; }
+      return typeof r.data === 'string' ? r.data : String(r.data == null ? '' : r.data);
+    }
+  }
+  try{
+    const res = await fetchWithTimeout(url, { headers:{ Accept:'text/html' } }, 12000);
+    if (!res.ok){ const e = new Error('HTTP ' + res.status); e.status = res.status; throw e; }
+    return await res.text();
+  }catch(e){ if (!e.status && !isNativeApp()) e.cors = true; throw e; }
+}
+// De gemeente (zoals Wattedoen die kent) en het land van de plek; Nominatim, per ~1 km onthouden.
+async function nrEvResolve(ll, fallbackName){
+  const k = ll.lat.toFixed(2) + ',' + ll.lon.toFixed(2); if (nrEvPlaceCache.has(k)) return nrEvPlaceCache.get(k);
+  let r = null;
+  try{
+    const res = await fetchWithTimeout(`https://nominatim.openstreetmap.org/reverse?format=json&addressdetails=1&zoom=10&accept-language=nl&lat=${ll.lat}&lon=${ll.lon}`, {}, 8000);
+    if (res.ok){ const j = await res.json(), a = (j && j.address) || {}; r = { name:String(a.municipality || a.city || a.town || a.village || a.county || fallbackName || ''), cc:String(a.country_code || '').toLowerCase() }; }
+  }catch(e){}
+  if (r && r.name){ nrEvPlaceCache.set(k, r); return r; }
+  return fallbackName ? { name:fallbackName, cc:'' } : null;
+}
+const nrEvKey = () => { const ll = nrSgCenter(); return ll ? ll.lat.toFixed(2) + ',' + ll.lon.toFixed(2) : ''; };
+function nrEvReset(){ const ev = nrState.ev; ev.tok++; ev.status = 'idle'; ev.items = []; ev.key = ''; ev.flt = 'all'; ev.err = ''; ev.diag = ''; }
+async function nrEvLoad(force){
+  const ev = nrState.ev, ll = nrSgCenter();
+  if (!ll){ ev.status = 'error'; ev.err = 'nolocation'; nrEvRender(); return; }
+  const key = nrEvKey();
+  if (!force && ev.key === key && (ev.status === 'ok' || ev.status === 'loading' || ev.status === 'abroad')) { nrEvRender(); return; }
+  if (!force && nrEvCache && nrEvCache.key === key && Date.now() - nrEvCache.at < NR_EV_TTL_MS){
+    ev.key = key; ev.items = nrEvCache.items; ev.reach = nrEvCache.reach; ev.place = nrEvCache.place; ev.at = nrEvCache.at; ev.status = 'ok'; ev.err = ''; nrEvRender(); return;
+  }
+  const tok = ++ev.tok; ev.key = key; ev.status = 'loading'; ev.items = []; ev.err = ''; ev.diag = ''; nrEvRender();
+  const sg = nrState.sg;
+  const place = await nrEvResolve(ll, sg.place ? sg.place.name : '');
+  if (tok !== ev.tok) return;
+  if (!place || !place.name){ ev.status = 'error'; ev.err = 'noplace'; nrEvRender(); return; }
+  ev.place = place.name;
+  if (place.cc && place.cc !== 'be'){ ev.status = 'abroad'; nrEvRender(); return; }
+  const all = new Map(); let url = `${NR_EV_HOST}seek.php?s_w2=&date=&word=&loc=${encodeURIComponent(place.name)}`, sample = '', bodyText = '';
+  try{
+    for (let p = 1; p <= NR_EV_PAGES && url; p++){
+      let html; try{ html = await nrEvGet(url); }catch(e){ if (p === 1) throw e; break; }
+      if (tok !== ev.tok) return;
+      const r = nrEvParseHtml(html, p);
+      if (p === 1){ sample = r.sample || ''; bodyText = String(html).replace(/\s+/g, ' ').slice(0, 1500); }
+      r.items.forEach(it => { if (!all.has(it.slug)) all.set(it.slug, it); });
+      url = r.next;
+    }
+  }catch(e){
+    if (tok !== ev.tok) return;
+    ev.status = 'error'; ev.err = e && e.cors ? 'cors' : 'net'; nrEvRender(); return;
+  }
+  if (tok !== ev.tok) return;
+  const items = Array.from(all.values());
+  if (!items.length){ ev.status = 'error'; ev.err = 'unreadable'; ev.diag = (sample || bodyText || '').slice(0, 1500); nrEvRender(); return; }
+  items.sort((a, b) => ((a.distKm == null ? 1e9 : a.distKm) - (b.distKm == null ? 1e9 : b.distKm)));
+  ev.items = items; ev.reach = items.reduce((m, it) => Math.max(m, it.distKm || 0), 0); ev.at = Date.now(); ev.status = 'ok';
+  nrEvCache = { key, items, reach:ev.reach, place:ev.place, at:ev.at };
+  nrEvRender(); nrRenderSights();
+}
+function nrEvToday(){
+  const ev = nrState.ev, now = new Date();
+  return ev.items.filter(it => it.distKm != null && it.distKm <= ev.km && nrEvIsToday(it.range, now));
+}
+function nrEvShown(){ const ev = nrState.ev; return nrEvToday().filter(it => ev.flt === 'free' ? it.free : ev.flt === 'kids' ? it.kids : true); }
+const nrEvIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>';
+function nrEvRowHtml(){
+  const ev = nrState.ev; let sub;
+  if (ev.status === 'loading') sub = nrT('Laden…', 'Loading…');
+  else if (ev.status === 'ok'){ const n = nrEvToday().length; sub = n ? nrT(n + (n === 1 ? ' evenement' : ' evenementen') + ' binnen ' + ev.km + ' km', n + (n === 1 ? ' event' : ' events') + ' within ' + ev.km + ' km') : nrT('Niets vandaag binnen ' + ev.km + ' km', 'Nothing today within ' + ev.km + ' km'); }
+  else if (ev.status === 'abroad') sub = nrT('Alleen in België', 'Belgium only');
+  else if (ev.status === 'error') sub = nrT('Laden mislukt, tik om opnieuw te proberen', 'Loading failed, tap to try again');
+  else sub = nrT('Wattedoen.be · tik om te laden', 'Wattedoen.be · tap to load');
+  return `<button type="button" class="nr-evrow" data-act="ev"><span class="nr-evic">${nrEvIcon}</span><span class="nr-evtx"><b>${nrT('Vandaag in de buurt', 'Today nearby')}</b><small>${osmWalkEsc(sub)}</small></span><svg class="nr-evch" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>`;
+}
+function nrEvItemHtml(it){
+  const tags = (it.free ? `<i class="nr-evtag g">${nrT('Gratis', 'Free')}</i>` : '') + (it.kids ? `<i class="nr-evtag g">${nrT('Kinderen', 'Kids')}</i>` : '') + (it.cat ? `<i class="nr-evtag">${osmWalkEsc(it.cat.replace(/[.,]+$/, '').toLowerCase().replace(/^./, c => c.toUpperCase()))}</i>` : '');
+  return `<button type="button" class="nr-sgi nr-evi" data-act="evopen" data-u="${osmWalkEsc(it.url)}"><span class="nr-evph">${nrEvIcon}</span><span class="nr-tx"><h4>${osmWalkEsc(it.title)}</h4><div class="nr-meta"><span class="nr-evd">${Math.round(it.distKm)} km</span><span>${osmWalkEsc([it.place, nrEvUntil(it.range)].filter(Boolean).join(' · '))}</span>${tags}</div></span><svg class="nr-evx" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></button>`;
+}
+function nrEvRender(){
+  const ev = nrState.ev; if (!$('nrEvItems')) return;
+  const set = (id, t) => { const el = $(id); if (el) el.textContent = t; };
+  set('nrEvTitle', nrT('Vandaag in de buurt', 'Today nearby'));
+  $('nrEvBack').setAttribute('aria-label', nrT('Terug', 'Back'));
+  set('nrEvSlL', nrT('Afstand tot ' + (ev.place || 'hier'), 'Distance from ' + (ev.place || 'here'))); set('nrEvSlV', nrT('Binnen ' + ev.km + ' km', 'Within ' + ev.km + ' km'));
+  $('nrEvRange').value = String(ev.km); $('nrEvRange').setAttribute('aria-label', nrT('Afstand in kilometer', 'Distance in kilometres'));
+  set('nrEvRefresh', nrT('Vernieuwen', 'Refresh'));
+  const shown = ev.status === 'ok' ? nrEvShown() : [];
+  $('nrEvSub').textContent = ev.status === 'ok' ? nrT(shown.length + (shown.length === 1 ? ' evenement' : ' evenementen') + (ev.place ? ' · ' + ev.place : ''), shown.length + (shown.length === 1 ? ' event' : ' events') + (ev.place ? ' · ' + ev.place : '')) : (ev.place || '');
+  $('nrEvChips').innerHTML = [['all', nrT('Alles', 'All')], ['free', nrT('Gratis', 'Free')], ['kids', nrT('Kinderen', 'Kids')]].map(([k, l]) => `<button type="button" class="nr-sgf${ev.flt === k ? ' on' : ''}" data-act="evflt" data-f="${k}" aria-pressed="${ev.flt === k}">${l}</button>`).join('');
+  const hint = ev.status === 'ok' && ev.km > ev.reach ? `<p class="nr-evhint">${nrT('De lijst van Wattedoen reikt tot ' + Math.round(ev.reach) + ' km; verder is niets geladen.', 'The Wattedoen list reaches up to ' + Math.round(ev.reach) + ' km; nothing further is loaded.')}</p>` : '';
+  const card = (cls, h, p, btns) => `<div class="nr-evmsg ${cls}"><b>${h}</b><p>${p}</p><div>${btns || ''}</div></div>`;
+  const b = (act, t, c) => `<button type="button" class="nr-evbtn${c ? ' ' + c : ''}" data-act="${act}">${t}</button>`;
+  let body;
+  if (ev.status === 'loading') body = '<div class="nr-evsk"><i></i><i></i><i></i></div>';
+  else if (ev.status === 'abroad') body = card('', nrT('Alleen België', 'Belgium only'), nrT('Wattedoen kent enkel België. Deze plek ligt daarbuiten. Kies een plaats in België om te zien wat er speelt.', 'Wattedoen only covers Belgium. This place is outside it. Pick a place in Belgium to see what is on.'), b('place', nrT('Andere plaats kiezen', 'Pick another place')));
+  else if (ev.status === 'error'){
+    const t = ev.err === 'cors' ? nrT('Dit werkt alleen in de app. De browser laat het lezen van een andere site niet toe.', 'This only works in the app. The browser does not allow reading another site.')
+      : ev.err === 'unreadable' ? nrT('De pagina is geladen, maar ik kan er geen evenementen uit lezen. Misschien is de opmaak van Wattedoen veranderd.', 'The page loaded, but I cannot read any events from it. Wattedoen may have changed its layout.')
+      : ev.err === 'nolocation' || ev.err === 'noplace' ? nrT('Je positie of plaats is niet bekend. Kies een plaats.', 'Your position or place is unknown. Pick a place.')
+      : nrT('Geen verbinding, of Wattedoen antwoordt niet. Probeer het opnieuw of open de site zelf.', 'No connection, or Wattedoen is not responding. Try again or open the site yourself.');
+    body = card('err', nrT('Het lukt niet om de lijst te laden', 'Could not load the list'), t, b('evrefresh', nrT('Opnieuw proberen', 'Try again')) + b('evsite', nrT('Open Wattedoen', 'Open the Wattedoen site'), 'alt') + (ev.err === 'unreadable' ? b('evdiag', nrT('Kopieer diagnose', 'Copy diagnostics'), 'alt') : ''));
+  } else if (ev.status === 'ok' && !shown.length){
+    body = hint + card('', nrT('Vandaag niets binnen ' + ev.km + ' km', 'Nothing today within ' + ev.km + ' km'), ev.flt !== 'all' ? nrT('Met dit filter is er niets. Kies Alles of vergroot de afstand.', 'Nothing with this filter. Choose All or increase the distance.') : nrT('Schuif de afstand op naar meer kilometer, of bekijk de hele agenda op Wattedoen.', 'Slide the distance further, or see the whole calendar on Wattedoen.'), b('evsite', nrT('Open Wattedoen', 'Open the Wattedoen site'), 'alt'));
+  } else body = hint + shown.map(nrEvItemHtml).join('');
+  $('nrEvItems').innerHTML = body;
+  set('nrEvFoot', nrT('Bron: Wattedoen.be. Een tik opent het evenement op hun site.' + (ev.at ? ' Bijgewerkt om ' + new Date(ev.at).toLocaleTimeString('nl-BE', { hour:'2-digit', minute:'2-digit' }) + '.' : ''), 'Source: Wattedoen.be. A tap opens the event on their site.' + (ev.at ? ' Updated at ' + new Date(ev.at).toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' }) + '.' : '')));
+}
+function nrEvOpen(){
+  nrState.listScroll = $('nrListWrap').scrollTop;
+  nrSgView('ev'); nrEvRender(); $('nrEvItems').scrollTop = 0;
+  nrEvLoad(false);
+}
+async function nrEvWire(){
+  if (nrState.evWired) return; nrState.evWired = true;
+  $('nrEvRange').addEventListener('input', (e) => {
+    const v = Math.max(1, Math.min(NR_EV_KM_MAX, parseInt(e.target.value, 10) || 20)); nrState.ev.km = v;
+    try{ storageSet(NR_EV_KM_KEY, String(v)); }catch(x){}
+    nrEvRender();
+  });
+  try{ const v = parseInt(await storageGet(NR_EV_KM_KEY), 10); if (v >= 1 && v <= NR_EV_KM_MAX) nrState.ev.km = v; }catch(e){}
+}
+function nrEvAct(act, b){
+  const ev = nrState.ev;
+  if (act === 'evopen'){ const u = b.dataset.u; if (/^https:\/\/www\.wattedoen\.be\//i.test(u || '')) openExternalGpxLink(u); return true; }
+  if (act === 'evflt'){ ev.flt = b.dataset.f || 'all'; nrEvRender(); return true; }
+  if (act === 'evrefresh'){ nrEvLoad(true); return true; }
+  if (act === 'evsite'){ openExternalGpxLink(NR_EV_HOST); return true; }
+  if (act === 'evdiag'){ const t = ev.diag || ''; try{ navigator.clipboard.writeText(t).then(() => toast(nrT('Diagnose gekopieerd', 'Diagnostics copied'), 2500), () => toast(nrT('Kopiëren lukte niet', 'Copy failed'), 2500)); }catch(e){ toast(nrT('Kopiëren lukte niet', 'Copy failed'), 2500); } return true; }
+  return false;
 }
 
 // ----- Filters: ☔ Bij regen (verharde ondergrond), 👨‍👩‍👧 Kinderen (speeltuin dichtbij), 🚆 Trein/bus (halte dichtbij), ⭐ Lijstje -----
@@ -45457,7 +45753,7 @@ function nrBackToList(){
   nrState.detail = null; nrState.dtoken++;
   $('nrListWrap').scrollTop = nrState.listScroll || 0;
 }
-function nrClose(){ $('nearbyRoutesOverlay').classList.remove('show'); $('nearbyRoutesCard').classList.remove('detail', 'loading', 'chat', 'sgv'); nrState.sg.tok++; nrSgListenStop(); $('nrPlaceSheet').classList.remove('show'); nrState.load = null; nrState.loadMsg = null; nrState.detail = null; nrState.dtoken++; nrState.token++; clearTimeout(nrState.pendT); nrState.pend = []; if (nrState.io){ try{ nrState.io.disconnect(); }catch(e){} nrState.io = null; } }
+function nrClose(){ $('nearbyRoutesOverlay').classList.remove('show'); $('nearbyRoutesCard').classList.remove('detail', 'loading', 'chat', 'sgv'); nrState.sg.tok++; nrState.ev.tok++; nrSgListenStop(); $('nrPlaceSheet').classList.remove('show'); nrState.load = null; nrState.loadMsg = null; nrState.detail = null; nrState.dtoken++; nrState.token++; clearTimeout(nrState.pendT); nrState.pend = []; if (nrState.io){ try{ nrState.io.disconnect(); }catch(e){} nrState.io = null; } }
 function nrOpenRoute(c){
   nrClose();
   // Vanaf het keuzescherm (assistent of "Mijn lijstje" daar) is er geen opzetscherm en dus nog geen Wandel-/Fietsmodus: eerst die modus
