@@ -2554,6 +2554,99 @@
   #nearbyRoutesCard .nr-ptxt{ display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; font-size:12.5px; color:#334155; margin-bottom:3px; }
   #nearbyRoutesCard .nr-dfav{ font-size:20px; color:#cbd5e1; }
   #nearbyRoutesCard .nr-dfav.on{ color:#f59e0b; }
+  /* Ronde 186: bezienswaardigheden (carrousel, volledige lijst, info met minikaart, grote kaart, plaatskiezer) */
+  #nearbyRoutesCard .nr-sight{ display:none; flex:1 1 auto; min-height:0; flex-direction:column; }
+  #nearbyRoutesCard.sgv > .nr-hd, #nearbyRoutesCard.sgv > .nr-chips, #nearbyRoutesCard.sgv > .nr-filters, #nearbyRoutesCard.sgv > .nr-seg, #nearbyRoutesCard.sgv > .nr-status, #nearbyRoutesCard.sgv > .nr-load, #nearbyRoutesCard.sgv > .nr-listwrap, #nearbyRoutesCard.sgv > .nr-foot, #nearbyRoutesCard.sgv > .nr-ask, #nearbyRoutesCard.sgv > .nr-chat, #nearbyRoutesCard.sgv > .nr-detail{ display:none !important; }
+  #nearbyRoutesCard.sgv > .nr-sight{ display:flex; }
+  #nearbyRoutesCard .nr-sgp{ display:none; flex:1 1 auto; min-height:0; flex-direction:column; }
+  #nearbyRoutesCard .nr-sight[data-v="list"] #nrSgList, #nearbyRoutesCard .nr-sight[data-v="det"] #nrSgDet, #nearbyRoutesCard .nr-sight[data-v="map"] #nrSgMap{ display:flex; }
+  #nearbyRoutesCard .nr-sgh{ flex:0 0 auto; display:flex; align-items:center; gap:10px; padding:14px 16px 6px; }
+  #nearbyRoutesCard .nr-sgh .nr-ttl{ margin:0; }
+  #nearbyRoutesCard .nr-sgb{ flex:0 0 auto; width:44px; height:44px; border:none; border-radius:50%; background:#f1f5f9; color:#334155; display:flex; align-items:center; justify-content:center; padding:0; }
+  #nearbyRoutesCard .nr-sgb svg{ width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+  #nearbyRoutesCard .nr-sgbar{ flex:0 0 auto; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:4px 16px 8px; }
+  #nearbyRoutesCard .nr-sgpill{ display:inline-flex; align-items:center; gap:8px; border:none; background:#f1f5f9; color:#0f172a; border-radius:99px; padding:0 14px; min-height:44px; font:inherit; font-size:13px; font-weight:600; max-width:100%; }
+  #nearbyRoutesCard .nr-sgpill span{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  #nearbyRoutesCard .nr-sgpill svg{ width:16px; height:16px; flex:0 0 auto; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  #nearbyRoutesCard .nr-sgmapbtn{ display:inline-flex; align-items:center; gap:6px; border:none; background:#b45309; color:#fff; border-radius:99px; padding:0 14px; min-height:44px; font:inherit; font-size:13px; font-weight:700; white-space:nowrap; flex:0 0 auto; }
+  #nearbyRoutesCard .nr-sgchips{ flex:0 0 auto; display:flex; gap:8px; overflow-x:auto; padding:0 16px 6px; -webkit-overflow-scrolling:touch; }
+  #nearbyRoutesCard .nr-sgf{ flex:0 0 auto; border:none; background:#f1f5f9; color:#334155; border-radius:99px; padding:0 14px; min-height:44px; font:inherit; font-size:13px; font-weight:600; white-space:nowrap; }
+  #nearbyRoutesCard .nr-sgf.on{ background:#0f172a; color:#fff; font-weight:700; }
+  #nearbyRoutesCard .nr-sgsort{ flex:0 0 auto; padding:0 16px 2px; font-size:12.5px; color:#64748b; display:flex; align-items:center; gap:6px; }
+  #nearbyRoutesCard .nr-sgsb{ border:none; background:none; color:#b45309; font:inherit; font-size:12.5px; font-weight:700; min-height:44px; padding:0 4px; }
+  #nearbyRoutesCard .nr-sgitems{ flex:1 1 auto; min-height:0; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch; padding:0 16px; border-top:1px solid #f1f5f9; }
+  #nearbyRoutesCard .nr-sgi{ display:flex; gap:12px; align-items:center; width:100%; padding:10px 0; border:none; border-top:1px solid #f1f5f9; background:none; color:inherit; text-align:left; font:inherit; }
+  #nearbyRoutesCard .nr-sgi:first-child{ border-top:none; }
+  #nearbyRoutesCard .nr-sgph{ flex:0 0 auto; width:56px; height:56px; border-radius:14px; overflow:hidden; background:linear-gradient(135deg,#fef3c7,#fde68a); display:flex; align-items:center; justify-content:center; font-size:24px; }
+  #nearbyRoutesCard .nr-sgph img{ width:100%; height:100%; object-fit:cover; display:block; }
+  #nearbyRoutesCard .nr-sgph.s{ width:52px; height:52px; }
+  #nearbyRoutesCard .nr-sgd{ font-weight:800; color:#b45309; background:#fffbeb; border-radius:99px; padding:2px 8px; box-shadow:inset 0 0 0 1px #fde68a; font-size:12px; }
+  #nearbyRoutesCard .nr-sgd.bl{ color:#1d4ed8; background:#eff6ff; box-shadow:inset 0 0 0 1px #bfdbfe; }
+  #nearbyRoutesCard .nr-sgfoot{ flex:0 0 auto; margin:0; padding:10px 16px 14px; border-top:1px solid #f1f5f9; font-size:11.5px; color:#64748b; line-height:1.4; }
+  /* carrousel op de lijst */
+  #nearbyRoutesCard .nr-sgsec{ padding:6px 0 4px; }
+  #nearbyRoutesCard .nr-sghd{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  #nearbyRoutesCard .nr-sghd .nr-sec{ margin:4px 0 0; }
+  #nearbyRoutesCard .nr-sgall{ border:none; background:none; color:#b45309; font:inherit; font-size:13px; font-weight:700; min-height:44px; padding:0 4px; }
+  #nearbyRoutesCard .nr-sgrow{ display:flex; gap:10px; overflow-x:auto; padding:2px 16px 10px 0; margin-right:-16px; -webkit-overflow-scrolling:touch; scroll-snap-type:x proximity; }
+  #nearbyRoutesCard .nr-sgc{ flex:0 0 auto; width:150px; display:flex; flex-direction:column; align-items:stretch; padding:0; border:none; border-radius:16px; background:#fff; box-shadow:0 0 0 1px #e2e8f0; overflow:hidden; text-align:left; font:inherit; color:inherit; scroll-snap-align:start; }
+  #nearbyRoutesCard .nr-sgc .nr-sgph{ width:100%; height:84px; border-radius:0; font-size:30px; }
+  #nearbyRoutesCard .nr-sgn{ display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; padding:8px 10px 0; font-size:13.5px; font-weight:700; color:#0f172a; line-height:1.25; height:36px; box-sizing:content-box; }
+  #nearbyRoutesCard .nr-sgm{ display:flex; align-items:center; gap:6px; padding:6px 10px 10px; font-size:12px; color:#64748b; white-space:nowrap; overflow:hidden; }
+  #nearbyRoutesCard .nr-sgm b{ font-weight:800; color:#b45309; background:#fffbeb; border-radius:99px; padding:1px 8px; box-shadow:inset 0 0 0 1px #fde68a; }
+  #nearbyRoutesCard .nr-sgmsg{ margin:6px 0 10px; padding:12px 14px; border-radius:14px; background:#f8fafc; box-shadow:inset 0 0 0 1px #e2e8f0; font-size:13px; line-height:1.45; color:#334155; display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+  #nearbyRoutesCard .nr-sgretry{ border:none; border-radius:10px; padding:0 14px; min-height:44px; background:#059669; color:#fff; font:inherit; font-size:13px; font-weight:800; }
+  /* info (Wikipedia) met minikaart */
+  #nearbyRoutesCard .nr-sgdbody{ position:relative; flex:1 1 auto; min-height:0; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch; }
+  #nearbyRoutesCard .nr-sghero{ height:170px; background:linear-gradient(135deg,#fef3c7,#fde68a 55%,#fcd9a8); display:flex; align-items:center; justify-content:center; font-size:56px; overflow:hidden; }
+  #nearbyRoutesCard .nr-sghero img{ width:100%; height:100%; object-fit:cover; display:block; }
+  #nearbyRoutesCard .nr-sgback{ position:absolute; left:12px; top:12px; background:#fff; box-shadow:0 2px 8px rgba(15,23,42,0.2); }
+  #nearbyRoutesCard .nr-sgdin{ padding:14px 16px 8px; }
+  #nearbyRoutesCard .nr-sgdin h3{ margin:0 0 6px; font-size:21px; font-weight:800; letter-spacing:-0.3px; color:#0f172a; line-height:1.2; }
+  #nearbyRoutesCard .nr-sgtext{ margin:12px 0 0; font-size:14px; line-height:1.55; color:#334155; }
+  #nearbyRoutesCard .nr-sgsrc{ margin:8px 0 0; font-size:11.5px; color:#64748b; }
+  #nearbyRoutesCard .nr-sgacts{ display:flex; flex-wrap:wrap; gap:4px 14px; align-items:center; }
+  #nearbyRoutesCard .nr-sglink{ display:none; align-items:center; min-height:44px; color:#1d4ed8; font-size:13px; font-weight:700; text-decoration:none; }
+  #nearbyRoutesCard .nr-sglisten{ display:none; align-items:center; gap:6px; min-height:44px; border:none; background:none; color:#b45309; font:inherit; font-size:13px; font-weight:700; padding:0; }
+  #nearbyRoutesCard .nr-sglisten.on{ text-decoration:underline; }
+  #nearbyRoutesCard .nr-sgminiw{ position:relative; height:158px; margin:4px 0 8px; border-radius:16px; overflow:hidden; box-shadow:inset 0 0 0 1px #e2e8f0; background:#e8efe3; }
+  #nearbyRoutesCard #nrSgMini{ position:absolute; left:0; top:0; right:0; bottom:0; z-index:0; }
+  #nearbyRoutesCard .nr-sgbig{ position:absolute; left:0; top:0; right:0; bottom:0; border:none; background:transparent; padding:0; z-index:5; }
+  #nearbyRoutesCard .nr-sgbig span{ position:absolute; right:10px; bottom:10px; display:inline-flex; align-items:center; min-height:44px; padding:0 14px; border-radius:99px; background:#fff; color:#0f172a; font-size:12.5px; font-weight:700; box-shadow:0 2px 8px rgba(15,23,42,0.2); }
+  #nearbyRoutesCard .nr-sgdfoot{ flex:0 0 auto; padding:10px 16px 16px; border-top:1px solid #f1f5f9; background:#fff; }
+  #nearbyRoutesCard .nr-sgnav{ display:flex; align-items:center; justify-content:center; width:100%; border:none; border-radius:14px; min-height:52px; background:#047857; color:#fff; font:inherit; font-size:15px; font-weight:800; }
+  /* grote kaart */
+  #nearbyRoutesCard .nr-sgmapw{ position:relative; flex:1 1 auto; min-height:0; background:#e8efe3; }
+  #nearbyRoutesCard #nrSgMapEl{ position:absolute; left:0; top:0; right:0; bottom:0; z-index:0; }
+  #nearbyRoutesCard .nr-sgtopl{ position:absolute; left:12px; top:12px; z-index:5; background:#fff; box-shadow:0 2px 8px rgba(15,23,42,0.2); }
+  #nearbyRoutesCard .nr-sgmtitle{ position:absolute; left:64px; right:12px; top:12px; z-index:5; min-height:44px; display:flex; align-items:center; padding:0 14px; border-radius:22px; background:#fff; color:#0f172a; font-size:14px; font-weight:800; box-shadow:0 2px 8px rgba(15,23,42,0.2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  #nearbyRoutesCard .nr-sgmcard{ flex:0 0 auto; padding:12px 16px 16px; background:#fff; border-top:1px solid #f1f5f9; }
+  #nearbyRoutesCard .nr-sgmt{ display:flex; gap:12px; align-items:center; margin-bottom:12px; }
+  #nearbyRoutesCard .nr-sgmt h4{ margin:0 0 4px; font-size:16px; font-weight:800; color:#0f172a; white-space:normal; }
+  #nearbyRoutesCard .nr-sgbtns{ display:flex; gap:8px; margin-top:8px; }
+  #nearbyRoutesCard .nr-sgbtns button{ flex:1; border:none; border-radius:12px; min-height:46px; background:#f1f5f9; color:#0f172a; font:inherit; font-size:13.5px; font-weight:700; }
+  #nearbyRoutesCard .nr-sgcap, #nearbyRoutesCard .nr-sgmh{ margin:8px 0 0; font-size:11.5px; color:#64748b; line-height:1.4; }
+  #nearbyRoutesCard .nr-sgmh{ font-size:13px; margin:0; padding:6px 0; }
+  .nr-sgpin{ width:34px; height:34px; border-radius:50%; background:#b45309; border:3px solid #fff; box-shadow:0 2px 6px rgba(15,23,42,0.35); display:flex; align-items:center; justify-content:center; font-size:15px; box-sizing:border-box; }
+  .nr-sgpin.sel{ background:#047857; transform:scale(1.18); }
+  .nr-sgme{ width:22px; height:22px; border-radius:50%; background:#2563eb; border:3px solid #fff; box-shadow:0 0 0 6px rgba(37,99,235,0.2); box-sizing:border-box; }
+  /* plaatskiezer */
+  #nearbyRoutesCard .nr-psheet{ display:none; position:absolute; left:0; top:0; right:0; bottom:0; z-index:20; background:rgba(15,23,42,0.45); align-items:flex-end; }
+  #nearbyRoutesCard .nr-psheet.show{ display:flex; }
+  #nearbyRoutesCard .nr-ppanel{ width:100%; max-height:88%; display:flex; flex-direction:column; background:#fff; border-radius:22px 22px 0 0; padding:8px 16px 16px; box-shadow:0 -6px 20px rgba(15,23,42,0.18); }
+  #nearbyRoutesCard .nr-pgrip{ align-self:center; width:40px; height:5px; border-radius:3px; background:#cbd5e1; margin:2px 0 8px; }
+  #nearbyRoutesCard .nr-ppanel h3{ margin:4px 0 10px; font-size:19px; font-weight:800; color:#0f172a; }
+  #nearbyRoutesCard .nr-pform{ display:flex; align-items:center; gap:10px; background:#f1f5f9; border-radius:14px; padding:0 12px; min-height:48px; }
+  #nearbyRoutesCard .nr-pform:focus-within{ box-shadow:inset 0 0 0 2px #047857; }
+  #nearbyRoutesCard .nr-pform input{ flex:1; min-width:0; border:none; background:none; font:inherit; font-size:16px; font-weight:600; color:#0f172a; outline:none; padding:10px 0; }
+  #nearbyRoutesCard .nr-pform svg{ width:18px; height:18px; flex:0 0 auto; fill:none; stroke:#475569; stroke-width:2; stroke-linecap:round; }
+  #nearbyRoutesCard .nr-pscroll{ overflow-y:auto; overscroll-behavior:contain; margin-top:6px; }
+  #nearbyRoutesCard .nr-pme, #nearbyRoutesCard .nr-sgpr{ display:flex; gap:12px; align-items:center; width:100%; min-height:44px; padding:8px 0; border:none; border-top:1px solid #f1f5f9; background:none; font:inherit; text-align:left; color:inherit; }
+  #nearbyRoutesCard .nr-pme .nr-sgph{ background:#eff6ff; color:#2563eb; }
+  #nearbyRoutesCard .nr-pme.on h4::after{ content:' ✓'; color:#047857; }
+  #nearbyRoutesCard .nr-sgrec{ display:flex; flex-wrap:wrap; gap:8px; }
+  #nearbyRoutesCard .nr-sgrec button{ border:none; background:#f1f5f9; color:#334155; border-radius:99px; padding:0 14px; min-height:44px; font:inherit; font-size:13.5px; font-weight:600; }
+  #nearbyRoutesCard .nr-sgclose{ margin-top:10px; border:none; background:none; color:#475569; font:inherit; font-weight:700; font-size:13px; min-height:44px; }
   #nearbyRoutesCard .nr-listwrap{ flex:1 1 auto; min-height:0; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch; padding:0 16px 8px; border-top:1px solid #f1f5f9; }
   #nearbyRoutesCard .nr-item{ display:flex; gap:12px; align-items:center; width:100%; padding:11px 0; border:none; border-top:1px solid #f1f5f9; background:none; color:inherit; text-align:left; font:inherit; }
   #nearbyRoutesCard .nr-item:first-child{ border-top:none; }
@@ -5481,11 +5574,53 @@
     <div id="nrSort" class="nr-seg" role="group"></div>
     <div id="nrStatus" class="nr-status"></div>
     <div id="nrLoad" class="nr-load" role="status" aria-live="polite"></div>
-    <div id="nrListWrap" class="nr-listwrap"><div id="nrPlaces"></div><div id="nrList"></div><p id="nrNote" class="nr-note"></p></div>
+    <div id="nrListWrap" class="nr-listwrap"><div id="nrSights"></div><div id="nrPlaces"></div><div id="nrList"></div><p id="nrNote" class="nr-note"></p></div>
     <button id="nrAsk" class="nr-ask" type="button"><i aria-hidden="true">✨</i><span id="nrAskLbl"></span><s aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></s></button>
     <div class="nr-foot"><label class="nr-sw"><input type="checkbox" id="nrToggle" checked><b></b><span id="nrToggleLbl"></span></label><button id="nrLater" class="nr-later" type="button"></button></div>
     <div id="nrChat" class="nr-chat"><div id="nrChatMsgs" class="nr-chatmsgs" aria-live="polite"></div><div id="nrChatSugg" class="nr-chips nr-chatsugg"></div><form id="nrChatForm" class="nr-chatform" autocomplete="off"><textarea id="nrChatInput" rows="2" maxlength="1000" enterkeyhint="send" autocomplete="off"></textarea><button id="nrChatSend" type="submit">➤</button></form><p id="nrChatHint" class="nr-chathint"></p></div>
     <div id="nrDetail" class="nr-detail"></div>
+    <div id="nrSight" class="nr-sight">
+      <div id="nrSgList" class="nr-sgp">
+        <div class="nr-sgh"><button type="button" class="nr-sgb" data-act="back" id="nrSgBack1"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><p class="nr-ttl"><span id="nrSgTitle"></span><small id="nrSgSub"></small></p></div>
+        <div class="nr-sgbar"><span id="nrSgPlace"></span><button type="button" class="nr-sgmapbtn" data-act="allmap" id="nrSgAllMap"></button></div>
+        <div id="nrSgChips" class="nr-sgchips" role="group"></div>
+        <div id="nrSgSort" class="nr-sgsort"></div>
+        <div id="nrSgItems" class="nr-sgitems"></div>
+        <p class="nr-sgfoot" id="nrSgFoot"></p>
+      </div>
+      <div id="nrSgDet" class="nr-sgp">
+        <div id="nrSgDBody" class="nr-sgdbody">
+          <div class="nr-sghero" id="nrSgDHero"></div>
+          <button type="button" class="nr-sgb nr-sgback" data-act="back" id="nrSgBack2"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+          <div class="nr-sgdin">
+            <h3 id="nrSgDTitle"></h3>
+            <div class="nr-meta" id="nrSgDMeta"></div>
+            <p class="nr-sgtext" id="nrSgDText"></p>
+            <p class="nr-sgsrc" id="nrSgDSrc"></p>
+            <div class="nr-sgacts"><a id="nrSgDLink" class="nr-sglink" data-act="wiki" href="#"></a><button type="button" id="nrSgDListen" class="nr-sglisten" data-act="listen"></button></div>
+            <div class="nr-sgminiw"><div id="nrSgMini"></div><button type="button" class="nr-sgbig" data-act="bigmap" id="nrSgBigBtn"><span></span></button></div>
+          </div>
+        </div>
+        <div class="nr-sgdfoot"><button type="button" class="nr-sgnav" data-act="nav" id="nrSgDNav"></button></div>
+      </div>
+      <div id="nrSgMap" class="nr-sgp">
+        <div class="nr-sgmapw"><div id="nrSgMapEl"></div><button type="button" class="nr-sgb nr-sgtopl" data-act="back" id="nrSgBack3"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><span class="nr-sgmtitle" id="nrSgMTitle"></span></div>
+        <div id="nrSgMCard" class="nr-sgmcard"></div>
+      </div>
+    </div>
+    <div id="nrPlaceSheet" class="nr-psheet" role="dialog" aria-modal="true" aria-labelledby="nrPlaceTitle">
+      <div class="nr-ppanel">
+        <span class="nr-pgrip" aria-hidden="true"></span>
+        <h3 id="nrPlaceTitle"></h3>
+        <form id="nrPlaceForm" class="nr-pform" autocomplete="off"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="nrPlaceQ" type="search" enterkeyhint="search" autocomplete="off" autocapitalize="words"></form>
+        <div class="nr-pscroll">
+          <button type="button" class="nr-pme" data-act="me" id="nrPlaceMe"><span class="nr-sgph s">📍</span><span class="nr-tx"><h4 id="nrPlaceMeT"></h4><div class="nr-meta"><span id="nrPlaceMeS"></span></div></span></button>
+          <div id="nrPlaceRes"></div>
+          <div id="nrPlaceRecent"></div>
+        </div>
+        <button type="button" class="nr-sgclose" data-act="close" id="nrPlaceClose"></button>
+      </div>
+    </div>
   </div>
 </div>
 <div id="toast"><i class="toast-eyes" aria-hidden="true"><b></b><b></b></i><svg class="toast-star t1" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 0 L12.2 7.8 L20 10 L12.2 12.2 L10 20 L7.8 12.2 L0 10 L7.8 7.8Z"/></svg><svg class="toast-star t2" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 0 L12.2 7.8 L20 10 L12.2 12.2 L10 20 L7.8 12.2 L0 10 L7.8 7.8Z"/></svg></div>
@@ -15482,6 +15617,25 @@ const DEV_NOTES_CONTENT = {
       <p><b>Teksten en test:</b> alle nieuwe teksten bestaan in NL en EN, Help en <code>plekken/README.md</code> zijn aangevuld. <b>Testsuite:</b> nieuw bestand <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> is een kiezer aangepast aan de nieuwe rijopbouw. Versie 2.497 / versionCode 116.</p>
     </section>
     <section>
+      <h3>🛠️ Ronde 186: bezienswaardigheden in "Leuke wandelingen", plaatskiezer en Beluister-fix</h3>
+      <p><b>Wat er is.</b> Bij Wandelen staat boven de routes een carrousel "Bezienswaardig in de buurt" (de acht bekendste), met foto, afstand en soort. "Alle N" opent de volledige lijst met filters per soort (kerken, Romeins, kastelen, musea, monumenten, uitzicht, overig) en sorteren op afstand of bekendheid. Een bezienswaardigheid aantikken toont de Wikipedia-inleiding (nl, anders en, anders de) met bron, een minikaart, "Beluister" en "Navigeer vanaf mijn locatie". "Grote kaart" toont de plek en jouw positie; "Alles op kaart" toont alle punten.</p>
+      <p><b>Bron.</b> <code>nrSgQuery()</code> vraagt aan OpenStreetMap (Overpass, enkel nodes en vlakken) naam en soort van <code>tourism=attraction|museum|viewpoint</code> en van <code>historic</code>, kerken en gebedshuizen die een <code>wikidata</code>-label hebben. <code>nrSgParse()</code> haalt dubbelen weg (zelfde Wikidata of zelfde naam binnen 250 m) en sorteert op afstand; <code>fame</code> telt Wikipedia-label 2, Wikidata 1 en attraction/museum 1. Straal 3 km, bij minder dan 6 resultaten één keer 8 km, hooguit 80 plekken. <code>nrSgEnrichIds()</code> haalt per batch van 50 de Wikipedia-titels en de naam in je taal uit Wikidata en de foto uit Wikipedia (<code>pageimages</code>), bewaard 30 dagen onder <code>nr_sight_enrich_v1</code>. Als er geen artikel gekoppeld is zoekt <code>nrWikiFindTitle()</code> op naam (artikelen binnen 300 m, daarna opensearch; enkel een titel met een gemeenschappelijk woord telt).</p>
+      <p><b>Plaatskiezer.</b> "Bij mij" of een andere plaats (geocoder met vijf resultaten, recente plaatsen onder <code>nr_recent_places_v1</code>). <code>nrSgSetPlace()</code> zoekt de bezienswaardigheden opnieuw en laadt de routes rond dezelfde plaats met <code>nrChatEnsureRoutes()</code> (Ronde 185). Bij elke keer openen begint het weer bij "Bij mij".</p>
+      <p><b>Navigeren.</b> <code>nrSgNavigate()</code> sluit de pop-up, opent de kaart (<code>garminSetupContinue()</code> of <code>bikeSetupContinueBtn</code>) en roept <code>navigateToPinpoint()</code> aan: de bestaande route vanaf je positie. De stippellijn op de kaart is hemelsbreed en dat staat erbij. De looptijd is hemelsbreed met 30% omweg bij 4,5 km/u.</p>
+      <p><b>Beluister-fix.</b> <code>playAudioGuideItem()</code> zocht enkel een artikel met de letterlijke naam. Bij een naam uit de fotoherkenning die niet exact een titel is vond het geen tekst en opende het enkel een gegokte pagina via <code>window.open()</code>, waarna de app op de achtergrond ging en het voorlezen niet startte of stopte. Nu zoekt het eerst op naam, start de stem eerst en toont het de uitleg in het Wikipedia-venster van de app (<code>showAudioGuideInfo()</code>) met een link; is er niets gevonden dan staat dat in het venster, met een zoeklink, in plaats van een melding van 2,5 seconden. De uitgesproken titel is die van het gevonden artikel.</p>
+      <p><b>Kaartlaag.</b> De minikaart en de grote kaart gebruiken <code>L.map</code> met OpenStreetMap-tegels (zelfde als de analysekaart). De kaartcontainers hebben <code>z-index:0</code>, anders liggen de panes van de kaart boven de knop die de minikaart aantikbaar maakt.</p>
+      <p><b>Beperkingen.</b> Niet elke bezienswaardigheid staat in OpenStreetMap, en relaties (grote complexen als multipolygoon) worden niet bevraagd. "Andere startplek" uit het ontwerp is niet gebouwd; er is "Open in Maps".</p>
+      <p><b>Test.</b> <code>test_round186_sights.js</code> (13 tests).</p>
+    </section>
+    <section>
+      <h3>🛠️ Ronde 185: de assistent zoekt routes rond een genoemde plaats</h3>
+      <p><b>Probleem.</b> Een vraag als "leuke wandelingen in Saarburg" gaf als antwoord dat de assistent alleen routes bij de huidige positie kent. Het begripsverzoek leverde wel <code>place</code> op, maar <code>nrChatEnsureRoutes()</code> haalde de routes altijd rond de eigen positie op, en de antwoordprompt kreeg een expliciete opmerking dat enkel de routes bij de gebruiker bekend zijn. Een genoemde plaats werd alleen gebruikt voor weer en plekken (eten, apotheek).</p>
+      <p><b>Oplossing.</b> Bij <code>routes</code> én <code>place</code> zoekt <code>nrChatSend()</code> de plaats op met <code>assistantGeocode()</code> en geeft die door aan <code>nrChatEnsureRoutes(mode, token, placeLL)</code>. Die haalt het GPX-overzicht en OpenStreetMap rond die plaats op (<code>nrState.userLL</code> is dan het midden van de plaats). De lijst onthoudt waarvoor ze gemaakt is (<code>nrState.listKey</code>, <code>nrState.placeName</code>): dezelfde plaats hergebruikt de lijst, een andere plaats of een vraag zonder plaats laadt opnieuw. Wordt de plaats niet gevonden, dan komt er een eerlijke melding en geen terugval op de eigen buurt.</p>
+      <p><b>Weergave.</b> Kaartjes in de chat tonen "van Saarburg" in plaats van "van hier" (per kaartje onthouden in <code>c._ref</code>, zodat oudere berichten kloppen), de lijst toont "rond Saarburg" in de ondertitel en "van Saarburg" bij de afstand, de bronregel luidt "routes rond Saarburg", en de antwoordprompt zegt dat de routes bij die plaats horen. Eigen tips komen uit de buurt van die plaats.</p>
+      <p><b>Privacy.</b> Er gaat enkel de plaatsnaam naar de Open-Meteo-geocoder en de plaats-coördinaten naar OpenStreetMap, geen eigen positie.</p>
+      <p><b>Test.</b> <code>test_round184_assistant_place_routes.js</code> (5 tests).</p>
+    </section>
+    <section>
       <h3>🛠️ Ronde 184: aankomstvenster, kaartopties-streepje en vastgelopen meedraaien</h3>
       <p><b>Aankomstvenster.</b> De knop "Bekijk rit-analyse" (<code>#reverseTripAnalyseBtn</code>) had geen eigen tekstkleur en een bijna-transparante achtergrond. Een <code>&lt;button&gt;</code> erft de tekstkleur niet van de omliggende kaart, dus onder Garmin-stijl (donkere kaart) werd het zwarte tekst op donker. De knop heeft nu een vaste kleur per stijl (<code>var(--ink)</code> in Standaard, <code>#f1f5f9</code> in Garmin) en een zichtbare achtergrond.</p>
       <p><b>Streepje van Kaartopties.</b> <code>#mapLayersSheetHandle</code> is sticky met een dekkende achtergrond, maar de ruimte eronder was een marge (7 px) en geen padding, dus gescrolde tegels werden tot vlak onder het streepje zichtbaar. De onderste padding is 5 px naar 10 px gegaan en de marge van 7 px naar 2 px: in rust is de lade even hoog, bij scrollen blijft er 5 px extra vrij onder het streepje.</p>
@@ -17246,6 +17400,25 @@ const DEV_NOTES_CONTENT = {
       <p><b>Filters:</b> data comes from Overpass (<code>osmWalkOverpass()</code>) and is kept for 30 days (<code>nearby_tags_v1</code>). Playground (<code>leisure=playground</code>, 300 m) and stop (<code>highway=bus_stop</code>, <code>railway=station|halt|tram_stop</code>, 500 m) in 1 request per 20 routes; the first 60 in the sorting. Surface: per route (the first 20) sample points about every 250 m (6 to 14), per point the nearest way within 15 m (<code>out tags geom</code>) and its class from <code>surface</code>, otherwise <code>tracktype</code> or <code>highway</code>; a path or footway without <code>surface</code> does not count. At least 5 known points and 60% of the points known, otherwise no statement; "in rain" = at least 70% paved. A route that is only a link has no track and gets no surface label. If a request fails a message appears and nothing is saved.</p>
       <p><b>Own places:</b> <code>plekken/index.json</code> (<code>regions[].places[]</code> with name, text, lat, lon, foto, fotoBron, mode, gecontroleerd) is loaded at startup; <code>nrPlacesNear()</code> keeps places of this activity within 40 km; the pop-up shows the three nearest. Without a filter and without a length group they show as "📍 Own tips" above the list; a tap opens the place in Google Maps. The file holds ten places in Limburg as a starter list (no date in <code>gecontroleerd</code>, so shown as "not checked yourself yet", with a Maps search text in <code>maps</code>); the rest comes from you, the app invents nothing.</p>
       <p><b>Texts and test:</b> all new texts exist in NL and EN, Help and <code>plekken/README.md</code> are extended. <b>Test suite:</b> new file <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> one selector is adjusted to the new row structure. Version 2.497 / versionCode 116.</p>
+    </section>
+    <section>
+      <h3>🛠️ Round 186: sights in "Nice walks", place picker and the Listen fix</h3>
+      <p><b>What is new.</b> For Walking, a carousel "Sights nearby" (the eight best known) sits above the routes, with photo, distance and type. "All N" opens the full list with filters per type (churches, Roman, castles, museums, monuments, viewpoints, other) and sorting by distance or fame. Tapping a sight shows the Wikipedia intro (nl, else en, else de) with source, a mini map, "Listen" and "Navigate from my location". "Large map" shows the place and your position; "All on map" shows every point.</p>
+      <p><b>Source.</b> <code>nrSgQuery()</code> asks OpenStreetMap (Overpass, nodes and ways only) for name and type of <code>tourism=attraction|museum|viewpoint</code> and of <code>historic</code> objects, churches and places of worship that carry a <code>wikidata</code> tag. <code>nrSgParse()</code> removes duplicates (same Wikidata, or same name within 250 m) and sorts by distance; <code>fame</code> counts a Wikipedia tag as 2, Wikidata as 1 and attraction/museum as 1. Radius 3 km, once 8 km when fewer than 6 results, at most 80 places. <code>nrSgEnrichIds()</code> fetches, per batch of 50, the Wikipedia titles and the name in your language from Wikidata and the photo from Wikipedia (<code>pageimages</code>), kept 30 days under <code>nr_sight_enrich_v1</code>. Without a linked article <code>nrWikiFindTitle()</code> searches by name (articles within 300 m, then opensearch; only a title sharing a word with the name counts).</p>
+      <p><b>Place picker.</b> "Near me" or another place (geocoder with five results, recent places under <code>nr_recent_places_v1</code>). <code>nrSgSetPlace()</code> searches the sights again and loads the routes around the same place with <code>nrChatEnsureRoutes()</code> (Round 185). Every time it opens it starts at "Near me" again.</p>
+      <p><b>Navigating.</b> <code>nrSgNavigate()</code> closes the pop-up, opens the map (<code>garminSetupContinue()</code> or <code>bikeSetupContinueBtn</code>) and calls <code>navigateToPinpoint()</code>: the existing route from your position. The dotted line on the map is a straight line and the screen says so. The walking time is the straight distance plus 30% at 4.5 km/h.</p>
+      <p><b>Listen fix.</b> <code>playAudioGuideItem()</code> only looked up an article with the literal name. For a name from photo recognition that is not exactly a title it found no text and only opened a guessed page through <code>window.open()</code>; the app then went to the background and the reading did not start or stopped. It now searches by name first, starts the voice first and shows the text in the app's Wikipedia window (<code>showAudioGuideInfo()</code>) with a link; if nothing is found that is stated in the window, with a search link, instead of a 2.5 second toast. The spoken title is that of the article found.</p>
+      <p><b>Map layer.</b> The mini map and large map use <code>L.map</code> with OpenStreetMap tiles (same as the analysis map). The map containers have <code>z-index:0</code>, otherwise the map panes sit above the button that makes the mini map tappable.</p>
+      <p><b>Limits.</b> Not every sight is in OpenStreetMap, and relations (large complexes as multipolygons) are not queried. "Other start place" from the design was not built; there is "Open in Maps app".</p>
+      <p><b>Test.</b> <code>test_round186_sights.js</code> (13 tests).</p>
+    </section>
+    <section>
+      <h3>🛠️ Round 185: the assistant searches routes around a named place</h3>
+      <p><b>Problem.</b> A question like "nice walks in Saarburg" got the answer that the assistant only knows routes near the current position. The understanding step did return <code>place</code>, but <code>nrChatEnsureRoutes()</code> always fetched routes around the user's own position, and the answer prompt got an explicit note that only routes near the user are known. A named place was only used for weather and places (food, pharmacy).</p>
+      <p><b>Solution.</b> With <code>routes</code> and <code>place</code> both set, <code>nrChatSend()</code> looks up the place with <code>assistantGeocode()</code> and passes it to <code>nrChatEnsureRoutes(mode, token, placeLL)</code>. That fetches the GPX overview and OpenStreetMap around that place (<code>nrState.userLL</code> is then the centre of the place). The list remembers what it was built for (<code>nrState.listKey</code>, <code>nrState.placeName</code>): the same place reuses the list, another place or a question without a place reloads it. If the place is not found there is an honest message and no fallback to the user's own area.</p>
+      <p><b>Display.</b> Chat cards show "from Saarburg" instead of "from here" (remembered per card in <code>c._ref</code>, so older messages stay correct), the list shows "around Saarburg" in the subtitle and "from Saarburg" next to the distance, the source line reads "routes around Saarburg", and the answer prompt says the routes belong to that place. Own tips come from around that place.</p>
+      <p><b>Privacy.</b> Only the place name goes to the Open-Meteo geocoder and the place coordinates to OpenStreetMap, never the user's own position.</p>
+      <p><b>Test.</b> <code>test_round184_assistant_place_routes.js</code> (5 tests).</p>
     </section>
     <section>
       <h3>🛠️ Round 184: arrival window, map options handle and stuck map rotation</h3>
@@ -26100,7 +26273,7 @@ ${GARMIN_MENU_BTN_JS}
 </body>
 </html>`;
 }
-const APP_VERSION_TEXT = 'v2.518 · 9 nov';
+const APP_VERSION_TEXT = 'v2.520 · 10 nov';
 $('homeVersionFooter').textContent = APP_VERSION_TEXT;
 function buildGarminHubHtml(){
   // Dit is Gemini's keuzescherm.html, ongewijzigd qua opbouw/stijl — enkel: (1) een derde grote tegel
@@ -41764,26 +41937,34 @@ async function playAudioGuideItem(item, rowIconEl){
     return;
   }
   const wikiLang = curLang()==='en' ? 'en' : 'nl';
-  let pageUrl, fullExtract;
+  let pageUrl, fullExtract, info = null;
   if (item.source === 'opentripmap'){
     const d = await fetchOpenTripMapDetail(item.xid);
     pageUrl = (d.ok && d.pageUrl) || `https://opentripmap.com/${wikiLang}/card/${item.xid}`;
     fullExtract = (d.ok && d.extract) || item.extract;
+    info = { title:item.title, extract:fullExtract, url:pageUrl, thumb:(d.ok && d.thumbnail) || '' };
   } else {
-    const r = await fetchWikimediaSummary(item.source, item.title);
-    pageUrl = r.ok ? r.pageUrl : `https://${wikiLang}.${item.source}.org/wiki/${encodeURIComponent(item.title)}`;
+    let r = await fetchWikimediaSummary(item.source, item.title);
+    // Ronde 186 (GEMELD: "de Beluister-knop brengt me op de Wiki maar er wordt niets voorgelezen"): een naam uit de fotoherkenning is niet altijd letterlijk de titel van een artikel.
+    // Dan zocht de app geen tekst en opende enkel een gegokte pagina. Nu eerst zoeken op naam (Wikipedia-zoeken) en pas dan opgeven.
+    if (!r.ok && item.source === 'wikipedia'){
+      const t2 = await nrWikiFindTitle(item.title, wikiLang, null);
+      if (t2 && t2 !== item.title) r = await fetchWikimediaSummary(item.source, t2);
+    }
+    pageUrl = r.ok ? r.pageUrl : `https://${wikiLang}.${item.source}.org/w/index.php?search=${encodeURIComponent(item.title)}`;
     fullExtract = (r.ok && r.extract) ? r.extract : item.extract;
-    if (appSettings.audioGuideFullArticle){
-      const wholeArticle = await fetchWikimediaFullExtract(item.source, item.title);
+    if (r.ok && appSettings.audioGuideFullArticle){
+      const wholeArticle = await fetchWikimediaFullExtract(item.source, r.title);
       if (wholeArticle) fullExtract = wholeArticle;
     }
+    info = { title:r.ok ? r.title : item.title, extract:fullExtract, url:pageUrl, thumb:r.ok ? r.thumbnail : '' };
   }
-  window.open(pageUrl, '_blank');
-  if (!('speechSynthesis' in window)) return;
+  // Ronde 186: eerst de stem, en de uitleg verschijnt in de app zelf (met een link naar Wikipedia) i.p.v. dat de app wegspringt naar een browser -- op Android stopte het voorlezen daardoor of begon het nooit.
+  const showInfo = () => showAudioGuideInfo(info.title, info.extract, info.url, info.thumb);
+  if (!('speechSynthesis' in window)){ showInfo(); return; }
   if (!fullExtract){
-    // Geen samenvatting beschikbaar (kan bij OpenTripMap-plekken zonder Wikipedia-koppeling/beschrijving) --
-    // de link is intussen wel al geopend, dus dat is nog steeds nuttig, gewoon niets om voor te lezen.
-    toast(curLang()==='en' ? 'No description available to read out for this place.' : 'Geen beschrijving beschikbaar om voor te lezen voor deze plek.', 2500);
+    // Geen samenvatting beschikbaar: dat staat duidelijk in het venster, met een link om zelf te zoeken.
+    showInfo();
     return;
   }
   // GEMELD ("kan je hem ook meer laten voorlezen?"): deze 60-woorden-grens (~20-25s) gold voorheen altijd,
@@ -41799,7 +41980,7 @@ async function playAudioGuideItem(item, rowIconEl){
   audioGuidePlayingIconEl = rowIconEl || null;
   setAudioGuideIcon(audioGuidePlayingIconEl, true);
   notifyGarminAudioGuideState(key);
-  speak(`${item.title}. ${spoken}`, () => {
+  speak(`${info.title || item.title}. ${spoken}`, () => {
     // Fragment eindigde vanzelf (of brak af) zonder dat er expliciet gestopt werd -- status netjes resetten.
     if (audioGuidePlayingKey === key){
       setAudioGuideIcon(audioGuidePlayingIconEl, false);
@@ -41809,6 +41990,15 @@ async function playAudioGuideItem(item, rowIconEl){
     }
   });
   voiceEnabled = wasEnabled;
+  showInfo();
+}
+// Ronde 186: de uitleg bij een audiogids-fragment in het Wikipedia-venster van de app (zelfde venster als bij planten en dieren).
+function showAudioGuideInfo(title, extract, url, thumb){
+  $('wikiInfoTitle').textContent = title;
+  $('wikiInfoText').textContent = extract || (curLang()==='en' ? 'No Wikipedia text found for this place.' : 'Geen Wikipedia-tekst gevonden voor deze plek.');
+  if (thumb){ $('wikiInfoImg').src = thumb; $('wikiInfoImg').style.display = 'block'; } else $('wikiInfoImg').style.display = 'none';
+  $('wikiInfoLink').href = url; $('wikiInfoLink').style.display = url ? 'block' : 'none';
+  openModal('wikiInfoModal');
 }
 // Ronde 33 (gemeld: "scanner-knoppen (plant/dier) verplaatsen naar linker knoppenrij... onbereikbaar
 // tijdens actieve navigatie"): resultElId-parameter toegevoegd (was vast #natureIdResult) zodat de nieuwe
@@ -42724,7 +42914,7 @@ function nrItemHtml(c, i){
   const pill = c.km > 0 ? `<span class="nr-kmp">${nrKmText(c.km)} km</span>`
     : km ? `<span class="nr-kmp nr-km">≈ ${nrKmText(km)} km</span>`                       // lengte berekend uit de OSM-geometrie
     : `<span class="nr-kmp nr-km unk">${nrT('lengte onbekend', 'length unknown')}</span>`;
-  const near = c.distKm == null ? '' : `<span class="nr-near"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>${approx ? '≈ ' : ''}${nrDistText(c.distKm)}${nrT(' hiervandaan', ' from here')}</span>`;
+  const near = c.distKm == null ? '' : `<span class="nr-near"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>${approx ? '≈ ' : ''}${nrDistText(c.distKm)}${nrState.placeName ? nrT(' van ' + nrState.placeName, ' from ' + nrState.placeName) : nrT(' hiervandaan', ' from here')}</span>`;
   const chips = [];
   if (c.kind === 'gpx') chips.push(`<span class="nr-chip">${nrT('Jouw GPX', 'Your GPX')}</span>`);
   else if (c.kind === 'link') chips.push(`<span class="nr-chip bl">${osmWalkEsc(c.source || nrT('Link', 'Link'))}</span>`);
@@ -42770,7 +42960,7 @@ function nrRenderNote(){
 function nrRenderSub(){
   const total = nrState.ranked.length, shown = nrState.view.length;
   if (nrState.favAll){ $('nrSub').textContent = total ? nrT(total + ' bewaard', total + ' saved') : ''; return; }
-  $('nrSub').textContent = total ? nrT(`${shown === total ? total : shown + ' van ' + total} gevonden · lengte in km`, `${shown === total ? total : shown + ' of ' + total} found · length in km`) : '';
+  $('nrSub').textContent = total ? nrT(`${shown === total ? total : shown + ' van ' + total} gevonden · lengte in km`, `${shown === total ? total : shown + ' of ' + total} found · length in km`) + (nrState.placeName ? nrT(' · rond ', ' · around ') + nrState.placeName : '') : '';
 }
 // De lijst opnieuw opbouwen. keepScroll: houd de rij die bovenaan stond op dezelfde plek (routes die erbij komen verschuiven niets onder je duim).
 function nrRenderList(keepScroll){
@@ -42789,6 +42979,7 @@ function nrRenderList(keepScroll){
   $('nrList').innerHTML = nrState.view.length ? nrState.view.map(nrItemHtml).join('')
     : ((nrState.ranked.length || nrState.favAll || nrState.flt.fav) ? `<p class="nr-empty">${emptyMsg}</p>` : '');
   $('nrPlaces').innerHTML = nrPlacesHtml();
+  nrRenderSights();
   if (anchorKey){
     const el = Array.from(wrap.querySelectorAll('.nr-item')).find(e => e.dataset.key === anchorKey);
     if (el) wrap.scrollTop += el.getBoundingClientRect().top - wrap.getBoundingClientRect().top - anchorOff;
@@ -42892,7 +43083,7 @@ function nrStaleNote(stale){
 }
 function nrOpenLoading(mode){
   nrWire();
-  nrState.token++; nrState.mode = mode; nrState.userLL = null; nrState.gpx = []; nrState.osm = []; nrState.osmPending = false; nrState.ranked = []; nrState.view = []; nrState.pend = [];
+  nrState.token++; nrState.mode = mode; nrState.userLL = null; nrState.listKey = null; nrState.placeName = ''; nrState.gpx = []; nrState.osm = []; nrState.osmPending = false; nrState.ranked = []; nrState.view = []; nrState.pend = [];
   nrState.load = { pos:'on', gpx:'todo', osm:'todo', fin:'todo' }; nrState.loadMsg = null; nrState.stale = null; nrState.favAll = false; nrState.flt = { rain:false, kids:false, pt:false, fav:false };
   const card = $('nearbyRoutesCard'); card.classList.remove('detail', 'favall', 'chat'); card.classList.add('loading'); nrState.detail = null; nrState.dtoken++;
   $('nrTitle').textContent = nrTitleText(mode); $('nrSub').textContent = nrT('Zoeken in de buurt…', 'Searching nearby…');
@@ -43079,6 +43270,484 @@ function nrPlacesHtml(){
     `<button type="button" class="nr-plek" data-pi="${i}"><span class="nr-th">${p.foto ? `<img src="${osmWalkEsc(p.foto)}" alt="" loading="lazy">` : '📍'}</span>` +
     `<span class="nr-tx"><h4>${osmWalkEsc(p.name)}</h4><span class="nr-ptxt">${osmWalkEsc(p.text)}</span><div class="nr-meta"><span class="nr-near">${nrDistText(p.distKm)}${nrT(' hiervandaan', ' from here')}</span>` +
     `<span class="nr-chip">${nrPlaceChip(p)}</span></div></span></button>`).join('');
+}
+
+// ===== Ronde 186: bezienswaardigheden in "Leuke wandelingen" =====
+// Carrousel boven de routes (enkel Wandelen), volledige lijst met filters, info (Wikipedia) met minikaart, grote kaart en navigeren vanaf je huidige locatie, en een plaatskiezer ("Bij mij" of een andere plaats).
+// Bron: OpenStreetMap (Overpass) voor plaats, naam en soort; Wikidata voor de Wikipedia-titels en de naam in je taal; Wikipedia voor foto en inleiding. Alles is een schatting: niet elke bezienswaardigheid staat in OpenStreetMap.
+const NR_SG_R = 3000, NR_SG_R_WIDE = 8000, NR_SG_MIN = 6, NR_SG_MAX = 80, NR_SG_CARDS = 8;
+const NR_SG_ENR_KEY = 'nr_sight_enrich_v1', NR_SG_RECENT_KEY = 'nr_recent_places_v1', NR_SG_ENR_TTL_MS = 30 * 24 * 3600 * 1000;
+nrState.sg = { key:'', items:[], status:'idle', radius:0, place:null, me:null, cat:'all', sort:'dist', from:'card', cur:null, tok:0, err:'', mapMode:'one', recent:null };
+const NR_SG_CATS = { kerk:['Kerken', 'Churches'], romeins:['Romeins', 'Roman'], kasteel:['Kastelen', 'Castles'], museum:['Musea', 'Museums'], monument:['Monumenten', 'Monuments'], uitzicht:['Uitzicht', 'Viewpoints'], overig:['Overig', 'Other'] };
+const NR_SG_SUB = { cathedral:['Kathedraal', 'Cathedral'], basilica:['Basiliek', 'Basilica'], church:['Kerk', 'Church'], chapel:['Kapel', 'Chapel'], monastery:['Klooster', 'Monastery'], place_of_worship:['Gebedshuis', 'Place of worship'],
+  castle:['Kasteel of burcht', 'Castle'], fort:['Fort', 'Fort'], manor:['Landhuis', 'Manor house'], city_gate:['Stadspoort', 'City gate'], tower:['Toren', 'Tower'], museum:['Museum', 'Museum'], gallery:['Galerie', 'Gallery'], viewpoint:['Uitzichtpunt', 'Viewpoint'],
+  monument:['Monument', 'Monument'], memorial:['Gedenkteken', 'Memorial'], ruins:['Ruïne', 'Ruins'], archaeological_site:['Opgraving', 'Archaeological site'], wayside_cross:['Veldkruis', 'Wayside cross'], attraction:['Bezienswaardigheid', 'Sight'] };
+const NR_SG_CAT_OF = { cathedral:'kerk', basilica:'kerk', church:'kerk', chapel:'kerk', monastery:'kerk', place_of_worship:'kerk', castle:'kasteel', fort:'kasteel', manor:'kasteel', city_gate:'kasteel', tower:'kasteel', museum:'museum', gallery:'museum', viewpoint:'uitzicht',
+  monument:'monument', memorial:'monument', ruins:'monument', archaeological_site:'monument', wayside_cross:'monument', attraction:'overig' };
+// Soort uit de OpenStreetMap-labels (zuivere functie, getest): eerst het gebouw, dan historic, dan tourism, dan gebedshuis. Romeinse plekken krijgen hun eigen groep.
+function nrSgKind(t){
+  t = t || {};
+  const nm = String(t.name || '');
+  let key = '';
+  if (/^(cathedral|basilica|church|chapel|monastery)$/.test(t.building || '')) key = t.building;
+  else if (NR_SG_SUB[t.historic]) key = t.historic;
+  else if (NR_SG_SUB[t.tourism]) key = t.tourism;
+  else if (t.amenity === 'place_of_worship') key = 'place_of_worship';
+  else key = 'attraction';
+  const roman = /roman|romein|römisch|romisch|porta nigra|therm|amphitheat/i.test(nm) || /roman/i.test(t['historic:civilization'] || '');
+  const s = NR_SG_SUB[key];
+  return { key, cat: roman ? 'romeins' : NR_SG_CAT_OF[key], sub: s ? nrT(s[0], s[1]) : '', subNl: s ? s[0] : '', roman };
+}
+function nrSgQuery(ll, r){
+  const a = `(around:${r},${ll.lat.toFixed(5)},${ll.lon.toFixed(5)})`;
+  const sel = [
+    '["tourism"~"^(attraction|museum|viewpoint)$"]["name"]',
+    '["historic"~"^(castle|fort|manor|city_gate|tower|monument|memorial|ruins|archaeological_site|church|monastery|wayside_cross)$"]["name"]["wikidata"]',
+    '["building"~"^(cathedral|basilica|church|chapel|monastery)$"]["name"]["wikidata"]',
+    '["amenity"="place_of_worship"]["name"]["wikidata"]'
+  ];
+  return `[out:json][timeout:${assistantServerLimitSec()}];(${sel.map(f => `node${f}${a};way${f}${a};`).join('')});out center tags 500;`;
+}
+// Overpass-elementen -> lijst, dichtstbij eerst, dubbelen weg (zelfde Wikidata, of dezelfde naam binnen 250 m). fame: hoe bekend (Wikipedia-label telt het zwaarst).
+function nrSgParse(elements, ll){
+  const out = [];
+  (elements || []).forEach(e => {
+    const t = (e && e.tags) || {}, name = String(t.name || '').trim(); if (!name) return;
+    const lat = e.lat != null ? e.lat : e.center && e.center.lat, lon = e.lon != null ? e.lon : e.center && e.center.lon;
+    if (!isFinite(lat) || !isFinite(lon)) return;
+    const k = nrSgKind(t), q = /^Q\d+$/.test(t.wikidata || '') ? t.wikidata : '', wp = String(t.wikipedia || '');
+    out.push({ id:(e.type || 'n').charAt(0) + (e.id || ''), name, lat, lon, distKm:haversine(ll.lat, ll.lon, lat, lon) / 1000, cat:k.cat, subKey:k.key, sub:k.sub + (k.roman && k.cat === 'romeins' && k.key !== 'attraction' ? nrT(' (Romeins)', ' (Roman)') : ''), q, wp,
+      fame:(q ? 1 : 0) + (wp ? 2 : 0) + (t.tourism === 'attraction' || t.tourism === 'museum' ? 1 : 0) });
+  });
+  out.sort((a, b) => a.distKm - b.distKm);
+  const kept = [];
+  out.forEach(s => { if (kept.some(x => (s.q && x.q === s.q) || (x.name.toLowerCase() === s.name.toLowerCase() && haversine(x.lat, x.lon, s.lat, s.lon) < 250))) return; kept.push(s); });
+  return kept;
+}
+// De bekendste eerst (voor de carrousel), bij gelijke bekendheid de dichtstbijzijnde.
+const nrSgTop = (items, n) => items.slice().sort((a, b) => (b.fame - a.fame) || (a.distKm - b.distKm)).slice(0, n);
+const nrSgCenter = () => { const sg = nrState.sg; return sg.place ? { lat:sg.place.lat, lon:sg.place.lon } : sg.me; };
+const nrSgById = (id) => nrState.sg.items.find(s => s.id === id) || null;
+const nrSgName = (s) => s.label || s.name;
+const nrSgWalkMin = (km) => Math.max(1, Math.round(km * 1.3 / 4.5 * 60 / 5) * 5);   // hemelsbreed + 30% omweg, 4,5 km/u
+const nrSgWalkText = (km) => { const m = nrSgWalkMin(km); return m < 60 ? m + ' min' : Math.floor(m / 60) + nrT('u', 'h') + String(m % 60).padStart(2, '0'); };
+const nrSgCache = new Map();
+async function nrSgFetch(ll, r, tok){
+  const ck = [r, ll.lat.toFixed(3), ll.lon.toFixed(3)].join('|'), hit = nrSgCache.get(ck);
+  if (hit && Date.now() - hit.t < 10 * 60 * 1000) return hit.data;
+  const data = await assistantOverpass(nrSgQuery(ll, r), null, () => tok !== nrState.sg.tok);
+  nrSgCache.set(ck, { t:Date.now(), data }); if (nrSgCache.size > 8) nrSgCache.delete(nrSgCache.keys().next().value);
+  return data;
+}
+async function nrSgLoad(force){
+  const sg = nrState.sg;
+  if (nrState.mode !== 'wandel'){ sg.status = 'idle'; nrRenderSights(); return; }
+  const ll = nrSgCenter();
+  if (!ll){ sg.status = 'idle'; nrRenderSights(); return; }
+  const key = ll.lat.toFixed(3) + ',' + ll.lon.toFixed(3);
+  if (!force && sg.key === key && (sg.status === 'ok' || sg.status === 'loading')) return;
+  const tok = ++sg.tok;
+  sg.key = key; sg.status = 'loading'; sg.items = []; sg.err = ''; nrRenderSights(); nrSgRenderList();
+  try{
+    let radius = NR_SG_R, items = nrSgParse((await nrSgFetch(ll, radius, tok)).elements, ll);
+    if (tok !== sg.tok) return;
+    if (items.length < NR_SG_MIN){ radius = NR_SG_R_WIDE; items = nrSgParse((await nrSgFetch(ll, radius, tok)).elements, ll); }
+    if (tok !== sg.tok) return;
+    sg.radius = radius; sg.items = items.filter(s => s.distKm * 1000 <= radius).slice(0, NR_SG_MAX);
+    sg.status = sg.items.length ? 'ok' : 'none';
+  }catch(e){
+    if (tok !== sg.tok || (e && e.nrStopped)) return;
+    sg.status = 'error'; sg.err = String((e && e.message) || '');
+    console.info('[bezienswaardigheden] zoeken mislukt:', sg.err);
+  }
+  nrRenderSights(); nrSgRenderList();
+  if (sg.status === 'ok') nrSgEnrich(tok);
+}
+// ----- Wikidata (titels in nl/en/de, naam en omschrijving) en Wikipedia (foto), per batch van 50 -----
+const nrSgEnr = {}; let nrSgEnrLoaded = false;
+async function nrSgEnrLoad(){
+  if (nrSgEnrLoaded) return; nrSgEnrLoaded = true;
+  try{ const v = await storageGet(NR_SG_ENR_KEY), o = v ? JSON.parse(v) : {}, now = Date.now(); Object.keys(o).forEach(k => { if (o[k] && now - o[k].t < NR_SG_ENR_TTL_MS && !nrSgEnr[k]) nrSgEnr[k] = o[k]; }); }catch(e){}
+}
+async function nrSgEnrSave(){
+  const keys = Object.keys(nrSgEnr);
+  if (keys.length > 300) keys.sort((a, b) => nrSgEnr[b].t - nrSgEnr[a].t).slice(300).forEach(k => delete nrSgEnr[k]);
+  try{ await storageSet(NR_SG_ENR_KEY, JSON.stringify(nrSgEnr)); }catch(e){}
+}
+const nrSgLangs = () => curLang() === 'en' ? ['en', 'nl', 'de'] : ['nl', 'en', 'de'];
+// Foto-resultaat van de Wikipedia-API koppelen aan de gevraagde titels (hoofdletters/omleidingen).
+function nrSgThumbsByTitle(query, wanted){
+  const out = {}, norm = {}, redir = {};
+  ((query && query.normalized) || []).forEach(n => { norm[n.from] = n.to; });
+  ((query && query.redirects) || []).forEach(n => { redir[n.from] = n.to; });
+  const byTitle = {};
+  Object.values((query && query.pages) || {}).forEach(p => { if (p && p.thumbnail && p.thumbnail.source) byTitle[p.title] = p.thumbnail.source; });
+  (wanted || []).forEach(w => { let t = norm[w] || w; t = redir[t] || t; if (byTitle[t]) out[w] = byTitle[t]; });
+  return out;
+}
+async function nrSgEnrichIds(ids){
+  await nrSgEnrLoad();
+  const now = Date.now(), need = ids.filter(q => q && !nrSgEnr[q]).slice(0, 50);
+  if (!need.length) return;
+  const data = await nrJson(`https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${need.join('|')}&props=sitelinks|labels|descriptions&languages=nl|en|de&sitefilter=nlwiki|enwiki|dewiki&format=json&origin=*`);
+  const ents = (data && data.entities) || {};
+  need.forEach(q => {
+    const e = ents[q] || {}, sl = e.sitelinks || {}, lb = e.labels || {}, ds = e.descriptions || {}, pref = nrSgLangs();
+    const pick = (o) => { for (const l of pref) if (o[l] && o[l].value) return o[l].value; return ''; };
+    nrSgEnr[q] = { t:now, nl:sl.nlwiki ? sl.nlwiki.title : '', en:sl.enwiki ? sl.enwiki.title : '', de:sl.dewiki ? sl.dewiki.title : '', label:pick(lb), desc:pick(ds), img:'' };
+  });
+  for (const lang of nrSgLangs()){
+    const todo = need.filter(q => !nrSgEnr[q].img && nrSgEnr[q][lang]);
+    if (!todo.length) continue;
+    try{
+      const titles = todo.map(q => nrSgEnr[q][lang]);
+      const r = await nrJson(`https://${lang}.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages&piprop=thumbnail&pithumbsize=360&redirects=1&titles=${encodeURIComponent(titles.join('|'))}`);
+      const map = nrSgThumbsByTitle(r && r.query, titles);
+      todo.forEach(q => { const u = map[nrSgEnr[q][lang]]; if (u) nrSgEnr[q].img = u; });
+    }catch(e){ console.info('[bezienswaardigheden] foto\'s (' + lang + ') mislukt:', e && e.message); }
+  }
+  nrSgEnrSave();
+}
+function nrSgApplyEnr(){
+  nrState.sg.items.forEach(s => { const e = s.q && nrSgEnr[s.q]; if (e){ if (e.img) s.img = e.img; if (e.label) s.label = e.label; if (e.desc) s.desc = e.desc; } });
+}
+async function nrSgEnrich(tok){
+  const sg = nrState.sg;
+  const first = nrSgTop(sg.items, NR_SG_CARDS).concat(sg.items.slice(0, 50)), ids = [];
+  first.forEach(s => { if (s.q && ids.indexOf(s.q) < 0) ids.push(s.q); });
+  try{
+    await nrSgEnrichIds(ids);
+  }catch(e){ console.info('[bezienswaardigheden] Wikidata mislukt:', e && e.message); }
+  if (tok !== sg.tok) return;
+  nrSgApplyEnr(); nrRenderSights(); nrSgRenderList();
+}
+// ----- Wikipedia-tekst bij één bezienswaardigheid -----
+async function nrSgSummary(lang, title){
+  try{
+    const res = await fetchWithTimeout(`https://${lang}.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`, {}, 10000);
+    if (!res.ok) return { ok:false };
+    const d = await res.json();
+    if (d.type === 'disambiguation' || !d.extract) return { ok:false };
+    return { ok:true, lang, title:d.title, extract:d.extract, thumb:d.thumbnail ? d.thumbnail.source : '', url:d.content_urls && d.content_urls.desktop ? d.content_urls.desktop.page : `https://${lang}.wikipedia.org/wiki/${encodeURIComponent(title)}` };
+  }catch(e){ return { ok:false }; }
+}
+const nrSgNormWords = (x) => String(x || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').split(/[^a-z0-9]+/).filter(w => w.length >= 4);
+// Titel zoeken als de naam niet exact een artikel is: Wikipedia-zoeken op naam (en bij coördinaten ook de artikelen vlakbij). Enkel een titel met een gemeenschappelijk woord telt.
+async function nrWikiFindTitle(name, lang, ll){
+  const words = nrSgNormWords(name), share = (t) => nrSgNormWords(t).some(w => words.indexOf(w) >= 0);
+  try{
+    if (ll){
+      const g = await nrJson(`https://${lang}.wikipedia.org/w/api.php?action=query&format=json&origin=*&list=geosearch&gscoord=${ll.lat.toFixed(5)}|${ll.lon.toFixed(5)}&gsradius=300&gslimit=10`);
+      const hit = ((g && g.query && g.query.geosearch) || []).find(x => share(x.title)); if (hit) return hit.title;
+    }
+    const o = await nrJson(`https://${lang}.wikipedia.org/w/api.php?action=opensearch&format=json&origin=*&limit=3&namespace=0&search=${encodeURIComponent(name)}`);
+    const titles = (o && o[1]) || [], hit = titles.find(share) || (ll ? '' : titles[0]);
+    return hit || '';
+  }catch(e){ return ''; }
+}
+async function nrSgInfo(s){
+  if (s._info) return s._info;
+  const order = nrSgLangs();
+  try{ if (s.q && !nrSgEnr[s.q]) await nrSgEnrichIds([s.q]); }catch(e){}
+  nrSgApplyEnr();
+  const e = (s.q && nrSgEnr[s.q]) || {}, wpm = /^([a-z-]+):(.+)$/.exec(s.wp || ''), titles = {};
+  order.forEach(l => { titles[l] = e[l] || (wpm && wpm[1] === l ? wpm[2] : ''); });
+  let info = null;
+  for (const l of order){ if (titles[l]){ const r = await nrSgSummary(l, titles[l]); if (r.ok){ info = r; break; } } }
+  if (!info){
+    for (const l of order.slice(0, 2)){ const t = await nrWikiFindTitle(s.name, l, { lat:s.lat, lon:s.lon }); if (t){ const r = await nrSgSummary(l, t); if (r.ok){ info = r; break; } } }
+  }
+  s._info = info || { ok:false };
+  return s._info;
+}
+// ----- Carrousel op de lijst (concept D) -----
+const nrSgPlaceName = () => nrState.sg.place ? nrState.sg.place.name : nrT('Bij mij', 'Near me');
+function nrSgPillHtml(){ return `<button type="button" class="nr-sgpill" data-act="place"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>${osmWalkEsc(nrSgPlaceName())}</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>`; }
+function nrSgCardHtml(s){
+  const th = s.img ? `<img src="${osmWalkEsc(s.img)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : '🏛️';
+  return `<button type="button" class="nr-sgc" data-id="${osmWalkEsc(s.id)}"><span class="nr-sgph">${th}</span><span class="nr-sgn">${osmWalkEsc(nrSgName(s))}</span><span class="nr-sgm"><b>${nrDistText(s.distKm)}</b>${osmWalkEsc(s.sub)}</span></button>`;
+}
+function nrSightsHtml(){
+  const sg = nrState.sg;
+  if (nrState.mode !== 'wandel' || nrState.favAll || nrState.bin !== 0 || nrFltActive() || sg.status === 'idle') return '';
+  const head = `<div class="nr-sghd"><p class="nr-sec">${nrT('🏛️ Bezienswaardig in de buurt', '🏛️ Sights nearby')}</p>${sg.status === 'ok' ? `<button type="button" class="nr-sgall" data-act="all">${nrT('Alle ' + sg.items.length, 'All ' + sg.items.length)}</button>` : ''}</div>`;
+  let body = '';
+  if (sg.status === 'loading') body = `<div class="nr-sgmsg"><span class="nr-dots" aria-hidden="true"><i></i><i></i><i></i></span> ${nrT('Bezienswaardigheden zoeken…', 'Looking for sights…')}</div>`;
+  else if (sg.status === 'error') body = `<div class="nr-sgmsg">${nrT('Zoeken in OpenStreetMap is niet gelukt. Controleer je verbinding.', 'Searching OpenStreetMap did not work. Check your connection.')} <button type="button" class="nr-sgretry" data-act="retry">${nrT('Opnieuw proberen', 'Try again')}</button></div>`;
+  else if (sg.status === 'none') body = `<div class="nr-sgmsg">${nrT('Geen bezienswaardigheden gevonden rond ' + nrSgPlaceName().toLowerCase() + '. Kies een andere plaats.', 'No sights found around ' + nrSgPlaceName() + '. Pick another place.')}</div>`;
+  else body = `<div class="nr-sgrow">${nrSgTop(sg.items, NR_SG_CARDS).map(nrSgCardHtml).join('')}</div>`;
+  return `<div class="nr-sgsec">${nrSgPillHtml()}${head}${body}</div>`;
+}
+function nrRenderSights(){ const el = $('nrSights'); if (el) el.innerHTML = nrSightsHtml(); }
+// ----- Volledige lijst (concept G) -----
+function nrSgFiltered(){
+  const sg = nrState.sg;
+  let l = sg.cat === 'all' ? sg.items.slice() : sg.items.filter(s => s.cat === sg.cat);
+  if (sg.sort === 'fame') l.sort((a, b) => (b.fame - a.fame) || (a.distKm - b.distKm));
+  return l;
+}
+function nrSgRenderList(){
+  const sg = nrState.sg; if (!$('nrSgItems')) return;
+  const cats = Object.keys(NR_SG_CATS).filter(k => sg.items.some(s => s.cat === k));
+  $('nrSgSub').textContent = sg.status === 'ok' ? nrT(sg.items.length + ' gevonden binnen ' + Math.round(sg.radius / 1000) + ' km', sg.items.length + ' found within ' + Math.round(sg.radius / 1000) + ' km') + (sg.place ? nrT(' van ' + sg.place.name, ' of ' + sg.place.name) : '') : '';
+  $('nrSgPlace').innerHTML = nrSgPillHtml();
+  $('nrSgChips').innerHTML = [`<button type="button" class="nr-sgf${sg.cat === 'all' ? ' on' : ''}" data-cat="all" aria-pressed="${sg.cat === 'all'}">${nrT('Alles', 'All')}</button>`].concat(cats.map(k => `<button type="button" class="nr-sgf${sg.cat === k ? ' on' : ''}" data-cat="${k}" aria-pressed="${sg.cat === k}">${nrT(NR_SG_CATS[k][0], NR_SG_CATS[k][1])}</button>`)).join('');
+  $('nrSgSort').innerHTML = nrT('Gesorteerd op', 'Sorted by') + ` <button type="button" class="nr-sgsb" data-act="sort">${sg.sort === 'fame' ? nrT('bekendheid', 'fame') : nrT('afstand', 'distance')}</button>`;
+  const l = nrSgFiltered();
+  $('nrSgItems').innerHTML = sg.status === 'loading' ? `<p class="nr-empty">${nrT('Bezienswaardigheden zoeken…', 'Looking for sights…')}</p>`
+    : sg.status === 'error' ? `<p class="nr-empty">${nrT('Zoeken in OpenStreetMap is niet gelukt.', 'Searching OpenStreetMap did not work.')}</p>`
+    : l.length ? l.map(s => `<button type="button" class="nr-sgi" data-id="${osmWalkEsc(s.id)}"><span class="nr-sgph s">${s.img ? `<img src="${osmWalkEsc(s.img)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : '🏛️'}</span><span class="nr-tx"><h4>${osmWalkEsc(nrSgName(s))}</h4><div class="nr-meta"><span class="nr-sgd">${nrDistText(s.distKm)}</span><span>${osmWalkEsc(s.sub)}</span></div></span><span class="nr-chev" aria-hidden="true">›</span></button>`).join('')
+    : `<p class="nr-empty">${nrT('Geen bezienswaardigheden in deze groep.', 'No sights in this group.')}</p>`;
+}
+// De vaste teksten van de schermen, in de taal van de app (de HTML zelf bevat geen tekst).
+function nrSgLabels(){
+  const set = (id, t) => { const el = $(id); if (el) el.textContent = t; };
+  set('nrSgTitle', nrT('Bezienswaardigheden', 'Sights')); set('nrSgAllMap', nrT('Alles op kaart', 'All on map'));
+  set('nrSgFoot', nrT('Info: Wikipedia (CC BY-SA). Plaatsen: OpenStreetMap.', 'Info: Wikipedia (CC BY-SA). Places: OpenStreetMap.'));
+  set('nrSgDListen', '🎧 ' + nrT('Beluister', 'Listen')); set('nrSgDNav', nrT('Navigeer vanaf mijn locatie', 'Navigate from my location'));
+  const big = $('nrSgBigBtn').firstChild; if (big) big.textContent = nrT('Grote kaart', 'Large map');
+  ['nrSgBack1', 'nrSgBack2', 'nrSgBack3'].forEach(id => $(id).setAttribute('aria-label', nrT('Terug', 'Back')));
+  set('nrPlaceTitle', nrT('Waar wil je wandelen?', 'Where do you want to walk?')); $('nrPlaceQ').placeholder = nrT('Zoek een plaats', 'Search for a place');
+  set('nrPlaceMeT', nrT('Bij mij', 'Near me')); set('nrPlaceMeS', nrT('Mijn huidige positie', 'My current position')); set('nrPlaceClose', nrT('Sluiten', 'Close'));
+}
+function nrSgView(v){
+  const card = $('nearbyRoutesCard'), box = $('nrSight');
+  if (v) nrSgLabels();
+  if (!v){ card.classList.remove('sgv'); box.removeAttribute('data-v'); $('nrPlaceSheet').classList.remove('show'); return; }
+  card.classList.add('sgv'); box.setAttribute('data-v', v);
+}
+function nrSgOpenList(){
+  const sg = nrState.sg; sg.cat = 'all';
+  nrState.listScroll = $('nrListWrap').scrollTop;
+  nrSgRenderList(); nrSgView('list'); $('nrSgItems').scrollTop = 0;
+}
+function nrSgBack(){
+  const sg = nrState.sg, v = $('nrSight').getAttribute('data-v');
+  if (v === 'map'){ if (sg.mapMode === 'one' && sg.cur) nrSgOpenDetail(sg.cur.id, sg.from); else nrSgView('list'); }
+  else if (v === 'det') nrSgView(sg.from === 'card' ? null : 'list');
+  else nrSgView(null);
+  if (!$('nearbyRoutesCard').classList.contains('sgv')) $('nrListWrap').scrollTop = nrState.listScroll || 0;
+}
+// ----- Info (concept I): Wikipedia-intro, minikaart, navigeren -----
+const nrSgMiniL = [], nrSgBigL = [];
+function nrSgNewMap(id, store){
+  if (store.inst) return store.inst;
+  store.inst = L.map(id, { zoomControl:false, attributionControl:false }).setView([50.93, 5.34], 15);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { subdomains:'abc', maxZoom:19 }).addTo(store.inst);
+  return store.inst;
+}
+const nrSgMiniStore = { inst:null }, nrSgBigStore = { inst:null };
+const nrSgPinIcon = (sel) => L.divIcon({ className:'', html:`<div class="nr-sgpin${sel ? ' sel' : ''}">🏛️</div>`, iconSize:[34, 34], iconAnchor:[17, 17] });
+const nrSgMeIcon = () => L.divIcon({ className:'', html:'<div class="nr-sgme"></div>', iconSize:[22, 22], iconAnchor:[11, 11] });
+function nrSgClear(inst, arr){ arr.forEach(l => { try{ inst.removeLayer(l); }catch(e){} }); arr.length = 0; }
+function nrSgNearMe(s){ const me = nrState.sg.me; return me && haversine(me.lat, me.lon, s.lat, s.lon) <= 15000 ? me : null; }
+function nrSgDrawOne(inst, layers, s, pinHandler){
+  nrSgClear(inst, layers);
+  const me = nrSgNearMe(s), pts = [[s.lat, s.lon]];
+  layers.push(L.marker([s.lat, s.lon], { icon:nrSgPinIcon(true) }).addTo(inst));
+  if (me){
+    layers.push(L.polyline([[me.lat, me.lon], [s.lat, s.lon]], { color:'#2563eb', weight:4, dashArray:'2 8', opacity:0.9 }).addTo(inst));
+    layers.push(L.marker([me.lat, me.lon], { icon:nrSgMeIcon() }).addTo(inst));
+    pts.push([me.lat, me.lon]);
+  }
+  if (pts.length > 1) inst.fitBounds(pts, { padding:[48, 48], maxZoom:17 }); else inst.setView([s.lat, s.lon], 16);
+}
+function nrSgOpenDetail(id, from){
+  const sg = nrState.sg, s = nrSgById(id); if (!s) return;
+  if (from) sg.from = from;
+  sg.cur = s;
+  if (from === 'card') nrState.listScroll = $('nrListWrap').scrollTop;
+  nrSgListenStop();
+  const t = ++nrState.dtoken;
+  $('nrSgDTitle').textContent = nrSgName(s);
+  $('nrSgDMeta').innerHTML = `<span class="nr-sgd">${nrDistText(s.distKm)}</span><span>${osmWalkEsc(s.sub)}${sg.place ? ' · ' + osmWalkEsc(nrT('van ' + sg.place.name, 'from ' + sg.place.name)) : ''}</span>`;
+  $('nrSgDHero').innerHTML = s.img ? `<img src="${osmWalkEsc(s.img)}" alt="" referrerpolicy="no-referrer">` : '<span aria-hidden="true">🏛️</span>';
+  $('nrSgDText').textContent = nrT('Bezig met laden…', 'Loading…');
+  $('nrSgDSrc').textContent = ''; $('nrSgDLink').style.display = 'none'; $('nrSgDListen').style.display = 'none';
+  nrSgView('det'); $('nrSgDBody').scrollTop = 0;
+  setTimeout(() => {
+    const inst = nrSgNewMap('nrSgMini', nrSgMiniStore);
+    try{ inst.invalidateSize(); }catch(e){}
+    if (nrState.sg.cur === s) nrSgDrawOne(inst, nrSgMiniL, s);
+  }, 80);
+  nrSgInfo(s).then(info => {
+    if (t !== nrState.dtoken || nrState.sg.cur !== s) return;
+    if (!info.ok){
+      $('nrSgDText').textContent = nrT('Geen Wikipedia-artikel gevonden voor deze plek.', 'No Wikipedia article found for this place.');
+      $('nrSgDLink').href = `https://${nrSgLangs()[0]}.wikipedia.org/w/index.php?search=${encodeURIComponent(s.name)}`; $('nrSgDLink').textContent = nrT('Zoek op Wikipedia', 'Search Wikipedia'); $('nrSgDLink').style.display = 'inline-flex';
+      return;
+    }
+    $('nrSgDText').textContent = info.extract;
+    $('nrSgDSrc').textContent = nrT('Bron: Wikipedia (' + info.lang + '), CC BY-SA 4.0', 'Source: Wikipedia (' + info.lang + '), CC BY-SA 4.0');
+    $('nrSgDLink').href = info.url; $('nrSgDLink').textContent = nrT('Lees verder op Wikipedia', 'Read more on Wikipedia'); $('nrSgDLink').style.display = 'inline-flex';
+    $('nrSgDListen').style.display = 'flex';
+    if (!s.img && info.thumb){ s.img = info.thumb; $('nrSgDHero').innerHTML = `<img src="${osmWalkEsc(info.thumb)}" alt="" referrerpolicy="no-referrer">`; }
+  });
+}
+// 🎧 Beluister: de inleiding voorlezen (eerst de stem, geen pagina die opent)
+let nrSgListening = false;
+function nrSgListenStop(){ if (nrSgListening){ try{ window.speechSynthesis.cancel(); }catch(e){} nrSgListening = false; const b = $('nrSgDListen'); if (b) b.classList.remove('on'); } }
+function nrSgListen(){
+  const s = nrState.sg.cur; if (!s || !s._info || !s._info.ok) return;
+  if (nrSgListening){ nrSgListenStop(); return; }
+  if (!('speechSynthesis' in window)){ toast(nrT('Voorlezen kan niet op dit toestel.', 'Reading aloud is not available on this device.'), 3000); return; }
+  const words = s._info.extract.split(/\s+/), cap = appSettings.audioGuideFullArticle ? Infinity : 60, spoken = words.slice(0, cap).join(' ') + (words.length > cap ? '…' : '');
+  const was = voiceEnabled; voiceEnabled = true;
+  nrSgListening = true; $('nrSgDListen').classList.add('on');
+  speak(`${nrSgName(s)}. ${spoken}`, () => { nrSgListening = false; const b = $('nrSgDListen'); if (b) b.classList.remove('on'); });
+  voiceEnabled = was;
+}
+// ----- Grote kaart (concept H en C): één plek, of alles -----
+function nrSgOpenMap(mode, id){
+  const sg = nrState.sg;
+  sg.mapMode = mode;
+  if (id){ sg.cur = nrSgById(id) || sg.cur; }
+  nrSgListenStop();
+  nrSgView('map');
+  $('nrSgMTitle').textContent = mode === 'all' ? nrT('Bezienswaardigheden', 'Sights') : nrSgName(sg.cur);
+  nrSgMapCard();
+  setTimeout(() => {
+    const inst = nrSgNewMap('nrSgMapEl', nrSgBigStore);
+    try{ inst.invalidateSize(); }catch(e){}
+    nrSgMapDraw(inst);
+  }, 80);
+}
+function nrSgMapDraw(inst){
+  const sg = nrState.sg;
+  if (sg.mapMode === 'one' && sg.cur){ nrSgDrawOne(inst, nrSgBigL, sg.cur); return; }
+  nrSgClear(inst, nrSgBigL);
+  const pts = [];
+  sg.items.forEach(s => {
+    const m = L.marker([s.lat, s.lon], { icon:nrSgPinIcon(sg.cur === s) }).addTo(inst);
+    m.on('click', () => { sg.cur = s; nrSgMapCard(); nrSgMapDraw(inst); });
+    nrSgBigL.push(m); pts.push([s.lat, s.lon]);
+  });
+  if (sg.me){ nrSgBigL.push(L.marker([sg.me.lat, sg.me.lon], { icon:nrSgMeIcon() }).addTo(inst)); pts.push([sg.me.lat, sg.me.lon]); }
+  if (pts.length > 1) inst.fitBounds(pts, { padding:[48, 48], maxZoom:17 });
+}
+function nrSgMapCard(){
+  const sg = nrState.sg, s = sg.cur, el = $('nrSgMCard');
+  if (sg.mapMode === 'all' && !s){ el.innerHTML = `<p class="nr-sgmh">${nrT('Tik op een punt voor info en navigatie.', 'Tap a point for info and navigation.')}</p>`; return; }
+  if (!s){ el.innerHTML = ''; return; }
+  const addr = nrSgNearMe(s) ? `<span class="nr-sgd bl">${nrSgWalkText(haversine(sg.me.lat, sg.me.lon, s.lat, s.lon) / 1000)} ${nrT('lopen', 'walk')}</span>` : '';
+  el.innerHTML = `<div class="nr-sgmt"><span class="nr-sgph s">${s.img ? `<img src="${osmWalkEsc(s.img)}" alt="" referrerpolicy="no-referrer">` : '🏛️'}</span><span class="nr-tx"><h4>${osmWalkEsc(nrSgName(s))}</h4><div class="nr-meta"><span class="nr-sgd bl">${nrDistText(s.distKm)}</span>${addr}<span>${osmWalkEsc(s.sub)}</span></div></span></div>` +
+    `<button type="button" class="nr-sgnav" data-act="nav">${nrT('Navigeer vanaf mijn locatie', 'Navigate from my location')}</button>` +
+    `<div class="nr-sgbtns"><button type="button" data-act="info">${nrT('Info lezen', 'Read info')}</button><button type="button" data-act="maps">${nrT('Open in Maps-app', 'Open in Maps app')}</button></div>` +
+    (sg.mapMode === 'one' && nrSgNearMe(s) ? `<p class="nr-sgcap">${nrT('De stippellijn is hemelsbreed; de echte route volgt de wegen.', 'The dotted line is straight; the real route follows the roads.')}</p>` : '');
+}
+// Navigeren vanaf je huidige locatie: de pop-up sluit, de kaart opent en de bestaande "Navigeer hierheen" tekent de route vanaf je positie.
+function nrSgNavigate(s){
+  s = s || nrState.sg.cur; if (!s) return;
+  nrClose();
+  try{
+    if ($('garminSetupScreen') && !$('garminSetupScreen').classList.contains('hidden')) garminSetupContinue();
+    else if ($('bikeSetupScreen') && !$('bikeSetupScreen').classList.contains('hidden')) $('bikeSetupContinueBtn').click();
+  }catch(e){ console.info('[bezienswaardigheden] kaart openen:', e && e.message); }
+  setTimeout(() => { try{ navigateToPinpoint(s.lat, s.lon); }catch(e){ console.info('[bezienswaardigheden] navigeren mislukt:', e && e.message); } }, 450);
+}
+const nrSgMapsUrl = (s) => 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(s.name + ' ' + s.lat.toFixed(5) + ',' + s.lon.toFixed(5));
+// ----- Plaatskiezer (concept F): Bij mij of een andere plaats; recente plaatsen blijven bewaard -----
+async function nrSgRecentGet(){
+  const sg = nrState.sg; if (sg.recent) return sg.recent;
+  try{ const v = await storageGet(NR_SG_RECENT_KEY); sg.recent = v ? JSON.parse(v) : []; }catch(e){ sg.recent = []; }
+  if (!Array.isArray(sg.recent)) sg.recent = [];
+  return sg.recent;
+}
+async function nrSgRecentAdd(p){
+  const list = (await nrSgRecentGet()).filter(x => x.name !== p.name);
+  list.unshift({ name:p.name, lat:p.lat, lon:p.lon }); nrState.sg.recent = list.slice(0, 5);
+  try{ await storageSet(NR_SG_RECENT_KEY, JSON.stringify(nrState.sg.recent)); }catch(e){}
+}
+async function nrGeocodeMany(q){
+  const res = await fetchWithTimeout(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=5&language=${curLang() === 'en' ? 'en' : 'nl'}&format=json`, {}, 8000);
+  if (!res.ok) return [];
+  const j = await res.json();
+  return ((j && j.results) || []).filter(r => isFinite(r.latitude) && isFinite(r.longitude)).map(r => ({ name:String(r.name || q), lat:r.latitude, lon:r.longitude, sub:[r.admin1, r.country].filter(Boolean).join(', ') }));
+}
+async function nrSgOpenPlaceSheet(){
+  nrSgLabels();
+  const sheet = $('nrPlaceSheet'); sheet.classList.add('show');
+  $('nrPlaceQ').value = ''; $('nrPlaceRes').innerHTML = '';
+  nrSgRenderRecent();
+  setTimeout(() => { try{ $('nrPlaceQ').focus(); }catch(e){} }, 150);
+}
+async function nrSgRenderRecent(){
+  const list = await nrSgRecentGet();
+  $('nrPlaceRecent').innerHTML = list.length ? `<p class="nr-sec">${nrT('Recent bezocht', 'Recently visited')}</p><div class="nr-sgrec">${list.map((p, i) => `<button type="button" data-ri="${i}">${osmWalkEsc(p.name)}</button>`).join('')}</div>` : '';
+  const me = $('nrPlaceMe'); me.classList.toggle('on', !nrState.sg.place);
+}
+let nrSgGeoTimer = null, nrSgGeoTok = 0;
+function nrSgSearchPlaces(q){
+  clearTimeout(nrSgGeoTimer);
+  q = String(q || '').trim();
+  if (q.length < 2){ $('nrPlaceRes').innerHTML = ''; return; }
+  nrSgGeoTimer = setTimeout(async () => {
+    const t = ++nrSgGeoTok;
+    $('nrPlaceRes').innerHTML = `<p class="nr-empty">${nrT('Zoeken…', 'Searching…')}</p>`;
+    let res = [];
+    try{ res = await nrGeocodeMany(q); }catch(e){ if (t === nrSgGeoTok) $('nrPlaceRes').innerHTML = `<p class="nr-empty">${nrT('Zoeken lukt niet. Controleer je verbinding.', 'Search failed. Check your connection.')}</p>`; return; }
+    if (t !== nrSgGeoTok) return;
+    nrState.sg.found = res;
+    $('nrPlaceRes').innerHTML = res.length ? `<p class="nr-sec">${nrT('Gevonden', 'Found')}</p>` + res.map((p, i) => `<button type="button" class="nr-sgpr" data-fi="${i}"><span class="nr-sgph s">📍</span><span class="nr-tx"><h4>${osmWalkEsc(p.name)}</h4><div class="nr-meta"><span>${osmWalkEsc(p.sub)}</span></div></span></button>`).join('') : `<p class="nr-empty">${nrT('Geen plaats gevonden met die naam.', 'No place found with that name.')}</p>`;
+  }, 350);
+}
+// Een plaats kiezen (of null = bij mij): bezienswaardigheden en routes worden opnieuw rond dat punt gezocht.
+async function nrSgSetPlace(p){
+  const sg = nrState.sg;
+  $('nrPlaceSheet').classList.remove('show');
+  sg.place = p ? { name:p.name, lat:p.lat, lon:p.lon } : null; sg.cat = 'all';
+  if (p) nrSgRecentAdd(p);
+  nrSgLoad(true);
+  const token = nrState.token;
+  nrState.stale = null;
+  try{
+    const r = await nrChatEnsureRoutes(null, token, p ? { lat:p.lat, lon:p.lon, name:p.name } : null);
+    if (token !== nrState.token) return;
+    if (r && r.ok === false && r.text) toast(r.text, 3500);
+  }catch(e){ console.info('[bezienswaardigheden] routes rond de plaats:', e && e.message); }
+  if (token === nrState.token){ nrRender(false); nrRenderSights(); }
+}
+function nrSgWire(){
+  if (nrState.sgWired) return; nrState.sgWired = true;
+  $('nrSights').addEventListener('click', (e) => {
+    const b = e.target.closest && e.target.closest('button'); if (!b) return;
+    if (b.dataset.act === 'place') return nrSgOpenPlaceSheet();
+    if (b.dataset.act === 'all') return nrSgOpenList();
+    if (b.dataset.act === 'retry') return nrSgLoad(true);
+    if (b.dataset.id) nrSgOpenDetail(b.dataset.id, 'card');
+  });
+  $('nrSight').addEventListener('click', (e) => {
+    const b = e.target.closest && e.target.closest('button, a'); if (!b) return;
+    const sg = nrState.sg, act = b.dataset.act;
+    if (act === 'back') return nrSgBack();
+    if (act === 'place') return nrSgOpenPlaceSheet();
+    if (act === 'sort'){ sg.sort = sg.sort === 'fame' ? 'dist' : 'fame'; return nrSgRenderList(); }
+    if (act === 'allmap') return nrSgOpenMap('all', null);
+    if (act === 'bigmap') return nrSgOpenMap('one', sg.cur && sg.cur.id);
+    if (act === 'nav') return nrSgNavigate(sg.cur);
+    if (act === 'info') return sg.cur && nrSgOpenDetail(sg.cur.id, sg.from);
+    if (act === 'maps') return sg.cur && openExternalGpxLink(nrSgMapsUrl(sg.cur));
+    if (act === 'listen') return nrSgListen();
+    if (act === 'wiki'){ e.preventDefault(); const u = b.getAttribute('href'); if (u) openExternalGpxLink(u); return; }
+    if (b.dataset.cat){ sg.cat = b.dataset.cat; return nrSgRenderList(); }
+    if (b.classList.contains('nr-sgi')) return nrSgOpenDetail(b.dataset.id, 'list');
+  });
+  $('nrPlaceSheet').addEventListener('click', (e) => {
+    const b = e.target.closest && e.target.closest('button, .nr-psheet'); if (!b) return;
+    if (b === $('nrPlaceSheet') || b.dataset.act === 'close'){ $('nrPlaceSheet').classList.remove('show'); return; }
+    if (b.dataset.act === 'me') return nrSgSetPlace(null);
+    if (b.dataset.fi != null){ const p = (nrState.sg.found || [])[parseInt(b.dataset.fi, 10)]; if (p) nrSgSetPlace(p); return; }
+    if (b.dataset.ri != null){ const p = (nrState.sg.recent || [])[parseInt(b.dataset.ri, 10)]; if (p) nrSgSetPlace(p); }
+  });
+  $('nrPlaceQ').addEventListener('input', (e) => nrSgSearchPlaces(e.target.value));
+  $('nrPlaceForm').addEventListener('submit', (e) => { e.preventDefault(); nrSgSearchPlaces($('nrPlaceQ').value); });
+}
+// Bij elke keer openen: terug naar "Bij mij" met een verse zoekactie (de lijst zelf wordt bewaard in nrSgCache).
+function nrSgReset(userLL){
+  const sg = nrState.sg;
+  sg.tok++; sg.place = null; sg.me = userLL ? { lat:userLL.lat, lon:userLL.lon } : null; sg.cat = 'all'; sg.sort = 'dist'; sg.key = ''; sg.items = []; sg.status = 'idle'; sg.cur = null;
+  nrSgListenStop();
+  nrSgWire();
 }
 
 // ----- Filters: ☔ Bij regen (verharde ondergrond), 👨‍👩‍👧 Kinderen (speeltuin dichtbij), 🚆 Trein/bus (halte dichtbij), ⭐ Lijstje -----
@@ -43832,20 +44501,30 @@ function nrChatKnownLL(){
   return old && old.pos && old.pos.coords ? { lat:old.pos.coords.latitude, lon:old.pos.coords.longitude } : null;
 }
 // Routes ophalen als er nog geen lijst is (assistent geopend vanaf het keuzescherm); positie via dezelfde functie als de pop-up.
-async function nrChatEnsureRoutes(mode, token){
+// Ronde 184: placeLL = een door de gebruiker genoemde plaats ({lat, lon, name}); dan worden de routes rond die plaats gezocht i.p.v. rond de eigen positie.
+// De lijst onthoudt waar ze voor gemaakt is (listKey), zodat een volgende vraag over een andere plaats (of weer over de eigen buurt) opnieuw laadt.
+async function nrChatEnsureRoutes(mode, token, placeLL){
+  const key = placeLL ? 'p:' + placeLL.lat.toFixed(2) + ',' + placeLL.lon.toFixed(2) : 'me';
   if (mode && mode !== nrState.mode && (mode === 'wandel' || mode === 'fiets')){
     nrState.mode = mode; nrState.gpx = []; nrState.osm = []; nrState.ranked = []; nrState.view = []; nrState.osmPending = false;
   }
-  if (nrState.ranked.length) return { ok:true };
-  const got = await nrGetPosition();
-  if (token !== nrState.token) return { ok:false, aborted:true };
-  let pos = got.pos;
-  if (!pos && got.kind !== 'denied'){ const old = nrStalePosition(); if (old) pos = old.pos; }
-  if (!pos) return { ok:false, text:nrPosErrText(got.kind) };
-  const userLL = { lat:pos.coords.latitude, lon:pos.coords.longitude }, m = nrState.mode;
+  if (nrState.ranked.length && (nrState.listKey || 'me') === key) return { ok:true };
+  if (nrState.ranked.length){ nrState.gpx = []; nrState.osm = []; nrState.ranked = []; nrState.view = []; nrState.osmPending = false; nrState.pend = []; }
+  let userLL;
+  if (placeLL) userLL = { lat:placeLL.lat, lon:placeLL.lon };
+  else {
+    const got = await nrGetPosition();
+    if (token !== nrState.token) return { ok:false, aborted:true };
+    let pos = got.pos;
+    if (!pos && got.kind !== 'denied'){ const old = nrStalePosition(); if (old) pos = old.pos; }
+    if (!pos) return { ok:false, text:nrPosErrText(got.kind) };
+    userLL = { lat:pos.coords.latitude, lon:pos.coords.longitude };
+  }
+  const m = nrState.mode;
   const [gpx, osm] = await Promise.all([nrFetchGpx(m, userLL).catch(() => []), nrFetchOsm(m, userLL).catch(() => null)]);
   if (token !== nrState.token) return { ok:false, aborted:true };
   nrState.userLL = userLL; nrState.gpx = gpx; nrState.osm = osm || []; nrState.osmPending = false; nrState.tried = {}; nrState.pend = [];
+  nrState.listKey = placeLL ? key : null; nrState.placeName = placeLL ? String(placeLL.name || '') : '';
   nrState.bin = 0; nrState.sort = NR_SORTS.includes(appSettings.nearbyRoutesSort) ? appSettings.nearbyRoutesSort : 'kort';
   nrState.ranked = nrRank(nrBaseList(), m);
   if (!nrState.ranked.length) return { ok:false, text: osm === null ? nrT('Zoeken in OpenStreetMap is niet gelukt. Controleer je verbinding.', 'Searching OpenStreetMap did not work. Check your connection.') : nrT('Geen routes gevonden in de buurt.', 'No routes found nearby.') };
@@ -43876,7 +44555,7 @@ function nrWhyParts(c){
 function nrChatRouteHtml(c){
   const km = nrKmOf(c), k = c.kind + '|' + c.key;
   const pill = c.km > 0 ? `<span class="nr-kmp">${nrKmText(c.km)} km</span>` : km ? `<span class="nr-kmp nr-km">≈ ${nrKmText(km)} km</span>` : `<span class="nr-kmp nr-km unk">${nrT('lengte onbekend', 'length unknown')}</span>`;
-  const near = c.distKm == null ? '' : `<span class="nr-near">${c.kind === 'osm' ? '≈ ' : ''}${nrDistText(c.distKm)}${nrT(' van hier', ' from here')}</span>`;
+  const near = c.distKm == null ? '' : `<span class="nr-near">${c.kind === 'osm' ? '≈ ' : ''}${nrDistText(c.distKm)}${c._ref ? nrT(' van ' + c._ref, ' from ' + c._ref) : nrT(' van hier', ' from here')}</span>`;
   const thumb = nrState.thumbs[c.key] || (c.kind === 'link' ? '🌿' : ((c.mode || nrState.mode) === 'fiets' ? '🚴' : '🥾'));
   const fav = nrFavHas(c);
   return `<div class="nr-rw nr-crw"><button type="button" class="nr-item" data-ckey="${osmWalkEsc(k)}"><span class="nr-th">${thumb}</span><span class="nr-tx"><h4>${osmWalkEsc(c.name)}</h4><div class="nr-meta">${pill}${near}</div>${nrWhyHtml(c)}</span><span class="nr-chev" aria-hidden="true">›</span></button>` +
@@ -43934,7 +44613,7 @@ function nrAssistOpen(from){
   const card = $('nearbyRoutesCard');
   nrState.chatFrom = from;
   if (from === 'hub'){
-    nrState.token++; nrState.mode = appMode === 'fiets' ? 'fiets' : 'wandel'; nrState.favAll = false; nrState.userLL = null;
+    nrState.token++; nrState.mode = appMode === 'fiets' ? 'fiets' : 'wandel'; nrState.favAll = false; nrState.userLL = null; nrState.listKey = null; nrState.placeName = '';
     nrState.gpx = []; nrState.osm = []; nrState.ranked = []; nrState.view = []; nrState.osmPending = false; nrState.tried = {}; nrState.pend = []; nrState.bin = 0; nrState.stale = null;
     nrState.flt = { rain:false, kids:false, pt:false, fav:false }; nrState.load = null; nrState.loadMsg = null; nrState.detail = null; nrState.dtoken++;
     card.classList.remove('detail', 'loading', 'favall');
@@ -43973,7 +44652,7 @@ async function nrChatSend(text){
     const prev = nrChat.msgs.slice(-5, -1).map(m => (m.role === 'me' ? 'Gebruiker: ' : 'Assistent: ') + String(m.text || '').slice(0, 200)).join('\n');
     const planPrompt = `Je bent het begripsdeel van de wandel- en fietsapp PathHopper (België, Nederland, Duitsland). Geef ENKEL JSON:\n` +
       `{"routes":true|false,"mode":"wandel"|"fiets"|null,"filters":{"rain":bool,"kids":bool,"pt":bool,"fav":bool},"maxKm":getal|null,"place":"plaatsnaam"|null,"weather":true|false,"poi":{"type":"${Object.keys(AST_POI).join('|')}","sub":"soort"|null,"terms":["..."],"openNow":bool,"more":bool,"name":"naam van een bepaalde zaak"|null,"radiusKm":getal|null}|null,"local":true|false,"wiki":"zoekterm"|null,"travel":true|false,"keywords":["..."]}\n` +
-      `- routes: true als de gebruiker routes, wandelingen of fietstochten in de buurt wil zien of wijzigen.\n- filters: rain = ook bij regen goed (verharde ondergrond), kids = met kinderen (speeltuin dichtbij), pt = bereikbaar met trein of bus, fav = enkel uit het lijstje van de gebruiker. Zet een filter ALLEEN aan als de vraag zelf erom vraagt. Neem de nu actieve filters (${active}) enkel over als de vraag duidelijk een verfijning van de vorige is (bv. \"iets korter\", \"en ook met de trein\"); bij een nieuw onderwerp staan alle filters uit.\n` +
+      `- routes: true als de gebruiker routes, wandelingen of fietstochten in de buurt wil zien of wijzigen, of in een genoemde plaats (vul dan ook place in).\n- filters: rain = ook bij regen goed (verharde ondergrond), kids = met kinderen (speeltuin dichtbij), pt = bereikbaar met trein of bus, fav = enkel uit het lijstje van de gebruiker. Zet een filter ALLEEN aan als de vraag zelf erom vraagt. Neem de nu actieve filters (${active}) enkel over als de vraag duidelijk een verfijning van de vorige is (bv. \"iets korter\", \"en ook met de trein\"); bij een nieuw onderwerp staan alle filters uit.\n` +
       `- maxKm: maximale lengte in km als de gebruiker die noemt (ook "iets korter" = kleiner dan de vorige), anders null.\n- place: de plaatsnaam als de gebruiker een andere plaats dan zijn eigen positie noemt, anders null.\n- weather: true als de gebruiker naar het weer vraagt (nu, straks, morgen, gaat het regenen).\n- poi: een zaak of plek in de buurt zoeken. type is een van: ${Object.keys(AST_POI).map(k => k + ' (' + AST_POI[k].nl + (AST_POI[k].subs ? '; sub: ' + Object.keys(AST_POI[k].subs).join(', ') : '') + ')').join('; ')}. Kies het meest passende type. sub = enkel als de gebruiker een bepaalde soort wil (bv. \"een restaurant\" of \"iets beters dan een frituur\" = type eten, sub restaurant; \"een kledingwinkel\" = winkel, sub kleding; \"een camping\" = overnachten, sub camping), anders null. terms = wat de gebruiker specifiek noemt: een gerecht, keuken of kenmerk (steak, pizza, sushi, vegetarisch, terras, taverne, brasserie, rolstoeltoegankelijk…), kort, in de taal van de gebruiker, hoogstens 4; een lege lijst als er niets specifieks is. Woorden over smaak of kwaliteit (lekker, goed, mooi, gezellig, goedkoop, beste) zijn GEEN term: de app heeft geen recensies, dus laat ze weg. more = true als de gebruiker na een eerdere lijst nog andere of meer opties wil (\"heb je er nog andere\", \"nog meer\", \"iets anders\"), anders false. Een taverne of brasserie is type eten met terms [\"taverne\"]; een kroeg is type drinken, sub kroeg. openNow = true bij \"open\", \"nu\" of \"vanavond nog\"; name = de naam van een bepaalde zaak als de gebruiker die noemt (bv. Delhaize, Apotheek Peeters), anders null; ook voor een adres of openingsuren van een bepaalde zaak is dit een poi-vraag. radiusKm = de straal in km als de gebruiker die noemt of aangeeft (\"ruimere buurt\" = 5, \"verder weg\" of \"in de streek\" = 10, \"dichtbij\" of \"te voet\" = 1), anders null. Vraagt de gebruiker een wandeling of fietstocht langs een speeltuin of halte, dan zijn dat routes met filter kids of pt en geen poi. poi is null als het om routes, het weer of iets anders gaat.\n- local: true als de vraag over de omgeving van de gebruiker gaat (wat is er te doen, wat is er te zien) zonder dat hij een plaats noemt.\n- wiki: het zoekwoord voor een encyclopedie (Wikipedia) als de gebruiker uitleg of feiten wil over een onderwerp, ding, plaats of streek (bv. "straalmotor", "Hoge Venen", "Moezel"); kort, in de taal van het onderwerp. null voor routes, weer, plekken in de buurt, openingsuren of een gesprek zonder onderwerp. travel = true als het een reisbestemming of streek is om te bezoeken (dan kijkt de app ook in de reisgids Wikivoyage).\n- keywords: 4 tot 8 korte zoekwoorden voor in brochures, in het Nederlands, Duits en Engels, zonder leestekens.\n` +
       (prev ? `Eerder in het gesprek:\n${prev}\n` : '') + `Vraag van de gebruiker: """${text}"""`;
     const pr = await assistantGemini(planPrompt, { json:true, temperature:0, models:GEMINI_PLAN_CHAIN, perTryMs:15000, budgetMs:35000, onTry:(t) => nrProgDetail(t.tries > 1 ? nrT('poging ' + t.tries + ' · ' + t.model, 'attempt ' + t.tries + ' · ' + t.model) : '') });
@@ -43993,10 +44672,16 @@ async function nrChatSend(text){
     const wantPos = plan.weather || plan.poi || (plan.local && mode !== 'sources' && !plan.place);   // ook een vraag over de buurt krijgt een (ruwe) positie als context
     nrProgPlan(plan, wantPos && !plan.place);
     // 2. Routes (enkel als erom gevraagd is): lijst laden indien nodig, filters zetten, controle afwachten
-    let routes = [], failNote = '', unchecked = '';
+    let routes = [], failNote = '', unchecked = '', routePlace = null;
     if (plan.routes){
       nrProgGo('routes');
-      const have = await nrChatEnsureRoutes(plan.mode, token);
+      // Ronde 184: noemt de gebruiker een plaats (bv. "wandelingen in Saarburg"), dan zoeken we de routes rond die plaats, niet rond de eigen positie.
+      if (plan.place){
+        nrProgDetail(nrT('plaats opzoeken: ', 'looking up: ') + plan.place);
+        routePlace = await assistantGeocode(plan.place).catch(() => null);
+        if (!alive()) return;
+      }
+      const have = plan.place && !routePlace ? { ok:false, text:nrT(`Ik vond de plaats "${plan.place}" niet.`, `I could not find the place "${plan.place}".`) } : await nrChatEnsureRoutes(plan.mode, token, routePlace);
       if (!alive()) return;
       if (!have.ok) failNote = have.text || '';
       else {
@@ -44005,12 +44690,13 @@ async function nrChatSend(text){
         let list = nrFilteredAll(nrState.ranked, nrState.mode, 0, nrState.sort);
         if (plan.maxKm) list = list.filter(c => { const k = nrKmOf(c); return k > 0 && k <= plan.maxKm; });
         routes = list.slice(0, 5);
+        routes.forEach(c => { c._ref = routePlace ? String(routePlace.name || plan.place) : ''; });
         const wantsCheck = plan.filters.rain || plan.filters.kids || plan.filters.pt;
         if (!routes.length && wantsCheck){
           // niets bevestigd (of de controle mislukte): toon toch de routes het dichtst bij jou, eerlijk als "niet bevestigd"
           let base = nrSortList(nrState.ranked, 'dicht');
           if (plan.maxKm) base = base.filter(c => { const k = nrKmOf(c); return k > 0 && k <= plan.maxKm; });
-          routes = base.slice(0, 5); unchecked = routes.length ? (nrState.anErr ? 'error' : 'nomatch') : '';
+          routes = base.slice(0, 5); routes.forEach(c => { c._ref = routePlace ? String(routePlace.name || plan.place) : ''; }); unchecked = routes.length ? (nrState.anErr ? 'error' : 'nomatch') : '';
         }
         if (!routes.length) failNote = nrT('Geen routes gevonden die hierbij passen.', 'No routes found that match.');
       }
@@ -44019,7 +44705,7 @@ async function nrChatSend(text){
     let wx = null, pois = null, wxFail = '', poiFail = '', where = '', placeLL = null, staleNote = '', staleAge = '', poiLL = null;
     if (wantPos){
       let ll = null;
-      if (plan.place){ nrProgGo(plan.weather ? 'weather' : 'poi'); nrProgDetail(nrT('plaats opzoeken: ', 'looking up: ') + plan.place); placeLL = await assistantGeocode(plan.place).catch(() => null); if (placeLL){ ll = placeLL; where = placeLL.name; } }
+      if (plan.place){ nrProgGo(plan.weather ? 'weather' : 'poi'); nrProgDetail(nrT('plaats opzoeken: ', 'looking up: ') + plan.place); placeLL = routePlace || await assistantGeocode(plan.place).catch(() => null); if (placeLL){ ll = placeLL; where = placeLL.name; } }
       if (!ll && !plan.place){
         nrProgGo('pos');
         const cp = await nrChatPosition();   // altijd eerst een verse positie; een oudere enkel als dat niet lukt, en dan met een melding
@@ -44047,7 +44733,7 @@ async function nrChatSend(text){
     // Eigen plekken, de seizoenstip en brochures horen bij vragen over routes en de omgeving, niet bij "waar is een apotheek" of het weer (dat gaf een regentip bij een apotheekvraag).
     const aboutPlaces = !plan.poi && !plan.weather;   // brochurefragmenten
     const aboutTrips = aboutPlaces && (plan.routes || plan.local);   // eigen plekken en seizoenstip enkel bij vragen over routes of de omgeving, niet bij "hoe werkt een straalmotor"
-    let ll = nrChat.ll || nrState.userLL || null;
+    let ll = routePlace ? { lat:routePlace.lat, lon:routePlace.lon } : (nrChat.ll || nrState.userLL || null);
     if (!ll && plan.local && aboutTrips){ const cp = await nrChatPosition(); if (cp.ll){ ll = cp.ll; if (cp.stale && !staleNote){ staleNote = nrStaleNote(cp.stale); staleAge = nrAgeText(cp.stale.ageMs); } } }
     if (!alive()) return;
     const places = ll && aboutTrips ? nrPlacesNear(nrState.mode, ll).slice(0, 3) : [];
@@ -44072,7 +44758,7 @@ async function nrChatSend(text){
     const lines = [];
     routes.forEach((c, i) => {
       const km = nrKmOf(c);
-      lines.push(`[R${i + 1}] Route "${c.name}"${km ? ', lengte van de route ' + nrKmText(km) + ' km' : ''}${c.distKm != null ? ', het startpunt ligt ' + nrDistText(c.distKm) + ' van de gebruiker' : ''}. ${nrWhyParts(c).join('; ')}`);
+      lines.push(`[R${i + 1}] Route "${c.name}"${km ? ', lengte van de route ' + nrKmText(km) + ' km' : ''}${c.distKm != null ? ', het startpunt ligt ' + nrDistText(c.distKm) + ' van ' + (routePlace ? 'het midden van ' + routePlace.name : 'de gebruiker') : ''}. ${nrWhyParts(c).join('; ')}`);
     });
     places.forEach((p, i) => lines.push(`[P${i + 1}] Eigen tip (${p.gecontroleerd ? 'gecontroleerd door de maker van de app, ' + p.gecontroleerd : 'nog NIET zelf gecontroleerd door de maker van de app'}) "${p.name}", ${nrDistText(p.distKm)} van de gebruiker: ${p.text}`));
     if (wx) lines.push(`[W1] Weersverwachting (Open-Meteo)${where ? ' voor ' + where : ' op de positie van de gebruiker'}: ${assistantWeatherLine(wx, '')}`);
@@ -44093,7 +44779,8 @@ async function nrChatSend(text){
     }
     if (poiFail && !webPoiFallback) lines.push(`OPMERKING: zoeken naar plekken in de buurt is mislukt (${poiFail}). Zeg dat eerlijk in één zin, stel voor om het straks opnieuw te proberen, en verzin geen plekken, openingsuren of andere tips.`);
     if (unchecked){ const what = [plan.filters.rain ? 'regen (verharde ondergrond)' : '', plan.filters.kids ? 'speeltuinen' : '', plan.filters.pt ? 'haltes' : ''].filter(Boolean).join(', '); lines.push(unchecked === 'error' ? `OPMERKING: de controle op ${what} is mislukt; de routes hierboven zijn NIET gecontroleerd. Zeg dat eerlijk in één zin en beloof niets over ${what}.` : `OPMERKING: bij geen enkele route kon ik ${what} bevestigen (OpenStreetMap heeft dit vaak niet). De routes hierboven zijn gewoon de routes het dichtst bij de gebruiker en NIET bevestigd. Zeg dat eerlijk in één zin en beloof niets over ${what}.`); }
-    if (plan.place && !plan.weather && !plan.poi) lines.push(`OPMERKING: de gebruiker noemde de plaats "${plan.place}". Je kent enkel de routes in de buurt van de huidige positie van de gebruiker, niet van die plaats. Zeg dat eerlijk in één zin.`);
+    if (routePlace) lines.push(`OPMERKING: de routes hierboven liggen rond ${routePlace.name}, de plaats die de gebruiker noemde, niet bij de gebruiker zelf. Zeg "de routes rond ${routePlace.name}" in plaats van "dichtbij jou".`);
+    if (plan.place && !plan.weather && !plan.poi && !routePlace) lines.push(`OPMERKING: de gebruiker noemde de plaats "${plan.place}". Je kent enkel de routes in de buurt van de huidige positie van de gebruiker, niet van die plaats. Zeg dat eerlijk in één zin.`);
     if (staleNote) lines.push(`OPMERKING: de positie van de gebruiker is NIET vers${staleAge ? ' (' + staleAge + ' oud)' : ''}. Zeg in één zin dat de resultaten bij die oudere positie horen en dat een verse positie niet lukte.`);
     if (aboutTrips) lines.push(`[T1] Seizoenstip: ${tip.text}`);
     chunks.forEach((c, i) => lines.push(`[K${i + 1}] Brochure "${kennisSourceLabel(c)}": ${c.t.slice(0, 700)}`));
@@ -44148,7 +44835,7 @@ async function nrChatSend(text){
     const shownO = pois ? pois.items.filter((x, i) => ids.has('O' + (i + 1))) : [];
     const shownPois = pois && pois.items.length ? (shownO.length ? shownO : pois.items.slice(0, 5)) : [];
     const sources = [];
-    if (shownR.length) sources.push({ label: nrT('routes dichtbij jou (OpenStreetMap en je lijstje)', 'routes near you (OpenStreetMap and your list)') });
+    if (shownR.length) sources.push({ label: routePlace ? nrT('routes rond ' + routePlace.name + ' (OpenStreetMap en je lijstje)', 'routes around ' + routePlace.name + ' (OpenStreetMap and your list)') : nrT('routes dichtbij jou (OpenStreetMap en je lijstje)', 'routes near you (OpenStreetMap and your list)') });
     if (usedP.length) sources.push({ label: nrT('eigen tips', 'own tips') });
     if (ids.has('W1') || wx) sources.push({ label: nrT('weer: Open-Meteo', 'weather: Open-Meteo') });
     if (shownPois.length) sources.push({ label: nrT('plekken en openingsuren: OpenStreetMap', 'places and opening hours: OpenStreetMap') });
@@ -44160,7 +44847,7 @@ async function nrChatSend(text){
     if (grounded) (ar.web || []).slice(0, 4).forEach(w => { if (/^https:\/\//i.test(w.uri)) sources.push({ label: w.title || nrT('webpagina', 'web page'), url:w.uri }); });
     const notes = [];
     if (unchecked === 'error') notes.push(nrT('Niet gecontroleerd: het ophalen bij OpenStreetMap lukte niet.', 'Not checked: fetching from OpenStreetMap did not work.'));
-    else if (unchecked) notes.push(nrT('Niet bevestigd: OpenStreetMap heeft hier meestal geen gegevens over. Dit zijn gewoon de routes het dichtst bij jou.', 'Not confirmed: OpenStreetMap usually has no data on this. These are simply the routes closest to you.'));
+    else if (unchecked) notes.push(nrT('Niet bevestigd: OpenStreetMap heeft hier meestal geen gegevens over. Dit zijn gewoon de routes het dichtst bij ' + (routePlace ? 'het midden van ' + routePlace.name : 'jou') + '.', 'Not confirmed: OpenStreetMap usually has no data on this. These are simply the routes closest to ' + (routePlace ? 'the centre of ' + routePlace.name : 'you') + '.'));
     else if (shownR.length && (plan.filters.rain || plan.filters.kids || plan.filters.pt)) notes.push(nrT('Schatting uit OpenStreetMap, geen zekerheid.', 'Estimate from OpenStreetMap, not a guarantee.'));
     if (shownPois.some(x => x.showHours)) notes.push(nrT('Openingsuren komen uit OpenStreetMap en kunnen ontbreken of verouderd zijn.', 'Opening hours come from OpenStreetMap and may be missing or outdated.'));
     if (shownPois.length && plan.poi && plan.poi.terms.length) notes.push(nrT('Wat bij een zaak staat (keuken, kenmerken) komt uit OpenStreetMap en is vaak onvolledig; een zaak zonder vinkje kan toch passen.', 'What is listed for a business (cuisine, features) comes from OpenStreetMap and is often incomplete; a business without a tick may still fit.'));
@@ -44770,7 +45457,7 @@ function nrBackToList(){
   nrState.detail = null; nrState.dtoken++;
   $('nrListWrap').scrollTop = nrState.listScroll || 0;
 }
-function nrClose(){ $('nearbyRoutesOverlay').classList.remove('show'); $('nearbyRoutesCard').classList.remove('detail', 'loading', 'chat'); nrState.load = null; nrState.loadMsg = null; nrState.detail = null; nrState.dtoken++; nrState.token++; clearTimeout(nrState.pendT); nrState.pend = []; if (nrState.io){ try{ nrState.io.disconnect(); }catch(e){} nrState.io = null; } }
+function nrClose(){ $('nearbyRoutesOverlay').classList.remove('show'); $('nearbyRoutesCard').classList.remove('detail', 'loading', 'chat', 'sgv'); nrState.sg.tok++; nrSgListenStop(); $('nrPlaceSheet').classList.remove('show'); nrState.load = null; nrState.loadMsg = null; nrState.detail = null; nrState.dtoken++; nrState.token++; clearTimeout(nrState.pendT); nrState.pend = []; if (nrState.io){ try{ nrState.io.disconnect(); }catch(e){} nrState.io = null; } }
 function nrOpenRoute(c){
   nrClose();
   // Vanaf het keuzescherm (assistent of "Mijn lijstje" daar) is er geen opzetscherm en dus nog geen Wandel-/Fietsmodus: eerst die modus
@@ -44786,11 +45473,13 @@ function nrOpenRoute(c){
 function nrOpen(mode, userLL, gpx, osm, osmPending, stale){
   nrWire();
   nrState.stale = stale || null;   // Ronde 164: positie niet vers = melding in de statusregel
-  nrState.token++; nrState.mode = mode; nrState.userLL = userLL; nrState.gpx = gpx; nrState.osm = osm; nrState.osmPending = osmPending;
+  nrState.token++; nrState.mode = mode; nrState.userLL = userLL; nrState.listKey = null; nrState.placeName = ''; nrState.gpx = gpx; nrState.osm = osm; nrState.osmPending = osmPending;
   $('nearbyRoutesCard').classList.remove('detail', 'loading', 'chat'); nrState.load = null; nrState.loadMsg = null; nrState.detail = null; nrState.dtoken++;
   nrState.bin = 0; nrState.sort = NR_SORTS.includes(appSettings.nearbyRoutesSort) ? appSettings.nearbyRoutesSort : 'kort'; nrState.tried = {}; nrState.pend = [];
   nrState.favAll = false; nrState.flt = { rain:false, kids:false, pt:false, fav:false }; nrState.anMsg = ''; nrState.anErr = false; $('nearbyRoutesCard').classList.remove('favall');
+  nrSgReset(userLL); nrSgView(null);   // Ronde 186: bezienswaardigheden beginnen steeds bij "Bij mij"
   nrRender(false);
+  nrSgLoad(false);
   $('nearbyRoutesOverlay').classList.add('show');
   $('nearbyRoutesOverlay').scrollTop = 0;
   const token = nrState.token;
