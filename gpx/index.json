@@ -11281,6 +11281,19 @@
           "lon": 5.82154
         }
       ]
+    },
+    {
+      "name": "Duitsland - Treben -Moezel",
+      "wandelen": [
+        {
+          "name": "Ruïnes van de Mont Royal",
+          "km": 6.0,
+          "categorie": "Natuur",
+          "file": "Wandelen/Duitsland - Treben -Moezel/Ruïnes van de Mont Royal.gpx",
+          "lat": 49.971523,
+          "lon": 7.113691
+        }
+      ]
     }
   ]
 }
