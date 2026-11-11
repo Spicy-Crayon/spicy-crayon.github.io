@@ -13,265 +13,353 @@
           "name": "Altenbroekwandeling",
           "km": 11,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/Altenbroekwandeling.gpx"
+          "file": "Wandelen/Limburg/Altenbroekwandeling.gpx",
+          "lat": 50.758533,
+          "lon": 5.762996
         },
         {
           "name": "Bever route",
           "km": 14,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/everroute.gpx"
+          "file": "Wandelen/Limburg/everroute.gpx",
+          "lat": 51.281388,
+          "lon": 5.492343
         },
         {
           "name": "Bloesemwandeling",
           "km": 8,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/loesemwandeling.gpx"
+          "file": "Wandelen/Limburg/loesemwandeling.gpx",
+          "lat": 50.81142,
+          "lon": 5.284495
         },
         {
           "name": "Bloesemwandeling ten zuiden van Sint Truiden",
           "km": 8,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/loesemwandelingtenzuidenvansinttruiden.gpx"
+          "file": "Wandelen/Limburg/loesemwandelingtenzuidenvansinttruiden.gpx",
+          "lat": 50.772916,
+          "lon": 5.182418
         },
         {
           "name": "Bosrijk in Maasmechelen",
           "km": 9,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/osrijkinmaasmechelen.gpx"
+          "file": "Wandelen/Limburg/osrijkinmaasmechelen.gpx",
+          "lat": 50.983801,
+          "lon": 5.683654
         },
         {
           "name": "Bronnenwandeling Voeren",
           "km": 9,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/ronnenwandelingVoeren.gpx"
+          "file": "Wandelen/Limburg/ronnenwandelingVoeren.gpx",
+          "lat": 50.748451,
+          "lon": 5.812248
         },
         {
           "name": "De 7 Trappistenroutes - Achel",
           "km": 8,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/de7trappistenroutesachel.gpx"
+          "file": "Wandelen/Limburg/de7trappistenroutesachel.gpx",
+          "lat": 51.291405,
+          "lon": 5.480923
         },
         {
           "name": "De 7 Trappistenroutes - Chimay",
           "km": 11,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/de7trappistenrouteschimay.gpx"
+          "file": "Wandelen/Limburg/de7trappistenrouteschimay.gpx",
+          "lat": 51.251422,
+          "lon": 5.545703
         },
         {
           "name": "De 7 Trappistenroutes - La Trappe",
           "km": 5,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/de7trappistenrouteslatrappe.gpx"
+          "file": "Wandelen/Limburg/de7trappistenrouteslatrappe.gpx",
+          "lat": 51.299132,
+          "lon": 5.489157
         },
         {
           "name": "De 7 Trappistenroutes - Orval",
           "km": 8,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/de7trappistenroutesorval.gpx"
+          "file": "Wandelen/Limburg/de7trappistenroutesorval.gpx",
+          "lat": 51.255372,
+          "lon": 5.481718
         },
         {
           "name": "De 7 Trappistenroutes - Rochefort",
           "km": 6,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/de7trappistenroutesrochefort.gpx"
+          "file": "Wandelen/Limburg/de7trappistenroutesrochefort.gpx",
+          "lat": 51.260395,
+          "lon": 5.513925
         },
         {
           "name": "De 7 Trappistenroutes - Westmalle",
           "km": 10,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/de7trappistenrouteswestmalle.gpx"
+          "file": "Wandelen/Limburg/de7trappistenrouteswestmalle.gpx",
+          "lat": 51.251377,
+          "lon": 5.545399
         },
         {
           "name": "De 7 Trappistenroutes - Westvleteren",
           "km": 8,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/de7trappistenrouteswestvleteren.gpx"
+          "file": "Wandelen/Limburg/de7trappistenrouteswestvleteren.gpx",
+          "lat": 51.276009,
+          "lon": 5.473341
         },
         {
           "name": "Door het Mergelland",
           "km": 17,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/Doorhetmergelland.gpx"
+          "file": "Wandelen/Limburg/doorhetmergelland.gpx",
+          "lat": 50.814177,
+          "lon": 5.668955
         },
         {
           "name": "Genk-Langerlo",
           "km": 11,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/GenkLangerlo.gpx"
+          "file": "Wandelen/Limburg/GenkLangerlo.gpx",
+          "lat": 50.942089,
+          "lon": 5.512557
         },
         {
           "name": "Gruitrode - Eisden",
           "km": 18,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/GruitrodeEisden.gpx"
+          "file": "Wandelen/Limburg/GruitrodeEisden.gpx",
+          "lat": 51.089149,
+          "lon": 5.58889
         },
         {
           "name": "Heide en boswandeling",
           "km": 11,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/heideenboswandeling.gpx"
+          "file": "Wandelen/Limburg/heideenboswandeling.gpx",
+          "lat": 50.978059,
+          "lon": 5.659335
         },
         {
           "name": "Helchteren: panorama Centraal Limburg",
           "km": 19,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/wandelinghelchteren.gpx"
+          "file": "Wandelen/Limburg/wandelinghelchteren.gpx",
+          "lat": 51.064527,
+          "lon": 5.388047
         },
         {
           "name": "Hengelhoef - Ter Haagdoornheide",
           "km": 14,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/hengelhoefterhaagdoornheide.gpx"
+          "file": "Wandelen/Limburg/hengelhoefterhaagdoornheide.gpx",
+          "lat": 51.00733,
+          "lon": 5.462436
         },
         {
           "name": "Het Schulensbroek",
           "km": 12,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/HetSchulensbroek.gpx"
+          "file": "Wandelen/Limburg/HetSchulensbroek.gpx",
+          "lat": 50.93885,
+          "lon": 5.16735
         },
         {
           "name": "Kanaalwandeling tussen Kanne en Ternaaien",
           "km": 13,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/kanaalwandelingtussenkanneenternaaien.gpx"
+          "file": "Wandelen/Limburg/kanaalwandelingtussenkanneenternaaien.gpx",
+          "lat": 50.814884,
+          "lon": 5.673819
         },
         {
           "name": "Kelchterhoef Ten Haagdoornheide",
           "km": 10,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/kelchterhoeftenhaagdoornheide.gpx"
+          "file": "Wandelen/Limburg/kelchterhoeftenhaagdoornheide.gpx",
+          "lat": 51.03034,
+          "lon": 5.440334
         },
         {
           "name": "Kortessem: Poort van Haspengouw",
           "km": 13,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/wandelingindepoortvanhaspengouw.gpx"
+          "file": "Wandelen/Limburg/wandelingindepoortvanhaspengouw.gpx",
+          "lat": 50.863773,
+          "lon": 5.423936
         },
         {
           "name": "Langs bloesems en boerenerven",
           "km": 21,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/langsbloezemsenboerenerven.gpx"
+          "file": "Wandelen/Limburg/langsbloezemsenboerenerven.gpx",
+          "lat": 50.801369,
+          "lon": 5.344677
         },
         {
           "name": "Munsterbos",
           "km": 10,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/munsterbos.gpx"
+          "file": "Wandelen/Limburg/munsterbos.gpx",
+          "lat": 50.89114,
+          "lon": 5.525627
         },
         {
           "name": "Panoramawandeling in Voeren",
           "km": 8,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/panoramawandelinginvoeren.gpx"
+          "file": "Wandelen/Limburg/panoramawandelinginvoeren.gpx",
+          "lat": 50.749504,
+          "lon": 5.813816
         },
         {
           "name": "Platwijerswandeling",
           "km": 12,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/platwijerswandeling.gpx"
+          "file": "Wandelen/Limburg/platwijerswandeling.gpx",
+          "lat": 50.956109,
+          "lon": 5.327289
         },
         {
           "name": "Puur natuur in Bolderberg",
           "km": 10,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/PuurnatuurinBolderberg.gpx"
+          "file": "Wandelen/Limburg/PuurnatuurinBolderberg.gpx",
+          "lat": 50.987659,
+          "lon": 5.274487
         },
         {
           "name": "Schrikhoekwandeling",
           "km": 7,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/schrikhoekwandeling.gpx"
+          "file": "Wandelen/Limburg/schrikhoekwandeling.gpx",
+          "lat": 51.066374,
+          "lon": 5.034525
         },
         {
           "name": "Tongeren - Zammelen",
           "km": 17,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/tongerenzammelen.gpx"
+          "file": "Wandelen/Limburg/tongerenzammelen.gpx",
+          "lat": 50.780737,
+          "lon": 5.463412
         },
         {
           "name": "Tussen Kanne en Maastricht",
           "km": 9,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/tussenkanneenmaastricht.gpx"
+          "file": "Wandelen/Limburg/tussenkanneenmaastricht.gpx",
+          "lat": 50.814839,
+          "lon": 5.673748
         },
         {
           "name": "Vanuit Schoot naar Gerhagen en terug",
           "km": 15,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/vanuitschootnaargerhagenenterug.gpx"
+          "file": "Wandelen/Limburg/vanuitschootnaargerhagenenterug.gpx",
+          "lat": 51.066174,
+          "lon": 5.036334
         },
         {
           "name": "Vijverkomplex van midden Limburg",
           "km": 19,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/vijverkomplexvanmiddenlimburg.gpx"
+          "file": "Wandelen/Limburg/vijverkomplexvanmiddenlimburg.gpx",
+          "lat": 50.991483,
+          "lon": 5.27245
         },
         {
           "name": "Vijverwandeling",
           "km": 9,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/vijverwandeling.gpx"
+          "file": "Wandelen/Limburg/vijverwandeling.gpx",
+          "lat": 50.989447,
+          "lon": 5.27716
         },
         {
           "name": "Vuursteenwandeling",
           "km": 9,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/vuursteenwandeling.gpx"
+          "file": "Wandelen/Limburg/vuursteenwandeling.gpx",
+          "lat": 50.7377,
+          "lon": 5.823432
         },
         {
           "name": "Wandeling Bokrijk - Kiewit",
           "km": 10,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/wandelingbokrijkkiewit.gpx"
+          "file": "Wandelen/Limburg/wandelingbokrijkkiewit.gpx",
+          "lat": 50.964896,
+          "lon": 5.413216
         },
         {
           "name": "Wandeling Hengelhoef",
           "km": 8,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/Hengelhoef.gpx"
+          "file": "Wandelen/Limburg/Hengelhoef.gpx",
+          "lat": 51.011466,
+          "lon": 5.4886
         },
         {
           "name": "Wandeling Lommel",
           "km": 11,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/Lommel.gpx"
+          "file": "Wandelen/Limburg/Lommel.gpx",
+          "lat": 51.239219,
+          "lon": 5.370462
         },
         {
           "name": "Wandeling rond Stal",
           "km": 10,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/eenwandelingrondstal.gpx"
+          "file": "Wandelen/Limburg/eenwandelingrondstal.gpx",
+          "lat": 51.07439,
+          "lon": 5.24313
         },
         {
           "name": "Wandeling Termolen",
           "km": 11,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/Termolen.gpx"
+          "file": "Wandelen/Limburg/Termolen.gpx",
+          "lat": 50.988998,
+          "lon": 5.416544
         },
         {
           "name": "Wandeling Wiemesmeer-Zutendaal",
           "km": 11,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/wandelingwiemesmeerzutendaal.gpx"
+          "file": "Wandelen/Limburg/wandelingwiemesmeerzutendaal.gpx",
+          "lat": 50.952677,
+          "lon": 5.559431
         },
         {
           "name": "Wandeling Zolder",
           "km": 11,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/Zolder.gpx"
+          "file": "Wandelen/Limburg/Zolder.gpx",
+          "lat": 50.987659,
+          "lon": 5.274487
         },
         {
           "name": "Wijngaardbos",
           "km": 8,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/Wijngaardbos.gpx"
+          "file": "Wandelen/Limburg/Wijngaardbos.gpx",
+          "lat": 50.818104,
+          "lon": 5.46431
         },
         {
           "name": "Zammelen - Tongeren",
           "km": 18,
           "categorie": "Natuur",
-          "file": "wandelen/Limburg/zammelentongeren.gpx"
+          "file": "Wandelen/Limburg/zammelentongeren.gpx",
+          "lat": 50.813325,
+          "lon": 5.406306
         },
         {
           "name": "Hoogstamgordel Grootloon - Groene wandeling",
@@ -2108,379 +2196,497 @@
           "name": "Abdijentocht",
           "km": 16,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/Abdijentocht.gpx"
+          "file": "Wandelen/Antwerpen/Abdijentocht.gpx",
+          "lat": 51.032535,
+          "lon": 4.976088
         },
         {
           "name": "Achter Olenpad",
           "km": 18,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/achterolenpad.gpx"
+          "file": "Wandelen/Antwerpen/achterolenpad.gpx",
+          "lat": 51.167843,
+          "lon": 4.90047
         },
         {
           "name": "Boekelpad",
           "km": 8,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/oekelpad.gpx"
+          "file": "Wandelen/Antwerpen/oekelpad.gpx",
+          "lat": 51.168494,
+          "lon": 4.903808
         },
         {
           "name": "Bornem de oude schelde",
           "km": 15,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/Bornemdeoudeschelde.gpx"
+          "file": "Wandelen/Antwerpen/Bornemdeoudeschelde.gpx",
+          "lat": 51.100353,
+          "lon": 4.234161
         },
         {
           "name": "Bossen en velden rond Averbode",
           "km": 14,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/ossenenveldenrondaverbode.gpx"
+          "file": "Wandelen/Antwerpen/ossenenveldenrondaverbode.gpx",
+          "lat": 51.052303,
+          "lon": 4.980981
         },
         {
           "name": "Boswandeling",
           "km": 11,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/oswandeling.gpx"
+          "file": "Wandelen/Antwerpen/oswandeling.gpx",
+          "lat": 51.14409,
+          "lon": 4.858976
         },
         {
           "name": "Boswandeling Beerse",
           "km": 5,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/BoswandelingBeerse.gpx"
+          "file": "Wandelen/Antwerpen/BoswandelingBeerse.gpx",
+          "lat": 51.336792,
+          "lon": 4.802828
         },
         {
           "name": "Boudewijnpad",
           "km": 5,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/boudewijnpad.gpx"
+          "file": "Wandelen/Antwerpen/boudewijnpad.gpx",
+          "lat": 51.173732,
+          "lon": 4.90296
         },
         {
           "name": "Brasschaat-Kapellen-Brasschaat",
           "km": 35,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/BrasschaatKapellenBrasschaat.gpx"
-        },
-        {
-          "name": "Bruinvissenpad",
-          "km": 7,
-          "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/w-belgie-bruinvissenpad.gpx"
+          "file": "Wandelen/Antwerpen/BrasschaatKapellenBrasschaat.gpx",
+          "lat": 51.307136,
+          "lon": 4.508449
         },
         {
           "name": "De Hutten",
           "km": 17,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/dehutten.gpx"
+          "file": "Wandelen/Antwerpen/dehutten.gpx",
+          "lat": 51.138365,
+          "lon": 5.075973
         },
         {
           "name": "De Put van het Bauw",
           "km": 12,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/deputvanrauw.gpx"
+          "file": "Wandelen/Antwerpen/deputvanrauw.gpx",
+          "lat": 51.218403,
+          "lon": 5.181224
         },
         {
           "name": "Deurne-Oelegem-Deurne",
           "km": 28,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/DeurneOelegemDeurne.gpx"
+          "file": "Wandelen/Antwerpen/DeurneOelegemDeurne.gpx",
+          "lat": 51.217033,
+          "lon": 4.481854
         },
         {
           "name": "Dodentocht 2010",
           "km": 100,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/dodentocht2010.gpx"
+          "file": "Wandelen/Antwerpen/dodentocht2010.gpx",
+          "lat": 51.093452,
+          "lon": 4.23199
         },
         {
           "name": "Domeinbos Het Broek",
           "km": 8,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/domeinboshetbroek.gpx"
+          "file": "Wandelen/Antwerpen/domeinboshetbroek.gpx",
+          "lat": 51.059851,
+          "lon": 4.381725
         },
         {
           "name": "Dorpskneuterpad",
           "km": 8,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/dorpskneuterpad.gpx"
+          "file": "Wandelen/Antwerpen/dorpskneuterpad.gpx",
+          "lat": 51.144136,
+          "lon": 4.859203
         },
         {
           "name": "Drieswandeling",
           "km": 12,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/drieswandeling.gpx"
+          "file": "Wandelen/Antwerpen/drieswandeling.gpx",
+          "lat": 51.144802,
+          "lon": 4.859211
         },
         {
           "name": "Essen-Kalmthout-Essen",
           "km": 27,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/EssenKalmthoutEssen.gpx"
+          "file": "Wandelen/Antwerpen/EssenKalmthoutEssen.gpx",
+          "lat": 51.462043,
+          "lon": 4.451732
         },
         {
           "name": "GR12 van Schoten tot Lier",
           "km": 29,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/gr12schotentotlier.gpx"
+          "file": "Wandelen/Antwerpen/gr12schotentotlier.gpx",
+          "lat": 51.261738,
+          "lon": 4.512976
         },
         {
           "name": "Het Hijgend Hertpad",
           "km": 17,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/hethijgendhertpad.gpx"
+          "file": "Wandelen/Antwerpen/hethijgendhertpad.gpx",
+          "lat": 51.144042,
+          "lon": 4.858976
         },
         {
           "name": "Het Vaartland in Willebroek-Heindonk",
           "km": 14,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/HetVaartlandinWillebroekHeindonk.gpx"
+          "file": "Wandelen/Antwerpen/HetVaartlandinWillebroekHeindonk.gpx",
+          "lat": 51.061141,
+          "lon": 4.404903
         },
         {
           "name": "Kastelentocht Westerlo (Lange route)",
           "km": 26,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/KastelentochtWesterlo.gpx"
+          "file": "Wandelen/Antwerpen/KastelentochtWesterlo.gpx",
+          "lat": 51.088489,
+          "lon": 4.915258
         },
         {
           "name": "Kastelentocht Westerlo (Korte route)",
           "km": 14,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/kastelentochtwesterlo (2).gpx"
+          "file": "Wandelen/Antwerpen/kastelentochtwesterlo (2).gpx",
+          "lat": 51.088108,
+          "lon": 4.915405
         },
         {
           "name": "KeizerKarelpad",
           "km": 8,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/keizerkarelpad.gpx"
+          "file": "Wandelen/Antwerpen/keizerkarelpad.gpx",
+          "lat": 51.144137,
+          "lon": 4.858901
         },
         {
           "name": "Kempense Heuvelrug",
           "km": 11,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/kempenseheuvelrug.gpx"
+          "file": "Wandelen/Antwerpen/kempenseheuvelrug.gpx",
+          "lat": 51.181418,
+          "lon": 4.829924
         },
         {
           "name": "Knuppelpad",
           "km": 10,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/knuppelpad.gpx"
+          "file": "Wandelen/Antwerpen/knuppelpad.gpx",
+          "lat": 51.173828,
+          "lon": 4.902961
         },
         {
           "name": "Koperdorppad",
           "km": 10,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/koperdorppad.gpx"
+          "file": "Wandelen/Antwerpen/koperdorppad.gpx",
+          "lat": 51.185147,
+          "lon": 4.904151
         },
         {
           "name": "Meerhout - Nete - weide - bos",
           "km": 11,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/meerhoutneteweidebos.gpx"
+          "file": "Wandelen/Antwerpen/meerhoutneteweidebos.gpx",
+          "lat": 51.136605,
+          "lon": 5.083585
         },
         {
           "name": "Millenniumpad",
           "km": 8,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/milleniumpad.gpx"
+          "file": "Wandelen/Antwerpen/milleniumpad.gpx",
+          "lat": 51.144136,
+          "lon": 4.859203
         },
         {
           "name": "Museumwandeling",
           "km": 11,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/museumwandeling.gpx"
+          "file": "Wandelen/Antwerpen/museumwandeling.gpx",
+          "lat": 51.17383,
+          "lon": 4.902507
         },
         {
           "name": "Nete en Kastelentocht",
           "km": 13,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/NeteenKastelentocht.gpx"
+          "file": "Wandelen/Antwerpen/NeteenKastelentocht.gpx",
+          "lat": 51.117359,
+          "lon": 4.653006
         },
         {
           "name": "Netenland",
           "km": 9,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/netenland.gpx"
+          "file": "Wandelen/Antwerpen/netenland.gpx",
+          "lat": 51.125987,
+          "lon": 4.71861
         },
         {
           "name": "Oogsttocht",
           "km": 35,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/oogsttocht.gpx"
+          "file": "Wandelen/Antwerpen/oogsttocht.gpx",
+          "lat": 51.167244,
+          "lon": 4.428004
         },
         {
           "name": "Pallieter achterna",
           "km": 11,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/Pallieterachterna.gpx"
+          "file": "Wandelen/Antwerpen/Pallieterachterna.gpx",
+          "lat": 51.130805,
+          "lon": 4.71426
         },
         {
           "name": "Perswandeling",
           "km": 19,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/perswandeling.gpx"
+          "file": "Wandelen/Antwerpen/perswandeling.gpx",
+          "lat": 51.186095,
+          "lon": 4.838374
         },
         {
           "name": "Pottenpad",
           "km": 6,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/pottenpad.gpx"
+          "file": "Wandelen/Antwerpen/pottenpad.gpx",
+          "lat": 51.144182,
+          "lon": 4.859658
         },
         {
           "name": "Ravels - Oud-Turnhout - Ravels",
           "km": 19,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/RavelsOudturnoutRavels.gpx"
+          "file": "Wandelen/Antwerpen/RavelsOudturnoutRavels.gpx",
+          "lat": 51.362384,
+          "lon": 4.990294
         },
         {
           "name": "Ravels-Turnhout-Ravels",
           "km": 31,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/RavelsTurnhoutRavels.gpx"
+          "file": "Wandelen/Antwerpen/RavelsTurnhoutRavels.gpx",
+          "lat": 51.361057,
+          "lon": 4.989137
         },
         {
           "name": "Rond Zoersel langs Boshuisje en Salphen",
           "km": 15,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/rondzoersellangsboshuisjeensalphen.gpx"
+          "file": "Wandelen/Antwerpen/rondzoersellangsboshuisjeensalphen.gpx",
+          "lat": 51.270416,
+          "lon": 4.713785
         },
         {
           "name": "Rondje Wuustwezel",
           "km": 17,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/rondjewuustwezel.gpx"
+          "file": "Wandelen/Antwerpen/rondjewuustwezel.gpx",
+          "lat": 51.389282,
+          "lon": 4.598072
         },
         {
           "name": "Rondewandeling vanaf S-Broek (Gravenwezel) - Schilde",
           "km": 12,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/rondwandelingvanafsgravenwezel.gpx"
+          "file": "Wandelen/Antwerpen/rondwandelingvanafsgravenwezel.gpx",
+          "lat": 51.263402,
+          "lon": 4.553651
         },
         {
           "name": "Sluizenpad",
           "km": 7,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/sluizenpad.gpx"
+          "file": "Wandelen/Antwerpen/sluizenpad.gpx",
+          "lat": 51.144137,
+          "lon": 4.859052
         },
         {
           "name": "Smokkelroute",
           "km": 10,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/smokkelroute.gpx"
+          "file": "Wandelen/Antwerpen/smokkelroute.gpx",
+          "lat": 51.453853,
+          "lon": 4.46456
         },
         {
           "name": "Tussen Demer en Nete",
           "km": 13,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/TussenDemerenNete.gpx"
+          "file": "Wandelen/Antwerpen/TussenDemerenNete.gpx",
+          "lat": 51.031967,
+          "lon": 4.828571
         },
         {
           "name": "Tussen Vliet en Rupel",
           "km": 17,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/tussenvlietenrupel.gpx"
+          "file": "Wandelen/Antwerpen/tussenvlietenrupel.gpx",
+          "lat": 51.088314,
+          "lon": 4.331277
         },
         {
           "name": "wandelen door de vallei van de Mark",
           "km": 20,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/wandelendoordevalleivandemark.gpx"
+          "file": "Wandelen/Antwerpen/wandelendoordevalleivandemark.gpx",
+          "lat": 51.401038,
+          "lon": 4.76134
         },
         {
           "name": "Wandeling Bossen - Heide",
           "km": 16,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/EssenHeide.gpx"
+          "file": "Wandelen/Antwerpen/EssenHeide.gpx",
+          "lat": 51.462741,
+          "lon": 4.451609
         },
         {
           "name": "Wandeling Geel-Bel",
           "km": 13,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/GeelBel.gpx"
+          "file": "Wandelen/Antwerpen/GeelBel.gpx",
+          "lat": 51.162567,
+          "lon": 5.063561
         },
         {
           "name": "Wandeling Gierle 1",
           "km": 11,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/Gierle.gpx"
+          "file": "Wandelen/Antwerpen/Gierle.gpx",
+          "lat": 51.267387,
+          "lon": 4.868322
         },
         {
           "name": "Wandeling Gierle 2",
           "km": 16,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/wandelinggierle.gpx"
+          "file": "Wandelen/Antwerpen/wandelinggierle.gpx",
+          "lat": 51.269237,
+          "lon": 4.869404
         },
         {
           "name": "Wandeling Door - Asbroek",
           "km": 11,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/wandelinggoorasbroek.gpx"
+          "file": "Wandelen/Antwerpen/wandelinggoorasbroek.gpx",
+          "lat": 51.052992,
+          "lon": 4.880651
         },
         {
           "name": "Wandeling Grasheide",
           "km": 13,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/Grasheide.gpx"
+          "file": "Wandelen/Antwerpen/Grasheide.gpx",
+          "lat": 51.028373,
+          "lon": 4.656216
         },
         {
           "name": "Wandeling Grobbendonk",
           "km": 12,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/Grobbendonk.gpx"
+          "file": "Wandelen/Antwerpen/Grobbendonk.gpx",
+          "lat": 51.189689,
+          "lon": 4.738623
         },
         {
           "name": "Wandeling Herentals",
           "km": 10,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/Herentals.gpx"
+          "file": "Wandelen/Antwerpen/Herentals.gpx",
+          "lat": 51.186351,
+          "lon": 4.838483
         },
         {
           "name": "Wandeling Kalmthoutse heide",
           "km": 11,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/kalmhoutseheide.gpx"
+          "file": "Wandelen/Antwerpen/kalmhoutseheide.gpx",
+          "lat": 51.40224,
+          "lon": 4.44558
         },
         {
           "name": "Wandeling Kasterlee",
           "km": 12,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/Kasterlee.gpx"
+          "file": "Wandelen/Antwerpen/Kasterlee.gpx",
+          "lat": 51.236625,
+          "lon": 4.965075
         },
         {
           "name": "Wandeling Schriek",
           "km": 10,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/Schriek.gpx"
+          "file": "Wandelen/Antwerpen/Schriek.gpx",
+          "lat": 51.027896,
+          "lon": 4.693332
         },
         {
           "name": "Wandeling Stabroek",
           "km": 31,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/wandelingstabroek.gpx"
+          "file": "Wandelen/Antwerpen/wandelingstabroek.gpx",
+          "lat": 51.351056,
+          "lon": 4.394674
         },
         {
           "name": "Wandeling Westmalle",
           "km": 11,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/Westmalle.gpx"
+          "file": "Wandelen/Antwerpen/Westmalle.gpx",
+          "lat": 51.298782,
+          "lon": 4.693283
         },
         {
           "name": "Wandeling Zandhoven",
           "km": 10,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/Zandhoven.gpx"
+          "file": "Wandelen/Antwerpen/Zandhoven.gpx",
+          "lat": 51.217533,
+          "lon": 4.6614
         },
         {
           "name": "Wandelpad Ree",
           "km": 16,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/wandelpadree.gpx"
+          "file": "Wandelen/Antwerpen/wandelpadree.gpx",
+          "lat": 51.417823,
+          "lon": 4.419245
         },
         {
           "name": "Wandeling St. Antonius Zoersel",
           "km": 15,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/StAntoniusZoersel.gpx"
+          "file": "Wandelen/Antwerpen/StAntoniusZoersel.gpx",
+          "lat": 51.264583,
+          "lon": 4.632523
         },
         {
           "name": "Wechelderzande",
           "km": 15,
           "categorie": "Natuur",
-          "file": "wandelen/Antwerpen/wechelderzande.gpx"
+          "file": "Wandelen/Antwerpen/wechelderzande.gpx",
+          "lat": 51.264608,
+          "lon": 4.787983
         },
         {
           "name": "Averbode Bos en Heide - Blauwe wandeling",
@@ -4955,103 +5161,137 @@
           "name": "Boswandeling in Rance",
           "km": 19,
           "categorie": "Natuur",
-          "file": "wandelen/Henegouwen/boswandelinginrance.gpx"
+          "file": "Wandelen/Henegouwen/boswandelinginrance.gpx",
+          "lat": 50.158938,
+          "lon": 4.243732
         },
         {
           "name": "Bruggentocht",
           "km": 11,
           "categorie": "Natuur",
-          "file": "wandelen/Henegouwen/bruggentocht.gpx"
+          "file": "Wandelen/Henegouwen/bruggentocht.gpx",
+          "lat": 50.349153,
+          "lon": 3.734449
         },
         {
           "name": "Circuit van het Pays Blanc",
           "km": 11,
           "categorie": "Natuur",
-          "file": "wandelen/Henegouwen/circuitvanhetpaysblanc.gpx"
+          "file": "Wandelen/Henegouwen/circuitvanhetpaysblanc.gpx",
+          "lat": 50.56742,
+          "lon": 3.449529
         },
         {
           "name": "De Vallei van de Sennette 1",
           "km": 8,
           "categorie": "Natuur",
-          "file": "wandelen/Henegouwen/devalleivandesennette.gpx"
+          "file": "Wandelen/Henegouwen/devalleivandesennette.gpx",
+          "lat": 50.57211,
+          "lon": 4.177511
         },
         {
           "name": "De vallei van de Sennette 2",
           "km": 10,
           "categorie": "Natuur",
-          "file": "wandelen/Henegouwen/ValeivandeSennette.gpx"
+          "file": "Wandelen/Henegouwen/ValeivandeSennette.gpx",
+          "lat": 50.574539,
+          "lon": 4.178846
         },
         {
           "name": "Gondregnies",
           "km": 10,
           "categorie": "Natuur",
-          "file": "wandelen/Henegouwen/gondregnies.gpx"
+          "file": "Wandelen/Henegouwen/gondregnies.gpx",
+          "lat": 50.626966,
+          "lon": 3.911704
         },
         {
           "name": "Het bos van Stambruges",
           "km": 10,
           "categorie": "Natuur",
-          "file": "wandelen/Henegouwen/hetbosvanstambruges.gpx"
+          "file": "Wandelen/Henegouwen/hetbosvanstambruges.gpx",
+          "lat": 50.506212,
+          "lon": 3.725258
         },
         {
           "name": "Het bos van Vantelle",
           "km": 12,
           "categorie": "Natuur",
-          "file": "wandelen/Henegouwen/hetbosvanvantelle.gpx"
+          "file": "Wandelen/Henegouwen/hetbosvanvantelle.gpx",
+          "lat": 50.424253,
+          "lon": 4.597304
         },
         {
           "name": "Het bos van Waibes",
           "km": 11,
           "categorie": "Natuur",
-          "file": "wandelen/Henegouwen/hetbosvanwaibes.gpx"
+          "file": "Wandelen/Henegouwen/hetbosvanwaibes.gpx",
+          "lat": 50.342288,
+          "lon": 4.288614
         },
         {
           "name": "Het land van het rode marmer",
           "km": 10,
           "categorie": "Natuur",
-          "file": "wandelen/Henegouwen/Hetlandvanhetrodemarmer.gpx"
+          "file": "Wandelen/Henegouwen/Hetlandvanhetrodemarmer.gpx",
+          "lat": 50.142745,
+          "lon": 4.270509
         },
         {
           "name": "Lijn 88 A naar Doornik",
           "km": 12,
           "categorie": "Natuur",
-          "file": "wandelen/Henegouwen/lijn88anaardoornik.gpx"
+          "file": "Wandelen/Henegouwen/lijn88anaardoornik.gpx",
+          "lat": 50.581813,
+          "lon": 3.367791
         },
         {
           "name": "Naar het Bois de la Haie du Roeulx",
           "km": 9,
           "categorie": "Natuur",
-          "file": "wandelen/Henegouwen/naarhetboisdelahaieduroeulx.gpx"
+          "file": "Wandelen/Henegouwen/naarhetboisdelahaieduroeulx.gpx",
+          "lat": 50.500874,
+          "lon": 4.109135
         },
         {
           "name": "Nogal ruim rond het meer",
           "km": 12,
           "categorie": "Natuur",
-          "file": "wandelen/Henegouwen/nogalruimrondhetmeer.gpx"
+          "file": "Wandelen/Henegouwen/nogalruimrondhetmeer.gpx",
+          "lat": 50.06844,
+          "lon": 4.343925
         },
         {
           "name": "Uilenwandeling",
           "km": 14,
           "categorie": "Natuur",
-          "file": "wandelen/Henegouwen/uilenwandeling.gpx"
+          "file": "Wandelen/Henegouwen/uilenwandeling.gpx",
+          "lat": 50.664014,
+          "lon": 3.65556
         },
         {
           "name": "Vallei van de Helpe",
           "km": 13,
           "categorie": "Natuur",
-          "file": "wandelen/Henegouwen/valleivandehelpe.gpx"
+          "file": "Wandelen/Henegouwen/valleivandehelpe.gpx",
+          "lat": 50.052308,
+          "lon": 4.20994
         },
         {
           "name": "Wandeling Lac l'eau d'heure",
           "km": 24,
           "categorie": "Natuur",
-          "file": "wandelen/Henegouwen/Lacl'eaud'heure.gpx"
+          "file": "Wandelen/Henegouwen/Lacl'eaud'heure.gpx",
+          "lat": 50.192161,
+          "lon": 4.381462
         },
         {
           "name": "Wandeling Virelles-Lompret",
           "km": 7,
           "categorie": "Natuur",
-          "file": "wandelen/Henegouwen/wandelingvirelleslompret.gpx"
+          "file": "Wandelen/Henegouwen/wandelingvirelleslompret.gpx",
+          "lat": 50.068649,
+          "lon": 4.345391
         },
         {
           "name": "Les sentiers de l'étang de Launoy : balade à Pont-à-Celles",
@@ -5183,163 +5423,217 @@
           "name": "Ambly-Nassonge",
           "km": 6,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/amblynassonge.gpx"
+          "file": "Wandelen/Luxemburg/amblynassonge.gpx",
+          "lat": 50.141803,
+          "lon": 5.313101
         },
         {
           "name": "Bure",
           "km": 7,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/bure.gpx"
+          "file": "Wandelen/Luxemburg/bure.gpx",
+          "lat": 50.088636,
+          "lon": 5.259964
         },
         {
           "name": "De Semoisvallei van Botassart naar Vresse",
           "km": 22,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/desemoisvalleivanbotassartnaarvresse.gpx"
+          "file": "Wandelen/Luxemburg/desemoisvalleivanbotassartnaarvresse.gpx",
+          "lat": 49.817684,
+          "lon": 5.043356
         },
         {
           "name": "Digelette wandeling",
           "km": 14,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/digelettewandeling.gpx"
+          "file": "Wandelen/Luxemburg/digelettewandeling.gpx",
+          "lat": 50.128568,
+          "lon": 5.342018
         },
         {
           "name": "Door dorpen en heuvels",
           "km": 5,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/Doordorpenenheuvels.gpx"
+          "file": "Wandelen/Luxemburg/Doordorpenenheuvels.gpx",
+          "lat": 50.254673,
+          "lon": 5.519096
         },
         {
           "name": "Durbuy-Bohon",
           "km": 6,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/durbuybohon.gpx"
+          "file": "Wandelen/Luxemburg/durbuybohon.gpx",
+          "lat": 50.351106,
+          "lon": 5.462616
         },
         {
           "name": "Forrieres - Ambly",
           "km": 8,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/forrieresambly.gpx"
+          "file": "Wandelen/Luxemburg/forrieresambly.gpx",
+          "lat": 50.131584,
+          "lon": 5.279192
         },
         {
           "name": "Gerouville-Gerouville",
           "km": 22,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/gerouvillegerouville.gpx"
+          "file": "Wandelen/Luxemburg/gerouvillegerouville.gpx",
+          "lat": 49.618844,
+          "lon": 5.425606
         },
         {
           "name": "GR AE 7 Noord: Boeur-Lutrebois",
           "km": 23,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/grae7noordboeurlutrebois.gpx"
+          "file": "Wandelen/Luxemburg/grae7noordboeurlutrebois.gpx",
+          "lat": 50.088713,
+          "lon": 5.839931
         },
         {
           "name": "GR577 Tour de la Famenne",
           "km": 25,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/gr577tourdelafamenne.gpx"
+          "file": "Wandelen/Luxemburg/gr577tourdelafamenne.gpx",
+          "lat": 50.228968,
+          "lon": 5.342386
         },
         {
           "name": "GTA - Transardennaise",
           "km": 156,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/transardenaisse.gpx"
+          "file": "Wandelen/Luxemburg/transardenaisse.gpx",
+          "lat": 50.179603,
+          "lon": 5.576099
         },
         {
           "name": "Houffalize - Moulin De Bistain",
           "km": 21,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/houffalizemoulindebistain.gpx"
+          "file": "Wandelen/Luxemburg/houffalizemoulindebistain.gpx",
+          "lat": 50.132197,
+          "lon": 5.790252
         },
         {
           "name": "Langs de grotten van duizend en één nacht",
           "km": 8,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/langsdegrottenvanduizendenéénnacht.gpx"
+          "file": "Wandelen/Luxemburg/langsdegrottenvanduizendenéénnacht.gpx",
+          "lat": 50.268409,
+          "lon": 5.447486
         },
         {
           "name": "Leven in Hodister",
           "km": 13,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/leveninhodister.gpx"
+          "file": "Wandelen/Luxemburg/leveninhodister.gpx",
+          "lat": 50.200678,
+          "lon": 5.49547
         },
         {
           "name": "Luxembourg - Ardennen - La Roche",
           "km": 19,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/luxumbourgardennenlaroche.gpx"
+          "file": "Wandelen/Luxemburg/luxumbourgardennenlaroche.gpx",
+          "lat": 50.186661,
+          "lon": 5.532503
         },
         {
           "name": "Nassonge",
           "km": 7,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/nassogne.gpx"
+          "file": "Wandelen/Luxemburg/nassogne.gpx",
+          "lat": 50.128646,
+          "lon": 5.34229
         },
         {
           "name": "Rondje Dochamps",
           "km": 15,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/RondjeDochamps.gpx"
+          "file": "Wandelen/Luxemburg/RondjeDochamps.gpx",
+          "lat": 50.230514,
+          "lon": 5.630754
         },
         {
           "name": "Rondje L'Ourthe",
           "km": 10,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/rondjelourthe.gpx"
+          "file": "Wandelen/Luxemburg/rondjelourthe.gpx",
+          "lat": 50.136382,
+          "lon": 5.717511
         },
         {
           "name": "Rondje Wéris",
           "km": 7,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/rondjeweris.gpx"
+          "file": "Wandelen/Luxemburg/rondjeweris.gpx",
+          "lat": 50.32643,
+          "lon": 5.532365
         },
         {
           "name": "Tussen Lesse en Daverdisse",
           "km": 7,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/TussenLesseenDaverdisse.gpx"
+          "file": "Wandelen/Luxemburg/TussenLesseenDaverdisse.gpx",
+          "lat": 50.011643,
+          "lon": 5.12876
         },
         {
           "name": "Wandeling Barrage Vierre",
           "km": 13,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/wandelingbarragevierre.gpx"
+          "file": "Wandelen/Luxemburg/wandelingbarragevierre.gpx",
+          "lat": 49.741583,
+          "lon": 5.343771
         },
         {
           "name": "Wandeling Burnechamps",
           "km": 11,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/wandelingburnechamps.gpx"
+          "file": "Wandelen/Luxemburg/wandelingburnechamps.gpx",
+          "lat": 49.741535,
+          "lon": 5.34377
         },
         {
           "name": "Wandeling Durbuy",
           "km": 10,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/Durbuy.gpx"
+          "file": "Wandelen/Luxemburg/Durbuy.gpx",
+          "lat": 50.353267,
+          "lon": 5.455377
         },
         {
           "name": "Wandeling Hotton - Ny",
           "km": 8,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/HottonNy.gpx"
+          "file": "Wandelen/Luxemburg/HottonNy.gpx",
+          "lat": 50.268264,
+          "lon": 5.44778
         },
         {
           "name": "Wandeling Soy",
           "km": 6,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/soy.gpx"
+          "file": "Wandelen/Luxemburg/soy.gpx",
+          "lat": 50.285518,
+          "lon": 5.510042
         },
         {
           "name": "Wandeling van de oude molen",
           "km": 12,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/wandelingvandeoudemolen.gpx"
+          "file": "Wandelen/Luxemburg/wandelingvandeoudemolen.gpx",
+          "lat": 50.053252,
+          "lon": 5.250288
         },
         {
           "name": "Wandelroute Ny",
           "km": 7,
           "categorie": "Natuur",
-          "file": "wandelen/Luxemburg/wandelrouteny.gpx"
+          "file": "Wandelen/Luxemburg/wandelrouteny.gpx",
+          "lat": 50.285514,
+          "lon": 5.48115
         },
         {
           "name": "Plateau des Tailles : balade à Manhay",
@@ -5559,151 +5853,201 @@
           "name": "Avontuur in Falmignoul",
           "km": 8.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/avontuurinfalmignoul.gpx"
+          "file": "Wandelen/Namen/avontuurinfalmignoul.gpx",
+          "lat": 50.203491,
+          "lon": 4.890422
         },
         {
           "name": "Bos en Flavionbeek",
           "km": 13.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/bosenflavionbeek.gpx"
+          "file": "Wandelen/Namen/bosenflavionbeek.gpx",
+          "lat": 50.275824,
+          "lon": 4.794367
         },
         {
           "name": "Cascatelle wandeling",
           "km": 12.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/cascatellewandeling.gpx"
+          "file": "Wandelen/Namen/cascatellewandeling.gpx",
+          "lat": 50.216384,
+          "lon": 4.825955
         },
         {
           "name": "Champalle en Poilvache",
           "km": 10.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/champalleenpoilvache.gpx"
+          "file": "Wandelen/Namen/champalleenpoilvache.gpx",
+          "lat": 50.30281,
+          "lon": 4.897827
         },
         {
           "name": "De laatste bochten van de Semois",
           "km": 9.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/BohandelaatstebochtenvandeSemois.gpx"
+          "file": "Wandelen/Namen/BohandelaatstebochtenvandeSemois.gpx",
+          "lat": 49.864402,
+          "lon": 4.884019
         },
         {
           "name": "Door het Bois de la Vecquée naar het fort",
           "km": 12.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/doorhetboisdelavecqueenaarhetfort.gpx"
+          "file": "Wandelen/Namen/doorhetboisdelavecqueenaarhetfort.gpx",
+          "lat": 50.451396,
+          "lon": 4.807245
         },
         {
           "name": "Falmignoul en Cascatelles",
           "km": 12.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/falmignoulencascatelles.gpx"
+          "file": "Wandelen/Namen/falmignoulencascatelles.gpx",
+          "lat": 50.20358,
+          "lon": 4.89161
         },
         {
           "name": "Fonds de Lustin",
           "km": 9.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/fondsdelustin.gpx"
+          "file": "Wandelen/Namen/fondsdelustin.gpx",
+          "lat": 50.37929,
+          "lon": 4.897222
         },
         {
           "name": "Langs de Ywoigne",
           "km": 14.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/langsdeywoigne.gpx"
+          "file": "Wandelen/Namen/langsdeywoigne.gpx",
+          "lat": 50.206846,
+          "lon": 5.053193
         },
         {
           "name": "Mariembourg - Roly",
           "km": 15.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/mariembourgroly.gpx"
+          "file": "Wandelen/Namen/mariembourgroly.gpx",
+          "lat": 50.091963,
+          "lon": 4.530926
         },
         {
           "name": "Naar de Molignee",
           "km": 15.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/naardemolignee.gpx"
+          "file": "Wandelen/Namen/naardemolignee.gpx",
+          "lat": 50.310042,
+          "lon": 4.87784
         },
         {
           "name": "Natuurreservaat van Devant-Bouvignes",
           "km": 9.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/natuurreservaatvandevantbouvignes.gpx"
+          "file": "Wandelen/Namen/natuurreservaatvandevantbouvignes.gpx",
+          "lat": 50.268687,
+          "lon": 4.905839
         },
         {
           "name": "Natuurreservaat van Sclaigneaux",
           "km": 7.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/natuurreservaatvansclaigneau.gpx"
+          "file": "Wandelen/Namen/natuurreservaatvansclaigneau.gpx",
+          "lat": 50.492064,
+          "lon": 5.026655
         },
         {
           "name": "Op zoek naar de Neanderthal-mens",
           "km": 20.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/opzoeknaardeneanderthalmens.gpx"
+          "file": "Wandelen/Namen/opzoeknaardeneanderthalmens.gpx",
+          "lat": 50.482296,
+          "lon": 4.705056
         },
         {
           "name": "Pondrôme",
           "km": 7.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/pondrome.gpx"
+          "file": "Wandelen/Namen/pondrome.gpx",
+          "lat": 50.099856,
+          "lon": 5.008309
         },
         {
           "name": "Rond en in het bos van Nismes",
           "km": 12.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/rondeninhetbosvannismes.gpx"
+          "file": "Wandelen/Namen/rondeninhetbosvannismes.gpx",
+          "lat": 50.379436,
+          "lon": 4.89648
         },
         {
           "name": "Samsonvallei",
           "km": 5.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/Samsonvallei.gpx"
+          "file": "Wandelen/Namen/Samsonvallei.gpx",
+          "lat": 50.451251,
+          "lon": 5.074677
         },
         {
           "name": "Wandeling Eprave",
           "km": 9.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/wandelingeprave.gpx"
+          "file": "Wandelen/Namen/wandelingeprave.gpx",
+          "lat": 50.139458,
+          "lon": 5.163946
         },
         {
           "name": "Wandeling Han Sur Lesse",
           "km": 5.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/wandelinghansurlesse.gpx"
+          "file": "Wandelen/Namen/wandelinghansurlesse.gpx",
+          "lat": 50.126124,
+          "lon": 5.185422
         },
         {
           "name": "Wandeling in Brûly-de-Pesche",
           "km": 6.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/wandelinginbrulydepeche.gpx"
+          "file": "Wandelen/Namen/wandelinginbrulydepeche.gpx",
+          "lat": 50.001791,
+          "lon": 4.46006
         },
         {
           "name": "Wandeling Mozet",
           "km": 7.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/Mozet.gpx"
+          "file": "Wandelen/Namen/Mozet.gpx",
+          "lat": 50.440567,
+          "lon": 4.985986
         },
         {
           "name": "Wandeling Orchimont",
           "km": 11.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/wandelingorchimont.gpx"
+          "file": "Wandelen/Namen/wandelingorchimont.gpx",
+          "lat": 49.893564,
+          "lon": 4.927314
         },
         {
           "name": "Wandeling Ry de Rome",
           "km": 5.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/wandelingryderome.gpx"
+          "file": "Wandelen/Namen/wandelingryderome.gpx",
+          "lat": 50.022936,
+          "lon": 4.534082
         },
         {
           "name": "Wanlin",
           "km": 6.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/wanlin.gpx"
+          "file": "Wandelen/Namen/wanlin.gpx",
+          "lat": 50.159719,
+          "lon": 5.06125
         },
         {
           "name": "Zeer knappe boerderijen",
           "km": 15.0,
           "categorie": "Natuur",
-          "file": "wandelen/Namen/zeerknappeboerderijen.gpx"
+          "file": "Wandelen/Namen/zeerknappeboerderijen.gpx",
+          "lat": 50.517044,
+          "lon": 4.778297
         },
         {
           "name": "Sclaigneaux : balade à Andenne",
@@ -5868,67 +6212,89 @@
           "name": "Blauwe Kouskeswandeling",
           "km": 18.0,
           "categorie": "Natuur",
-          "file": "wandelen/Oost-Vlaanderen/BlauweKouskeswandeling.gpx"
+          "file": "Wandelen/Oost-Vlaanderen/BlauweKouskeswandeling.gpx",
+          "lat": 50.806537,
+          "lon": 3.67891
         },
         {
           "name": "De Liniewegel te Eksaarde",
           "km": 12.0,
           "categorie": "Natuur",
-          "file": "wandelen/Oost-Vlaanderen/deliniewegelteeksaarde.gpx"
+          "file": "Wandelen/Oost-Vlaanderen/deliniewegelteeksaarde.gpx",
+          "lat": 51.149009,
+          "lon": 3.966897
         },
         {
           "name": "Donkmeer-Waterhoek",
           "km": 19.0,
           "categorie": "Natuur",
-          "file": "wandelen/Oost-Vlaanderen/donkmeerwaterhoek.gpx"
+          "file": "Wandelen/Oost-Vlaanderen/donkmeerwaterhoek.gpx",
+          "lat": 51.040878,
+          "lon": 3.98434
         },
         {
           "name": "Dwars door Brakel",
           "km": 13.0,
           "categorie": "Natuur",
-          "file": "wandelen/Oost-Vlaanderen/DwarsdoorBrakel.gpx"
+          "file": "Wandelen/Oost-Vlaanderen/DwarsdoorBrakel.gpx",
+          "lat": 50.804954,
+          "lon": 3.763639
         },
         {
           "name": "Geuzenhoek - wandelen in de Vlaamse Ardennen",
           "km": 15.0,
           "categorie": "Natuur",
-          "file": "wandelen/Oost-Vlaanderen/geuzenhoekwandelenindevlaamserden.gpx"
+          "file": "Wandelen/Oost-Vlaanderen/geuzenhoekwandelenindevlaamseardennen.gpx",
+          "lat": 50.837504,
+          "lon": 3.687157
         },
         {
           "name": "Kasteel en Paarden",
           "km": 12.0,
           "categorie": "Natuur",
-          "file": "wandelen/Oost-Vlaanderen/KasteelenPaarden.gpx"
+          "file": "Wandelen/Oost-Vlaanderen/KasteelenPaarden.gpx",
+          "lat": 51.029473,
+          "lon": 3.856159
         },
         {
           "name": "Literair wandelpad Anton van Wilderode",
           "km": 10.0,
           "categorie": "Natuur",
-          "file": "wandelen/Oost-Vlaanderen/LiterairwandelpadAntonvanWilder.gpx"
+          "file": "Wandelen/Oost-Vlaanderen/LiterairwandelpadAntonvanWilder.gpx",
+          "lat": 51.172473,
+          "lon": 3.938866
         },
         {
           "name": "Lokeren: Molsbroek-Buylaers wandelroute",
           "km": 10.0,
           "categorie": "Natuur",
-          "file": "wandelen/Oost-Vlaanderen/molsbroekbuylaers.gpx"
+          "file": "Wandelen/Oost-Vlaanderen/molsbroekbuylaers.gpx",
+          "lat": 51.103807,
+          "lon": 3.989475
         },
         {
           "name": "Panorama Wandeling Kluisbergen",
           "km": 16.0,
           "categorie": "Natuur",
-          "file": "wandelen/Oost-Vlaanderen/panoramawandelingkluisbergen.gpx"
+          "file": "Wandelen/Oost-Vlaanderen/panoramawandelingkluisbergen.gpx",
+          "lat": 50.776744,
+          "lon": 3.525592
         },
         {
           "name": "Temse: de Buitenland-Polder",
           "km": 12.0,
           "categorie": "Natuur",
-          "file": "wandelen/Oost-Vlaanderen/TemsedeBuitenlandPolder.gpx"
+          "file": "Wandelen/Oost-Vlaanderen/TemsedeBuitenlandPolder.gpx",
+          "lat": 51.123346,
+          "lon": 4.216315
         },
         {
           "name": "Wandeling Deurle",
           "km": 13.0,
           "categorie": "Natuur",
-          "file": "wandelen/Oost-Vlaanderen/Deurle.gpx"
+          "file": "Wandelen/Oost-Vlaanderen/Deurle.gpx",
+          "lat": 50.998779,
+          "lon": 3.607248
         },
         {
           "name": "Beneden-Dender: Bellebroek, Hannaerden, Wiestermeers, Hoekske, Hogedonk en Biezebroeken - Hoekskenpad (Hogedonk)",
@@ -7589,295 +7955,385 @@
           "name": "Bertem- en Eikenbos",
           "km": 12.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/bertemeikenboswandeling.gpx"
+          "file": "Wandelen/Vlaams-Brabant/bertemeikenboswandeling.gpx",
+          "lat": 50.897974,
+          "lon": 4.641628
         },
         {
           "name": "Bossen rond Leuven",
           "km": 15.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/bossenrondleuven.gpx"
+          "file": "Wandelen/Vlaams-Brabant/bossenrondleuven.gpx",
+          "lat": 50.890555,
+          "lon": 4.734773
         },
         {
           "name": "Dagstapper Vlaams Brabant 11",
           "km": 23.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/dagstappervlaamsbrabant11.gpx"
+          "file": "Wandelen/Vlaams-Brabant/dagstappervlaamsbrabant11.gpx",
+          "lat": 50.786825,
+          "lon": 4.634011
         },
         {
           "name": "Demerbroeken",
           "km": 9.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/demerbroeken.gpx"
+          "file": "Wandelen/Vlaams-Brabant/demerbroeken.gpx",
+          "lat": 51.006623,
+          "lon": 4.987134
         },
         {
           "name": "Diest-Webbekom",
           "km": 22.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/diestwebbekom.gpx"
+          "file": "Wandelen/Vlaams-Brabant/diestwebbekom.gpx",
+          "lat": 50.983834,
+          "lon": 5.054977
         },
         {
           "name": "Door park en bos",
           "km": 13.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/doorparkenbos.gpx"
+          "file": "Wandelen/Vlaams-Brabant/doorparkenbos.gpx",
+          "lat": 50.824127,
+          "lon": 4.514268
         },
         {
           "name": "Drassige vallei en bruine heuvels",
           "km": 14.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/drassigevalleienbruineheuvels.gpx"
+          "file": "Wandelen/Vlaams-Brabant/drassigevalleienbruineheuvels.gpx",
+          "lat": 50.921149,
+          "lon": 4.757312
         },
         {
           "name": "Drie toren wandeling",
           "km": 12.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/drietorenwandeling.gpx"
+          "file": "Wandelen/Vlaams-Brabant/drietorenwandeling.gpx",
+          "lat": 50.981128,
+          "lon": 4.572561
         },
         {
           "name": "Een stukje Mollendaalbos",
           "km": 11.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/eenstukjemollendaalbos.gpx"
+          "file": "Wandelen/Vlaams-Brabant/eenstukjemollendaalbos.gpx",
+          "lat": 50.827563,
+          "lon": 4.759169
         },
         {
           "name": "GR 12-09 Beersel-Kasteelbrakel",
           "km": 23.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/gr1209beerselkasteelbrakel.gpx"
+          "file": "Wandelen/Vlaams-Brabant/gr1209beerselkasteelbrakel.gpx",
+          "lat": 50.766267,
+          "lon": 4.301008
         },
         {
           "name": "Hageland",
           "km": 8.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/hageland.gpx"
+          "file": "Wandelen/Vlaams-Brabant/hageland.gpx",
+          "lat": 50.901523,
+          "lon": 4.7812
         },
         {
           "name": "Heikruis - Pajottenland",
           "km": 14.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/HeikruisPajottenland.gpx"
+          "file": "Wandelen/Vlaams-Brabant/HeikruisPajottenland.gpx",
+          "lat": 50.734684,
+          "lon": 4.112035
         },
         {
           "name": "Holsbeek in het Hageland",
           "km": 17.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/holsbeekinhethageland.gpx"
+          "file": "Wandelen/Vlaams-Brabant/holsbeekinhethageland.gpx",
+          "lat": 50.921051,
+          "lon": 4.756853
         },
         {
           "name": "Iets meer dan de Ijsevallei",
           "km": 19.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/ietsmeerdandeijsevallei.gpx"
+          "file": "Wandelen/Vlaams-Brabant/ietsmeerdandeijsevallei.gpx",
+          "lat": 50.788751,
+          "lon": 4.583889
         },
         {
           "name": "Kasteelparkenwandeling",
           "km": 8.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/kasteelparkenwandeling.gpx"
+          "file": "Wandelen/Vlaams-Brabant/kasteelparkenwandeling.gpx",
+          "lat": 50.79997,
+          "lon": 4.204427
         },
         {
           "name": "Landelijk Scherpenheuvel",
           "km": 15.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/landelijkscherpenheuvel.gpx"
+          "file": "Wandelen/Vlaams-Brabant/landelijkscherpenheuvel.gpx",
+          "lat": 50.977017,
+          "lon": 4.976488
         },
         {
           "name": "Langs Demer en heide",
           "km": 12.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/langsdemerenheide.gpx"
+          "file": "Wandelen/Vlaams-Brabant/langsdemerenheide.gpx",
+          "lat": 51.010877,
+          "lon": 4.896237
         },
         {
           "name": "Langs drie renbanen",
           "km": 18.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/langsdrierenbanen.gpx"
+          "file": "Wandelen/Vlaams-Brabant/langsdrierenbanen.gpx",
+          "lat": 50.76686,
+          "lon": 4.447771
         },
         {
           "name": "Leuven - Mont-Saint-Guibert",
           "km": 28.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/leuvenmontsaintguibert.gpx"
+          "file": "Wandelen/Vlaams-Brabant/leuvenmontsaintguibert.gpx",
+          "lat": 50.845637,
+          "lon": 4.695823
         },
         {
           "name": "Meester Craps wandeling",
           "km": 9.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/meestercrapswandeling.gpx"
+          "file": "Wandelen/Vlaams-Brabant/meestercrapswandeling.gpx",
+          "lat": 50.861449,
+          "lon": 4.512679
         },
         {
           "name": "Midden in het Hageland",
           "km": 9.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/MiddeninhetHageland.gpx"
+          "file": "Wandelen/Vlaams-Brabant/MiddeninhetHageland.gpx",
+          "lat": 50.940238,
+          "lon": 4.902734
         },
         {
           "name": "Moeille wandeling",
           "km": 7.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/moeillewandeling.gpx"
+          "file": "Wandelen/Vlaams-Brabant/moeillewandeling.gpx",
+          "lat": 50.831726,
+          "lon": 4.139917
         },
         {
           "name": "Mollekenberg",
           "km": 7.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/mollekensberg.gpx"
+          "file": "Wandelen/Vlaams-Brabant/mollekensberg.gpx",
+          "lat": 50.897645,
+          "lon": 4.644124
         },
         {
           "name": "Naar de bronnen van de Ijse",
           "km": 15.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/naardebronnenvandeijse.gpx"
+          "file": "Wandelen/Vlaams-Brabant/naardebronnenvandeijse.gpx",
+          "lat": 50.764494,
+          "lon": 4.42683
         },
         {
           "name": "Naar de Dijle",
           "km": 28.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/naardedijle.gpx"
+          "file": "Wandelen/Vlaams-Brabant/naardedijle.gpx",
+          "lat": 50.977765,
+          "lon": 4.635474
         },
         {
           "name": "Naar de Laanvallei",
           "km": 14.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/naardelaanvallei.gpx"
+          "file": "Wandelen/Vlaams-Brabant/naardelaanvallei.gpx",
+          "lat": 50.789036,
+          "lon": 4.58374
         },
         {
           "name": "Naar de wijngaarden",
           "km": 10.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/naardewijngaarden.gpx"
+          "file": "Wandelen/Vlaams-Brabant/naardewijngaarden.gpx",
+          "lat": 50.933998,
+          "lon": 4.860422
         },
         {
           "name": "Prachtig Pajottenland",
           "km": 21.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/prachtigpajottenland.gpx"
+          "file": "Wandelen/Vlaams-Brabant/prachtigpajottenland.gpx",
+          "lat": 50.763681,
+          "lon": 4.11903
         },
         {
           "name": "Rate wandeling",
           "km": 18.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/ratewandeling1.gpx"
+          "file": "Wandelen/Vlaams-Brabant/ratewandeling1.gpx",
+          "lat": 50.793145,
+          "lon": 4.59817
         },
         {
           "name": "Releghempad",
           "km": 8.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/releghempad.gpx"
+          "file": "Wandelen/Vlaams-Brabant/releghempad.gpx",
+          "lat": 50.98648,
+          "lon": 4.469478
         },
         {
           "name": "Rosdel en Schoorbroek wandeling",
           "km": 10.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/rosdelenschoorbroekwandeling.gpx"
+          "file": "Wandelen/Vlaams-Brabant/rosdelenschoorbroekwandeling.gpx",
+          "lat": 50.773578,
+          "lon": 4.88722
         },
         {
           "name": "Testelt en omgeving",
           "km": 9.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/testeltenomgeving.gpx"
+          "file": "Wandelen/Vlaams-Brabant/testeltenomgeving.gpx",
+          "lat": 51.009389,
+          "lon": 4.949086
         },
         {
           "name": "wandelen in het Hageland 1",
           "km": 18.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/WandeleninhetHageland.gpx"
+          "file": "Wandelen/Vlaams-Brabant/WandeleninhetHageland.gpx",
+          "lat": 50.947676,
+          "lon": 4.755685
         },
         {
           "name": "wandelen in het Hageland 2",
           "km": 19.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/KortrijkDutselWandeleninhetHageland.gpx"
+          "file": "Wandelen/Vlaams-Brabant/KortrijkDutselWandeleninhetHageland.gpx",
+          "lat": 50.925342,
+          "lon": 4.806551
         },
         {
           "name": "Wandeling Aarschot",
           "km": 13.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/Aarschot.gpx"
+          "file": "Wandelen/Vlaams-Brabant/Aarschot.gpx",
+          "lat": 50.982601,
+          "lon": 4.839384
         },
         {
           "name": "Wandeling Bertem",
           "km": 13.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/wandelingbertem.gpx"
+          "file": "Wandelen/Vlaams-Brabant/wandelingbertem.gpx",
+          "lat": 50.865876,
+          "lon": 4.632047
         },
         {
           "name": "Wandeling Dworp",
           "km": 11.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/Dworp.gpx"
+          "file": "Wandelen/Vlaams-Brabant/Dworp.gpx",
+          "lat": 50.730255,
+          "lon": 4.298843
         },
         {
           "name": "Wandeling Herne",
           "km": 9.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/wandelingherne.gpx"
+          "file": "Wandelen/Vlaams-Brabant/wandelingherne.gpx",
+          "lat": 50.724706,
+          "lon": 4.02802
         },
         {
           "name": "Wandeling Hoegaarden",
           "km": 14.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/Hoegaarden.gpx"
+          "file": "Wandelen/Vlaams-Brabant/Hoegaarden.gpx",
+          "lat": 50.779846,
+          "lon": 4.899744
         },
         {
           "name": "Wandeling Hof ten Hout",
           "km": 9.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/HoftenHout.gpx"
+          "file": "Wandelen/Vlaams-Brabant/HoftenHout.gpx",
+          "lat": 50.744854,
+          "lon": 4.345257
         },
         {
           "name": "Wandeling Langdorp 1",
           "km": 15.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/Langdorp.gpx"
+          "file": "Wandelen/Vlaams-Brabant/Langdorp.gpx",
+          "lat": 51.0088,
+          "lon": 4.869969
         },
         {
           "name": "Wandeling Langdorp 2",
           "km": 15.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/Langdorp2.gpx"
+          "file": "Wandelen/Vlaams-Brabant/Langdorp2.gpx",
+          "lat": 51.008752,
+          "lon": 4.87042
         },
         {
           "name": "Wandeling Messelbroek",
           "km": 11.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/Messelbroek.gpx"
+          "file": "Wandelen/Vlaams-Brabant/Messelbroek.gpx",
+          "lat": 50.984897,
+          "lon": 4.953074
         },
         {
           "name": "Wandeling Nieuwrode",
           "km": 11.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/Nieuwrode.gpx"
+          "file": "Wandelen/Vlaams-Brabant/Nieuwrode.gpx",
+          "lat": 50.950332,
+          "lon": 4.836192
         },
         {
           "name": "Wandeling op de wijngaardberg te Wezemaal",
           "km": 8.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/wandelingopdewijngaerdbergtewezemaal.gpx"
+          "file": "Wandelen/Vlaams-Brabant/wandelingopdewijngaerdbergtewezemaal.gpx",
+          "lat": 50.94812,
+          "lon": 4.755398
         },
         {
           "name": "Wandeling Ottenburg",
           "km": 14.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/Ottenburg.gpx"
-        },
-        {
-          "name": "Wandeling rond Hesselbroek",
-          "km": 13.0,
-          "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/Messelbroek.gpx"
+          "file": "Wandelen/Vlaams-Brabant/Ottenburg.gpx",
+          "lat": 50.751754,
+          "lon": 4.613868
         },
         {
           "name": "Wandeling vanuit St. Joris Winge",
           "km": 15.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/vanuitStJorisWinge.gpx"
+          "file": "Wandelen/Vlaams-Brabant/vanuitStJorisWinge.gpx",
+          "lat": 50.908371,
+          "lon": 4.883061
         },
         {
           "name": "Wandeling Winksele",
           "km": 10.0,
           "categorie": "Natuur",
-          "file": "wandelen/Vlaams-Brabant/Winksele.gpx"
+          "file": "Wandelen/Vlaams-Brabant/Winksele.gpx",
+          "lat": 50.897926,
+          "lon": 4.641553
         },
         {
           "name": "Antitankgracht - Haachts Broek - Rolstoelwandeling (Oranje) - Rolstoeltoegankelijk",
@@ -9483,169 +9939,225 @@
           "name": "Bailleriewandeling",
           "km": 8.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/bailleriewandeling.gpx"
+          "file": "Wandelen/Waals-Brabant/bailleriewandeling.gpx",
+          "lat": 50.616543,
+          "lon": 4.508819
         },
         {
           "name": "Bruyerewandeling en meer",
           "km": 16.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/bruyerewandelingenmeer.gpx"
+          "file": "Wandelen/Waals-Brabant/bruyerewandelingenmeer.gpx",
+          "lat": 50.629922,
+          "lon": 4.453195
         },
         {
           "name": "De twee Thorembais",
           "km": 11.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/detweethorembais.gpx"
+          "file": "Wandelen/Waals-Brabant/detweethorembais.gpx",
+          "lat": 50.635548,
+          "lon": 4.784381
         },
         {
           "name": "De vijvers van Coeurcq",
           "km": 9.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/devijversvancoeurcq.gpx"
+          "file": "Wandelen/Waals-Brabant/devijversvancoeurcq.gpx",
+          "lat": 50.670258,
+          "lon": 4.156514
         },
         {
           "name": "Drie valleien",
           "km": 27.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/drievalleien.gpx"
+          "file": "Wandelen/Waals-Brabant/drievalleien.gpx",
+          "lat": 50.634079,
+          "lon": 4.585548
         },
         {
           "name": "Godfried Van Bouillon wandeling",
           "km": 7.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/godfriedvanbouillonwandeling.gpx"
+          "file": "Wandelen/Waals-Brabant/godfriedvanbouillonwandeling.gpx",
+          "lat": 50.593742,
+          "lon": 4.465542
         },
         {
           "name": "Grottenwandeling",
           "km": 10.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/grottenwandeling.gpx"
+          "file": "Wandelen/Waals-Brabant/grottenwandeling.gpx",
+          "lat": 50.6817,
+          "lon": 4.955052
         },
         {
           "name": "Het bos van Berines",
           "km": 9.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/hetbosvanberines.gpx"
+          "file": "Wandelen/Waals-Brabant/hetbosvanberines.gpx",
+          "lat": 50.598383,
+          "lon": 4.490224
         },
         {
           "name": "Hottomont",
           "km": 13.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/hottomont.gpx"
+          "file": "Wandelen/Waals-Brabant/hottomont.gpx",
+          "lat": 50.633185,
+          "lon": 4.866146
         },
         {
           "name": "La balade de 3 clochers",
           "km": 8.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/labalade-de-3-clochers.gpx"
+          "file": "Wandelen/Waals-Brabant/labaladede3clochers.gpx",
+          "lat": 50.654935,
+          "lon": 4.779538
         },
         {
           "name": "Langs de Nijl",
           "km": 9.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/langsdenijl.gpx"
+          "file": "Wandelen/Waals-Brabant/langsdenijl.gpx",
+          "lat": 50.617648,
+          "lon": 4.694982
         },
         {
           "name": "Langs de Train en haar bijriviertjes",
           "km": 24.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/langsdetrainenhaarbijriviertjes.gpx"
+          "file": "Wandelen/Waals-Brabant/langsdetrainenhaarbijriviertjes.gpx",
+          "lat": 50.739248,
+          "lon": 4.696795
         },
         {
           "name": "Le Bercuit",
           "km": 7.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/lebercuit.gpx"
+          "file": "Wandelen/Waals-Brabant/lebercuit.gpx",
+          "lat": 50.729519,
+          "lon": 4.664428
         },
         {
           "name": "Meer dan een abdij",
           "km": 15.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/meerdaneenabdij.gpx"
+          "file": "Wandelen/Waals-Brabant/meerdaneenabdij.gpx",
+          "lat": 50.590629,
+          "lon": 4.527208
         },
         {
           "name": "Met Ardennengevoel",
           "km": 8.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/metardennengevoel.gpx"
+          "file": "Wandelen/Waals-Brabant/metardennengevoel.gpx",
+          "lat": 50.731818,
+          "lon": 4.743626
         },
         {
           "name": "Mottewandeling",
           "km": 10.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/mottewandeling.gpx"
+          "file": "Wandelen/Waals-Brabant/mottewandeling.gpx",
+          "lat": 50.636484,
+          "lon": 4.540435
         },
         {
           "name": "Naar de golfbaan en terug",
           "km": 9.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/naardegolfbaanenterug.gpx"
+          "file": "Wandelen/Waals-Brabant/naardegolfbaanenterug.gpx",
+          "lat": 50.6963,
+          "lon": 4.471441
         },
         {
           "name": "Naar het bos van Laurensart",
           "km": 11.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/naarhetbosvanlaurensart.gpx"
+          "file": "Wandelen/Waals-Brabant/naarhetbosvanlaurensart.gpx",
+          "lat": 50.722104,
+          "lon": 4.619399
         },
         {
           "name": "Nieuwe stad avontuurlijk bos",
           "km": 11.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/nieuwestadavontuurlijkbos.gpx"
+          "file": "Wandelen/Waals-Brabant/nieuwestadavontuurlijkbos.gpx",
+          "lat": 50.681566,
+          "lon": 4.61461
         },
         {
           "name": "Onbenullige beekjes",
           "km": 13.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/onbenulligebeekjes.gpx"
+          "file": "Wandelen/Waals-Brabant/onbenulligebeekjes.gpx",
+          "lat": 50.661344,
+          "lon": 4.674325
         },
         {
           "name": "Pinchartwandeling en meer",
           "km": 12.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/pinchartwandelingenmeer.gpx"
+          "file": "Wandelen/Waals-Brabant/pinchartwandelingenmeer.gpx",
+          "lat": 50.681094,
+          "lon": 4.560452
         },
         {
           "name": "Rond Rosieres",
           "km": 10.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/rondrosieres.gpx"
+          "file": "Wandelen/Waals-Brabant/rondrosieres.gpx",
+          "lat": 50.734083,
+          "lon": 4.553059
         },
         {
           "name": "Rondje Hamme-Mille",
           "km": 6.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/rondjehammemille.gpx"
+          "file": "Wandelen/Waals-Brabant/rondjehammemille.gpx",
+          "lat": 50.779723,
+          "lon": 4.719435
         },
         {
           "name": "Rondom Nethen",
           "km": 8.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/rondomnethen.gpx"
+          "file": "Wandelen/Waals-Brabant/rondomnethen.gpx",
+          "lat": 50.784326,
+          "lon": 4.677671
         },
         {
           "name": "Rondom Tubize",
           "km": 13.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/rondomtubize.gpx"
+          "file": "Wandelen/Waals-Brabant/rondomtubize.gpx",
+          "lat": 50.689341,
+          "lon": 4.215531
         },
         {
           "name": "Spoorlijn en Zennevallei",
           "km": 10.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/spoorlijnenzennevallei.gpx"
+          "file": "Wandelen/Waals-Brabant/spoorlijnenzennevallei.gpx",
+          "lat": 50.661032,
+          "lon": 4.135519
         },
         {
           "name": "Verte Voie",
           "km": 8.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/vertevoie.gpx"
+          "file": "Wandelen/Waals-Brabant/vertevoie.gpx",
+          "lat": 50.751727,
+          "lon": 4.670967
         },
         {
           "name": "Wandeling Tienne Stricheaux",
           "km": 11.0,
           "categorie": "Natuur",
-          "file": "wandelen/Waals-Brabant/wandelingtiennestricheaux.gpx"
+          "file": "Wandelen/Waals-Brabant/wandelingtiennestricheaux.gpx",
+          "lat": 50.695817,
+          "lon": 4.818187
         },
         {
           "name": "Nysdam : balade à La Hulpe",
@@ -9667,67 +10179,89 @@
           "name": "Boerenkrijgwandelpad",
           "km": 8.0,
           "categorie": "Natuur",
-          "file": "wandelen/West-Vlaanderen/boerenkrijgwandelpad.gpx"
+          "file": "Wandelen/West-Vlaanderen/boerenkrijgwandelpad.gpx",
+          "lat": 50.84274,
+          "lon": 3.058878
         },
         {
           "name": "Damme - Oostkerke - Damme",
           "km": 16.0,
           "categorie": "Natuur",
-          "file": "wandelen/West-Vlaanderen/DammeOostkerkeDamme.gpx"
+          "file": "Wandelen/West-Vlaanderen/DammeOostkerkeDamme.gpx",
+          "lat": 51.248222,
+          "lon": 3.284582
         },
         {
           "name": "Hazegras",
           "km": 7.0,
           "categorie": "Natuur",
-          "file": "wandelen/West-Vlaanderen/hazegras.gpx"
+          "file": "Wandelen/West-Vlaanderen/hazegras.gpx",
+          "lat": 51.347992,
+          "lon": 3.326706
         },
         {
           "name": "Heuvelland",
           "km": 7.0,
           "categorie": "Natuur",
-          "file": "wandelen/West-Vlaanderen/heuvelland.gpx"
+          "file": "Wandelen/West-Vlaanderen/heuvelland.gpx",
+          "lat": 50.781753,
+          "lon": 2.772082
         },
         {
           "name": "Kruiseke Wandelroute",
           "km": 7.0,
           "categorie": "Natuur",
-          "file": "wandelen/West-Vlaanderen/kruisekewandelroute.gpx"
+          "file": "Wandelen/West-Vlaanderen/kruisekewandelroute.gpx",
+          "lat": 50.815991,
+          "lon": 3.021435
         },
         {
           "name": "Nieuwpoort van Floreal tot Floreal",
           "km": 21.0,
           "categorie": "Natuur",
-          "file": "wandelen/West-Vlaanderen/nieuwpoortvanflorealtotfloreal.gpx"
+          "file": "Wandelen/West-Vlaanderen/nieuwpoortvanflorealtotfloreal.gpx",
+          "lat": 51.150419,
+          "lon": 2.726309
         },
         {
           "name": "Nieuwpoort via knooppunten",
           "km": 12.0,
           "categorie": "Natuur",
-          "file": "wandelen/West-Vlaanderen/nieuwpoortviaknooppunten.gpx"
+          "file": "Wandelen/West-Vlaanderen/nieuwpoortviaknooppunten.gpx",
+          "lat": 51.149017,
+          "lon": 2.72477
         },
         {
           "name": "Pompeschitterswandelpad",
           "km": 9.0,
           "categorie": "Natuur",
-          "file": "wandelen/West-Vlaanderen/pompeschitterswandelpad.gpx"
+          "file": "Wandelen/West-Vlaanderen/pompeschitterswandelpad.gpx",
+          "lat": 50.851714,
+          "lon": 3.095994
         },
         {
           "name": "Synthesewandeling",
           "km": 17.0,
           "categorie": "Natuur",
-          "file": "wandelen/West-Vlaanderen/synthesewandeling.gpx"
+          "file": "Wandelen/West-Vlaanderen/synthesewandeling.gpx",
+          "lat": 51.168611,
+          "lon": 2.775917
         },
         {
           "name": "Wandeling Hertsberge bossen",
           "km": 10.0,
           "categorie": "Natuur",
-          "file": "wandelen/West-Vlaanderen/Hertsbergebossen.gpx"
+          "file": "Wandelen/West-Vlaanderen/Hertsbergebossen.gpx",
+          "lat": 51.105354,
+          "lon": 3.273365
         },
         {
           "name": "Westhoekreservaat",
           "km": 10.0,
           "categorie": "Natuur",
-          "file": "wandelen/West-Vlaanderen/westhoekreservaat.gpx"
+          "file": "Wandelen/West-Vlaanderen/westhoekreservaat.gpx",
+          "lat": 51.093421,
+          "lon": 2.592695
         },
         {
           "name": "Bassegembos Wandeling",
@@ -10377,119 +10911,153 @@
           "km": 6.5,
           "categorie": "Natuur",
           "url": "",
-          "file": "wandelen/Luik/passerellekannegroen6.5km.gpx"
+          "file": "Wandelen/Luik/passerellekannegroen6.5km.gpx",
+          "lat": 50.80591,
+          "lon": 5.68983
         },
         {
           "name": "Passerelle blauw-bleu",
           "km": 11.0,
           "categorie": "Natuur",
           "url": "",
-          "file": "wandelen/Luik/passerelleblauwbleu11km.gpx"
+          "file": "Wandelen/Luik/passerelleblauwbleu11km.gpx",
+          "lat": 50.77769,
+          "lon": 5.69675
         },
         {
           "name": "Passerelle geel-jaune",
           "km": 14.0,
           "categorie": "Natuur",
           "url": "",
-          "file": "wandelen/Luik/passerellegeeljaune14km.gpx"
+          "file": "Wandelen/Luik/passerellegeeljaune14km.gpx",
+          "lat": 50.78196,
+          "lon": 5.65964
         },
         {
           "name": "Passerelle rood-rouge",
           "km": 17.0,
           "categorie": "Natuur",
           "url": "",
-          "file": "wandelen/Luik/passerelleroodrouge17km.gpx"
+          "file": "Wandelen/Luik/passerelleroodrouge17km.gpx",
+          "lat": 50.80591,
+          "lon": 5.68983
         },
         {
           "name": "Eben-Emael groen",
           "km": 4.3,
           "categorie": "Natuur",
           "url": "",
-          "file": "wandelen/Luik/EbenEmaelgroen4,3km.gpx"
+          "file": "Wandelen/Luik/EbenEmaelgroen4,3km.gpx",
+          "lat": 50.775077,
+          "lon": 5.652411
         },
         {
           "name": "Eben-Emael oranje kruis",
           "km": 9.7,
           "categorie": "Natuur",
           "url": "",
-          "file": "wandelen/Luik/EbenEmaeloranjekruis9,7km.gpx"
+          "file": "Wandelen/Luik/EbenEmaeloranjekruis9,7km.gpx",
+          "lat": 50.778202,
+          "lon": 5.653062
         },
         {
           "name": "Dolembreux haie des pauvres",
           "km": 6.6,
           "categorie": "Natuur",
           "url": "",
-          "file": "wandelen/Luik/Dolembreuxhaiedespauvres6.6km.gpx"
+          "file": "Wandelen/Luik/Dolembreuxhaiedespauvres6.6km.gpx",
+          "lat": 50.530876,
+          "lon": 5.626422
         },
         {
           "name": "Place de la Cathédrale - Rue des Clarisses",
           "km": 4.3,
           "categorie": "Natuur",
           "url": "",
-          "file": "wandelen/Luik/PlacedelaCathédraleRuedesClarisses4.3km.gpx"
+          "file": "Wandelen/Luik/PlacedelaCathédraleRuedesClarisses4.3km.gpx",
+          "lat": 50.64075,
+          "lon": 5.571132
         },
         {
           "name": "Rondje le Colombier",
           "km": 13.0,
           "categorie": "Natuur",
           "url": "",
-          "file": "wandelen/Luik/RondjeleColombier13km.gpx"
+          "file": "Wandelen/Luik/RondjeleColombier13km.gpx",
+          "lat": 50.805412,
+          "lon": 5.690198
         },
         {
           "name": "Esneux",
           "km": 6.5,
           "categorie": "Natuur",
           "url": "",
-          "file": "wandelen/Luik/Esneux6.5km.gpx"
+          "file": "Wandelen/Luik/Esneux6.5km.gpx",
+          "lat": 50.525536,
+          "lon": 5.590455
         },
         {
           "name": "Rondje Hony",
           "km": 8.0,
           "categorie": "Natuur",
           "url": "",
-          "file": "wandelen/Luik/RondjeHony8km.gpx"
+          "file": "Wandelen/Luik/RondjeHony8km.gpx",
+          "lat": 50.539519,
+          "lon": 5.569923
         },
         {
           "name": "Hervé",
           "km": 10.0,
           "categorie": "Natuur",
           "url": "",
-          "file": "wandelen/Luik/Hervé10km.gpx"
+          "file": "Wandelen/Luik/Hervé10km.gpx",
+          "lat": 50.435893,
+          "lon": 5.670189
         },
         {
           "name": "Kanne",
           "km": 6.8,
           "categorie": "Natuur",
           "url": "",
-          "file": "wandelen/Luik/Kanne6.8km.gpx"
+          "file": "Wandelen/Luik/Kanne6.8km.gpx",
+          "lat": 50.796714,
+          "lon": 5.672832
         },
         {
           "name": "Itinéraire à pied Luik",
           "km": 3.6,
           "categorie": "Natuur",
           "url": "",
-          "file": "wandelen/Luik/Itinéraireàpied3,6kmLuik.gpx"
+          "file": "Wandelen/Luik/Itinéraireàpied3,6kmLuik.gpx",
+          "lat": 50.650276,
+          "lon": 5.58619
         },
         {
           "name": "Terrasses des coteaux - Liège",
           "km": 2.5,
           "categorie": "Natuur",
           "url": "",
-          "file": "wandelen/Luik/TerrassesdescoteauxLiège2.5km.gpx"
+          "file": "Wandelen/Luik/TerrassesdescoteauxLiège2.5km.gpx",
+          "lat": 50.646517,
+          "lon": 5.574202
         },
         {
           "name": "Jalhay - Promenade de la Hoëgne - L'écume au pied des Fagnes",
           "km": 11.2,
           "categorie": "Natuur",
           "url": "",
-          "file": "wandelen/Luik/JalhayPromenadedelaHoegneLecumeaupieddesFagnes11.2km.gpx"
+          "file": "Wandelen/Luik/JalhayPromenadedelaHoegneLecumeaupieddesFagnes11.2km.gpx",
+          "lat": 50.508071,
+          "lon": 5.960264
         },
         {
           "name": "Nonceveux - De Ninglinspo - De betoverende beek",
           "km": 13.2,
           "categorie": "Natuur",
           "url": "",
-          "file": "wandelen/Luik/NonceveuxDeNinglinspoDebetoverendebeek13.2km.gpx"
+          "file": "Wandelen/Luik/NonceveuxDeNinglinspoDebetoverendebeek13.2km.gpx",
+          "lat": 50.468629,
+          "lon": 5.743711
         },
         {
           "name": "Un paradis pour les oiseaux : balade à Hollogne-sur-Geer",
@@ -10699,6 +11267,18 @@
           "Gmaps": "https://www.google.com/maps/place/50.442,5.283",
           "lat": 50.442,
           "lon": 5.283
+        }
+      ]
+    },
+    {
+      "name": "Nederlands-Limburg",
+      "wandelen": [
+        {
+          "name": "Wandelroute rondom de Amerikaanse Begraafplaats Margraten",
+          "km": 5.9,
+          "file": "Wandelen/Nederlands-Limburg/wandelroute-rondom-de-amerikaanse-begraafplaats-margraten.gpx",
+          "lat": 50.82008,
+          "lon": 5.82154
         }
       ]
     }

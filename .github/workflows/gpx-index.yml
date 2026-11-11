@@ -1,0 +1,31 @@
+name: gpx/index.json bijwerken
+
+# Draait automatisch zodra je .gpx-bestanden toevoegt, wijzigt of verwijdert in de map gpx/ (of handmatig via de knop "Run workflow").
+# Het script tools/gpx_index_bijwerken.py zet nieuwe routes in gpx/index.json en commit dat bestand terug. Er is niets om te installeren.
+on:
+  push:
+    paths:
+      - 'gpx/**/*.gpx'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Index bijwerken
+        run: python3 tools/gpx_index_bijwerken.py gpx
+      - name: Terug committen als er iets veranderde
+        run: |
+          if [ -n "$(git status --porcelain gpx/index.json)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add gpx/index.json
+            git commit -m "gpx/index.json automatisch bijgewerkt"
+            git push
+          else
+            echo "index.json klopt al, niets te committen"
+          fi

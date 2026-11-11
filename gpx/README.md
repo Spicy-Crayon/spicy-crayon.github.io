@@ -4,8 +4,22 @@ Deze map wordt door de app zelf getoond via de knop **"Wandelroutes (GPX)"** /
 **"Fietsroutes (GPX)"** in het opzetscherm (zichtbaar in zowel wandel- als
 fiets-modus, elk met zijn eigen lijst). De app kan géén routes downloaden of
 scrapen van externe route-sites (dat blokkeren die sites zelf via CORS) — dus
-moet jij de `.gpx`-bestanden zelf aanleveren, waarna ze bij de eerstvolgende
-versie van de app worden meegebouwd.
+moet jij de `.gpx`-bestanden zelf aanleveren (zie hieronder: sinds v2.525 komen
+nieuwe routes zonder nieuwe versie van de app in de lijst).
+
+## Een route toevoegen (sinds v2.525)
+
+1. Zet het `.gpx`-bestand in de map `gpx/Wandelen/<Provincie>/` (of `gpx/Fietsen/<Provincie>/`) van de website-repo
+   (`spicy-crayon.github.io`). Geef het bestand een goede naam: die wordt de naam in de lijst
+   (`mijn-mooie-wandeling.gpx` wordt "Mijn mooie wandeling"). Een nieuwe provincie hoef je niet aan te maken in de json, ze ontstaat vanzelf.
+2. Commit en push. De workflow `.github/workflows/gpx-index.yml` draait `tools/gpx_index_bijwerken.py`, zet de route in `gpx/index.json`
+   (met lengte en beginpunt uit het bestand) en commit dat bestand terug. Controleer na een minuutje op GitHub of er een commit
+   "gpx/index.json automatisch bijgewerkt" bijkwam.
+3. De Android-app haalt de lijst en de bestanden online op; bij geen verbinding gebruikt ze de laatst opgehaalde kopie en daarna de lijst die in de app zit.
+
+Een bestand weghalen werkt hetzelfde: verwijder het .gpx, push, en de rij verdwijnt uit `index.json`. Rijen met alleen een `url` blijven altijd staan.
+De naam, `km` of `categorie` van een bestaande rij pas je gewoon met de hand aan in `index.json`; het script laat bestaande rijen met rust.
+Het script kan ook lokaal draaien: `python tools/gpx_index_bijwerken.py gpx` (of `--controle` voor enkel een rapport).
 
 ## Mapstructuur
 
@@ -133,9 +147,9 @@ voorheen:
   centrum van de vertrekgemeente als `lat`/`lon` (Natagora geeft zelf geen exacte coördinaat van het beginpunt).
 - **`lat`/`lon`** (optioneel, beide samen): coördinaten van het beginpunt, enkel gebruikt voor de "In de
   buurt"-weergave (zie hieronder) — een routerij zonder `lat`/`lon` blijft gewoon zichtbaar per provincie,
-  maar verschijnt niet in de "In de buurt"-lijst. Wordt NIET automatisch uit een `file` gehaald (geen
-  GPX-parsing enkel om te sorteren) — voor een `file`-routerij moet je dus zelf het beginpunt opzoeken en
-  meegeven, voor een `url`-routerij is dit de enige manier om 'm toch op afstand te kunnen tonen. Heeft een
+  maar verschijnt niet in de "In de buurt"-lijst. De app haalt dit niet zelf uit een `file`; voor een `file`-routerij vult
+  `tools/gpx_index_bijwerken.py` het beginpunt automatisch in (eerste punt van het bestand), voor een `url`-routerij is dit
+  de enige manier om 'm toch op afstand te kunnen tonen. Heeft een
   gebied meerdere wandelingen met een verschillende lengte (bv. een korte en een lange lus vanaf hetzelfde
   startpunt), zet dan gewoon 2 aparte routerijen met elk hun eigen `km` en hetzelfde `lat`/`lon`.
 - **`foto`**, **`fotoBron`**, **`fotoUrl`** (optioneel, Ronde 155): een eigen foto van deze wandeling voor het detailscherm van
@@ -189,9 +203,7 @@ voorheen:
   maar dan enkel getoond in de Wandel-lijst, nooit in de Fiets-lijst. Nieuwe
   routes toevoegen gebeurt best meteen in de nieuwe, opgesplitste vorm.
 
-## Belangrijk: dit vereist een nieuwe build
+## De ingebouwde kopie in de app
 
-Net zoals bij de Zombie Run mp3's kan een gebruiker deze map NIET achteraf vullen via
-een bestandsbeheerder op het toestel — de inhoud van `gpx/` wordt bij het bouwen van
-de app (PWA + Android) mee ingepakt. Bezorg de `.gpx`-bestanden (en de bijgewerkte
-`index.json`) zodat ze in de volgende versie meegenomen kunnen worden.
+De Android-app bevat nog een kopie van deze map (de terugval zonder verbinding en zonder bewaarde kopie). Die wordt pas bijgewerkt bij een nieuwe build; voor
+nieuwe routes is dat niet meer nodig.

@@ -2603,6 +2603,44 @@
   #nearbyRoutesCard .nr-evfoot{ flex:0 0 auto; display:flex; align-items:center; gap:10px; padding:10px 16px 14px; border-top:1px solid #f1f5f9; }
   #nearbyRoutesCard .nr-evfoot p{ flex:1 1 auto; margin:0; font-size:11.5px; line-height:1.4; color:#64748b; }
   #nearbyRoutesCard .nr-evfoot button{ flex:0 0 auto; border:none; background:#4f46e5; color:#fff; border-radius:99px; padding:0 14px; min-height:44px; font:inherit; font-size:13px; font-weight:700; }
+
+  /* Ronde 189: eigen GPX toevoegen (op dit toestel) */
+  #nearbyRoutesCard .nr-rthd{ display:flex; align-items:center; justify-content:space-between; gap:10px; border-top:1px solid #f1f5f9; margin-top:6px; }
+  #nearbyRoutesCard .nr-rthd .nr-sec{ margin:0; }
+  #nearbyRoutesCard .nr-ownbtn{ display:inline-flex; align-items:center; gap:6px; border:none; background:#ecfdf5; color:#047857; border-radius:99px; padding:0 12px 0 10px; min-height:44px; box-sizing:border-box; font:inherit; font-size:13px; font-weight:700; margin-right:-4px; }
+  #nearbyRoutesCard .nr-ownbtn svg{ width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+  #nearbyRoutesCard .nr-rw.own > .nr-item{ padding-right:92px; }
+  #nearbyRoutesCard .nr-more{ position:absolute; right:44px; top:50%; transform:translateY(-50%); width:44px; height:44px; border:none; background:none; padding:0; color:#64748b; display:flex; align-items:center; justify-content:center; }
+  #nearbyRoutesCard .nr-more svg{ width:20px; height:20px; fill:currentColor; }
+  #nearbyRoutesCard .nr-rw.fresh > .nr-item{ background:#ecfdf5; border-radius:12px; }
+  #nrOwnPanel{ overflow-y:auto; overscroll-behavior:contain; }
+  #nearbyRoutesCard .nr-osub{ margin:-6px 0 10px; font-size:12.5px; color:#64748b; }
+  #nearbyRoutesCard .nr-obig{ display:flex; align-items:center; gap:12px; width:100%; border:none; text-align:left; background:#ecfdf5; color:#0f172a; border-radius:16px; padding:12px; font:inherit; min-height:64px; box-sizing:border-box; box-shadow:inset 0 0 0 1px #a7f3d0; margin-bottom:10px; }
+  #nearbyRoutesCard .nr-obig .ic{ width:44px; height:44px; border-radius:12px; background:#fff; display:flex; align-items:center; justify-content:center; flex:none; }
+  #nearbyRoutesCard .nr-obig svg{ width:24px; height:24px; fill:none; stroke:#047857; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  #nearbyRoutesCard .nr-obig b{ display:block; font-size:15px; font-weight:800; color:#064e3b; }
+  #nearbyRoutesCard .nr-obig small{ display:block; font-size:12.5px; color:#047857; margin-top:1px; }
+  #nearbyRoutesCard .nr-obox{ border-radius:16px; box-shadow:inset 0 0 0 1px #e2e8f0; padding:12px; margin-bottom:10px; }
+  #nearbyRoutesCard .nr-obox h4{ margin:0; font-size:15px; font-weight:800; color:#0f172a; }
+  #nearbyRoutesCard .nr-obox p{ margin:2px 0 0; font-size:12.5px; color:#64748b; }
+  #nearbyRoutesCard .nr-orow{ display:flex; gap:8px; margin-top:10px; }
+  #nearbyRoutesCard .nr-oin{ flex:1; min-width:0; height:44px; border:none; border-radius:12px; background:#f8fafc; box-shadow:inset 0 0 0 1px #cbd5e1; padding:0 12px; font:inherit; font-size:16px; color:#0f172a; box-sizing:border-box; }
+  #nearbyRoutesCard .nr-oin:focus{ outline:none; box-shadow:inset 0 0 0 2px #047857; }
+  #nearbyRoutesCard .nr-obtn{ flex:none; min-height:44px; border:none; border-radius:12px; background:#0f172a; color:#fff; font:inherit; font-size:13.5px; font-weight:700; padding:0 16px; }
+  #nearbyRoutesCard .nr-obtn.g{ background:#047857; font-size:15px; font-weight:800; flex:1; min-height:50px; border-radius:14px; }
+  #nearbyRoutesCard .nr-obtn.l{ background:#f1f5f9; color:#334155; min-height:50px; border-radius:14px; padding:0 18px; }
+  #nearbyRoutesCard .nr-obtn.d{ background:#fef2f2; color:#b91c1c; }
+  #nearbyRoutesCard .nr-obtn:disabled{ opacity:.55; }
+  #nearbyRoutesCard .nr-onote{ font-size:12px; line-height:1.45; color:#64748b; margin:2px 2px 8px; }
+  #nearbyRoutesCard .nr-oerr{ font-size:13px; line-height:1.4; color:#991b1b; background:#fef2f2; border-radius:12px; padding:10px 12px; margin:0 0 10px; }
+  #nearbyRoutesCard .nr-oprev{ height:150px; border-radius:16px; background:#ecfdf5; box-shadow:inset 0 0 0 1px #a7f3d0; display:flex; align-items:center; justify-content:center; overflow:hidden; margin-bottom:10px; }
+  #nearbyRoutesCard .nr-oprev svg{ height:100%; width:auto; aspect-ratio:1; }
+  #nearbyRoutesCard .nr-olbl{ display:block; font-size:12px; font-weight:700; color:#64748b; margin:0 0 4px; }
+  #nearbyRoutesCard .nr-ostats{ display:flex; gap:8px; margin:10px 0; }
+  #nearbyRoutesCard .nr-ostats div{ flex:1; border-radius:12px; background:#f8fafc; padding:9px 12px; min-width:0; }
+  #nearbyRoutesCard .nr-ostats small{ display:block; font-size:11.5px; color:#64748b; }
+  #nearbyRoutesCard .nr-ostats b{ display:block; font-size:15px; font-weight:800; color:#047857; margin-top:1px; word-break:break-word; }
+  #nearbyRoutesCard .nr-ofoot{ display:flex; gap:10px; padding-top:8px; }
   #nearbyRoutesCard .nr-sgsort{ flex:0 0 auto; padding:0 16px 2px; font-size:12.5px; color:#64748b; display:flex; align-items:center; gap:6px; }
   #nearbyRoutesCard .nr-sgsb{ border:none; background:none; color:#b45309; font:inherit; font-size:12.5px; font-weight:700; min-height:44px; padding:0 4px; }
   #nearbyRoutesCard .nr-sgitems{ flex:1 1 auto; min-height:0; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch; padding:0 16px; border-top:1px solid #f1f5f9; }
@@ -5608,7 +5646,7 @@
     <div id="nrSort" class="nr-seg" role="group"></div>
     <div id="nrStatus" class="nr-status"></div>
     <div id="nrLoad" class="nr-load" role="status" aria-live="polite"></div>
-    <div id="nrListWrap" class="nr-listwrap"><div id="nrSights"></div><div id="nrPlaces"></div><div id="nrList"></div><p id="nrNote" class="nr-note"></p></div>
+    <div id="nrListWrap" class="nr-listwrap"><div id="nrSights"></div><div id="nrPlaces"></div><div id="nrRtHd"></div><div id="nrList"></div><p id="nrNote" class="nr-note"></p></div>
     <button id="nrAsk" class="nr-ask" type="button"><i aria-hidden="true">✨</i><span id="nrAskLbl"></span><s aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></s></button>
     <div class="nr-foot"><label class="nr-sw"><input type="checkbox" id="nrToggle" checked><b></b><span id="nrToggleLbl"></span></label><button id="nrLater" class="nr-later" type="button"></button></div>
     <div id="nrChat" class="nr-chat"><div id="nrChatMsgs" class="nr-chatmsgs" aria-live="polite"></div><div id="nrChatSugg" class="nr-chips nr-chatsugg"></div><form id="nrChatForm" class="nr-chatform" autocomplete="off"><textarea id="nrChatInput" rows="2" maxlength="1000" enterkeyhint="send" autocomplete="off"></textarea><button id="nrChatSend" type="submit">➤</button></form><p id="nrChatHint" class="nr-chathint"></p></div>
@@ -5662,6 +5700,8 @@
         <button type="button" class="nr-sgclose" data-act="close" id="nrPlaceClose"></button>
       </div>
     </div>
+    <div id="nrOwnSheet" class="nr-psheet" role="dialog" aria-modal="true" aria-labelledby="nrOwnTitle"><div class="nr-ppanel" id="nrOwnPanel"></div></div>
+    <input type="file" id="nrOwnFile" accept=".gpx,application/gpx+xml,text/xml,application/xml,application/octet-stream" style="display:none">
   </div>
 </div>
 <div id="toast"><i class="toast-eyes" aria-hidden="true"><b></b><b></b></i><svg class="toast-star t1" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 0 L12.2 7.8 L20 10 L12.2 12.2 L10 20 L7.8 12.2 L0 10 L7.8 7.8Z"/></svg><svg class="toast-star t2" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 0 L12.2 7.8 L20 10 L12.2 12.2 L10 20 L7.8 12.2 L0 10 L7.8 7.8Z"/></svg></div>
@@ -13829,6 +13869,8 @@ const HELP_CONTENT = {
       <p>Bij <b>Wandelen</b> toont de pop-up "Leuke wandelingen" bovenaan een plaatskiezer, een rij met evenementen van vandaag en een rij bezienswaardigheden. De plaatskiezer staat standaard op <b>In mijn buurt</b> (je huidige positie); tik erop om een andere plaats te zoeken, bv. waar je morgen heen gaat. Recente plaatsen blijven bewaard.</p>
       <p><b>Bezienswaardig in de buurt:</b> de acht bekendste plekken binnen ongeveer 3 km (zijn er weinig, dan tot 8 km), met foto, afstand en soort. "Alle" opent de volledige lijst met filters en sortering op afstand of bekendheid; een tik op een plek toont uitleg uit Wikipedia, een minikaart, een knop Beluister en een knop om vanaf je locatie te navigeren. De plaatsen komen uit OpenStreetMap, de gratis servers daarvan zijn soms druk: de app probeert dan automatisch een andere server en, als dat niet lukt, één keer een lichtere zoekopdracht (kerken en kapellen ontbreken dan misschien, dat staat erbij). Antwoordt geen enkele server, dan zoekt de app Wikipedia-artikelen met coördinaten rond de plaats: dat is snel en de uitleg zit er meteen bij, maar het is minder volledig en minder precies (soms komt er een dorp of heuvel bij; de app filtert dat zo goed mogelijk weg) en dat staat erbij. Lukt niets, dan staat er kort waarom en kun je opnieuw proberen.</p>
       <p><b>Vandaag in de buurt:</b> evenementen van vandaag uit Wattedoen.be, met een schuif van 1 tot 50 km (standaard 20) en filters; een tik op een evenement opent de pagina op Wattedoen. Dit werkt alleen voor België (voor een plaats in het buitenland krijg je een melding). De afstand telt vanaf de gemeente, niet vanaf je exacte positie. Het kan zijn dat een evenement ontbreekt of een onduidelijke datum heeft: de site is niet van ons en kan veranderen.</p>
+      <p><b>Eigen GPX:</b> bij de kop "Wandelroutes" (bij Fietsen "Fietsroutes") staat de knop <b>+ Eigen GPX</b>. Stap 1: kies een .gpx-bestand van je toestel of plak een directe link naar een .gpx. Stap 2: de app leest de naam, lengte, stijging en het beginpunt; je kunt de naam aanpassen en tikt op "Toevoegen aan de lijst". De route krijgt het label "Jouw GPX" en staat daarna altijd in de lijst, ook ver weg en ook zonder internet. Het ⋯-menu bij zo'n route laat je de naam wijzigen of de route verwijderen. Je eigen routes staan <b>alleen op dit toestel</b> (niet op andere toestellen en niet in de website) en verdwijnen als je de app-gegevens wist. Links van Komoot, Wikiloc en dergelijke werken meestal niet, omdat die sites geen directe download toelaten: download het bestand dan eerst en kies het als bestand.</p>
+      <p><b>Online lijst:</b> de routes uit de meegeleverde GPX-lijst haalt de Android-app online op, zodat nieuwe routes er zonder nieuwe versie bij komen. De laatst opgehaalde lijst en routes worden op je toestel bewaard; zonder verbinding gebruikt de app die kopie, en daarna de lijst die in de app zelf zit. De routes die je zelf met "Eigen GPX" toevoegde, hebben hier geen last van.</p>
     </section>
     <section>
       <h3>🔁 Fiets ↔ wandel</h3>
@@ -14020,6 +14062,8 @@ const HELP_CONTENT = {
       <p>For <b>Walking</b>, the "Nice walks" pop-up shows a place picker at the top, a row with today's events and a row with sights. The place picker starts on <b>Around me</b> (your current position); tap it to search another place, e.g. where you are going tomorrow. Recent places are remembered.</p>
       <p><b>Sights nearby:</b> the eight best-known places within about 3 km (8 km when there are few), with photo, distance and type. "All" opens the full list with filters and sorting by distance or fame; tapping a place shows an explanation from Wikipedia, a small map, a Listen button and a button to navigate from your location. The places come from OpenStreetMap, whose free servers are sometimes busy: the app then automatically tries another server and, if that fails, one lighter search (churches and chapels may then be missing, which is shown). If no server answers at all, the app searches Wikipedia articles with coordinates around the place: that is fast and comes with the explanation, but it is less complete and less precise (a village or hill may slip in; the app filters those out as well as it can), and this is shown. If nothing works, a short reason is shown and you can try again.</p>
       <p><b>Today nearby:</b> today's events from Wattedoen.be, with a slider from 1 to 50 km (default 20) and filters; tapping an event opens its page on Wattedoen. This only works for Belgium (for a place abroad you get a notice). The distance counts from the municipality, not from your exact position. An event may be missing or have an unclear date: the site is not ours and can change.</p>
+      <p><b>Own GPX:</b> next to the heading "Walking routes" (for Cycling "Cycling routes") you find the button <b>+ Own GPX</b>. Step 1: pick a .gpx file from your device or paste a direct link to a .gpx. Step 2: the app reads the name, length, climb and start point; you can change the name and tap "Add to the list". The route gets the label "Your GPX" and then always appears in the list, even far away and even offline. The ⋯ menu on such a route lets you rename or delete it. Your own routes live <b>only on this device</b> (not on other devices and not in the website) and disappear if you clear the app data. Links from Komoot, Wikiloc and similar sites usually do not work, because those sites do not allow a direct download: download the file first and pick it as a file.</p>
+      <p><b>Online list:</b> the Android app fetches the routes of the bundled GPX list online, so new routes appear without a new version. The last fetched list and routes are kept on your device; without a connection the app uses that copy, and then the list built into the app. The routes you added yourself with "Own GPX" are not affected.</p>
     </section>
     <section>
       <h3>🔁 Bike ↔ walk</h3>
@@ -15670,6 +15714,24 @@ const DEV_NOTES_CONTENT = {
       <p><b>Teksten en test:</b> alle nieuwe teksten bestaan in NL en EN, Help en <code>plekken/README.md</code> zijn aangevuld. <b>Testsuite:</b> nieuw bestand <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> is een kiezer aangepast aan de nieuwe rijopbouw. Versie 2.497 / versionCode 116.</p>
     </section>
     <section>
+      <h3>🛠️ Ronde 190: GPX-lijst online lezen en automatisch bijwerken</h3>
+      <p><b>Online lezen.</b> <code>gpxFetch(rel)</code> vervangt alle <code>fetch('gpx/…')</code>: de lijst (<code>index.json</code>) in <code>fetchGpxRoutesManifest()</code> en <code>nrFetchGpx()</code>, en de bestanden in <code>loadBundledGpxRoute()</code>, <code>openMapsFromBundledGpxFile()</code> en <code>nrGpxText()</code>. In de Android-app (<code>gpxOnlineOn()</code> = <code>isNativeApp()</code>) haalt ze eerst <code>https://spicy-crayon.github.io/gpx/&lt;pad&gt;</code> op (<code>encodeURI</code>, dus spaties worden <code>%20</code>; time-out 5 s voor de lijst, 8 s voor een bestand), bewaart een gelukt antwoord in de Cache API (<code>ph-gpx-online-v1</code>), en valt bij een mislukking terug op die kopie en dan op het ingebouwde <code>gpx/</code>. Een antwoord telt enkel als het een echte lijst is (<code>provinces</code> of een <code>wandelen</code>/<code>fietsen</code>-sectie) of een bestand met <code>&lt;gpx</code> (<code>gpxTextOk()</code>); een foutpagina of andere json wordt genegeerd. Op de website zelf (en in tests) blijft het relatieve pad; <code>window.GPX_ONLINE_OVERRIDE</code> (true/false) schakelt het om voor tests.</p>
+      <p><b>Lijst met coördinaten.</b> Een bestandsroute komt enkel in "Leuke wandelingen" als de rij <code>lat</code> en <code>lon</code> heeft (<code>nrManifestCandidates()</code>). De 292 bestandsroutes hadden die niet; ze zijn aangevuld met het eerste punt van elk bestand. Paden in de lijst begonnen met <code>wandelen/</code> terwijl de map <code>Wandelen</code> heet; GitHub Pages en Android zijn hoofdlettergevoelig, dus de paden zijn gelijkgezet met de echte schrijfwijze.</p>
+      <p><b>Automatisch bijwerken.</b> <code>tools/gpx_index_bijwerken.py</code> (alleen Python-standaardbibliotheek) vergelijkt <code>gpx/index.json</code> met de .gpx-bestanden: een nieuw bestand in <code>gpx/Wandelen|Fietsen/&lt;Provincie&gt;/</code> wordt een rij (naam uit de bestandsnaam, lengte uit de punten, beginpunt, categorie "Natuur"; een nieuwe provincie wordt aangemaakt), een rij met een bestand dat niet meer bestaat verdwijnt, een rij zonder <code>lat</code>/<code>lon</code> krijgt het beginpunt, en een pad dat enkel in hoofdletters afwijkt wordt rechtgezet. Bestaande rijen blijven verder ongemoeid, rijen met alleen een <code>url</code> blijven altijd staan, en zonder wijziging wordt het bestand niet herschreven. <code>.github/workflows/gpx-index.yml</code> draait dat script bij elke push die een .gpx raakt (en handmatig) en commit <code>index.json</code> terug (<code>permissions: contents: write</code>). Een fietsroute komt in een top-level <code>fietsen</code>-sectie naast de wandelprovincies; de app leest beide.</p>
+      <p><b>Grenzen.</b> De ingebouwde lijst in de app blijft de terugval en wordt pas bijgewerkt bij een nieuwe build. Een route die enkel online staat en nooit werd geopend, is zonder verbinding niet beschikbaar. De workflow committe niet als er niets veranderde; draaien kan niet als de repo het schrijven door workflows verbiedt.</p>
+      <p><b>Help en vertalingen:</b> alinea "Online lijst" in de Help-sectie "Leuke wandelingen" in NL en EN. <b>Tests:</b> nieuw bestand <code>test_round190_gpx_online.js</code> (9 tests); de versiecontroles van de vorige rondes accepteren 2.525. Versie 2.525 / versionCode 144.</p>
+    </section>
+    <section>
+      <h3>🛠️ Ronde 189: eigen GPX toevoegen aan "Leuke wandelingen"</h3>
+      <p><b>Wat.</b> Bij de kop van de routelijst (<code>#nrRtHd</code>, gevuld door <code>nrOwnHeadHtml()</code>) staat de knop "+ Eigen GPX" (bij Fietsen: "Fietsroutes"). Hij verschijnt niet in "Mijn lijstje". Een tik opent het onderblad <code>#nrOwnSheet</code> met twee stappen: <b>pick</b> (bestand kiezen via <code>#nrOwnFile</code> of een link plakken) en <b>check</b> (naam, lengte, stijgen, start en een kaartje met het spoor, daarna "Toevoegen aan de lijst"). Een derde weergave, <b>manage</b>, hoort bij het ⋯-menu van een eigen route (hernoemen, verwijderen met een tweede bevestiging).</p>
+      <p><b>Analyse.</b> <code>nrOwnAnalyze(text, fileName)</code> controleert op <code>&lt;gpx</code>, gebruikt <code>parseGPX()</code> (die bij geen of te weinig punten een fout gooit), neemt de naam uit de metadata of uit de bestandsnaam, rondt de lengte af op 0,1 km (<code>trackDistanceKm()</code>), berekent de stijging met <code>computeGpxElevationStats()</code> en neemt het eerste punt als beginpunt. Maximaal 6 MB per bestand en 100 eigen routes. Een link wordt opgehaald met <code>nrOwnGet()</code>: in de APK via CapacitorHttp (geen CORS), in de browser met <code>fetchWithTimeout()</code>.</p>
+      <p><b>Opslag.</b> De lijst (id, soort, naam, km, stijging, lat, lon) staat onder <code>NR_OWN_KEY = 'ph_own_gpx_v1'</code>; de GPX-tekst zelf in de Cache API (<code>ph-own-gpx-v1</code>), met <code>localStorage</code> (<code>ph_own_gpx_txt_&lt;id&gt;</code>) als terugval. Alles blijft op het toestel. Kan de browser de Cache API leegmaken, dan blijft de naam in de lijst staan terwijl de tekst weg is: openen geeft dan de melding "Kon deze route niet openen".</p>
+      <p><b>In de lijst.</b> <code>nrOwnCands(mode, userLL, doneKeys)</code> maakt kandidaten <code>{kind:'gpx', own:true, ownId, key:'own:'+id}</code> per soort (wandel of fiets), zonder afstandsgrens. <code>nrFetchGpx()</code> voegt ze vóór de rijen uit <code>gpx/index.json</code> toe en gooit enkel een fout als de meegeleverde lijst mislukt én er geen eigen routes zijn. <code>nrRank()</code> slaat de ontdubbeling op naam en beginpunt over voor eigen routes, zodat een route met hetzelfde beginpunt als een route uit de lijst niet verdwijnt. <code>nrGpxText()</code> geeft de tekst (eigen route: uit de opslag; anders <code>gpx/</code> + bestand) aan het kaartje, het detail en <code>nrDetailGeometry()</code>; <code>nrOpenRoute()</code> opent een eigen route met <code>loadOwnGpxRoute()</code> en dezelfde richtingsvraag als andere GPX-routes (<code>gpxOpenPointsOnMap()</code>). Ster en lijstje werken als bij andere routes (<code>NR_FAV_FIELDS</code> kreeg <code>own</code> en <code>ownId</code>); verwijderen of hernoemen werkt het lijstje bij.</p>
+      <p><b>Lege staat.</b> Vindt de pop-up helemaal niets (geen routes in de buurt en geen meegeleverde lijst), dan toont de laadkaart onder "Geen routes gevonden in de buurt." de knop <code>#nrLoadOwn</code>; na het toevoegen opent <code>nrOwnRefresh()</code> de gewone lijst via <code>nrOpen()</code>.</p>
+      <p><b>Grenzen.</b> Eigen routes staan alleen op het toestel waar je ze toevoegt. Links van Komoot, Wikiloc en dergelijke geven meestal een webpagina of een foutmelding terug in plaats van een .gpx; de app meldt dan dat het geen GPX is. De 292 bestanden uit <code>gpx/</code> zonder coördinaten in <code>index.json</code> staan nog niet in de lijst; dat is een apart, later onderdeel.</p>
+      <p><b>Help en vertalingen:</b> alinea "Eigen GPX" in de Help-sectie "Leuke wandelingen" in NL en EN; alle nieuwe teksten bestaan in beide talen. <b>Tests:</b> nieuw bestand <code>test_round189_own_gpx.js</code> (12 tests). Versie 2.524 / versionCode 143.</p>
+    </section>
+    <section>
       <h3>🛠️ Ronde 188: bezienswaardigheden die niet laden, servervolgorde, vangnet en opmaak</h3>
       <p><b>Oorzaak.</b> De zoekvraag voor bezienswaardigheden (<code>nrSgQuery()</code>) bevatte <code>["amenity"="place_of_worship"]</code>. Een exacte waarde die zo vaak voorkomt, laat Overpass een trage zoekmethode kiezen: op <code>overpass.openstreetmap.fr</code> liep de vraag tegen de time-out, terwijl dezelfde vraag met <code>["amenity"~"^place_of_worship$"]</code> in ongeveer 2 s antwoordde (getest met 26 resultaten rond Traben-Trarbach op 3 km, 98 op 8 km, 71 rond Trier). De selector staat nu in de regex-vorm. Dezelfde afweging geldt voor andere veelvoorkomende exacte waarden.</p>
       <p><b>Servers.</b> <code>OVERPASS_ENDPOINTS</code> begint nu met <code>overpass.openstreetmap.fr</code>, dan <code>overpass.private.coffee</code>, <code>overpass-api.de</code>, <code>overpass.kumi.systems</code>, <code>overpass.openstreetmap.ru</code>. Bij metingen gaf overpass-api.de 502 of 34 s op een triviale vraag, antwoordde private.coffee niet, stuurde kumi door naar private.coffee en faalde .ru na 21 s. De laatst werkende server blijft voorrang krijgen (<code>osmWalkLastGoodEndpoint</code>).</p>
@@ -15677,7 +15739,7 @@ const DEV_NOTES_CONTENT = {
       <p><b>Vangnet 2: Wikipedia.</b> Na een mislukte volledige vraag start <code>nrSgFetch()</code> tegelijk de lichte vraag en <code>nrSgWikiFallback()</code>: Wikipedia <code>generator=geosearch</code> (straal max. 10 km, 60 artikelen, <code>prop=coordinates|description|pageprops</code>) in de taal van de app, plus Duits binnen Duitsland. Wikipedia antwoordt snel; de lichte vraag krijgt daarna nog hooguit 8 s om te winnen en wordt anders afgebroken. Een artikel blijft over als de korte Wikidata-omschrijving een bezienswaardigheid noemt (<code>NR_SG_WIKI_KEEP</code>: kasteel, kerk, museum, toren, ruïne, monument, brug, uitkijkpunt...) en niets als dorp, gemeente, rivier, straat of station (<code>NR_SG_WIKI_DROP</code>); dubbelen volgens <code>wikibase_item</code> vallen weg. <code>nrSgWikiTags()</code> zet de omschrijving om naar OpenStreetMap-labels, zodat <code>nrSgParse()</code>, soort, filters en de verrijking ongewijzigd werken. Na één val op Wikipedia slaat de ruimere ronde Overpass over (<code>sg.wikiOnly</code>). Het resultaat krijgt een opmerking (<code>sg.wiki</code>). Beperking: Wikipedia kent veel minder plekken dan OpenStreetMap en omschrijvingen ontbreken soms.</p>
       <p><b>Foutreden.</b> De foutkaart toont onder de zin de echte reden in kleine letters (<code>nrSgWhyHtml()</code>, uit <code>sg.err</code>, max. 170 tekens), bv. de server met "time-out" of "HTTP 502".</p>
       <p><b>Opmaak.</b> De ster (<code>.nr-star</code>, 44 px, rechts) raakte de tekst omdat een latere regel <code>#nearbyRoutesCard .nr-item</code> de <code>padding-right</code> weer op 0 zette; nu zet <code>#nearbyRoutesCard .nr-rw &gt; .nr-item</code> 48 px. De plaatspil is lager (34 px zichtbaar, tikvlak via <code>::after</code> ruim 44 px) en heeft ruimte erboven en eronder.</p>
-      <p><b>Naam.</b> De plaatsknop heet "In mijn buurt" (Engels "Around me") in plaats van "Bij mij". <b>Help en vertalingen:</b> nieuwe Help-sectie "Leuke wandelingen: bezienswaardigheden &amp; evenementen" in NL en EN; alle nieuwe teksten bestaan in beide talen. <b>Tests:</b> nieuw bestand <code>test_round188_sights_fix.js</code>; tests 129, 138 en 170 gebruiken de nieuwe servervolgorde (.fr eerst). Versie 2.522 / versionCode 141.</p>
+      <p><b>Naam.</b> De plaatsknop heet "In mijn buurt" (Engels "Around me") in plaats van "Bij mij". <b>Help en vertalingen:</b> nieuwe Help-sectie "Leuke wandelingen: bezienswaardigheden &amp; evenementen" in NL en EN; alle nieuwe teksten bestaan in beide talen. <b>Tests:</b> nieuw bestand <code>test_round188_sights_fix.js</code>; tests 129, 138 en 170 gebruiken de nieuwe servervolgorde (.fr eerst). Versie 2.523 / versionCode 142 (2.522 had het Wikipedia-vangnet nog niet).</p>
     </section>
     <section>
       <h3>🛠️ Ronde 187: evenementen vandaag in "Leuke wandelingen" (Wattedoen.be)</h3>
@@ -17474,6 +17536,24 @@ const DEV_NOTES_CONTENT = {
       <p><b>Texts and test:</b> all new texts exist in NL and EN, Help and <code>plekken/README.md</code> are extended. <b>Test suite:</b> new file <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> one selector is adjusted to the new row structure. Version 2.497 / versionCode 116.</p>
     </section>
     <section>
+      <h3>🛠️ Round 190: reading the GPX list online and updating it automatically</h3>
+      <p><b>Reading online.</b> <code>gpxFetch(rel)</code> replaces every <code>fetch('gpx/…')</code>: the list (<code>index.json</code>) in <code>fetchGpxRoutesManifest()</code> and <code>nrFetchGpx()</code>, and the files in <code>loadBundledGpxRoute()</code>, <code>openMapsFromBundledGpxFile()</code> and <code>nrGpxText()</code>. In the Android app (<code>gpxOnlineOn()</code> = <code>isNativeApp()</code>) it first fetches <code>https://spicy-crayon.github.io/gpx/&lt;path&gt;</code> (<code>encodeURI</code>, so spaces become <code>%20</code>; 5 s timeout for the list, 8 s for a file), stores a successful answer in the Cache API (<code>ph-gpx-online-v1</code>), and on failure falls back to that copy and then to the built-in <code>gpx/</code>. An answer only counts if it is a real list (<code>provinces</code> or a <code>wandelen</code>/<code>fietsen</code> section) or a file containing <code>&lt;gpx</code> (<code>gpxTextOk()</code>); an error page or other json is ignored. On the website itself (and in tests) the relative path stays; <code>window.GPX_ONLINE_OVERRIDE</code> (true/false) switches it for tests.</p>
+      <p><b>List with coordinates.</b> A file route only appears in "Nice walks" if its row has <code>lat</code> and <code>lon</code> (<code>nrManifestCandidates()</code>). The 292 file routes lacked them; they were filled in with the first point of each file. Paths in the list started with <code>wandelen/</code> while the folder is called <code>Wandelen</code>; GitHub Pages and Android are case-sensitive, so the paths were set to the real spelling.</p>
+      <p><b>Automatic update.</b> <code>tools/gpx_index_bijwerken.py</code> (Python standard library only) compares <code>gpx/index.json</code> with the .gpx files: a new file in <code>gpx/Wandelen|Fietsen/&lt;Province&gt;/</code> becomes a row (name from the file name, length from the points, start point, category "Natuur"; a new province is created), a row whose file no longer exists is removed, a row without <code>lat</code>/<code>lon</code> gets the start point, and a path that differs only in capitals is corrected. Existing rows are otherwise left alone, <code>url</code>-only rows always stay, and without changes the file is not rewritten. <code>.github/workflows/gpx-index.yml</code> runs that script on every push that touches a .gpx (and manually) and commits <code>index.json</code> back (<code>permissions: contents: write</code>). A cycling route goes into a top-level <code>fietsen</code> section next to the walking provinces; the app reads both.</p>
+      <p><b>Limits.</b> The list built into the app stays the fallback and is only updated by a new build. A route that only exists online and was never opened is not available without a connection. The workflow does not commit if nothing changed; it cannot run if the repo forbids workflows from writing.</p>
+      <p><b>Help and translations:</b> paragraph "Online list" in the Help section "Nice walks" in NL and EN. <b>Tests:</b> new file <code>test_round190_gpx_online.js</code> (9 tests); the version checks of earlier rounds accept 2.525. Version 2.525 / versionCode 144.</p>
+    </section>
+    <section>
+      <h3>🛠️ Round 189: adding your own GPX to "Nice walks"</h3>
+      <p><b>What.</b> Next to the heading of the route list (<code>#nrRtHd</code>, filled by <code>nrOwnHeadHtml()</code>) there is a "+ Own GPX" button ("Cycling routes" in Cycling). It does not appear in "My list". A tap opens the bottom sheet <code>#nrOwnSheet</code> with two steps: <b>pick</b> (choose a file via <code>#nrOwnFile</code> or paste a link) and <b>check</b> (name, length, climb, start and a small map of the track, then "Add to the list"). A third view, <b>manage</b>, belongs to the ⋯ menu of an own route (rename, delete with a second confirmation).</p>
+      <p><b>Analysis.</b> <code>nrOwnAnalyze(text, fileName)</code> checks for <code>&lt;gpx</code>, uses <code>parseGPX()</code> (which throws on no or too few points), takes the name from the metadata or the file name, rounds the length to 0.1 km (<code>trackDistanceKm()</code>), computes the climb with <code>computeGpxElevationStats()</code> and uses the first point as start. At most 6 MB per file and 100 own routes. A link is fetched with <code>nrOwnGet()</code>: in the APK through CapacitorHttp (no CORS), in the browser with <code>fetchWithTimeout()</code>.</p>
+      <p><b>Storage.</b> The list (id, mode, name, km, climb, lat, lon) lives under <code>NR_OWN_KEY = 'ph_own_gpx_v1'</code>; the GPX text itself in the Cache API (<code>ph-own-gpx-v1</code>), with <code>localStorage</code> (<code>ph_own_gpx_txt_&lt;id&gt;</code>) as fallback. Everything stays on the device. If the browser clears the Cache API, the name stays in the list while the text is gone: opening then shows "Could not open this route".</p>
+      <p><b>In the list.</b> <code>nrOwnCands(mode, userLL, doneKeys)</code> builds candidates <code>{kind:'gpx', own:true, ownId, key:'own:'+id}</code> per mode (walk or bike), with no distance limit. <code>nrFetchGpx()</code> puts them before the rows from <code>gpx/index.json</code> and only throws if the bundled list fails and there are no own routes. <code>nrRank()</code> skips the de-duplication on name and start point for own routes, so a route with the same start as a listed one does not vanish. <code>nrGpxText()</code> gives the text (own route: from storage; otherwise <code>gpx/</code> + file) to the thumbnail, the detail and <code>nrDetailGeometry()</code>; <code>nrOpenRoute()</code> opens an own route with <code>loadOwnGpxRoute()</code> and the same direction question as other GPX routes (<code>gpxOpenPointsOnMap()</code>). Star and list work as for other routes (<code>NR_FAV_FIELDS</code> gained <code>own</code> and <code>ownId</code>); deleting or renaming updates the list.</p>
+      <p><b>Empty state.</b> If the pop-up finds nothing at all (no routes nearby and no bundled list), the loading card shows the button <code>#nrLoadOwn</code> under "No routes found nearby."; after adding, <code>nrOwnRefresh()</code> opens the normal list through <code>nrOpen()</code>.</p>
+      <p><b>Limits.</b> Own routes live only on the device where you add them. Links from Komoot, Wikiloc and similar sites usually return a web page or an error instead of a .gpx; the app then says it is not a GPX. The 292 files in <code>gpx/</code> without coordinates in <code>index.json</code> are not in the list yet; that is a separate, later part.</p>
+      <p><b>Help and translations:</b> paragraph "Own GPX" in the Help section "Nice walks" in NL and EN; all new texts exist in both languages. <b>Tests:</b> new file <code>test_round189_own_gpx.js</code> (12 tests). Version 2.524 / versionCode 143.</p>
+    </section>
+    <section>
       <h3>🛠️ Round 188: sights that do not load, server order, safety net and layout</h3>
       <p><b>Cause.</b> The sights query (<code>nrSgQuery()</code>) contained <code>["amenity"="place_of_worship"]</code>. An exact value that common makes Overpass pick a slow search method: on <code>overpass.openstreetmap.fr</code> the query hit the timeout, while the same query with <code>["amenity"~"^place_of_worship$"]</code> answered in about 2 s (tested: 26 results around Traben-Trarbach at 3 km, 98 at 8 km, 71 around Trier). The selector now uses the regex form. The same consideration applies to other very common exact values.</p>
       <p><b>Servers.</b> <code>OVERPASS_ENDPOINTS</code> now starts with <code>overpass.openstreetmap.fr</code>, then <code>overpass.private.coffee</code>, <code>overpass-api.de</code>, <code>overpass.kumi.systems</code>, <code>overpass.openstreetmap.ru</code>. In measurements overpass-api.de gave 502 or 34 s on a trivial query, private.coffee did not answer, kumi redirected to private.coffee and .ru failed after 21 s. The last working server still gets priority (<code>osmWalkLastGoodEndpoint</code>).</p>
@@ -17481,7 +17561,7 @@ const DEV_NOTES_CONTENT = {
       <p><b>Safety net 2: Wikipedia.</b> After a failed full query, <code>nrSgFetch()</code> starts the light query and <code>nrSgWikiFallback()</code> at the same time: Wikipedia <code>generator=geosearch</code> (radius max. 10 km, 60 articles, <code>prop=coordinates|description|pageprops</code>) in the app language, plus German inside Germany. Wikipedia answers fast; the light query then gets at most 8 more seconds to win and is aborted otherwise. An article is kept when its short Wikidata description names a sight (<code>NR_SG_WIKI_KEEP</code>: castle, church, museum, tower, ruins, monument, bridge, viewpoint...) and nothing like village, municipality, river, street or station (<code>NR_SG_WIKI_DROP</code>); duplicates by <code>wikibase_item</code> are dropped. <code>nrSgWikiTags()</code> converts the description to OpenStreetMap tags, so <code>nrSgParse()</code>, kind, filters and enrichment work unchanged. After one fall back to Wikipedia the wider round skips Overpass (<code>sg.wikiOnly</code>). The result gets a note (<code>sg.wiki</code>). Limitation: Wikipedia knows far fewer places than OpenStreetMap and descriptions are sometimes missing.</p>
       <p><b>Error reason.</b> The error card shows the actual reason in small text under the sentence (<code>nrSgWhyHtml()</code>, from <code>sg.err</code>, max. 170 characters), e.g. the server with "time-out" or "HTTP 502".</p>
       <p><b>Layout.</b> The star (<code>.nr-star</code>, 44 px, right) touched the text because a later rule on <code>#nearbyRoutesCard .nr-item</code> reset <code>padding-right</code> to 0; now <code>#nearbyRoutesCard .nr-rw &gt; .nr-item</code> sets 48 px. The place pill is lower (34 px visible, tap area about 44 px through <code>::after</code>) with space above and below.</p>
-      <p><b>Name.</b> The place button is called "Around me" (Dutch "In mijn buurt") instead of "Near me". <b>Help and translations:</b> new Help section "Nice walks: sights &amp; events" in NL and EN; all new texts exist in both languages. <b>Tests:</b> new file <code>test_round188_sights_fix.js</code>; tests 129, 138 and 170 use the new server order (.fr first). Version 2.522 / versionCode 141.</p>
+      <p><b>Name.</b> The place button is called "Around me" (Dutch "In mijn buurt") instead of "Near me". <b>Help and translations:</b> new Help section "Nice walks: sights &amp; events" in NL and EN; all new texts exist in both languages. <b>Tests:</b> new file <code>test_round188_sights_fix.js</code>; tests 129, 138 and 170 use the new server order (.fr first). Version 2.523 / versionCode 142 (2.522 did not have the Wikipedia safety net yet).</p>
     </section>
     <section>
       <h3>🛠️ Round 187: events today in "Nice walks" (Wattedoen.be)</h3>
@@ -22825,7 +22905,7 @@ async function fetchGpxRoutesManifest(){
   // net als findNearbyRestPoints(), 1x opgehaald bij het openen van dit scherm (geen live update nodig).
   const userPos = await getBestKnownPosition().catch(() => null);
   try{
-    const res = await fetch('gpx/index.json', { cache:'no-store' });
+    const res = await gpxFetch('index.json');
     if (!res.ok) throw new Error('http ' + res.status);
     const manifest = await res.json();
     // UITGEBREID ("de gpx knop mag ook voor fietsroutes"): gpx/index.json heeft nu een top-level
@@ -22888,18 +22968,25 @@ async function toggleGpxRouteDone(key){
 // (parseGPX + de bestaande richtingsvraag), enkel met fetch() i.p.v. een <input type=file>.
 async function loadBundledGpxRoute(path){
   try{
-    const res = await fetch('gpx/' + path, { cache:'no-store' });
+    const res = await gpxFetch(path);
     if (!res.ok) throw new Error('http ' + res.status);
     const text = await res.text();
-    const pts = parseGPX(text);
-    closeGpxRoutesScreen();
-    if (!$('garminSetupScreen').classList.contains('hidden')) $('garminSetupScreen').classList.add('hidden');
-    $('bikeSetupContinueBtn').click();
-    pendingGpxPoints = pts;
-    setTimeout(() => openGpxDirectionModal(), 300);
+    gpxOpenPointsOnMap(parseGPX(text));
   }catch(e){
     toast(curLang()==='en' ? 'Could not open this route.' : 'Kon deze route niet openen.', 3200);
   }
+}
+function gpxOpenPointsOnMap(pts){
+  closeGpxRoutesScreen();
+  if (!$('garminSetupScreen').classList.contains('hidden')) $('garminSetupScreen').classList.add('hidden');
+  $('bikeSetupContinueBtn').click();
+  pendingGpxPoints = pts;
+  setTimeout(() => openGpxDirectionModal(), 300);
+}
+// Ronde 189: een eigen, op dit toestel toegevoegde GPX (zie nrOwn* bij de pop-up "Leuke wandelingen") op de kaart zetten.
+async function loadOwnGpxRoute(id){
+  try{ gpxOpenPointsOnMap(parseGPX(await nrOwnText(id))); }
+  catch(e){ toast(curLang()==='en' ? 'Could not open this route.' : 'Kon deze route niet openen.', 3200); }
 }
 // GEVRAAGD ("ik wou ook naar een site kunnen linken via de lijst"): een routerij in gpx/index.json mag nu een
 // "url" hebben i.p.v. een "file" (bv. een overzichtspagina op een wandelsite in plaats van één specifiek
@@ -22923,7 +23010,7 @@ function navigateToExternalUrl(url){ window.open(url, '_blank', 'noopener'); }
 // 1 keer gedownload/geparsed moeten worden enkel om te weten welke rijen een Maps-knop verdienen.
 async function openMapsFromBundledGpxFile(path){
   try{
-    const res = await fetch('gpx/' + path, { cache:'no-store' });
+    const res = await gpxFetch(path);
     if (!res.ok) throw new Error('http ' + res.status);
     const text = await res.text();
     const pts = parseGPX(text);
@@ -26364,7 +26451,7 @@ ${GARMIN_MENU_BTN_JS}
 </body>
 </html>`;
 }
-const APP_VERSION_TEXT = 'v2.522 · 10 nov';
+const APP_VERSION_TEXT = 'v2.525 · 11 nov';
 $('homeVersionFooter').textContent = APP_VERSION_TEXT;
 function buildGarminHubHtml(){
   // Dit is Gemini's keuzescherm.html, ongewijzigd qua opbouw/stijl — enkel: (1) een derde grote tegel
@@ -39345,6 +39432,41 @@ async function fetchWithTimeout(url, options, timeoutMs){
     clearTimeout(timer);
   }
 }
+
+// ===== Ronde 190: GPX-bibliotheek online lezen (gpx/index.json en de .gpx-bestanden)
+// Op spicy-crayon.github.io zelf is het relatieve pad al online. In de Android-app staat een kopie ingebouwd; daar halen we eerst de online versie op
+// (nieuwe routes zonder nieuwe build), bewaren elk gelukt antwoord in de Cache API (ph-gpx-online-v1) en vallen bij geen verbinding terug op die kopie en daarna
+// op de ingebouwde versie. Een antwoord dat geen echte index of geen GPX is (bv. een foutpagina) telt niet. window.GPX_ONLINE_OVERRIDE (true/false) is voor tests.
+const GPX_ONLINE_BASE = 'https://spicy-crayon.github.io/gpx/';
+const GPX_ONLINE_CACHE = 'ph-gpx-online-v1';
+function gpxOnlineOn(){
+  try{ if (window.GPX_ONLINE_OVERRIDE === true || window.GPX_ONLINE_OVERRIDE === false) return window.GPX_ONLINE_OVERRIDE; return isNativeApp(); }catch(e){ return false; }
+}
+function gpxTextOk(rel, t){
+  t = String(t || '');
+  if (/\.gpx$/i.test(rel)) return /<gpx[\s>]/i.test(t);
+  try{ const j = JSON.parse(t); return !!j && typeof j === 'object' && (Array.isArray(j.provinces) || Object.keys(j).some(k => /^(wandelen|wandelingen|walking|fietsen|fiets|cycling)$/i.test(k))); }catch(e){ return false; }
+}
+async function gpxFetch(rel){
+  const bundled = () => fetch('gpx/' + rel, { cache:'no-store' });
+  if (!gpxOnlineOn()) return bundled();
+  const url = GPX_ONLINE_BASE + encodeURI(rel), mk = (t) => new Response(t, { status:200, headers:{ 'content-type': /\.gpx$/i.test(rel) ? 'application/gpx+xml' : 'application/json' } });
+  try{
+    const r = await fetchWithTimeout(url, { cache:'no-store' }, /\.gpx$/i.test(rel) ? 8000 : 5000);   // de lijst mag de pop-up niet lang ophouden
+    if (r.ok){
+      const t = await r.text();
+      if (gpxTextOk(rel, t)){
+        try{ const c = await caches.open(GPX_ONLINE_CACHE); await c.put(url, mk(t)); }catch(e){}
+        return mk(t);
+      }
+    }
+  }catch(e){}
+  try{
+    const c = await caches.open(GPX_ONLINE_CACHE), m = await c.match(url);
+    if (m){ const t = await m.text(); if (gpxTextOk(rel, t)) return mk(t); }
+  }catch(e){}
+  return bundled();
+}
 // NIEUW (Ronde 31 — diepgaand onderzoek naar "bij planten niets, ook niet bij herstart, terwijl dieren
 // binnen 4 seconden werkt"): elke afzonderlijke stap in de herkenningsketen heeft al een eigen tijdslimiet
 // (zie hierboven/-onder), dus in theorie kan geen enkele stap oneindig hangen — maar een moderne
@@ -42856,6 +42978,7 @@ function nrRank(list, mode){
     .sort((a, b) => (b.score - a.score) || ((a.distKm || 0) - (b.distKm || 0)) || String(a.name).localeCompare(String(b.name), 'nl'));
   const seenName = new Set(), seenPlace = new Set(), out = [];
   for (const c of scored){
+    if (c.own){ out.push(c); continue; }                        // Ronde 189: een eigen route valt nooit weg door ontdubbeling
     const nm = nrNormName(c.name);
     if (nm && seenName.has(nm)) continue;
     const place = c.kind !== 'osm' ? c.lat.toFixed(3) + ',' + c.lon.toFixed(3) : null;
@@ -42951,9 +43074,24 @@ async function nrFetchOsm(mode, userLL){
   }
 }
 async function nrFetchGpx(mode, userLL){
-  const res = await fetch('gpx/index.json', { cache:'no-store' });
-  if (!res.ok) throw new Error('http ' + res.status);
-  return nrManifestCandidates(await res.json(), mode, userLL, await getGpxRoutesDoneKeys());
+  // Ronde 189: de eigen GPX's van dit toestel horen er altijd bij, ook als de meegeleverde lijst niet laadt.
+  await nrOwnLoad();
+  const doneKeys = await getGpxRoutesDoneKeys();
+  const own = nrOwnCands(mode, userLL, doneKeys);
+  let cands = [], err = null;
+  try{
+    const res = await gpxFetch('index.json');
+    if (!res.ok) throw new Error('http ' + res.status);
+    cands = nrManifestCandidates(await res.json(), mode, userLL, doneKeys);
+  }catch(e){ err = e; }
+  if (err && !own.length) throw err;
+  return own.concat(cands);
+}
+async function nrGpxText(c){
+  if (c.own) return nrOwnText(c.ownId);
+  const r = await gpxFetch(c.file);
+  if (!r.ok) throw new Error('http ' + r.status);
+  return r.text();
 }
 // Kaartje met het routetje: punten (lat/lon) -> SVG-pad in een vak van 58x58.
 function nrThumbSvg(points){
@@ -43016,9 +43154,9 @@ function nrItemHtml(c, i){
   if (c.done) chips.push(`<span class="nr-chip gr">✓ ${nrT('Gedaan', 'Done')}</span>`);
   const thumb = nrState.thumbs[c.key] || (c.kind === 'link' ? '🌿' : ((c.mode || nrState.mode) === 'fiets' ? '🚴' : '🥾'));
   const fav = nrFavHas(c);
-  return `<div class="nr-rw"><button type="button" class="nr-item" data-idx="${i}" data-key="${osmWalkEsc(c.key)}"><span class="nr-th">${thumb}</span>` +
+  return `<div class="nr-rw${c.own ? ' own' : ''}${c.fresh ? ' fresh' : ''}"><button type="button" class="nr-item" data-idx="${i}" data-key="${osmWalkEsc(c.key)}"><span class="nr-th">${thumb}</span>` +
     `<span class="nr-tx"><h4>${osmWalkEsc(c.name)}</h4><div class="nr-meta">${pill}${near}</div><div class="nr-tags">${chips.join('')}</div>${nrWhyHtml(c)}</span><span class="nr-chev" aria-hidden="true">›</span></button>` +
-    `<button type="button" class="nr-star${fav ? ' on' : ''}" data-idx="${i}" data-key="${osmWalkEsc(c.key)}" aria-pressed="${fav}" aria-label="${fav ? nrT('Uit je lijstje halen', 'Remove from your list') : nrT('Bewaar in je lijstje', 'Save to your list')}">${fav ? '★' : '☆'}</button></div>`;
+    (c.own ? `<button type="button" class="nr-more" data-key="${osmWalkEsc(c.key)}" aria-label="${nrT('Meer opties', 'More options')}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="12" cy="19" r="1.8"/></svg></button>` : '') + `<button type="button" class="nr-star${fav ? ' on' : ''}" data-idx="${i}" data-key="${osmWalkEsc(c.key)}" aria-pressed="${fav}" aria-label="${fav ? nrT('Uit je lijstje halen', 'Remove from your list') : nrT('Bewaar in je lijstje', 'Save to your list')}">${fav ? '★' : '☆'}</button></div>`;
 }
 // Het lijstje (alles bewaarde) of de gevonden routes; met het lijstjes-filter aan blijven enkel de bewaarde routes van deze soort over (vers gevonden exemplaar wint van de bewaarde momentopname).
 function nrBaseList(){
@@ -43070,6 +43208,7 @@ function nrRenderList(keepScroll){
   $('nrList').innerHTML = nrState.view.length ? nrState.view.map(nrItemHtml).join('')
     : ((nrState.ranked.length || nrState.favAll || nrState.flt.fav) ? `<p class="nr-empty">${emptyMsg}</p>` : '');
   $('nrPlaces').innerHTML = nrPlacesHtml();
+  $('nrRtHd').innerHTML = nrOwnHeadHtml();
   nrRenderSights();
   if (anchorKey){
     const el = Array.from(wrap.querySelectorAll('.nr-item')).find(e => e.dataset.key === anchorKey);
@@ -43107,7 +43246,7 @@ function nrLoadHtml(){
 // Een mislukte of lege laadstand blijft staan met een uitleg (en "Opnieuw proberen"), in plaats van zonder iets te zeggen te sluiten.
 function nrLoadMsgHtml(){
   const m = nrState.loadMsg; if (!m) return '';
-  return `<div class="nr-lmsg" role="alert">${osmWalkEsc(m.text)}${m.detail ? `<small>${osmWalkEsc(m.detail)}</small>` : ''}</div>` + (m.retry ? `<button type="button" id="nrRetry" class="nr-retry">${nrT('Opnieuw proberen', 'Try again')}</button>` : '');
+  return `<div class="nr-lmsg" role="alert">${osmWalkEsc(m.text)}${m.detail ? `<small>${osmWalkEsc(m.detail)}</small>` : ''}</div>` + (m.retry ? `<button type="button" id="nrRetry" class="nr-retry">${nrT('Opnieuw proberen', 'Try again')}</button>` : '') + (m.own ? `<button type="button" id="nrLoadOwn" class="nr-retry">+ ${nrT('Eigen GPX toevoegen', 'Add your own GPX')}</button>` : '');
 }
 function nrSetLoad(patch, msg){ if (!nrState.load) return; nrState.load = Object.assign({}, nrState.load, patch); if (msg !== undefined) nrState.loadMsg = msg; $('nrLoad').innerHTML = nrLoadHtml(); }
 // Positie voor de pop-up: een recente bekende positie telt (ruw is genoeg voor "in de buurt"); anders vragen we tegelijk een snelle, ruwe positie (netwerk, mag tot 10 min oud zijn) en een nauwkeurige (GPS).
@@ -43173,8 +43312,8 @@ function nrStaleNote(stale){
              : nrT('Je laatst bekende positie wordt gebruikt, want een verse positie lukte niet.', 'Your last known position is used, because a fresh position did not work.');
 }
 function nrOpenLoading(mode){
-  nrWire();
-  nrState.token++; nrState.mode = mode; nrState.userLL = null; nrState.listKey = null; nrState.placeName = ''; nrState.gpx = []; nrState.osm = []; nrState.osmPending = false; nrState.ranked = []; nrState.view = []; nrState.pend = [];
+  nrWire(); nrOwnWire();
+  nrState.token++; nrState.mode = mode; nrState.userLL = null; nrState.listKey = null; nrState.placeName = ''; nrState.gpx = []; nrState.osm = []; nrState.osmPending = false; nrState.ranked = []; nrState.view = []; nrState.pend = []; nrState.emptyLL = null;
   nrState.load = { pos:'on', gpx:'todo', osm:'todo', fin:'todo' }; nrState.loadMsg = null; nrState.stale = null; nrState.favAll = false; nrState.flt = { rain:false, kids:false, pt:false, fav:false };
   const card = $('nearbyRoutesCard'); card.classList.remove('detail', 'favall', 'chat'); card.classList.add('loading'); nrState.detail = null; nrState.dtoken++;
   $('nrTitle').textContent = nrTitleText(mode); $('nrSub').textContent = nrT('Zoeken in de buurt…', 'Searching nearby…');
@@ -43217,7 +43356,7 @@ async function nrFlushThumbs(token){
     document.querySelectorAll('#nrList .nr-item').forEach(el => { if (el.dataset.key === c.key) el.querySelector('.nr-th').innerHTML = svg; });
   };
   await Promise.all(cands.filter(c => c.kind === 'gpx').map(async c => {
-    try{ const r = await fetch('gpx/' + c.file, { cache:'no-store' }); if (r.ok) setThumb(c, parseGPX(await r.text())); }catch(e){}
+    try{ setThumb(c, parseGPX(await nrGpxText(c))); }catch(e){}
   }));
   const osm = cands.filter(c => c.kind === 'osm');
   if (osm.length && token === nrState.token){
@@ -43245,7 +43384,7 @@ function nrUpdateRow(key){
 // ---------- Ronde 166: lijstje (favorieten), filters uit OpenStreetMap, eigen plekken, seizoenstip ----------
 // Lijstje: een momentopname per route (naam, ligging, bestand/link) in opslag, zodat het lijstje ook zonder positie en zonder netwerk werkt.
 const NR_FAV_KEY = 'nearby_favorites_v1';
-const NR_FAV_FIELDS = ['mode', 'kind', 'key', 'name', 'km', 'lat', 'lon', 'file', 'url', 'source', 'gemeente', 'categorie', 'osmId', 'colorKey', 'network', 'operator', 'website', 'foto', 'fotoBron', 'fotoUrl', 'kaart', 'kaartBron', 'kaartUrl'];
+const NR_FAV_FIELDS = ['mode', 'kind', 'key', 'name', 'km', 'lat', 'lon', 'file', 'own', 'ownId', 'url', 'source', 'gemeente', 'categorie', 'osmId', 'colorKey', 'network', 'operator', 'website', 'foto', 'fotoBron', 'fotoUrl', 'kaart', 'kaartBron', 'kaartUrl'];
 let nrFavMap = {};
 async function nrFavInit(){
   try{ const v = await storageGet(NR_FAV_KEY); const o = v ? JSON.parse(v) : {}; nrFavMap = (o && typeof o === 'object' && !Array.isArray(o)) ? o : {}; }catch(e){ nrFavMap = {}; }
@@ -43923,8 +44062,206 @@ function nrSgWire(){
 function nrSgReset(userLL){
   const sg = nrState.sg;
   sg.tok++; sg.place = null; sg.me = userLL ? { lat:userLL.lat, lon:userLL.lon } : null; sg.cat = 'all'; sg.sort = 'dist'; sg.key = ''; sg.items = []; sg.status = 'idle'; sg.cur = null;
-  nrSgListenStop(); nrEvReset();
-  nrSgWire(); nrEvWire();
+  nrSgListenStop(); nrEvReset(); nrOwnReset();
+  nrSgWire(); nrEvWire(); nrOwnWire();
+}
+
+// ===== Ronde 189: eigen GPX toevoegen (blijft op dit toestel) =====
+// Via "+ Eigen GPX" bij de kop van de routelijst kies je een .gpx-bestand of plak je een directe link. De app leest zelf naam, lengte, stijgen en beginpunt
+// (parseGPX), toont ze ter controle en bewaart de route: de lijst met gegevens in de opslag (NR_OWN_KEY), de GPX-tekst in de Cache API (zoals de offline kaarten),
+// met localStorage als terugval. De route komt als eigen kandidaat (own:true) in de lijst, op afstand, zonder afstandsgrens, en alleen op dit toestel.
+const NR_OWN_KEY = 'ph_own_gpx_v1', NR_OWN_CACHE = 'ph-own-gpx-v1', NR_OWN_TXT = 'ph_own_gpx_txt_', NR_OWN_MAX_BYTES = 6 * 1024 * 1024, NR_OWN_MAX = 100;
+let nrOwnList = null;
+const nrOwn = { step:'', draft:null, err:'', busy:false, cur:null, confirmDel:false, wired:false };
+async function nrOwnLoad(){
+  if (nrOwnList) return nrOwnList;
+  try{ const v = await storageGet(NR_OWN_KEY), a = v ? JSON.parse(v) : []; nrOwnList = Array.isArray(a) ? a.filter(o => o && o.id && isFinite(o.lat) && isFinite(o.lon)) : []; }
+  catch(e){ nrOwnList = []; }
+  return nrOwnList;
+}
+async function nrOwnSaveIndex(){ try{ await storageSet(NR_OWN_KEY, JSON.stringify(nrOwnList || [])); return true; }catch(e){ return false; } }
+const nrOwnUrl = (id) => location.origin + '/__own-gpx/' + encodeURIComponent(id) + '.gpx';
+async function nrOwnPut(id, text){
+  try{ const c = await caches.open(NR_OWN_CACHE); await c.put(new Request(nrOwnUrl(id)), new Response(text, { headers:{ 'content-type':'application/gpx+xml' } })); return; }catch(e){}
+  await storageSet(NR_OWN_TXT + id, text);
+}
+async function nrOwnText(id){
+  try{ const c = await caches.open(NR_OWN_CACHE), r = await c.match(new Request(nrOwnUrl(id))); if (r) return await r.text(); }catch(e){}
+  const t = await storageGet(NR_OWN_TXT + id); if (t) return t;
+  throw new Error('niet gevonden');
+}
+async function nrOwnRemoveFile(id){
+  try{ const c = await caches.open(NR_OWN_CACHE); await c.delete(new Request(nrOwnUrl(id))); }catch(e){}
+  try{ localStorage.removeItem(NR_OWN_TXT + id); }catch(e){}
+}
+function nrOwnCands(mode, userLL, doneKeys){
+  const done = new Set(doneKeys || []);
+  return (nrOwnList || []).filter(o => o.mode === mode).map(o => ({ kind:'gpx', own:true, ownId:o.id, key:'own:' + o.id, mode:o.mode, name:o.name, km:o.km > 0 ? o.km : 0, lat:o.lat, lon:o.lon,
+    distKm: userLL ? haversine(userLL.lat, userLL.lon, o.lat, o.lon) / 1000 : null, file:'', url:'', source:'', gemeente:'', categorie:'', done:done.has('own:' + o.id),
+    foto:'', fotoBron:'', fotoUrl:'', kaart:'', kaartBron:'', kaartUrl:'' }));
+}
+// Naam, lengte, stijgen en beginpunt uit de GPX-tekst. Gooit een leesbare fout bij een bestand dat geen route bevat.
+function nrOwnAnalyze(text, fileName){
+  text = String(text || '');
+  if (text.length > NR_OWN_MAX_BYTES) throw new Error(nrT('Het bestand is te groot (meer dan 6 MB).', 'The file is too large (over 6 MB).'));
+  if (!/<gpx[\s>]/i.test(text)) throw new Error(nrT('Dit lijkt geen GPX-bestand te zijn.', 'This does not look like a GPX file.'));
+  const pts = parseGPX(text);
+  if (pts.length < 2) throw new Error(nrT('Er zitten te weinig punten in dit bestand.', 'This file has too few points.'));
+  let name = String((lastParsedGpxMeta && lastParsedGpxMeta.name) || '').replace(/\s+/g, ' ').trim();
+  if (!name) name = String(fileName || '').replace(/\.gpx$/i, '').replace(/[_\-]+/g, ' ').replace(/\s+/g, ' ').trim();
+  if (!name) name = nrT('Eigen route', 'My route');
+  const ele = computeGpxElevationStats(pts);
+  return { name:name.slice(0, 80), km:Math.round(trackDistanceKm(pts) * 10) / 10, ascent:ele && ele.ascent > 0 ? Math.round(ele.ascent) : 0, lat:pts[0].lat, lon:pts[0].lon, n:pts.length, text, pts };
+}
+async function nrOwnGet(url){
+  if (!/^https?:\/\//i.test(url)) throw new Error(nrT('Dit is geen geldige link (begin met https://).', 'This is not a valid link (start with https://).'));
+  if (isNativeApp()){
+    const H = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.CapacitorHttp;
+    if (H && typeof H.get === 'function'){
+      const r = await H.get({ url, responseType:'text', connectTimeout:10000, readTimeout:20000 });
+      if (!r || r.status !== 200) throw new Error('HTTP ' + (r && r.status));
+      return typeof r.data === 'string' ? r.data : '';
+    }
+  }
+  const res = await fetchWithTimeout(url, {}, 15000);
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  return await res.text();
+}
+function nrOwnHeadHtml(){
+  if (nrState.favAll || !nrState.mode) return '';
+  const fiets = nrState.mode === 'fiets';
+  return `<div class="nr-rthd"><p class="nr-sec">${fiets ? nrT('Fietsroutes', 'Cycling routes') : nrT('Wandelroutes', 'Walking routes')}</p><button type="button" class="nr-ownbtn" data-act="own"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>${nrT('Eigen GPX', 'Own GPX')}</button></div>`;
+}
+const nrOwnComma = (n, d) => (Math.round(n * Math.pow(10, d)) / Math.pow(10, d)).toFixed(d).replace('.', curLang() === 'en' ? '.' : ',');
+function nrOwnPanelHtml(){
+  const o = nrOwn, close = (b) => `<button type="button" class="nr-obtn l" data-act="${b}">${b === 'back' ? nrT('Terug', 'Back') : nrT('Sluiten', 'Close')}</button>`;
+  const err = o.err ? `<p class="nr-oerr" role="alert">${osmWalkEsc(o.err)}</p>` : '';
+  const x = `<button type="button" class="nr-obtn l" data-act="close" aria-label="${nrT('Sluiten', 'Close')}" style="min-height:44px;width:44px;padding:0;border-radius:22px;flex:none">✕</button>`;
+  if (o.step === 'pick'){
+    return `<span class="nr-pgrip" aria-hidden="true"></span><div style="display:flex;align-items:flex-start;gap:10px"><div style="flex:1"><h3 id="nrOwnTitle">${nrT('Eigen GPX toevoegen', 'Add your own GPX')}</h3><p class="nr-osub">${nrT('Stap 1 van 2 · kies waar de route vandaan komt', 'Step 1 of 2 · choose where the route comes from')}</p></div>${x}</div>` + err +
+      `<button type="button" class="nr-obig" data-act="pick"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></span><span><b>${nrT('Bestand kiezen', 'Choose a file')}</b><small>${nrT('Een .gpx uit Downloads of Bestanden', 'A .gpx from Downloads or Files')}</small></span></button>` +
+      `<form class="nr-obox" id="nrOwnLinkForm" autocomplete="off"><h4>${nrT('Link plakken', 'Paste a link')}</h4><p>${nrT('Een directe downloadlink naar een .gpx', 'A direct download link to a .gpx')}</p><div class="nr-orow"><input class="nr-oin" id="nrOwnUrl" type="url" inputmode="url" autocapitalize="off" placeholder="https://…/route.gpx" aria-label="${nrT('Link naar een GPX-bestand', 'Link to a GPX file')}"><button type="submit" class="nr-obtn"${o.busy ? ' disabled' : ''}>${o.busy ? nrT('Bezig…', 'Working…') : nrT('Ophalen', 'Fetch')}</button></div></form>` +
+      `<p class="nr-onote">${nrT('Je route blijft op dit toestel bewaard, ook offline. Sites als Komoot of Wikiloc laten een directe link meestal niet toe: download het bestand dan eerst en kies het hierboven.', 'Your route stays on this device, also offline. Sites like Komoot or Wikiloc usually do not allow a direct link: download the file first and choose it above.')}</p>`;
+  }
+  if (o.step === 'check' && o.draft){
+    const d = o.draft;
+    return `<span class="nr-pgrip" aria-hidden="true"></span><div style="display:flex;align-items:flex-start;gap:10px"><div style="flex:1"><h3 id="nrOwnTitle">${nrT('Controleer je route', 'Check your route')}</h3><p class="nr-osub">${nrT('Stap 2 van 2 · gelezen uit ', 'Step 2 of 2 · read from ')}${osmWalkEsc(d.from)}</p></div>${x}</div>` + err +
+      `<div class="nr-oprev">${nrThumbSvg(d.pts)}</div>` +
+      `<label class="nr-olbl" for="nrOwnName">${nrT('Naam in de lijst', 'Name in the list')}</label><input class="nr-oin" id="nrOwnName" type="text" maxlength="80" value="${osmWalkEsc(d.name)}" style="width:100%;flex:none">` +
+      `<div class="nr-ostats"><div><small>${nrT('Lengte', 'Length')}</small><b>${nrOwnComma(d.km, 1)} km</b></div>${d.ascent > 0 ? `<div><small>${nrT('Stijgen', 'Climb')}</small><b>${d.ascent} m</b></div>` : ''}<div style="flex:1.4"><small>${nrT('Beginpunt', 'Start')}</small><b style="color:#0f172a;font-size:13px">${nrOwnComma(d.lat, 3)} · ${nrOwnComma(d.lon, 3)}</b></div></div>` +
+      `<p class="nr-onote">${nrT('Het beginpunt is het eerste punt van de GPX; daarmee staat de route op de juiste afstand in de lijst.', 'The start is the first point of the GPX; that puts the route at the right distance in the list.')}</p>` +
+      `<div class="nr-ofoot"><button type="button" class="nr-obtn l" data-act="back">${nrT('Terug', 'Back')}</button><button type="button" class="nr-obtn g" data-act="add"${o.busy ? ' disabled' : ''}>${nrT('Toevoegen aan de lijst', 'Add to the list')}</button></div>`;
+  }
+  if (o.step === 'manage' && o.cur){
+    return `<span class="nr-pgrip" aria-hidden="true"></span><div style="display:flex;align-items:flex-start;gap:10px"><div style="flex:1"><h3 id="nrOwnTitle">${nrT('Jouw route', 'Your route')}</h3><p class="nr-osub">${nrT('Staat alleen op dit toestel', 'Only stored on this device')}</p></div>${x}</div>` + err +
+      `<label class="nr-olbl" for="nrOwnName">${nrT('Naam in de lijst', 'Name in the list')}</label><div class="nr-orow" style="margin-top:0"><input class="nr-oin" id="nrOwnName" type="text" maxlength="80" value="${osmWalkEsc(o.cur.name)}"><button type="button" class="nr-obtn" data-act="rename">${nrT('Opslaan', 'Save')}</button></div>` +
+      (o.confirmDel
+        ? `<p class="nr-oerr" role="alert" style="margin-top:14px">${nrT('Deze route van dit toestel verwijderen? Dat kan niet ongedaan worden.', 'Delete this route from this device? This cannot be undone.')}</p><div class="nr-ofoot"><button type="button" class="nr-obtn l" data-act="delno">${nrT('Nee, bewaren', 'No, keep it')}</button><button type="button" class="nr-obtn d" data-act="delgo" style="flex:1;min-height:50px;border-radius:14px">${nrT('Ja, verwijderen', 'Yes, delete')}</button></div>`
+        : `<div class="nr-ofoot" style="margin-top:12px"><button type="button" class="nr-obtn d" data-act="del" style="flex:1;min-height:50px;border-radius:14px">${nrT('Verwijderen van dit toestel', 'Delete from this device')}</button></div>`);
+  }
+  return '';
+}
+function nrOwnRender(){ $('nrOwnPanel').innerHTML = nrOwnPanelHtml(); }
+function nrOwnShow(step){ nrOwn.step = step; nrOwn.err = ''; nrOwn.busy = false; nrOwnRender(); $('nrOwnSheet').classList.add('show'); }
+function nrOwnClose(){ $('nrOwnSheet').classList.remove('show'); nrOwn.step = ''; nrOwn.draft = null; nrOwn.cur = null; nrOwn.confirmDel = false; nrOwn.busy = false; }
+function nrOwnReset(){ try{ nrOwnClose(); }catch(e){} }
+function nrOwnOpen(){ nrOwn.draft = null; nrOwnShow('pick'); }
+function nrOwnSetDraft(text, from){
+  try{
+    const d = nrOwnAnalyze(text, from); d.from = from;
+    nrOwn.draft = d; nrOwnShow('check');
+  }catch(e){ nrOwn.err = String((e && e.message) || e); nrOwn.step = 'pick'; nrOwn.busy = false; nrOwnRender(); }
+}
+async function nrOwnAdd(){
+  const d = nrOwn.draft; if (!d || nrOwn.busy) return;
+  await nrOwnLoad();
+  if (nrOwnList.length >= NR_OWN_MAX){ nrOwn.err = nrT('Je hebt al ' + NR_OWN_MAX + ' eigen routes. Verwijder er eerst een.', 'You already have ' + NR_OWN_MAX + ' own routes. Delete one first.'); nrOwnRender(); return; }
+  const nameEl = $('nrOwnName'), name = (nameEl ? nameEl.value : d.name).replace(/\s+/g, ' ').trim() || d.name;
+  nrOwn.busy = true; nrOwnRender();
+  const id = 'g' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), mode = nrState.mode === 'fiets' ? 'fiets' : 'wandel';
+  try{
+    await nrOwnPut(id, d.text);
+    nrOwnList.push({ id, mode, name:name.slice(0, 80), km:d.km, ascent:d.ascent, lat:d.lat, lon:d.lon, added:Date.now() });
+    if (!(await nrOwnSaveIndex())) throw new Error(nrT('Opslaan is niet gelukt (geen ruimte?).', 'Saving failed (no space?).'));
+  }catch(e){
+    nrOwnList = nrOwnList.filter(o => o.id !== id); await nrOwnRemoveFile(id);
+    nrOwn.busy = false; nrOwn.err = String((e && e.message) || e); nrOwnRender(); return;
+  }
+  nrOwnClose();
+  await nrOwnRefresh(id);
+  toast(nrT('Toegevoegd: ' + name, 'Added: ' + name), 3200);
+}
+// Lijst opnieuw samenstellen met de eigen routes van deze soort; de nieuwe route komt in beeld en licht even op.
+async function nrOwnRefresh(focusId){
+  nrState.gpx = nrState.gpx.filter(c => !c.own).concat(nrOwnCands(nrState.mode, nrState.userLL, await getGpxRoutesDoneKeys()));
+  if (focusId){ nrState.bin = 0; nrState.flt = { rain:false, kids:false, pt:false, fav:false }; nrState.favAll = false; $('nearbyRoutesCard').classList.remove('favall'); }
+  if (nrState.emptyLL && nrState.gpx.length && $('nearbyRoutesCard').classList.contains('loading')){ const ll = nrState.emptyLL; nrState.emptyLL = null; nrOpen(nrState.mode, ll, nrState.gpx, [], false, null); }
+  else nrRender(!focusId);
+  if (!focusId) return;
+  const key = 'own:' + focusId, row = Array.from(document.querySelectorAll('#nrList .nr-item')).find(e => e.dataset.key === key);
+  if (row){ const rw = row.closest('.nr-rw'); if (rw){ rw.classList.add('fresh'); try{ rw.scrollIntoView({ block:'center' }); }catch(e){} setTimeout(() => rw.classList.remove('fresh'), 2500); } }
+}
+async function nrOwnRename(){
+  const o = nrOwn.cur, el = $('nrOwnName'); if (!o || !el) return;
+  const name = el.value.replace(/\s+/g, ' ').trim(); if (!name){ nrOwn.err = nrT('Geef de route een naam.', 'Give the route a name.'); nrOwnRender(); return; }
+  o.name = name.slice(0, 80); await nrOwnSaveIndex();
+  const fid = o.mode + '|own:' + o.id;
+  if (nrFavMap[fid]){ nrFavMap[fid].name = o.name; try{ await storageSet(NR_FAV_KEY, JSON.stringify(nrFavMap)); }catch(e){} }
+  nrOwnClose(); await nrOwnRefresh(null);
+}
+async function nrOwnDelete(){
+  const o = nrOwn.cur; if (!o) return;
+  nrOwnList = (nrOwnList || []).filter(x => x.id !== o.id); await nrOwnSaveIndex(); await nrOwnRemoveFile(o.id);
+  const fid = o.mode + '|own:' + o.id;
+  if (nrFavMap[fid]){ delete nrFavMap[fid]; try{ await storageSet(NR_FAV_KEY, JSON.stringify(nrFavMap)); }catch(e){} nrFavNotify(); }
+  nrOwnClose(); await nrOwnRefresh(null);
+  toast(nrT('Route verwijderd', 'Route deleted'), 2500);
+}
+function nrOwnWire(){
+  if (nrOwn.wired) return; nrOwn.wired = true;
+  $('nrRtHd').addEventListener('click', (e) => { const b = e.target.closest && e.target.closest('button[data-act="own"]'); if (b) nrOwnOpen(); });
+  $('nrLoad').addEventListener('click', (e) => { if (e.target.closest && e.target.closest('#nrLoadOwn')) nrOwnOpen(); });
+  $('nrList').addEventListener('click', async (e) => {
+    const b = e.target.closest && e.target.closest('.nr-more'); if (!b) return;
+    await nrOwnLoad();
+    const id = String(b.dataset.key || '').replace(/^own:/, ''), o = nrOwnList.find(x => x.id === id);
+    if (!o){ toast(nrT('Deze route staat niet meer op dit toestel.', 'This route is no longer on this device.'), 3000); return; }
+    nrOwn.cur = o; nrOwn.confirmDel = false; nrOwnShow('manage');
+  });
+  $('nrOwnSheet').addEventListener('click', (e) => {
+    const b = e.target.closest && e.target.closest('button, .nr-psheet'); if (!b) return;
+    if (b === $('nrOwnSheet')){ nrOwnClose(); return; }
+    const a = b.dataset.act;
+    if (a === 'close') nrOwnClose();
+    else if (a === 'pick') $('nrOwnFile').click();
+    else if (a === 'back') nrOwnShow('pick');
+    else if (a === 'add') nrOwnAdd();
+    else if (a === 'rename') nrOwnRename();
+    else if (a === 'del'){ nrOwn.confirmDel = true; nrOwnRender(); }
+    else if (a === 'delno'){ nrOwn.confirmDel = false; nrOwnRender(); }
+    else if (a === 'delgo') nrOwnDelete();
+  });
+  $('nrOwnSheet').addEventListener('submit', async (e) => {
+    if (!e.target || e.target.id !== 'nrOwnLinkForm') return;
+    e.preventDefault();
+    const url = String($('nrOwnUrl').value || '').trim(); if (!url || nrOwn.busy) return;
+    nrOwn.busy = true; nrOwn.err = ''; nrOwnRender(); $('nrOwnUrl').value = url;
+    try{
+      const text = await nrOwnGet(url);
+      let from = url.split('?')[0].split('/').filter(Boolean).pop() || url; try{ from = decodeURIComponent(from); }catch(x){}
+      nrOwn.busy = false; nrOwnSetDraft(text, from);
+    }catch(err){
+      nrOwn.busy = false; nrOwn.step = 'pick';
+      nrOwn.err = nrT('Ophalen is niet gelukt (' + String((err && err.message) || err) + '). Veel sites laten dit niet toe: download het bestand dan eerst en kies het via "Bestand kiezen".', 'Fetching failed (' + String((err && err.message) || err) + '). Many sites do not allow this: download the file first and choose it with "Choose a file".');
+      nrOwnRender(); $('nrOwnUrl').value = url;
+    }
+  });
+  $('nrOwnFile').addEventListener('change', async (e) => {
+    const f = e.target.files && e.target.files[0]; e.target.value = '';
+    if (!f) return;
+    try{ nrOwnSetDraft(await f.text(), f.name); }
+    catch(err){ nrOwn.err = nrT('Het bestand kon niet gelezen worden.', 'The file could not be read.'); nrOwn.step = 'pick'; nrOwnRender(); }
+  });
 }
 
 // ===== Ronde 187: evenementen vandaag (Wattedoen.be, enkel België) =====
@@ -44260,7 +44597,7 @@ function nrRainFrom(samples, ways){
   return { pct: Math.round(paved / known * 100), n: known };
 }
 async function nrTrackPoints(c){
-  if (c.kind === 'gpx'){ const r = await fetch('gpx/' + c.file, { cache:'no-store' }); if (!r.ok) throw new Error('http ' + r.status); return parseGPX(await r.text()); }
+  if (c.kind === 'gpx') return parseGPX(await nrGpxText(c));
   if (c.kind === 'osm'){ const g = (await osmWalkEnsureGeometry([c.osmId]))[0]; return g && g.chains && g.chains.length ? osmWalkJoinChains(g.chains) : null; }
   return null;                                                                      // een link naar een website heeft geen spoor
 }
@@ -45533,7 +45870,7 @@ async function nrPhotosFor(c, track){
   if (res.status !== 'error') nrPhotoCachePut(key, res);
   return res;
 }
-function nrSourceLabel(c){ return c.kind === 'gpx' ? nrT('Jouw GPX-lijst', 'Your GPX list') : c.kind === 'link' ? (c.source || nrT('Link', 'Link')) : 'OpenStreetMap'; }
+function nrSourceLabel(c){ return c.own ? nrT('Door jou toegevoegd op dit toestel', 'Added by you on this device') : c.kind === 'gpx' ? nrT('Jouw GPX-lijst', 'Your GPX list') : c.kind === 'link' ? (c.source || nrT('Link', 'Link')) : 'OpenStreetMap'; }
 function nrCredit(it){
   const who = it.author || nrT('maker onbekend', 'author unknown');
   if (it.kind === 'own') return it.author ? it.author : '';
@@ -45833,9 +46170,7 @@ async function nrDetailGeometry(c){
   if (nrState.geo[c.key]) return nrState.geo[c.key];
   let g = null;
   if (c.kind === 'gpx'){
-    const r = await fetch('gpx/' + c.file, { cache:'no-store' });
-    if (!r.ok) throw new Error('http ' + r.status);
-    const pts = parseGPX(await r.text());
+    const pts = parseGPX(await nrGpxText(c));
     g = { pts, km: c.km > 0 ? c.km : trackDistanceKm(pts), ele: computeGpxElevationStats(pts) };
   } else if (c.kind === 'osm'){
     const geom = (await osmWalkEnsureGeometry([c.osmId]))[0];
@@ -45882,7 +46217,7 @@ function nrOpenRoute(c){
     const m = c.mode === 'fiets' || c.mode === 'wandel' ? c.mode : (nrState.mode === 'fiets' ? 'fiets' : 'wandel');
     if (appMode !== m) openBikeSetupScreen(m);
   }
-  if (c.kind === 'gpx') loadBundledGpxRoute(c.file);
+  if (c.kind === 'gpx') (c.own ? loadOwnGpxRoute(c.ownId) : loadBundledGpxRoute(c.file));
   else if (c.kind === 'link') openExternalGpxLink(c.url);
   else osmWalkLoadIntoApp(c.osmId, c.name);
 }
@@ -45961,7 +46296,8 @@ async function nrOnModeOpened(mode){
       return;
     }
     if (!res.rows.length){                                     // echt niets in de buurt: dit telt als getoond voor vandaag
-      nrSetLoad({ osm:'done' }, { text: nrT('Geen routes gevonden in de buurt.', 'No routes found nearby.'), detail: nrStaleNote(stale), retry:false });
+      nrState.emptyLL = userLL;                                // Ronde 189: ook zonder routes kun je een eigen GPX toevoegen
+      nrSetLoad({ osm:'done' }, { text: nrT('Geen routes gevonden in de buurt.', 'No routes found nearby.'), detail: nrStaleNote(stale), retry:false, own:true });
       if (!stale) nrMarkShown(mode);
       return;
     }
