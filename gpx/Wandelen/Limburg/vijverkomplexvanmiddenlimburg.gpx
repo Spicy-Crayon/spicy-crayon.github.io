@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<gpx
+ version="1.0"
+ creator="OziExplorer Version 3962a - http://www.oziexplorer.com"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns="http://www.topografix.com/GPX/1/0"
+ xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
+<time>2008-09-24T08:08:53Z</time>
+<bounds minlat="50.965082" minlon="5.270256" maxlat="51.000999" maxlon="5.338399"/>
+<wpt lat="50.9914834" lon="5.2723747">
+ <ele>0.000000</ele>
+ <time>2008-09-02T12:30:59.097Z</time>
+ <name>START</name>
+ <cmt>Start Vijverkomplex van Midden Limburg</cmt>
+ <desc>Start Vijverkomplex van Midden Limburg</desc>
+</wpt>
+<trk>
+ <name>w-belgie-vijverkomplex-van-midden-limburg</name>
+ <desc>Vijverkomplex van midden Limburg</desc>
+<trkseg>
+<trkpt lat="50.9914828" lon="5.2724501">
+<ele>50.781620</ele>
+<time>2007-12-31T22:00:01.000Z</time>
+</trkpt>
+<trkpt lat="50.9920644" lon="5.2711043">
+<ele>63.707623</ele>
+<time>2007-12-31T22:00:02.000Z</time>
+</trkpt>
+<trkpt lat="50.9929286" lon="5.2701408">
+<ele>63.213551</ele>
+<time>2007-12-31T22:00:03.000Z</time>
+</trkpt>
+<trkpt lat="50.9934068" lon="5.2698485">
+<ele>55.612869</ele>
+<time>2007-12-31T22:00:04.000Z</time>
+</trkpt>
+<trkpt lat="50.9940244" lon="5.2700111">
+<ele>47.923008</ele>
+<time>2007-12-31T22:00:05.000Z</time>
+</trkpt>
+<trkpt lat="50.9947371" lon="5.2701757">
+<ele>42.222359</ele>
+<time>2007-12-31T22:00:06.000Z</time>
+</trkpt>
+<trkpt lat="50.9950552" lon="5.2721421">
+<ele>42.779934</ele>
+<time>2007-12-31T22:00:07.000Z</time>
+</trkpt>
+<trkpt lat="50.9957458" lon="5.2751714">
+<ele>33.827984</ele>
+<time>2007-12-31T22:00:08.000Z</time>
+</trkpt>
+<trkpt lat="50.9970899" lon="5.2798723">
+<ele>43.148869</ele>
+<time>2007-12-31T22:00:09.000Z</time>
+</trkpt>
+<trkpt lat="50.9975123" lon="5.2806345">
+<ele>40.259090</ele>
+<time>2007-12-31T22:00:10.000Z</time>
+</trkpt>
+<trkpt lat="50.9975082" lon="5.2811623">
+<ele>40.941872</ele>
+<time>2007-12-31T22:00:11.000Z</time>
+</trkpt>
+<trkpt lat="50.9990095" lon="5.2839815">
+<ele>46.576576</ele>
+<time>2007-12-31T22:00:12.000Z</time>
+</trkpt>
+<trkpt lat="50.9994766" lon="5.2851217">
+<ele>37.381241</ele>
+<time>2007-12-31T22:00:13.000Z</time>
+</trkpt>
+<trkpt lat="50.9997521" lon="5.2864090">
+<ele>36.000000</ele>
+<time>2007-12-31T22:00:14.000Z</time>
+</trkpt>
+<trkpt lat="50.9996511" lon="5.2871611">
+<ele>45.000004</ele>
+<time>2007-12-31T22:00:15.000Z</time>
+</trkpt>
+<trkpt lat="51.0001205" lon="5.2879997">
+<ele>43.999996</ele>
+<time>2007-12-31T22:00:16.000Z</time>
+</trkpt>
+<trkpt lat="50.9997262" lon="5.2897263">
+<ele>49.000000</ele>
+<time>2007-12-31T22:00:17.000Z</time>
+</trkpt>
+<trkpt lat="50.9996263" lon="5.2903276">
+<ele>49.000000</ele>
+<time>2007-12-31T22:00:18.000Z</time>
+</trkpt>
+<trkpt lat="50.9991944" lon="5.2907715">
+<ele>51.960655</ele>
+<time>2007-12-31T22:00:19.000Z</time>
+</trkpt>
+<trkpt lat="50.9980938" lon="5.2915038">
+<ele>48.843513</ele>
+<time>2007-12-31T22:00:20.000Z</time>
+</trkpt>
+<trkpt lat="50.9976191" lon="5.2913436">
+<ele>48.655956</ele>
+<time>2007-12-31T22:00:21.000Z</time>
+</trkpt>
+<trkpt lat="50.9972401" lon="5.2911100">
+<ele>49.365086</ele>
+<time>2007-12-31T22:00:22.000Z</time>
+</trkpt>
+<trkpt lat="50.9969575" lon="5.2907274">
+<ele>49.820850</ele>
+<time>2007-12-31T22:00:23.000Z</time>
+</trkpt>
+<trkpt lat="50.9966244" lon="5.2907208">
+<ele>49.439316</ele>
+<time>2007-12-31T22:00:24.000Z</time>
+</trkpt>
+<trkpt lat="50.9961913" lon="5.2913155">
+<ele>48.779297</ele>
+<time>2007-12-31T22:00:25.000Z</time>
+</trkpt>
+<trkpt lat="50.9957154" lon="5.2913061">
+<ele>46.097591</ele>
+<time>2007-12-31T22:00:26.000Z</time>
+</trkpt>
+<trkpt lat="50.9941829" lon="5.2924822">
+<ele>36.540085</ele>
+<time>2007-12-31T22:00:27.000Z</time>
+</trkpt>
+<trkpt lat="50.9941806" lon="5.2927837">
+<ele>36.755566</ele>
+<time>2007-12-31T22:00:28.000Z</time>
+</trkpt>
+<trkpt lat="50.9951925" lon="5.2972522">
+<ele>40.256554</ele>
+<time>2007-12-31T22:00:29.000Z</time>
+</trkpt>
+<trkpt lat="50.9955595" lon="5.2989936">
+<ele>40.818737</ele>
+<time>2007-12-31T22:00:30.000Z</time>
+</trkpt>
+<trkpt lat="50.9960253" lon="5.3002847">
+<ele>41.341686</ele>
+<time>2007-12-31T22:00:31.000Z</time>
+</trkpt>
+<trkpt lat="50.9967520" lon="5.3046724">
+<ele>37.439480</ele>
+<time>2007-12-31T22:00:32.000Z</time>
+</trkpt>
+<trkpt lat="50.9972592" lon="5.3067183">
+<ele>38.159863</ele>
+<time>2007-12-31T22:00:33.000Z</time>
+</trkpt>
+<trkpt lat="50.9987520" lon="5.3105185">
+<ele>44.897057</ele>
+<time>2007-12-31T22:00:34.000Z</time>
+</trkpt>
+<trkpt lat="51.0001477" lon="5.3145431">
+<ele>43.000000</ele>
+<time>2007-12-31T22:00:35.000Z</time>
+</trkpt>
+<trkpt lat="50.9996217" lon="5.3148341">
+<ele>43.999996</ele>
+<time>2007-12-31T22:00:36.000Z</time>
+</trkpt>
+<trkpt lat="50.9992452" lon="5.3142986">
+<ele>41.844742</ele>
+<time>2007-12-31T22:00:37.000Z</time>
+</trkpt>
+<trkpt lat="50.9982391" lon="5.3151077">
+<ele>41.859249</ele>
+<time>2007-12-31T22:00:38.000Z</time>
+</trkpt>
+<trkpt lat="50.9975434" lon="5.3128316">
+<ele>39.418816</ele>
+<time>2007-12-31T22:00:39.000Z</time>
+</trkpt>
+<trkpt lat="50.9962518" lon="5.3136349">
+<ele>37.136768</ele>
+<time>2007-12-31T22:00:40.000Z</time>
+</trkpt>
+<trkpt lat="50.9947964" lon="5.3111174">
+<ele>37.369831</ele>
+<time>2007-12-31T22:00:41.000Z</time>
+</trkpt>
+<trkpt lat="50.9932601" lon="5.3127451">
+<ele>42.117439</ele>
+<time>2007-12-31T22:00:42.000Z</time>
+</trkpt>
+<trkpt lat="50.9931625" lon="5.3130447">
+<ele>42.866947</ele>
+<time>2007-12-31T22:00:43.000Z</time>
+</trkpt>
+<trkpt lat="50.9928770" lon="5.3130389">
+<ele>42.407642</ele>
+<time>2007-12-31T22:00:44.000Z</time>
+</trkpt>
+<trkpt lat="50.9919209" lon="5.3135474">
+<ele>33.365738</ele>
+<time>2007-12-31T22:00:45.000Z</time>
+</trkpt>
+<trkpt lat="50.9911570" lon="5.3138335">
+<ele>36.080154</ele>
+<time>2007-12-31T22:00:46.000Z</time>
+</trkpt>
+<trkpt lat="50.9900817" lon="5.3113993">
+<ele>31.615873</ele>
+<time>2007-12-31T22:00:47.000Z</time>
+</trkpt>
+<trkpt lat="50.9898420" lon="5.3116207">
+<ele>32.550537</ele>
+<time>2007-12-31T22:00:48.000Z</time>
+</trkpt>
+<trkpt lat="50.9891196" lon="5.3126615">
+<ele>34.692905</ele>
+<time>2007-12-31T22:00:49.000Z</time>
+</trkpt>
+<trkpt lat="50.9888762" lon="5.3133351">
+<ele>36.219574</ele>
+<time>2007-12-31T22:00:50.000Z</time>
+</trkpt>
+<trkpt lat="50.9886785" lon="5.3142358">
+<ele>37.653404</ele>
+<time>2007-12-31T22:00:51.000Z</time>
+</trkpt>
+<trkpt lat="50.9888146" lon="5.3150678">
+<ele>35.990063</ele>
+<time>2007-12-31T22:00:52.000Z</time>
+</trkpt>
+<trkpt lat="50.9890496" lon="5.3154495">
+<ele>32.190441</ele>
+<time>2007-12-31T22:00:53.000Z</time>
+</trkpt>
+<trkpt lat="50.9895255" lon="5.3154591">
+<ele>28.774395</ele>
+<time>2007-12-31T22:00:54.000Z</time>
+</trkpt>
+<trkpt lat="50.9909044" lon="5.3156378">
+<ele>34.973316</ele>
+<time>2007-12-31T22:00:55.000Z</time>
+</trkpt>
+<trkpt lat="50.9909984" lon="5.3157905">
+<ele>34.554104</ele>
+<time>2007-12-31T22:00:56.000Z</time>
+</trkpt>
+<trkpt lat="50.9921894" lon="5.3156638">
+<ele>35.292255</ele>
+<time>2007-12-31T22:00:57.000Z</time>
+</trkpt>
+<trkpt lat="50.9923170" lon="5.3175512">
+<ele>34.166176</ele>
+<time>2007-12-31T22:00:58.000Z</time>
+</trkpt>
+<trkpt lat="50.9922676" lon="5.3177764">
+<ele>35.071030</ele>
+<time>2007-12-31T22:00:59.000Z</time>
+</trkpt>
+<trkpt lat="50.9933128" lon="5.3180238">
+<ele>37.603706</ele>
+<time>2007-12-31T22:01:00.000Z</time>
+</trkpt>
+<trkpt lat="50.9933030" lon="5.3192299">
+<ele>37.399872</ele>
+<time>2007-12-31T22:01:01.000Z</time>
+</trkpt>
+<trkpt lat="50.9938698" lon="5.3197692">
+<ele>36.867172</ele>
+<time>2007-12-31T22:01:02.000Z</time>
+</trkpt>
+<trkpt lat="50.9946276" lon="5.3202370">
+<ele>37.485924</ele>
+<time>2007-12-31T22:01:03.000Z</time>
+</trkpt>
+<trkpt lat="50.9951877" lon="5.3216056">
+<ele>37.591152</ele>
+<time>2007-12-31T22:01:04.000Z</time>
+</trkpt>
+<trkpt lat="50.9952317" lon="5.3220588">
+<ele>37.484768</ele>
+<time>2007-12-31T22:01:05.000Z</time>
+</trkpt>
+<trkpt lat="50.9947539" lon="5.3222753">
+<ele>35.173855</ele>
+<time>2007-12-31T22:01:06.000Z</time>
+</trkpt>
+<trkpt lat="50.9935012" lon="5.3241346">
+<ele>35.325195</ele>
+<time>2007-12-31T22:01:07.000Z</time>
+</trkpt>
+<trkpt lat="50.9927830" lon="5.3246477">
+<ele>36.007195</ele>
+<time>2007-12-31T22:01:08.000Z</time>
+</trkpt>
+<trkpt lat="50.9927385" lon="5.3242698">
+<ele>35.349083</ele>
+<time>2007-12-31T22:01:09.000Z</time>
+</trkpt>
+<trkpt lat="50.9885832" lon="5.3259942">
+<ele>35.938938</ele>
+<time>2007-12-31T22:01:10.000Z</time>
+</trkpt>
+<trkpt lat="50.9889461" lon="5.3281879">
+<ele>37.752319</ele>
+<time>2007-12-31T22:01:11.000Z</time>
+</trkpt>
+<trkpt lat="50.9880851" lon="5.3286979">
+<ele>38.749615</ele>
+<time>2007-12-31T22:01:12.000Z</time>
+</trkpt>
+<trkpt lat="50.9867550" lon="5.3283691">
+<ele>37.148151</ele>
+<time>2007-12-31T22:01:13.000Z</time>
+</trkpt>
+<trkpt lat="50.9866147" lon="5.3280647">
+<ele>36.806133</ele>
+<time>2007-12-31T22:01:14.000Z</time>
+</trkpt>
+<trkpt lat="50.9860918" lon="5.3279786">
+<ele>35.828968</ele>
+<time>2007-12-31T22:01:15.000Z</time>
+</trkpt>
+<trkpt lat="50.9862779" lon="5.3285101">
+<ele>37.271107</ele>
+<time>2007-12-31T22:01:16.000Z</time>
+</trkpt>
+<trkpt lat="50.9864621" lon="5.3292677">
+<ele>35.080246</ele>
+<time>2007-12-31T22:01:17.000Z</time>
+</trkpt>
+<trkpt lat="50.9862167" lon="5.3301673">
+<ele>34.568134</ele>
+<time>2007-12-31T22:01:18.000Z</time>
+</trkpt>
+<trkpt lat="50.9861580" lon="5.3315229">
+<ele>36.669235</ele>
+<time>2007-12-31T22:01:19.000Z</time>
+</trkpt>
+<trkpt lat="50.9850071" lon="5.3325546">
+<ele>35.619244</ele>
+<time>2007-12-31T22:01:20.000Z</time>
+</trkpt>
+<trkpt lat="50.9853792" lon="5.3336176">
+<ele>36.107403</ele>
+<time>2007-12-31T22:01:21.000Z</time>
+</trkpt>
+<trkpt lat="50.9854688" lon="5.3342979">
+<ele>35.285324</ele>
+<time>2007-12-31T22:01:22.000Z</time>
+</trkpt>
+<trkpt lat="50.9846078" lon="5.3348078">
+<ele>34.310726</ele>
+<time>2007-12-31T22:01:23.000Z</time>
+</trkpt>
+<trkpt lat="50.9840361" lon="5.3348714">
+<ele>36.056419</ele>
+<time>2007-12-31T22:01:24.000Z</time>
+</trkpt>
+<trkpt lat="50.9833673" lon="5.3351591">
+<ele>36.675415</ele>
+<time>2007-12-31T22:01:25.000Z</time>
+</trkpt>
+<trkpt lat="50.9826015" lon="5.3356709">
+<ele>37.180256</ele>
+<time>2007-12-31T22:01:26.000Z</time>
+</trkpt>
+<trkpt lat="50.9822288" lon="5.3346833">
+<ele>36.513287</ele>
+<time>2007-12-31T22:01:27.000Z</time>
+</trkpt>
+<trkpt lat="50.9819451" lon="5.3344513">
+<ele>35.647556</ele>
+<time>2007-12-31T22:01:28.000Z</time>
+</trkpt>
+<trkpt lat="50.9810372" lon="5.3348848">
+<ele>36.558414</ele>
+<time>2007-12-31T22:01:29.000Z</time>
+</trkpt>
+<trkpt lat="50.9809395" lon="5.3351843">
+<ele>36.748161</ele>
+<time>2007-12-31T22:01:30.000Z</time>
+</trkpt>
+<trkpt lat="50.9798436" lon="5.3353124">
+<ele>34.435677</ele>
+<time>2007-12-31T22:01:31.000Z</time>
+</trkpt>
+<trkpt lat="50.9796971" lon="5.3357616">
+<ele>34.854248</ele>
+<time>2007-12-31T22:01:32.000Z</time>
+</trkpt>
+<trkpt lat="50.9797304" lon="5.3374959">
+<ele>39.425095</ele>
+<time>2007-12-31T22:01:33.000Z</time>
+</trkpt>
+<trkpt lat="50.9777272" lon="5.3379820">
+<ele>39.757984</ele>
+<time>2007-12-31T22:01:34.000Z</time>
+</trkpt>
+<trkpt lat="50.9769758" lon="5.3309572">
+<ele>36.823124</ele>
+<time>2007-12-31T22:01:35.000Z</time>
+</trkpt>
+<trkpt lat="50.9769461" lon="5.3287709">
+<ele>36.812492</ele>
+<time>2007-12-31T22:01:36.000Z</time>
+</trkpt>
+<trkpt lat="50.9767650" lon="5.3276366">
+<ele>34.626823</ele>
+<time>2007-12-31T22:01:37.000Z</time>
+</trkpt>
+<trkpt lat="50.9764887" lon="5.3265005">
+<ele>33.913448</ele>
+<time>2007-12-31T22:01:38.000Z</time>
+</trkpt>
+<trkpt lat="50.9719675" lon="5.3146517">
+<ele>38.231155</ele>
+<time>2007-12-31T22:01:39.000Z</time>
+</trkpt>
+<trkpt lat="50.9670776" lon="5.3011402">
+<ele>34.972679</ele>
+<time>2007-12-31T22:01:40.000Z</time>
+</trkpt>
+<trkpt lat="50.9642353" lon="5.2933982">
+<ele>28.847387</ele>
+<time>2007-12-31T22:01:41.000Z</time>
+</trkpt>
+<trkpt lat="50.9680624" lon="5.2848835">
+<ele>27.553507</ele>
+<time>2007-12-31T22:01:42.000Z</time>
+</trkpt>
+<trkpt lat="50.9687252" lon="5.2853486">
+<ele>26.974022</ele>
+<time>2007-12-31T22:01:43.000Z</time>
+</trkpt>
+<trkpt lat="50.9730672" lon="5.2901060">
+<ele>30.573139</ele>
+<time>2007-12-31T22:01:44.000Z</time>
+</trkpt>
+<trkpt lat="50.9734420" lon="5.2908670">
+<ele>32.065689</ele>
+<time>2007-12-31T22:01:45.000Z</time>
+</trkpt>
+<trkpt lat="50.9738162" lon="5.2917034">
+<ele>32.300957</ele>
+<time>2007-12-31T22:01:46.000Z</time>
+</trkpt>
+<trkpt lat="50.9744420" lon="5.2908113">
+<ele>28.835287</ele>
+<time>2007-12-31T22:01:47.000Z</time>
+</trkpt>
+<trkpt lat="50.9751565" lon="5.2907501">
+<ele>30.564337</ele>
+<time>2007-12-31T22:01:48.000Z</time>
+</trkpt>
+<trkpt lat="50.9788770" lon="5.2897682">
+<ele>31.073341</ele>
+<time>2007-12-31T22:01:49.000Z</time>
+</trkpt>
+<trkpt lat="50.9786967" lon="5.2884833">
+<ele>31.548794</ele>
+<time>2007-12-31T22:01:50.000Z</time>
+</trkpt>
+<trkpt lat="50.9803190" lon="5.2879876">
+<ele>34.608273</ele>
+<time>2007-12-31T22:01:51.000Z</time>
+</trkpt>
+<trkpt lat="50.9835588" lon="5.2875989">
+<ele>34.991947</ele>
+<time>2007-12-31T22:01:52.000Z</time>
+</trkpt>
+<trkpt lat="50.9835559" lon="5.2879758">
+<ele>35.542698</ele>
+<time>2007-12-31T22:01:53.000Z</time>
+</trkpt>
+<trkpt lat="50.9842228" lon="5.2879135">
+<ele>34.266518</ele>
+<time>2007-12-31T22:01:54.000Z</time>
+</trkpt>
+<trkpt lat="50.9851782" lon="5.2874800">
+<ele>30.196365</ele>
+<time>2007-12-31T22:01:55.000Z</time>
+</trkpt>
+<trkpt lat="50.9857540" lon="5.2868882">
+<ele>30.594553</ele>
+<time>2007-12-31T22:01:56.000Z</time>
+</trkpt>
+<trkpt lat="50.9869580" lon="5.2851026">
+<ele>30.101812</ele>
+<time>2007-12-31T22:01:57.000Z</time>
+</trkpt>
+<trkpt lat="50.9876372" lon="5.2834575">
+<ele>30.485146</ele>
+<time>2007-12-31T22:01:58.000Z</time>
+</trkpt>
+<trkpt lat="50.9877864" lon="5.2826311">
+<ele>29.351383</ele>
+<time>2007-12-31T22:01:59.000Z</time>
+</trkpt>
+<trkpt lat="50.9878721" lon="5.2777327">
+<ele>31.005632</ele>
+<time>2007-12-31T22:02:00.000Z</time>
+</trkpt>
+<trkpt lat="50.9882087" lon="5.2772870">
+<ele>31.952023</ele>
+<time>2007-12-31T22:02:01.000Z</time>
+</trkpt>
+<trkpt lat="50.9880242" lon="5.2765295">
+<ele>32.308514</ele>
+<time>2007-12-31T22:02:02.000Z</time>
+</trkpt>
+<trkpt lat="50.9881194" lon="5.2765314">
+<ele>32.542217</ele>
+<time>2007-12-31T22:02:03.000Z</time>
+</trkpt>
+<trkpt lat="50.9887822" lon="5.2769965">
+<ele>33.109119</ele>
+<time>2007-12-31T22:02:04.000Z</time>
+</trkpt>
+<trkpt lat="50.9894473" lon="5.2771602">
+<ele>33.307064</ele>
+<time>2007-12-31T22:02:05.000Z</time>
+</trkpt>
+<trkpt lat="50.9903051" lon="5.2770261">
+<ele>34.799652</ele>
+<time>2007-12-31T22:02:06.000Z</time>
+</trkpt>
+<trkpt lat="50.9906940" lon="5.2759782">
+<ele>36.792576</ele>
+<time>2007-12-31T22:02:07.000Z</time>
+</trkpt>
+<trkpt lat="50.9912843" lon="5.2735017">
+<ele>43.890110</ele>
+<time>2007-12-31T22:02:08.000Z</time>
+</trkpt>
+<trkpt lat="50.9912884" lon="5.2729741">
+<ele>46.521221</ele>
+<time>2007-12-31T22:02:09.000Z</time>
+</trkpt>
+</trkseg>
+</trk>
+</gpx>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<gpx
+ xmlns="http://www.topografix.com/GPX/1/1"
+ creator="OziExplorer Version 3955t - http://www.oziexplorer.com"
+ version="1.1"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+<metadata>
+ <time>2014-12-05T08:25:05Z</time>
+ <bounds minlat="51.299972" minlon="5.489522" maxlat="51.315032" maxlon="5.521002"/>
+</metadata>
+<wpt lat="51.2990854" lon="5.4890796">
+ <time>2014-11-27T14:25:06.365Z</time>
+ <name>Start</name>
+ <cmt>Start LaTrappe - De 7 Trappisten routes</cmt>
+ <desc>Start LaTrappe - De 7 Trappisten routes</desc>
+ <sym>Trail Head</sym>
+</wpt>
+<trk>
+ <name>w-belgie-de-7-trappistenroutes-la-trappe</name>
+ <desc>LaTrappe - De 7 Trappisten routes</desc>
+<trkseg>
+<trkpt lat="51.2991322" lon="5.4891567">
+<ele>32.972008</ele>
+<time>2013-12-31T23:00:01.000Z</time>
+</trkpt>
+<trkpt lat="51.3044578" lon="5.5046231">
+<ele>28.963026</ele>
+<time>2013-12-31T23:00:02.000Z</time>
+</trkpt>
+<trkpt lat="51.3048334" lon="5.5051639">
+<ele>26.752964</ele>
+<time>2013-12-31T23:00:03.000Z</time>
+</trkpt>
+<trkpt lat="51.3057777" lon="5.5059465">
+<ele>27.599445</ele>
+<time>2013-12-31T23:00:04.000Z</time>
+</trkpt>
+<trkpt lat="51.3069599" lon="5.5067351">
+<ele>26.250862</ele>
+<time>2013-12-31T23:00:05.000Z</time>
+</trkpt>
+<trkpt lat="51.3095980" lon="5.5095341">
+<ele>28.549429</ele>
+<time>2013-12-31T23:00:06.000Z</time>
+</trkpt>
+<trkpt lat="51.3104485" lon="5.5101627">
+<ele>32.556099</ele>
+<time>2013-12-31T23:00:07.000Z</time>
+</trkpt>
+<trkpt lat="51.3118247" lon="5.5105766">
+<ele>33.189053</ele>
+<time>2013-12-31T23:00:08.000Z</time>
+</trkpt>
+<trkpt lat="51.3111241" lon="5.5141281">
+<ele>27.833427</ele>
+<time>2013-12-31T23:00:09.000Z</time>
+</trkpt>
+<trkpt lat="51.3103364" lon="5.5168419">
+<ele>28.349113</ele>
+<time>2013-12-31T23:00:10.000Z</time>
+</trkpt>
+<trkpt lat="51.3113611" lon="5.5191456">
+<ele>26.608898</ele>
+<time>2013-12-31T23:00:11.000Z</time>
+</trkpt>
+<trkpt lat="51.3119246" lon="5.5199191">
+<ele>26.025156</ele>
+<time>2013-12-31T23:00:12.000Z</time>
+</trkpt>
+<trkpt lat="51.3130606" lon="5.5205551">
+<ele>31.879793</ele>
+<time>2013-12-31T23:00:13.000Z</time>
+</trkpt>
+<trkpt lat="51.3131355" lon="5.5177473">
+<ele>26.471674</ele>
+<time>2013-12-31T23:00:14.000Z</time>
+</trkpt>
+<trkpt lat="51.3134387" lon="5.5109965">
+<ele>37.118591</ele>
+<time>2013-12-31T23:00:15.000Z</time>
+</trkpt>
+<trkpt lat="51.3141435" lon="5.4970414">
+<ele>28.868969</ele>
+<time>2013-12-31T23:00:16.000Z</time>
+</trkpt>
+<trkpt lat="51.3130008" lon="5.4970892">
+<ele>31.609041</ele>
+<time>2013-12-31T23:00:17.000Z</time>
+</trkpt>
+<trkpt lat="51.3121466" lon="5.4968404">
+<ele>31.877323</ele>
+<time>2013-12-31T23:00:18.000Z</time>
+</trkpt>
+<trkpt lat="51.3115295" lon="5.4966733">
+<ele>29.616941</ele>
+<time>2013-12-31T23:00:19.000Z</time>
+</trkpt>
+<trkpt lat="51.3114993" lon="5.4948502">
+<ele>28.085117</ele>
+<time>2013-12-31T23:00:20.000Z</time>
+</trkpt>
+<trkpt lat="51.3072237" lon="5.4940618">
+<ele>26.630373</ele>
+<time>2013-12-31T23:00:21.000Z</time>
+</trkpt>
+<trkpt lat="51.3065597" lon="5.4938178">
+<ele>27.694357</ele>
+<time>2013-12-31T23:00:22.000Z</time>
+</trkpt>
+<trkpt lat="51.3065366" lon="5.4962468">
+<ele>35.155140</ele>
+<time>2013-12-31T23:00:23.000Z</time>
+</trkpt>
+<trkpt lat="51.3064277" lon="5.4976867">
+<ele>35.089798</ele>
+<time>2013-12-31T23:00:24.000Z</time>
+</trkpt>
+<trkpt lat="51.3061775" lon="5.4989713">
+<ele>31.494755</ele>
+<time>2013-12-31T23:00:25.000Z</time>
+</trkpt>
+<trkpt lat="51.3053226" lon="5.4987984">
+<ele>35.749336</ele>
+<time>2013-12-31T23:00:26.000Z</time>
+</trkpt>
+<trkpt lat="51.3048028" lon="5.4984060">
+<ele>34.680347</ele>
+<time>2013-12-31T23:00:27.000Z</time>
+</trkpt>
+<trkpt lat="51.3042384" lon="5.4977088">
+<ele>35.709705</ele>
+<time>2013-12-31T23:00:28.000Z</time>
+</trkpt>
+<trkpt lat="51.3036804" lon="5.4963285">
+<ele>29.950855</ele>
+<time>2013-12-31T23:00:29.000Z</time>
+</trkpt>
+<trkpt lat="51.3020505" lon="5.4975790">
+<ele>35.636425</ele>
+<time>2013-12-31T23:00:30.000Z</time>
+</trkpt>
+<trkpt lat="51.2992245" lon="5.4894626">
+<ele>32.783737</ele>
+<time>2013-12-31T23:00:31.000Z</time>
+</trkpt>
+</trkseg>
+</trk>
+</gpx>

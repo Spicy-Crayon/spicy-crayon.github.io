@@ -1,0 +1,1328 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" creator="MapSource 6.16.3" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+
+  <metadata>
+    <link href="http://www.garmin.com">
+      <text>Garmin International</text>
+    </link>
+    <time>2015-03-13T08:11:37Z</time>
+    <bounds maxlat="51.152464700862765" maxlon="2.726384494453669" minlat="51.091478308662772" minlon="2.597488760948181"/>
+  </metadata>
+
+  <wpt lat="51.13936822861433" lon="2.690383214503527">
+    <ele>3</ele>
+    <time>2014-10-03T15:41:27Z</time>
+    <name>Bunkers met ondergrondse gangen aan duinpad</name>
+    <cmt>Bunkers met ondergrondse gangen aan duinpad</cmt>
+    <desc>Bunkers met ondergrondse gangen aan duinpad</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.127538429573178" lon="2.684265431016684">
+    <ele>9</ele>
+    <time>2014-10-03T15:41:27Z</time>
+    <name>De Peerdevisser</name>
+    <cmt>De zeer moderne jeugdherberg ligt recht tegenover een mooi duinengebied en op circa 10 minuten wandelafstand van het zeer brede strand dat Oostduinkerke kenmerkt.   Folklore, musea en pretparken kunnen een mooie aanvulling zijn voor uw programma op minder zonnige dagen: o.a. de garnaalvissers te paard, de abdij Ter Duinen, het Visserijmuseum, het Delvaux-museum en uiteraard Plopsaland voor de kleinsten.  Deze jeugdherberg beschikt over 135 bedden in 39 kamers:   1 kamer van 1 bed - 12 kamers van 2 bedden- 23 kamers van 4 bedden - 3 familie kamers van 6 bedden   Toegankelijk voor mindervaliden   Inclusief ontbijt, lakens en taksen Elke kamer is voorzien van eigen sanitair   gratis parking voor auto en fietsen     Duinparklaan 41  B 8670 Oostduinkerke  Tel: +32-(0)-58 51 26 49  oostduinkerke@vjh.be   www.vjh.be</cmt>
+    <desc>De zeer moderne jeugdherberg ligt recht tegenover een mooi duinengebied en op circa 10 minuten wandelafstand van het zeer brede strand dat Oostduinkerke kenmerkt.   Folklore, musea en pretparken kunnen een mooie aanvulling zijn voor uw programma op minder zonnige dagen: o.a. de garnaalvissers te paard, de abdij Ter Duinen, het Visserijmuseum, het Delvaux-museum en uiteraard Plopsaland voor de kleinsten.  Deze jeugdherberg beschikt over 135 bedden in 39 kamers:   1 kamer van 1 bed - 12 kamers van 2 bedden- 23 kamers van 4 bedden - 3 familie kamers van 6 bedden   Toegankelijk voor mindervaliden   Inclusief ontbijt, lakens en taksen Elke kamer is voorzien van eigen sanitair   gratis parking voor auto en fietsen     Duinparklaan 41  B 8670 Oostduinkerke  Tel: +32-(0)-58 51 26 49  oostduinkerke@vjh.be   www.vjh.be</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.139781037345529" lon="2.691706800833345">
+    <ele>0</ele>
+    <time>2014-10-03T15:41:27Z</time>
+    <name>Duinenpad tussen bunkercomplex en Oostduinkerke</name>
+    <cmt>Duinenpad tussen bunkercomplex en Oostduinkerke</cmt>
+    <desc>Duinenpad tussen bunkercomplex en Oostduinkerke</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.118844635784626" lon="2.653909111395478">
+    <ele>4</ele>
+    <time>2014-10-03T15:41:27Z</time>
+    <name>Een kwis aan de Doornpanne</name>
+    <cmt>Een kwis aan de Doornpanne, op te lossen door de borden onderweg goed te lezen.</cmt>
+    <desc>Een kwis aan de Doornpanne, op te lossen door de borden onderweg goed te lezen.</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.14835262298584" lon="2.724223136901856">
+    <ele>8</ele>
+    <time>2014-09-29T13:23:11Z</time>
+    <name>Floreal Club</name>
+    <cmt>Floreal Club</cmt>
+    <desc>Floreal Club</desc>
+    <sym>Airport</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.133342897519469" lon="2.670579040423036">
+    <ele>4</ele>
+    <time>2014-10-03T15:41:27Z</time>
+    <name>Garnaalvisserij te paard</name>
+    <cmt>Wie kent de sympathieke paardenvisser niet, zoals hij al honderden keren door kunstschilders, beeldhouwers, fotografen en cineasten werd vereeuwigd? De paardenvissers, die hoog op hun stoere boerenpaarden zitten, dwingen nog steeds ieders bewondering af wanneer ze moeizaam door de golven ploegen. De garnaalvisserij wordt beoefend bij laagtij, gedurende 2 à 3 uren. De paardenvisser in gele oliejekker, hoge laarzen en met een zuidwester op het hoofd, zit op een houten zadel op zijn paard dat het zware garnaalnet achter zich aansleept.Af en toe komen paard en visser op het droge om het net te ledigen in de korven die aan weerszijden van het paard vastgehecht zijn.  Tijdens de maanden maart, april, mei, september, oktober en november trekken de paardenvissers naar zee ter hoogte van de Schipgatduinen (St. André) en ter hoogte van Groenendijk. Dan krijgt dit bijberoep de waarde terug van een eeuwenoude traditie.    Info  Dienst Toerisme  Zeelaan 303  B-8670 Koksijde  T +32 (0) 58 51 29 10</cmt>
+    <desc>Wie kent de sympathieke paardenvisser niet, zoals hij al honderden keren door kunstschilders, beeldhouwers, fotografen en cineasten werd vereeuwigd? De paardenvissers, die hoog op hun stoere boerenpaarden zitten, dwingen nog steeds ieders bewondering af wanneer ze moeizaam door de golven ploegen. De garnaalvisserij wordt beoefend bij laagtij, gedurende 2 à 3 uren. De paardenvisser in gele oliejekker, hoge laarzen en met een zuidwester op het hoofd, zit op een houten zadel op zijn paard dat het zware garnaalnet achter zich aansleept.Af en toe komen paard en visser op het droge om het net te ledigen in de korven die aan weerszijden van het paard vastgehecht zijn.  Tijdens de maanden maart, april, mei, september, oktober en november trekken de paardenvissers naar zee ter hoogte van de Schipgatduinen (St. André) en ter hoogte van Groenendijk. Dan krijgt dit bijberoep de waarde terug van een eeuwenoude traditie.    Info  Dienst Toerisme  Zeelaan 303  B-8670 Koksijde  T +32 (0) 58 51 29 10</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.093220822513103" lon="2.611694578081369">
+    <ele>6</ele>
+    <time>2014-09-25T16:55:13Z</time>
+    <name>Gemeentelijk zwembad</name>
+    <cmt>Het gemeentelijk zwembad is een gezellig familiebad waar zowel jong als oud zich kan uitleven. We beschikken over een 25 meter bad (28°) met springplank, een glijbaan (35m) en spuitkanon. In het kinderbad (30°) kunnen peuters en kleuters zich uitleven op het peuterglijbaantje. Er is ook een paddestoeldouche en draakspuitkop voorzien. In de relaxstoelen kan men eventjes tot rust komen.      Contactgegevens:  - Gemeentelijk zwembad  - Sportlaan 2, 8660 De Panne  - Tel: +32 58 42 18 20  - Fax: +32 58 41 29 74  - E-Mail: sport@depanne.be  - Web: &lt;a href="http://www.depanne.be" target="_blank"&gt;www.depanne.be&lt;/a&gt;    - Openingsuren    Tijdens weekdagen: van 14.00 tot 20.00 uur   Dinsdag-, donderdag-, en zaterdagvoormiddag: ook open van 9.00 - 12.00 uur  Zondag: van 09.00 tot 13.00 uur     Juli en augustus: Dagelijks: van 9.00 tot 21.00 uur     Krokus-, Paas-, Herfst- en Kerstvakantie   Maandag tot zaterdag: van 9.00 tot 12.00 uur en van 14.00 tot 20.00 uur  Zondag: van 9.00 tot 13.00 uur</cmt>
+    <desc>Het gemeentelijk zwembad is een gezellig familiebad waar zowel jong als oud zich kan uitleven. We beschikken over een 25 meter bad (28°) met springplank, een glijbaan (35m) en spuitkanon. In het kinderbad (30°) kunnen peuters en kleuters zich uitleven op het peuterglijbaantje. Er is ook een paddestoeldouche en draakspuitkop voorzien. In de relaxstoelen kan men eventjes tot rust komen.      Contactgegevens:  - Gemeentelijk zwembad  - Sportlaan 2, 8660 De Panne  - Tel: +32 58 42 18 20  - Fax: +32 58 41 29 74  - E-Mail: sport@depanne.be  - Web: &lt;a href="http://www.depanne.be" target="_blank"&gt;www.depanne.be&lt;/a&gt;    - Openingsuren    Tijdens weekdagen: van 14.00 tot 20.00 uur   Dinsdag-, donderdag-, en zaterdagvoormiddag: ook open van 9.00 - 12.00 uur  Zondag: van 09.00 tot 13.00 uur     Juli en augustus: Dagelijks: van 9.00 tot 21.00 uur     Krokus-, Paas-, Herfst- en Kerstvakantie   Maandag tot zaterdag: van 9.00 tot 12.00 uur en van 14.00 tot 20.00 uur  Zondag: van 9.00 tot 13.00 uur</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.115268664434552" lon="2.620641086250544">
+    <ele>6</ele>
+    <time>2014-09-25T17:06:34Z</time>
+    <name>Informatiepunt</name>
+    <cmt>Informatiepunt</cmt>
+    <desc>Informatiepunt</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.12968503497541" lon="2.697233995422721">
+    <ele>10.999999000000001</ele>
+    <time>2014-09-25T16:55:13Z</time>
+    <name>IWVA en Mariapark</name>
+    <cmt>Zo'n 26 hectare van Ter Yde is eigendom van de IWVA. De waterwinningsmaatschappij beschikt over een pompstation met reservoir voor distributie van drinkwater.    Een deel van de voormalige strandvlakte werd in de jaren 1970-1980 ingenomen door de wijk Mariapark, waar je een kort stukje door wandelt.</cmt>
+    <desc>Zo'n 26 hectare van Ter Yde is eigendom van de IWVA. De waterwinningsmaatschappij beschikt over een pompstation met reservoir voor distributie van drinkwater.    Een deel van de voormalige strandvlakte werd in de jaren 1970-1980 ingenomen door de wijk Mariapark, waar je een kort stukje door wandelt.</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.13346703350544" lon="2.692811032757163">
+    <ele>16</ele>
+    <time>2014-10-03T15:41:27Z</time>
+    <name>Jonge stuivende duinen</name>
+    <cmt>Hier komen we in de jonge stuivende duinen van de 19de en 20ste eeuw. Deze duinen zijn veel hoger dan de vorige en zijn begroeid met helmgras. De diepe uitgestoven pannen staan in de winter onder water.</cmt>
+    <desc>Hier komen we in de jonge stuivende duinen van de 19de en 20ste eeuw. Deze duinen zijn veel hoger dan de vorige en zijn begroeid met helmgras. De diepe uitgestoven pannen staan in de winter onder water.</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.112378416582942" lon="2.624354772269726">
+    <ele>10.999999000000001</ele>
+    <time>2014-09-25T17:06:34Z</time>
+    <name>Midwester</name>
+    <cmt>Te midden uitgestrekte zandstranden te Koksijde vindt u de Midwester: een uitstekende plek voor zeeklassen &amp; weekendgroepen. U geniet bij ons van een verblijf vlakbij de zee. Onze troeven zijn o.a. onze kleinschaligheid waardoor we u veel flexibiliteit kunnen bieden. Bovendien stopt de kusttram voor de deur, wat tal van mogelijkheden biedt voor excursies. Wij helpen u graag met het samenstellen van uw programma en kunnen u verschillende tips geven voor activiteiten in en rond Koksijde.    Faciliteiten: speelruimte/speeltuin, toegankelijk voor rolstoelgebruikers.    Contactgegevens:  - Midwester  - Tel: +32 58 51 92 22  - Fax: +32 58 52 17 41  - E-Mail: midwester@cjt.be  - Web: &lt;a href="http://www.midwester.be" target="_blank"&gt;www.midwester.be&lt;/a&gt;</cmt>
+    <desc>Te midden uitgestrekte zandstranden te Koksijde vindt u de Midwester: een uitstekende plek voor zeeklassen &amp; weekendgroepen. U geniet bij ons van een verblijf vlakbij de zee. Onze troeven zijn o.a. onze kleinschaligheid waardoor we u veel flexibiliteit kunnen bieden. Bovendien stopt de kusttram voor de deur, wat tal van mogelijkheden biedt voor excursies. Wij helpen u graag met het samenstellen van uw programma en kunnen u verschillende tips geven voor activiteiten in en rond Koksijde.    Faciliteiten: speelruimte/speeltuin, toegankelijk voor rolstoelgebruikers.    Contactgegevens:  - Midwester  - Tel: +32 58 51 92 22  - Fax: +32 58 52 17 41  - E-Mail: midwester@cjt.be  - Web: &lt;a href="http://www.midwester.be" target="_blank"&gt;www.midwester.be&lt;/a&gt;</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.129317907616496" lon="2.686586631461978">
+    <ele>10</ele>
+    <time>2014-10-03T15:41:27Z</time>
+    <name>Missimo B&amp;B</name>
+    <cmt>Missimo B&amp;B is een rustig en net gastenverblijf op wandelafstand van het Koksijdse strand. U logeert bij Marie-Luce Guissart, die u zorgzaam en hartelijk ontvangt. Uw tweepersoonskamer heeft een privédouche en wc. En op een zwoele zomeravond, na een heerlijke dag aan zee, geniet u op uw eigen terras van een lekker drankje.&lt;br /&gt;&lt;br /&gt;&lt;a target="_blank" href="http://www.tov.be/logies.aspx?productId=2453526"&gt;Klik hier&lt;/a&gt;</cmt>
+    <desc>Missimo B&amp;B is een rustig en net gastenverblijf op wandelafstand van het Koksijdse strand. U logeert bij Marie-Luce Guissart, die u zorgzaam en hartelijk ontvangt. Uw tweepersoonskamer heeft een privédouche en wc. En op een zwoele zomeravond, na een heerlijke dag aan zee, geniet u op uw eigen terras van een lekker drankje.&lt;br /&gt;&lt;br /&gt;&lt;a target="_blank" href="http://www.tov.be/logies.aspx?productId=2453526"&gt;Klik hier&lt;/a&gt;</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.122439717873931" lon="2.6602144818753">
+    <ele>4</ele>
+    <time>2014-09-25T16:55:13Z</time>
+    <name>MuseumCabour</name>
+    <cmt>Het Cabourmuseum is het geesteskind van de intercommunale Waterleidingsmaatschappij van Veurne-Ambacht en illustreert de waterwinning in de Westhoek. Terwijl u rondzwerft door de verschillende lokalen van dit sympathieke museum in Adinkerke, waant u zich in een andere tijd. Hier wordt het waterwinningsproces van A tot Z aan u uitgelegd en geïllustreerd aan de hand van oude instrumenten, materialen en documenten.      Contactgegevens:  - Museum Cabour  - Doornpannestraat 1, 8670 Koksijde  - Tel: +32 58 53 38 33  - Fax: +32 58 53 38 39  - E-Mail: info@iwva.be  - Web: &lt;a href="http://www.depanne.be of www.iwva.be" target="_blank"&gt;www.depanne.be of www.iwva.be&lt;/a&gt;    - Het Carbourmuseum is een gesloten domein en is enkel onder begeleiding van een gids te bezoeken.</cmt>
+    <desc>Het Cabourmuseum is het geesteskind van de intercommunale Waterleidingsmaatschappij van Veurne-Ambacht en illustreert de waterwinning in de Westhoek. Terwijl u rondzwerft door de verschillende lokalen van dit sympathieke museum in Adinkerke, waant u zich in een andere tijd. Hier wordt het waterwinningsproces van A tot Z aan u uitgelegd en geïllustreerd aan de hand van oude instrumenten, materialen en documenten.      Contactgegevens:  - Museum Cabour  - Doornpannestraat 1, 8670 Koksijde  - Tel: +32 58 53 38 33  - Fax: +32 58 53 38 39  - E-Mail: info@iwva.be  - Web: &lt;a href="http://www.depanne.be of www.iwva.be" target="_blank"&gt;www.depanne.be of www.iwva.be&lt;/a&gt;    - Het Carbourmuseum is een gesloten domein en is enkel onder begeleiding van een gids te bezoeken.</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.140388641506433" lon="2.693457026034594">
+    <ele>3</ele>
+    <time>2014-10-03T15:41:27Z</time>
+    <name>Natuurreservaat Ter Yde, verkeerspaal op knooppunt 73</name>
+    <cmt>Natuurreservaat Ter Yde verkeerspaal in het duinpad op knooppunt 73</cmt>
+    <desc>Natuurreservaat Ter Yde verkeerspaal in het duinpad op knooppunt 73</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.091478308662772" lon="2.599698901176453">
+    <ele>9</ele>
+    <time>2014-09-25T16:55:13Z</time>
+    <name>Natuurtuin</name>
+    <cmt>In de natuurtuin ontdek je 11 nagebootste duinbiotopen met elk hun typische flora. Je loopt langsheen met helm beplante zeereepduinen en paraboolduinen, je doorkruist duinstruweel en je verkent een natte duinpanne. De natuurtuin is dankzij het wandelpad in schelpenklei zeer goed toegankelijk. De vele infoborden geven u alvast een aantal leuke weetjes mee.</cmt>
+    <desc>In de natuurtuin ontdek je 11 nagebootste duinbiotopen met elk hun typische flora. Je loopt langsheen met helm beplante zeereepduinen en paraboolduinen, je doorkruist duinstruweel en je verkent een natte duinpanne. De natuurtuin is dankzij het wandelpad in schelpenklei zeer goed toegankelijk. De vele infoborden geven u alvast een aantal leuke weetjes mee.</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.102020479738712" lon="2.63398046605289">
+    <ele>10.999999000000001</ele>
+    <time>2014-09-25T17:06:34Z</time>
+    <name>Noordduinen</name>
+    <cmt>Gezinsvriendelijke camping gelegen temidden van het natuurgebied 'de Noordduinen'. De camping bevindt zich op loopafstand van zee en strand. Leuk tentenveld aanwezig.&lt;br /&gt;&lt;a target="_blank" href="http://www.tov.be/logies.aspx?productId=431557"&gt;Klik hier&lt;/a&gt;</cmt>
+    <desc>Gezinsvriendelijke camping gelegen temidden van het natuurgebied 'de Noordduinen'. De camping bevindt zich op loopafstand van zee en strand. Leuk tentenveld aanwezig.&lt;br /&gt;&lt;a target="_blank" href="http://www.tov.be/logies.aspx?productId=431557"&gt;Klik hier&lt;/a&gt;</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.091528935357928" lon="2.597488760948181">
+    <ele>12</ele>
+    <time>2014-09-25T16:55:13Z</time>
+    <name>Onthaalpoort De Nachtegaal</name>
+    <cmt>De Nachtegaal wil haar bezoekers, jong en oud, informatie verstrekken over de kustmilieus. In een permanente tentoonstelling kan u kennis maken met de natuurelementen van zee, strand en duinen. Enkele malen per jaar zijn er bijkomende tijdelijke tentoonstellingen. Er zijn diverse gratis (zoek)tochten voor families met kinderen en voor schoolgroepen worden talrijke educatieve pakketten aangeboden. Aan de infobalie kan je dan weer terecht voor heel wat folders, brochures en wandelplannen.  Het bezoekerscentrum is dan ook het ideale vertrek- en eindpunt voor een fikse wandeling in de rondom gelegen natuurgebieden. Uitblazen na uw wandeling kan in de cafetaria of op het (zonovergoten) terras. De Nachtegaal organiseert elk jaar ook terugkerende activiteiten en evenementen zoals geleide wandelingen, vormingen, workshops tijdens "week van de zee" en "week van het bos", de vakantiezoektocht (juni-september), het Natuurfestival (1e weekend van oktober),... en zo veel meer!</cmt>
+    <desc>De Nachtegaal wil haar bezoekers, jong en oud, informatie verstrekken over de kustmilieus. In een permanente tentoonstelling kan u kennis maken met de natuurelementen van zee, strand en duinen. Enkele malen per jaar zijn er bijkomende tijdelijke tentoonstellingen. Er zijn diverse gratis (zoek)tochten voor families met kinderen en voor schoolgroepen worden talrijke educatieve pakketten aangeboden. Aan de infobalie kan je dan weer terecht voor heel wat folders, brochures en wandelplannen.  Het bezoekerscentrum is dan ook het ideale vertrek- en eindpunt voor een fikse wandeling in de rondom gelegen natuurgebieden. Uitblazen na uw wandeling kan in de cafetaria of op het (zonovergoten) terras. De Nachtegaal organiseert elk jaar ook terugkerende activiteiten en evenementen zoals geleide wandelingen, vormingen, workshops tijdens "week van de zee" en "week van het bos", de vakantiezoektocht (juni-september), het Natuurfestival (1e weekend van oktober),... en zo veel meer!</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.103849997743964" lon="2.618979960680008">
+    <ele>10</ele>
+    <time>2014-09-25T16:55:13Z</time>
+    <name>Openluchtzwembad Oostduinkerke</name>
+    <cmt>Een openluchtzwembad op het strand, Oostduinkerke heeft het. Het bad is gevuld met - weliswaar verwarmd - zeewater. Uniek aan de Kust, misschien is dit al voldoende reden om er heen te trekken.    Extra informatie:  -Kindvriendelijk  -Vestiaire      Contactgegevens:  - Openluchtzwembad  - Strand, 8670 Oostduinkerke  - Tel: +32 58 51 22 08  - Fax: +32 58 52 08 77  - Web: &lt;a href="http://www.koksijde.be" target="_blank"&gt;www.koksijde.be&lt;/a&gt;</cmt>
+    <desc>Een openluchtzwembad op het strand, Oostduinkerke heeft het. Het bad is gevuld met - weliswaar verwarmd - zeewater. Uniek aan de Kust, misschien is dit al voldoende reden om er heen te trekken.    Extra informatie:  -Kindvriendelijk  -Vestiaire      Contactgegevens:  - Openluchtzwembad  - Strand, 8670 Oostduinkerke  - Tel: +32 58 51 22 08  - Fax: +32 58 52 08 77  - Web: &lt;a href="http://www.koksijde.be" target="_blank"&gt;www.koksijde.be&lt;/a&gt;</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.115763615816832" lon="2.657204540446401">
+    <ele>5</ele>
+    <time>2014-09-25T16:55:13Z</time>
+    <name>Panorama zuidelijke Doornpanne met infiltratievijvers voor drinkwaterwinning</name>
+    <cmt>Panorama zuidelijke Doornpanne met infiltratievijvers voor waterwinning; aan de horizon rechts de Hoge Blekker (33m, hoogste duin aan de kust)</cmt>
+    <desc>Panorama zuidelijke Doornpanne met infiltratievijvers voor waterwinning; aan de horizon rechts de Hoge Blekker (33m, hoogste duin aan de kust)</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.117577040567994" lon="2.674440164119005">
+    <ele>4</ele>
+    <time>2014-09-25T16:55:13Z</time>
+    <name>Residentie Rivella</name>
+    <cmt>Boven het volkse café Leopold logeert u in een eenvoudig en net gastenverblijf met drie tweepersoonskamers. U komt en gaat in alle vrijheid: u hebt een eigen ingang vanaf de straat. Uw badkamer met douche en wc vindt u op de gang. U parkeert uw fietsen of moto in een afgesloten berging. In café Leopold is de sfeer ongedwongen en ontspannen: uw gastvrouw Nadine serveert u het heerlijke, uitgebreide ontbijt - wanneer u dat wilt.&lt;br /&gt;&lt;a target="_blank" href="http://www.tov.be/logies.aspx?productId=2687393"&gt;Klik hier&lt;/a&gt;</cmt>
+    <desc>Boven het volkse café Leopold logeert u in een eenvoudig en net gastenverblijf met drie tweepersoonskamers. U komt en gaat in alle vrijheid: u hebt een eigen ingang vanaf de straat. Uw badkamer met douche en wc vindt u op de gang. U parkeert uw fietsen of moto in een afgesloten berging. In café Leopold is de sfeer ongedwongen en ontspannen: uw gastvrouw Nadine serveert u het heerlijke, uitgebreide ontbijt - wanneer u dat wilt.&lt;br /&gt;&lt;a target="_blank" href="http://www.tov.be/logies.aspx?productId=2687393"&gt;Klik hier&lt;/a&gt;</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.136379661038518" lon="2.704670168459415">
+    <ele>10.999999000000001</ele>
+    <time>2014-09-25T16:55:13Z</time>
+    <name>Rustbank</name>
+    <cmt>Rustbank</cmt>
+    <desc>Rustbank</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.134615689516068" lon="2.679188009351492">
+    <ele>10.999999000000001</ele>
+    <time>2014-10-03T15:41:27Z</time>
+    <name>Sand Yacht Club Oostduinkerke</name>
+    <cmt>Faciliteiten in deze strandclub: ruime sportinfrastructuur met groot botenpark, kleedkamers, sanitair, werkplaats opberggarage.  Sporten: zeil-initiatie en vervolmaking (juli/augustus) en zeilwagenrijden (winterperiode)    Extra informatie:  -Kindvriendelijk  -Geschikt voor jongeren tussen de 12 en 16 jaar      Contactgegevens:  - Sand Yacht Club Oostduinkerke  - Alfred Devoslaan 50, 8670 Oostduinkerke  - Tel: +32 58 51 36 74  - Fax: +32 58 52 03 13  - GSM: +32 486 96 33 13  - E-Mail: info@sycod.be  - Web: &lt;a href="http://www.sycod.be" target="_blank"&gt;www.sycod.be&lt;/a&gt;</cmt>
+    <desc>Faciliteiten in deze strandclub: ruime sportinfrastructuur met groot botenpark, kleedkamers, sanitair, werkplaats opberggarage.  Sporten: zeil-initiatie en vervolmaking (juli/augustus) en zeilwagenrijden (winterperiode)    Extra informatie:  -Kindvriendelijk  -Geschikt voor jongeren tussen de 12 en 16 jaar      Contactgegevens:  - Sand Yacht Club Oostduinkerke  - Alfred Devoslaan 50, 8670 Oostduinkerke  - Tel: +32 58 51 36 74  - Fax: +32 58 52 03 13  - GSM: +32 486 96 33 13  - E-Mail: info@sycod.be  - Web: &lt;a href="http://www.sycod.be" target="_blank"&gt;www.sycod.be&lt;/a&gt;</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.131823929026723" lon="2.670331103727222">
+    <ele>10</ele>
+    <time>2014-10-03T15:41:27Z</time>
+    <name>Savagan</name>
+    <cmt>A look you 'II like! Uw unieke stijl, perfect passend bij de specifieke structuur van uw haar, uw levensstijl en uw persoonlijkheid . Al onze stylisten zijn met de jongste kapseltrends en kniptechnieken,want trends zijn onze passie en techniek is ons codewoord.      Contactgegevens:  - Savagan  - Albert I laan 49, 8670 Koksijde  - Tel: +32 58 51 22 09  - E-Mail: savagan.oostduinkerke@gmail.com  - Web: &lt;a href="http://www.savagan.com" target="_blank"&gt;www.savagan.com&lt;/a&gt;    - Open op afspraak- Ouvert sur rendez-vous - Offen nach rendez-vous    Vrijdag tot - Vendredi jusqu'à - Freitag bis: 19:30    Zaterdag open vanaf - Samedi ouvert de - Samstag offen von: 08:15</cmt>
+    <desc>A look you 'II like! Uw unieke stijl, perfect passend bij de specifieke structuur van uw haar, uw levensstijl en uw persoonlijkheid . Al onze stylisten zijn met de jongste kapseltrends en kniptechnieken,want trends zijn onze passie en techniek is ons codewoord.      Contactgegevens:  - Savagan  - Albert I laan 49, 8670 Koksijde  - Tel: +32 58 51 22 09  - E-Mail: savagan.oostduinkerke@gmail.com  - Web: &lt;a href="http://www.savagan.com" target="_blank"&gt;www.savagan.com&lt;/a&gt;    - Open op afspraak- Ouvert sur rendez-vous - Offen nach rendez-vous    Vrijdag tot - Vendredi jusqu'à - Freitag bis: 19:30    Zaterdag open vanaf - Samedi ouvert de - Samstag offen von: 08:15</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.125821061432362" lon="2.65611388720572">
+    <ele>8</ele>
+    <time>2014-10-03T15:41:27Z</time>
+    <name>Schipgatduinen richting zuidelijkste huis</name>
+    <cmt>Schipgatduinen richting zuidelijkste huis</cmt>
+    <desc>Schipgatduinen richting zuidelijkste huis</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.103849997743964" lon="2.618979960680008">
+    <ele>10</ele>
+    <time>2014-09-25T16:55:13Z</time>
+    <name>Sint-Idesbalduskerk</name>
+    <cmt>De Sint-Idesbalduskerk in Koksijde-Sint-Idesbald (Strandlaan) was oorspronkelijk een kloosterkerk, in gebruik genomen in 1935 en parochiekerk vanaf 1967.  Architect Albert Lust inspireerde zich op de villastijl die in die periode opgang maakte in de groeiende badplaats. Het glasraam van het koor toont een achtergrond van een duinen- en zeelandschap: O.L.Vrouw als Ster der Zee, vereerd door de apostel Petrus, met een vis en abt Idesbald, met een schepje. Links staan de schilden van Idesbaldus en Vlaanderen en rechts het voormalige schild van Koksijde en van de abdij en nu het gemeenteschild.      Contactgegevens:  - Sint-Idesbalduskerk  - Strandlaan, 8670 Koksijde  - Tel: +32 58 52 23 49</cmt>
+    <desc>De Sint-Idesbalduskerk in Koksijde-Sint-Idesbald (Strandlaan) was oorspronkelijk een kloosterkerk, in gebruik genomen in 1935 en parochiekerk vanaf 1967.  Architect Albert Lust inspireerde zich op de villastijl die in die periode opgang maakte in de groeiende badplaats. Het glasraam van het koor toont een achtergrond van een duinen- en zeelandschap: O.L.Vrouw als Ster der Zee, vereerd door de apostel Petrus, met een vis en abt Idesbald, met een schepje. Links staan de schilden van Idesbaldus en Vlaanderen en rechts het voormalige schild van Koksijde en van de abdij en nu het gemeenteschild.      Contactgegevens:  - Sint-Idesbalduskerk  - Strandlaan, 8670 Koksijde  - Tel: +32 58 52 23 49</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.124109979718924" lon="2.676922967657447">
+    <ele>8</ele>
+    <time>2014-10-03T15:41:27Z</time>
+    <name>Sint-Niklaaskerk Oostduinkerke</name>
+    <cmt>Moderne kerk (1952-1955), Leopold II-laan, gebouwd door de Brusselse architect Jean Gilson (°1909- 1988). Het Christusbeeld aan de voorzijde van de toren (38 m) meet 13,50 m en weegt 4 ton, ontworpen door de beeldhouwer Jarnost Gause.    Extra informatie:  -Toegankelijk voor mindervaliden      Contactgegevens:  - Sint-Niklaaskerk  - Leopold II-laan, 8670 Oostduinkerke  - Tel: +32 58 51 23 33  - E-Mail: hans.devos@gmail.com  - Web: &lt;a href="http://www.sint-niklaasparochieoostduinkerke.tk" target="_blank"&gt;www.sint-niklaasparochieoostduinkerke.tk&lt;/a&gt;    - Erediensten vinden plaats op  Zaterdag om 18.00 uur, zondag om 10.00 uur  In de Mariakapel vindt de eredienst plaats op zondag om 10.30 en 11.30 uur</cmt>
+    <desc>Moderne kerk (1952-1955), Leopold II-laan, gebouwd door de Brusselse architect Jean Gilson (°1909- 1988). Het Christusbeeld aan de voorzijde van de toren (38 m) meet 13,50 m en weegt 4 ton, ontworpen door de beeldhouwer Jarnost Gause.    Extra informatie:  -Toegankelijk voor mindervaliden      Contactgegevens:  - Sint-Niklaaskerk  - Leopold II-laan, 8670 Oostduinkerke  - Tel: +32 58 51 23 33  - E-Mail: hans.devos@gmail.com  - Web: &lt;a href="http://www.sint-niklaasparochieoostduinkerke.tk" target="_blank"&gt;www.sint-niklaasparochieoostduinkerke.tk&lt;/a&gt;    - Erediensten vinden plaats op  Zaterdag om 18.00 uur, zondag om 10.00 uur  In de Mariakapel vindt de eredienst plaats op zondag om 10.30 en 11.30 uur</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.112210107967257" lon="2.623565113171935">
+    <ele>10.999999000000001</ele>
+    <time>2014-09-25T17:06:34Z</time>
+    <name>Soll Cress</name>
+    <cmt>Slechts op 150 m van strand en duinen. Verzorgd restaurant met menus of à la carte. Gezellige bar en terras. Seminaries mogelijk. Gratis thermisch binnenzwembad, ook kuurmogelijkheden. Verzorgde kruidentuin met medicinale planten. Infraroodcabine.NIEUW 1 wellnesskamer met eigen sauna, infrarood en ruim terras, en 1 cocoonkamer met kitchenette en zonneterras.    Fietsvriendelijk label    Faciliteiten: televisie, kluis op kamer, terras/balkon, telefoon, kinderbed beschikbaar, restaurant, bar, lift, internet, bancontact, visa, master card, korting voor kinderen, zwemgelegenheid, sauna, jacuzzi, fitness, specifieke wellness (Aquafitocenter met massages, pakkingen, infrarood, babbelbaden, .), eigen tuin.    Contactgegevens:  - Soll Cress  - Koninklijke Baan 225, 8670 Koksijde  - Tel: +32 58 51 23 32  - Fax: +32 58 51 91 32  - E-Mail: hotel@sollcress.be  - Web: &lt;a href="http://www.sollcress.be" target="_blank"&gt;www.sollcress.be&lt;/a&gt;    Richtprijzen:  - persoon/nacht (2 personen) + ontbijt: 45-55 euro  - persoon/nacht (2 personen) + half pension: 65-75 euro  - persoon/nacht (single) + ontbijt: 60-75 euro  - persoon/nacht (single) + half pension: 95-65 euro</cmt>
+    <desc>Slechts op 150 m van strand en duinen. Verzorgd restaurant met menus of à la carte. Gezellige bar en terras. Seminaries mogelijk. Gratis thermisch binnenzwembad, ook kuurmogelijkheden. Verzorgde kruidentuin met medicinale planten. Infraroodcabine.NIEUW 1 wellnesskamer met eigen sauna, infrarood en ruim terras, en 1 cocoonkamer met kitchenette en zonneterras.    Fietsvriendelijk label    Faciliteiten: televisie, kluis op kamer, terras/balkon, telefoon, kinderbed beschikbaar, restaurant, bar, lift, internet, bancontact, visa, master card, korting voor kinderen, zwemgelegenheid, sauna, jacuzzi, fitness, specifieke wellness (Aquafitocenter met massages, pakkingen, infrarood, babbelbaden, .), eigen tuin.    Contactgegevens:  - Soll Cress  - Koninklijke Baan 225, 8670 Koksijde  - Tel: +32 58 51 23 32  - Fax: +32 58 51 91 32  - E-Mail: hotel@sollcress.be  - Web: &lt;a href="http://www.sollcress.be" target="_blank"&gt;www.sollcress.be&lt;/a&gt;    Richtprijzen:  - persoon/nacht (2 personen) + ontbijt: 45-55 euro  - persoon/nacht (2 personen) + half pension: 65-75 euro  - persoon/nacht (single) + ontbijt: 60-75 euro  - persoon/nacht (single) + half pension: 95-65 euro</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.096971221268177" lon="2.615989968180656">
+    <ele>10</ele>
+    <time>2014-09-25T16:55:13Z</time>
+    <name>Speelbos</name>
+    <cmt>Gebied: De duinen en bossen van De Panne  Eigenaar: Vlaams Gewest  Toegang: 1 jan - 31 dec</cmt>
+    <desc>Gebied: De duinen en bossen van De Panne  Eigenaar: Vlaams Gewest  Toegang: 1 jan - 31 dec</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.150419935584068" lon="2.726384494453669">
+    <time>2015-03-06T10:37:20Z</time>
+    <name>Start</name>
+    <cmt>Start Nieuwpoort van Floreal tot Floreal</cmt>
+    <desc>Start Nieuwpoort van Floreal tot Floreal</desc>
+    <sym>Trail Head</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.111141666769981" lon="2.627991093322635">
+    <ele>10</ele>
+    <time>2014-09-25T16:55:13Z</time>
+    <name>Studio Koksijde</name>
+    <cmt>In Cinema Koksijde kan je elke dag terecht voor filmvertoningen om 20.00 en om 22.15 uur. Tijdens weekends, vakanties en op woensdag heb je al een eerste voorstelling om 14.00 uur.    Extra informatie:  -Kindvriendelijk  -Geschikt voor jongeren tussen de 12 en 16 jaar      Contactgegevens:  - Cinema Koksijde  - Ter Duinenlaan 51, 8670 Koksijde  - Tel: +32 58 51 47 00  - Web: &lt;a href="http://www.cinemakoksijde.be" target="_blank"&gt;www.cinemakoksijde.be&lt;/a&gt;    - Prijs  Volwassenen: € 7,00  60+: € 6,00  Kinderen: € 6,00    toegangsprijs: 7 euro</cmt>
+    <desc>In Cinema Koksijde kan je elke dag terecht voor filmvertoningen om 20.00 en om 22.15 uur. Tijdens weekends, vakanties en op woensdag heb je al een eerste voorstelling om 14.00 uur.    Extra informatie:  -Kindvriendelijk  -Geschikt voor jongeren tussen de 12 en 16 jaar      Contactgegevens:  - Cinema Koksijde  - Ter Duinenlaan 51, 8670 Koksijde  - Tel: +32 58 51 47 00  - Web: &lt;a href="http://www.cinemakoksijde.be" target="_blank"&gt;www.cinemakoksijde.be&lt;/a&gt;    - Prijs  Volwassenen: € 7,00  60+: € 6,00  Kinderen: € 6,00    toegangsprijs: 7 euro</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.135540967807174" lon="2.699312036857009">
+    <ele>10.999999000000001</ele>
+    <time>2014-10-03T15:41:27Z</time>
+    <name>Stuivend duin met jonge duinpanne</name>
+    <cmt>Je wandelt nu door een actief stuivend gebied en achter de afsluiting is er nog een jonge duinpanne. Het droge zand stuift geleidelijk weg onder invloed van noordwestenwinden tot het niveau waar de zandkorrels door het grondwater worden vastgehouden. In natte winters komt het grondwater tot aan de oppervlakte. Om verruiging tegen te gaan en om de soortenrijkdom te behouden wordt deze panne jaarlijks gemaaid.</cmt>
+    <desc>Je wandelt nu door een actief stuivend gebied en achter de afsluiting is er nog een jonge duinpanne. Het droge zand stuift geleidelijk weg onder invloed van noordwestenwinden tot het niveau waar de zandkorrels door het grondwater worden vastgehouden. In natte winters komt het grondwater tot aan de oppervlakte. Om verruiging tegen te gaan en om de soortenrijkdom te behouden wordt deze panne jaarlijks gemaaid.</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.118096970021725" lon="2.680953238159418">
+    <ele>4</ele>
+    <time>2014-09-25T16:55:13Z</time>
+    <name>Villa Elsa</name>
+    <cmt>Eén van de meest karaktervolle rijhuisjes, daterend van het begin van de vorige eeuw, werd heel recent gerenoveerd en omgebouwd tot gastenverblijf.  Ontwerp en inrichting zijn van de hand van de gastvrouw zelf, tevens decoratrice.  De drie charmekamers ingericht met bloemenbehang, fluweel, kroonluchters en brocantemeubels, ademen de sfeer van het Parijse boudoir anno 1920: speels, zinnenprikkelend, ietwat ondeugend.    Villa Elsa bevindt zich in het dorp van Oostduinkerke,1,500 m van zee.    Faciliteiten: fietsvriendelijke uitbating, televisie, terras/balkon, kinderbed beschikbaar, bar, internet, neerhofdieren.    Contactgegevens:  - Villa Elsa  - Leopold II Laan 56, 8670 Oostduinkerke  - Tel: +32 58 52 16 65  - GSM: +32 476 40 91 62  - E-Mail: welcome@villaelsa.be  - Web: &lt;a href="http://www.villaelsa.be" target="_blank"&gt;www.villaelsa.be&lt;/a&gt;    Richtprijzen:  - persoon/nacht (2 personen) + ontbijt: 42-52 euro  - persoon/nacht (single) + ontbijt: 70-80 euro</cmt>
+    <desc>Eén van de meest karaktervolle rijhuisjes, daterend van het begin van de vorige eeuw, werd heel recent gerenoveerd en omgebouwd tot gastenverblijf.  Ontwerp en inrichting zijn van de hand van de gastvrouw zelf, tevens decoratrice.  De drie charmekamers ingericht met bloemenbehang, fluweel, kroonluchters en brocantemeubels, ademen de sfeer van het Parijse boudoir anno 1920: speels, zinnenprikkelend, ietwat ondeugend.    Villa Elsa bevindt zich in het dorp van Oostduinkerke,1,500 m van zee.    Faciliteiten: fietsvriendelijke uitbating, televisie, terras/balkon, kinderbed beschikbaar, bar, internet, neerhofdieren.    Contactgegevens:  - Villa Elsa  - Leopold II Laan 56, 8670 Oostduinkerke  - Tel: +32 58 52 16 65  - GSM: +32 476 40 91 62  - E-Mail: welcome@villaelsa.be  - Web: &lt;a href="http://www.villaelsa.be" target="_blank"&gt;www.villaelsa.be&lt;/a&gt;    Richtprijzen:  - persoon/nacht (2 personen) + ontbijt: 42-52 euro  - persoon/nacht (single) + ontbijt: 70-80 euro</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.113329427316785" lon="2.636277275159955">
+    <ele>6</ele>
+    <time>2014-09-25T17:06:34Z</time>
+    <name>Villa Monique</name>
+    <cmt>Verblijft u in Villa Monique? Dan geniet u van verfijnde gastvrijheid. Uw gastvrouw bakt voor u elke morgen in haar eigen bakkerij de beste broodjes en croissantjes. ‘s Zomers geniet u van het heerlijke ontbijt op het sfeervolle ontbijtterras. Alle kamers hebben kabel-tv, kluis en minibar. U kiest een logement met een eigen badkamer of eentje met een gedeelde douche en wc naast de kamer.&lt;br /&gt;&lt;a target="_blank" href="http://www.tov.be/logies.aspx?productId=679655"&gt;Klik hier&lt;/a&gt;</cmt>
+    <desc>Verblijft u in Villa Monique? Dan geniet u van verfijnde gastvrijheid. Uw gastvrouw bakt voor u elke morgen in haar eigen bakkerij de beste broodjes en croissantjes. ‘s Zomers geniet u van het heerlijke ontbijt op het sfeervolle ontbijtterras. Alle kamers hebben kabel-tv, kluis en minibar. U kiest een logement met een eigen badkamer of eentje met een gedeelde douche en wc naast de kamer.&lt;br /&gt;&lt;a target="_blank" href="http://www.tov.be/logies.aspx?productId=679655"&gt;Klik hier&lt;/a&gt;</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.111040329560637" lon="2.670852290466428">
+    <ele>3</ele>
+    <time>2014-10-03T15:41:27Z</time>
+    <name>Vissershuis</name>
+    <cmt>Gelegen in een rustige omgeving, op amper 1,5 km van zee. Vakantiewoningen (aangepast  voor personen met een handicap), studio's, kamers of slaapzalen. Sportterrein, kampeerterrein, restaurant en cafetaria. Speciale arrangementen voor groepen.&lt;br /&gt;&lt;a target="_blank" href="http://www.tov.be/logies.aspx?productId=436412"&gt;Klik hier&lt;/a&gt;</cmt>
+    <desc>Gelegen in een rustige omgeving, op amper 1,5 km van zee. Vakantiewoningen (aangepast  voor personen met een handicap), studio's, kamers of slaapzalen. Sportterrein, kampeerterrein, restaurant en cafetaria. Speciale arrangementen voor groepen.&lt;br /&gt;&lt;a target="_blank" href="http://www.tov.be/logies.aspx?productId=436412"&gt;Klik hier&lt;/a&gt;</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.09561393968761" lon="2.611987441778183">
+    <ele>8</ele>
+    <time>2014-09-25T16:55:13Z</time>
+    <name>Vlaams Natuurreservaat Houtsaegerduinen</name>
+    <cmt>De Houtsaegerduinen en het Kerkepannebos vormen een ingesloten natuurgebied tussen De Panne en St.-Idesbald (Koksijde). De Houtsaegerduinen (80 ha) hebben sinds 1989 het statuut van Vlaams Natuurreservaat. Het droge halfnatuurlijke duinlandschap met mos-, korstmos-, en buntgrasvegetaties behoort tot het best ontwikkelde van de hele kust. Ook de duinkalkgraslanden met zeldzame plantensoorten zijn van groot belang.</cmt>
+    <desc>De Houtsaegerduinen en het Kerkepannebos vormen een ingesloten natuurgebied tussen De Panne en St.-Idesbald (Koksijde). De Houtsaegerduinen (80 ha) hebben sinds 1989 het statuut van Vlaams Natuurreservaat. Het droge halfnatuurlijke duinlandschap met mos-, korstmos-, en buntgrasvegetaties behoort tot het best ontwikkelde van de hele kust. Ook de duinkalkgraslanden met zeldzame plantensoorten zijn van groot belang.</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.134261973202229" lon="2.702777031809092">
+    <ele>8</ele>
+    <time>2014-09-25T16:55:13Z</time>
+    <name>Voormalige woning IJslandvaarder</name>
+    <cmt>Deze verbouwde woning was in de 19de eeuw het vissershuis van een IJslandvaarder. IJslandvaarders waren mannen van de Westkust die vanuit de Noord-Franse havens Duinkerke en Gravelines met zeilschepen van maart tot september naar IJsland vertrokken om kabeljauw te vangen. De duingebieden van Oostduinkerke waren een arme streek en met een half jaar hard labeur op zee konden de vissers evenveel verdienen als een jaarloon in Oostduinkerke. De echtgenoten bleven thuis en hadden rond hun woningen kleine akkertjes met moestuinen die werden bemest met afval van de visserij.</cmt>
+    <desc>Deze verbouwde woning was in de 19de eeuw het vissershuis van een IJslandvaarder. IJslandvaarders waren mannen van de Westkust die vanuit de Noord-Franse havens Duinkerke en Gravelines met zeilschepen van maart tot september naar IJsland vertrokken om kabeljauw te vangen. De duingebieden van Oostduinkerke waren een arme streek en met een half jaar hard labeur op zee konden de vissers evenveel verdienen als een jaarloon in Oostduinkerke. De echtgenoten bleven thuis en hadden rond hun woningen kleine akkertjes met moestuinen die werden bemest met afval van de visserij.</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.130060963332653" lon="2.699297033250332">
+    <ele>9</ele>
+    <time>2014-09-25T16:55:13Z</time>
+    <name>Waardevolle graslanden</name>
+    <cmt>Links zien we historische graslanden die werden hersteld binnen het Life-project FEYDRA , een Europese natuurherstelproject. Om de oorspronkelijke duingraslanden en bloemrijke hooilanden te herstellen, werden afstervende elzen en populieren over een oppervlakte van ongeveer 6 ha gekapt en verwijderd. Daarbij werd rekening gehouden met de vochtige, veenachtige en weinig draagkrachtige bodem in het Hannecartbos.     Er ontwikkelden zich opnieuw schrale, venige hooilanden met uiterst zeldzame en kwetsbare planten. Dit is een van de toplocaties in Vlaanderen voor speciale planten, met meer dan 360 soorten op 6 hectare! Rond juni kleuren de graslanden geel van de kleine en grote ratelaar, en in de winter liggen ze dras en plas onder invloed van zuiver en ijzerrijk kwelwater van de omliggende duingebieden.</cmt>
+    <desc>Links zien we historische graslanden die werden hersteld binnen het Life-project FEYDRA , een Europese natuurherstelproject. Om de oorspronkelijke duingraslanden en bloemrijke hooilanden te herstellen, werden afstervende elzen en populieren over een oppervlakte van ongeveer 6 ha gekapt en verwijderd. Daarbij werd rekening gehouden met de vochtige, veenachtige en weinig draagkrachtige bodem in het Hannecartbos.     Er ontwikkelden zich opnieuw schrale, venige hooilanden met uiterst zeldzame en kwetsbare planten. Dit is een van de toplocaties in Vlaanderen voor speciale planten, met meer dan 360 soorten op 6 hectare! Rond juni kleuren de graslanden geel van de kleine en grote ratelaar, en in de winter liggen ze dras en plas onder invloed van zuiver en ijzerrijk kwelwater van de omliggende duingebieden.</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.138689965009689" lon="2.68904403783381">
+    <ele>4</ele>
+    <time>2014-10-03T15:41:27Z</time>
+    <name>Zeereep</name>
+    <cmt>De zeereep is de natuurlijke zeewering. Door het helmgras kunnen zeerepen een meter per jaar aangroeien. In deze zeereepduinen is het voorkomen van blauwe zeedistel en zeewinde van nationaal belang. Ook kuifleeuwerik en bontbekplevier vinden er een geschikte broedplaats. Bij laag water kun je over het strand wandelen en bij heel hoog water volg je we de blauwe palen.</cmt>
+    <desc>De zeereep is de natuurlijke zeewering. Door het helmgras kunnen zeerepen een meter per jaar aangroeien. In deze zeereepduinen is het voorkomen van blauwe zeedistel en zeewinde van nationaal belang. Ook kuifleeuwerik en bontbekplevier vinden er een geschikte broedplaats. Bij laag water kun je over het strand wandelen en bij heel hoog water volg je we de blauwe palen.</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="51.110661970451474" lon="2.648133980110288">
+    <ele>18</ele>
+    <time>2014-09-25T16:55:13Z</time>
+    <name>Zwem- en recreatiebad Hoge Blekker</name>
+    <cmt>25 meterbad met springplank (28°C), 3 kinderbaden met recreatieve attracties (32°C), buitenbad via een tunnel in verbinding met het wildwaterbad uitgerust met nekmassage en massagewanden (29°C), 75 meter glijbaan (binnen/buiten) met variabele sterrenhemel en afzonderlijk landingsbad, 4 duowhirlpools met aromakeuze ingeplant in de relaxtuin met ergonomisch gevormde rugsteunen en verhoogde hoofdsteunen - na elk gebruik volledige lediging whirlpool    Extra informatie:  -Kindvriendelijk  -Geschikt voor jongeren tussen de 12 en 16 jaar      Contactgegevens:  - Hoge Blekker  - Pylyserlaan 32, 8670 Koksijde  - Tel: +32 58 51 27 08  - Fax: +32 58 52 08 77  - E-Mail: zwembaden@koksijde.be  - Web: &lt;a href="http://www.koksijde.be" target="_blank"&gt;www.koksijde.be&lt;/a&gt;</cmt>
+    <desc>25 meterbad met springplank (28°C), 3 kinderbaden met recreatieve attracties (32°C), buitenbad via een tunnel in verbinding met het wildwaterbad uitgerust met nekmassage en massagewanden (29°C), 75 meter glijbaan (binnen/buiten) met variabele sterrenhemel en afzonderlijk landingsbad, 4 duowhirlpools met aromakeuze ingeplant in de relaxtuin met ergonomisch gevormde rugsteunen en verhoogde hoofdsteunen - na elk gebruik volledige lediging whirlpool    Extra informatie:  -Kindvriendelijk  -Geschikt voor jongeren tussen de 12 en 16 jaar      Contactgegevens:  - Hoge Blekker  - Pylyserlaan 32, 8670 Koksijde  - Tel: +32 58 51 27 08  - Fax: +32 58 52 08 77  - E-Mail: zwembaden@koksijde.be  - Web: &lt;a href="http://www.koksijde.be" target="_blank"&gt;www.koksijde.be&lt;/a&gt;</desc>
+    <sym>Flag, Blue</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <trk>
+    <name>Nieuwpoort van Floreal tot Floreal</name>
+    <desc>Nieuwpoort van Floreal tot Floreal</desc>
+    <trkseg>
+      <trkpt lat="51.150418762117624" lon="2.726308889687061">
+        <ele>6.845285</ele>
+        <time>2014-12-31T23:00:01Z</time>
+      </trkpt>
+      <trkpt lat="51.152464700862765" lon="2.72283174097538">
+        <ele>7.883317</ele>
+        <time>2014-12-31T23:00:02Z</time>
+      </trkpt>
+      <trkpt lat="51.151826335117221" lon="2.721416875720024">
+        <ele>11.592024</ele>
+        <time>2014-12-31T23:00:03Z</time>
+      </trkpt>
+      <trkpt lat="51.151098031550646" lon="2.7203837223351">
+        <ele>11.622101000000001</ele>
+        <time>2014-12-31T23:00:04Z</time>
+      </trkpt>
+      <trkpt lat="51.144217075780034" lon="2.704819031059742">
+        <ele>12.444331999999999</ele>
+        <time>2014-12-31T23:00:05Z</time>
+      </trkpt>
+      <trkpt lat="51.141745923087001" lon="2.698327079415321">
+        <ele>11.181236</ele>
+        <time>2014-12-31T23:00:06Z</time>
+      </trkpt>
+      <trkpt lat="51.141499495133758" lon="2.69773087464273">
+        <ele>11.708423</ele>
+        <time>2014-12-31T23:00:07Z</time>
+      </trkpt>
+      <trkpt lat="51.141734188422561" lon="2.697495510801673">
+        <ele>11.842014000000001</ele>
+        <time>2014-12-31T23:00:08Z</time>
+      </trkpt>
+      <trkpt lat="51.140643786638975" lon="2.694433685392141">
+        <ele>11.859643999999999</ele>
+        <time>2014-12-31T23:00:09Z</time>
+      </trkpt>
+      <trkpt lat="51.140158474445343" lon="2.693770509213209">
+        <ele>11.363235</ele>
+        <time>2014-12-31T23:00:10Z</time>
+      </trkpt>
+      <trkpt lat="51.14000927656889" lon="2.6933219935745">
+        <ele>10.151472999999999</ele>
+        <time>2014-12-31T23:00:11Z</time>
+      </trkpt>
+      <trkpt lat="51.139777936041355" lon="2.693784171715379">
+        <ele>8.310027</ele>
+        <time>2014-12-31T23:00:12Z</time>
+      </trkpt>
+      <trkpt lat="51.139027504250407" lon="2.694567795842886">
+        <ele>4.677613</ele>
+        <time>2014-12-31T23:00:13Z</time>
+      </trkpt>
+      <trkpt lat="51.139044603332877" lon="2.695777304470539">
+        <ele>2.986035</ele>
+        <time>2014-12-31T23:00:14Z</time>
+      </trkpt>
+      <trkpt lat="51.139096403494477" lon="2.696077963337302">
+        <ele>3.0784</ele>
+        <time>2014-12-31T23:00:15Z</time>
+      </trkpt>
+      <trkpt lat="51.138908313587308" lon="2.696236129850149">
+        <ele>4.18283</ele>
+        <time>2014-12-31T23:00:16Z</time>
+      </trkpt>
+      <trkpt lat="51.138761295005679" lon="2.695938823744655">
+        <ele>3.980751</ele>
+        <time>2014-12-31T23:00:17Z</time>
+      </trkpt>
+      <trkpt lat="51.138475891202688" lon="2.695949133485556">
+        <ele>4.467148</ele>
+        <time>2014-12-31T23:00:18Z</time>
+      </trkpt>
+      <trkpt lat="51.138389306142926" lon="2.696557408198714">
+        <ele>7.337377</ele>
+        <time>2014-12-31T23:00:19Z</time>
+      </trkpt>
+      <trkpt lat="51.138294087722898" lon="2.696560760959983">
+        <ele>7.621905</ele>
+        <time>2014-12-31T23:00:20Z</time>
+      </trkpt>
+      <trkpt lat="51.138112368062139" lon="2.69717238843441">
+        <ele>11.42207</ele>
+        <time>2014-12-31T23:00:21Z</time>
+      </trkpt>
+      <trkpt lat="51.138073308393359" lon="2.697778902947903">
+        <ele>14.510679</ele>
+        <time>2014-12-31T23:00:22Z</time>
+      </trkpt>
+      <trkpt lat="51.137645160779357" lon="2.69779440946877">
+        <ele>14.184668</ele>
+        <time>2014-12-31T23:00:23Z</time>
+      </trkpt>
+      <trkpt lat="51.136987768113613" lon="2.698423219844699">
+        <ele>10.973086</ele>
+        <time>2014-12-31T23:00:24Z</time>
+      </trkpt>
+      <trkpt lat="51.136895818635821" lon="2.698653386905789">
+        <ele>10.864143</ele>
+        <time>2014-12-31T23:00:25Z</time>
+      </trkpt>
+      <trkpt lat="51.135292276740074" lon="2.699694419279695">
+        <ele>10.051045</ele>
+        <time>2014-12-31T23:00:26Z</time>
+      </trkpt>
+      <trkpt lat="51.135011063888669" lon="2.700007064267993">
+        <ele>9.778904000000001</ele>
+        <time>2014-12-31T23:00:27Z</time>
+      </trkpt>
+      <trkpt lat="51.134894974529743" lon="2.701901961117983">
+        <ele>11.764887</ele>
+        <time>2014-12-31T23:00:28Z</time>
+      </trkpt>
+      <trkpt lat="51.134145632386208" lon="2.702760938555002">
+        <ele>6.79392</ele>
+        <time>2014-12-31T23:00:29Z</time>
+      </trkpt>
+      <trkpt lat="51.133343316614628" lon="2.703243484720588">
+        <ele>8.614385</ele>
+        <time>2014-12-31T23:00:30Z</time>
+      </trkpt>
+      <trkpt lat="51.132915085181594" lon="2.703258907422423">
+        <ele>8.249167</ele>
+        <time>2014-12-31T23:00:31Z</time>
+      </trkpt>
+      <trkpt lat="51.132018724456429" lon="2.703820578753948">
+        <ele>8.704141</ele>
+        <time>2014-12-31T23:00:32Z</time>
+      </trkpt>
+      <trkpt lat="51.131321936845779" lon="2.701652515679598">
+        <ele>9.4132</ele>
+        <time>2014-12-31T23:00:33Z</time>
+      </trkpt>
+      <trkpt lat="51.131412796676159" lon="2.701346827670932">
+        <ele>10.165512</ele>
+        <time>2014-12-31T23:00:34Z</time>
+      </trkpt>
+      <trkpt lat="51.131117837503552" lon="2.700676778331399">
+        <ele>9.129986000000001</ele>
+        <time>2014-12-31T23:00:35Z</time>
+      </trkpt>
+      <trkpt lat="51.130836624652147" lon="2.700989423319697">
+        <ele>7.029639</ele>
+        <time>2014-12-31T23:00:36Z</time>
+      </trkpt>
+      <trkpt lat="51.130545772612095" lon="2.700621793046594">
+        <ele>7.349508</ele>
+        <time>2014-12-31T23:00:37Z</time>
+      </trkpt>
+      <trkpt lat="51.130346031859517" lon="2.699948390945792">
+        <ele>8.820957</ele>
+        <time>2014-12-31T23:00:38Z</time>
+      </trkpt>
+      <trkpt lat="51.130191469565034" lon="2.699122102931142">
+        <ele>8.264227999999999</ele>
+        <time>2014-12-31T23:00:39Z</time>
+      </trkpt>
+      <trkpt lat="51.130025424063206" lon="2.697464413940907">
+        <ele>13.509981</ele>
+        <time>2014-12-31T23:00:40Z</time>
+      </trkpt>
+      <trkpt lat="51.129573723301291" lon="2.695817034691572">
+        <ele>6.817136</ele>
+        <time>2014-12-31T23:00:41Z</time>
+      </trkpt>
+      <trkpt lat="51.127101564779878" lon="2.699384707957506">
+        <ele>3.667305</ele>
+        <time>2014-12-31T23:00:42Z</time>
+      </trkpt>
+      <trkpt lat="51.126124570146203" lon="2.697605229914188">
+        <ele>3.133949</ele>
+        <time>2014-12-31T23:00:43Z</time>
+      </trkpt>
+      <trkpt lat="51.125828521326184" lon="2.69685965962708">
+        <ele>3.829892</ele>
+        <time>2014-12-31T23:00:44Z</time>
+      </trkpt>
+      <trkpt lat="51.125426525250077" lon="2.695361981168389">
+        <ele>5.063399</ele>
+        <time>2014-12-31T23:00:45Z</time>
+      </trkpt>
+      <trkpt lat="51.125120837241411" lon="2.693936303257942">
+        <ele>4.55905</ele>
+        <time>2014-12-31T23:00:46Z</time>
+      </trkpt>
+      <trkpt lat="51.125013884156942" lon="2.693108506500721">
+        <ele>2.493253</ele>
+        <time>2014-12-31T23:00:47Z</time>
+      </trkpt>
+      <trkpt lat="51.124026076868176" lon="2.690573399886489">
+        <ele>6.128204</ele>
+        <time>2014-12-31T23:00:48Z</time>
+      </trkpt>
+      <trkpt lat="51.123587200418115" lon="2.68983319401741">
+        <ele>5.431461</ele>
+        <time>2014-12-31T23:00:49Z</time>
+      </trkpt>
+      <trkpt lat="51.123277070000768" lon="2.688105432316661">
+        <ele>5.425822</ele>
+        <time>2014-12-31T23:00:50Z</time>
+      </trkpt>
+      <trkpt lat="51.122927963733673" lon="2.686983933672309">
+        <ele>5.113183</ele>
+        <time>2014-12-31T23:00:51Z</time>
+      </trkpt>
+      <trkpt lat="51.122441561892629" lon="2.686245488002896">
+        <ele>5.536729</ele>
+        <time>2014-12-31T23:00:52Z</time>
+      </trkpt>
+      <trkpt lat="51.121371360495687" lon="2.68462099134922">
+        <ele>6.212019</ele>
+        <time>2014-12-31T23:00:53Z</time>
+      </trkpt>
+      <trkpt lat="51.119892625138164" lon="2.6810456905514">
+        <ele>4.371375</ele>
+        <time>2014-12-31T23:00:54Z</time>
+      </trkpt>
+      <trkpt lat="51.119683999568224" lon="2.679768037050962">
+        <ele>4.204026</ele>
+        <time>2014-12-31T23:00:55Z</time>
+      </trkpt>
+      <trkpt lat="51.119873179122806" lon="2.679685475304723">
+        <ele>4.73863</ele>
+        <time>2014-12-31T23:00:56Z</time>
+      </trkpt>
+      <trkpt lat="51.119864629581571" lon="2.679080972447991">
+        <ele>5.125622</ele>
+        <time>2014-12-31T23:00:57Z</time>
+      </trkpt>
+      <trkpt lat="51.12005271948874" lon="2.678922889754176">
+        <ele>6.053838</ele>
+        <time>2014-12-31T23:00:58Z</time>
+      </trkpt>
+      <trkpt lat="51.119942497462034" lon="2.677868530154228">
+        <ele>7.782646</ele>
+        <time>2014-12-31T23:00:59Z</time>
+      </trkpt>
+      <trkpt lat="51.119877621531487" lon="2.676661117002368">
+        <ele>7.250392</ele>
+        <time>2014-12-31T23:01:00Z</time>
+      </trkpt>
+      <trkpt lat="51.118820160627365" lon="2.672617183998227">
+        <ele>7.930408</ele>
+        <time>2014-12-31T23:01:01Z</time>
+      </trkpt>
+      <trkpt lat="51.118428809568286" lon="2.671875469386578">
+        <ele>9.480226999999999</ele>
+        <time>2014-12-31T23:01:02Z</time>
+      </trkpt>
+      <trkpt lat="51.118519585579634" lon="2.671569781377912">
+        <ele>9.847848000000001</ele>
+        <time>2014-12-31T23:01:03Z</time>
+      </trkpt>
+      <trkpt lat="51.118314228951931" lon="2.670518774539232">
+        <ele>8.853249</ele>
+        <time>2014-12-31T23:01:04Z</time>
+      </trkpt>
+      <trkpt lat="51.118402825668454" lon="2.670061960816383">
+        <ele>8.153829</ele>
+        <time>2014-12-31T23:01:05Z</time>
+      </trkpt>
+      <trkpt lat="51.118967095389962" lon="2.669587712734938">
+        <ele>6.872501</ele>
+        <time>2014-12-31T23:01:06Z</time>
+      </trkpt>
+      <trkpt lat="51.118867686018348" lon="2.669288897886872">
+        <ele>6.846136</ele>
+        <time>2014-12-31T23:01:07Z</time>
+      </trkpt>
+      <trkpt lat="51.118811359629035" lon="2.668686071410775">
+        <ele>7.791136</ele>
+        <time>2014-12-31T23:01:08Z</time>
+      </trkpt>
+      <trkpt lat="51.11890004016459" lon="2.668229341506958">
+        <ele>8.171374999999999</ele>
+        <time>2014-12-31T23:01:09Z</time>
+      </trkpt>
+      <trkpt lat="51.119228694587946" lon="2.66791476868093">
+        <ele>7.8633</ele>
+        <time>2014-12-31T23:01:10Z</time>
+      </trkpt>
+      <trkpt lat="51.120169227942824" lon="2.667124187573791">
+        <ele>3.672672</ele>
+        <time>2014-12-31T23:01:11Z</time>
+      </trkpt>
+      <trkpt lat="51.120409285649657" lon="2.667266596108675">
+        <ele>3.123129</ele>
+        <time>2014-12-31T23:01:12Z</time>
+      </trkpt>
+      <trkpt lat="51.120847994461656" lon="2.664679773151875">
+        <ele>4.211258</ele>
+        <time>2014-12-31T23:01:13Z</time>
+      </trkpt>
+      <trkpt lat="51.121161393821239" lon="2.663307404145598">
+        <ele>5.767283</ele>
+        <time>2014-12-31T23:01:14Z</time>
+      </trkpt>
+      <trkpt lat="51.1210270319134" lon="2.660590410232544">
+        <ele>5.650674</ele>
+        <time>2014-12-31T23:01:15Z</time>
+      </trkpt>
+      <trkpt lat="51.120931897312403" lon="2.660594014450908">
+        <ele>5.957435</ele>
+        <time>2014-12-31T23:01:16Z</time>
+      </trkpt>
+      <trkpt lat="51.120767276734114" lon="2.659087870270014">
+        <ele>5.77046</ele>
+        <time>2014-12-31T23:01:17Z</time>
+      </trkpt>
+      <trkpt lat="51.120249526575208" lon="2.659485004842281">
+        <ele>5.88186</ele>
+        <time>2014-12-31T23:01:18Z</time>
+      </trkpt>
+      <trkpt lat="51.119719706475735" lon="2.659050989896059">
+        <ele>5.151338</ele>
+        <time>2014-12-31T23:01:19Z</time>
+      </trkpt>
+      <trkpt lat="51.119387783110142" lon="2.659138832241297">
+        <ele>4.919393</ele>
+        <time>2014-12-31T23:01:20Z</time>
+      </trkpt>
+      <trkpt lat="51.118255890905857" lon="2.659861017018557">
+        <ele>5.547074</ele>
+        <time>2014-12-31T23:01:21Z</time>
+      </trkpt>
+      <trkpt lat="51.117874262854457" lon="2.659799493849278">
+        <ele>6.442603</ele>
+        <time>2014-12-31T23:01:22Z</time>
+      </trkpt>
+      <trkpt lat="51.117357602342963" lon="2.660272233188152">
+        <ele>8.47339</ele>
+        <time>2014-12-31T23:01:23Z</time>
+      </trkpt>
+      <trkpt lat="51.117024589329958" lon="2.660284386947751">
+        <ele>8.024998</ele>
+        <time>2014-12-31T23:01:24Z</time>
+      </trkpt>
+      <trkpt lat="51.11693381331861" lon="2.660590158775449">
+        <ele>7.119154</ele>
+        <time>2014-12-31T23:01:25Z</time>
+      </trkpt>
+      <trkpt lat="51.116073159500957" lon="2.66031950712204">
+        <ele>3.92965</ele>
+        <time>2014-12-31T23:01:26Z</time>
+      </trkpt>
+      <trkpt lat="51.115688262507319" lon="2.660031337291002">
+        <ele>5.113935</ele>
+        <time>2014-12-31T23:01:27Z</time>
+      </trkpt>
+      <trkpt lat="51.115493634715676" lon="2.659736126661301">
+        <ele>5.833283</ele>
+        <time>2014-12-31T23:01:28Z</time>
+      </trkpt>
+      <trkpt lat="51.114125037565827" lon="2.660542633384466">
+        <ele>3.889131</ele>
+        <time>2014-12-31T23:01:29Z</time>
+      </trkpt>
+      <trkpt lat="51.113536711782217" lon="2.659354666247964">
+        <ele>5.439883</ele>
+        <time>2014-12-31T23:01:30Z</time>
+      </trkpt>
+      <trkpt lat="51.11309221945703" lon="2.658237190917134">
+        <ele>3.803931</ele>
+        <time>2014-12-31T23:01:31Z</time>
+      </trkpt>
+      <trkpt lat="51.112987194210291" lon="2.657560687512159">
+        <ele>4.040038</ele>
+        <time>2014-12-31T23:01:32Z</time>
+      </trkpt>
+      <trkpt lat="51.112979566678405" lon="2.657031873241067">
+        <ele>4.192088</ele>
+        <time>2014-12-31T23:01:33Z</time>
+      </trkpt>
+      <trkpt lat="51.112681003287435" lon="2.656135763972998">
+        <ele>4.140489</ele>
+        <time>2014-12-31T23:01:34Z</time>
+      </trkpt>
+      <trkpt lat="51.112675638869405" lon="2.655757991597056">
+        <ele>4.081365</ele>
+        <time>2014-12-31T23:01:35Z</time>
+      </trkpt>
+      <trkpt lat="51.110821394249797" lon="2.655902076512575">
+        <ele>4.42176</ele>
+        <time>2014-12-31T23:01:36Z</time>
+      </trkpt>
+      <trkpt lat="51.110578067600727" lon="2.655533188953996">
+        <ele>4.177552</ele>
+        <time>2014-12-31T23:01:37Z</time>
+      </trkpt>
+      <trkpt lat="51.109799472615123" lon="2.654352597892284">
+        <ele>3.262088</ele>
+        <time>2014-12-31T23:01:38Z</time>
+      </trkpt>
+      <trkpt lat="51.109355986118317" lon="2.653310727328062">
+        <ele>4.701273</ele>
+        <time>2014-12-31T23:01:39Z</time>
+      </trkpt>
+      <trkpt lat="51.108955834060907" lon="2.651965012773871">
+        <ele>3.849658</ele>
+        <time>2014-12-31T23:01:40Z</time>
+      </trkpt>
+      <trkpt lat="51.108600776642561" lon="2.650466412305832">
+        <ele>4.541458</ele>
+        <time>2014-12-31T23:01:41Z</time>
+      </trkpt>
+      <trkpt lat="51.108492482453585" lon="2.649563429877162">
+        <ele>5.499979</ele>
+        <time>2014-12-31T23:01:42Z</time>
+      </trkpt>
+      <trkpt lat="51.10934441909194" lon="2.649229411035776">
+        <ele>6.16475</ele>
+        <time>2014-12-31T23:01:43Z</time>
+      </trkpt>
+      <trkpt lat="51.10962538048625" lon="2.648916598409414">
+        <ele>7.484114</ele>
+        <time>2014-12-31T23:01:44Z</time>
+      </trkpt>
+      <trkpt lat="51.109904162585735" lon="2.64845266006887">
+        <ele>8.208537</ele>
+        <time>2014-12-31T23:01:45Z</time>
+      </trkpt>
+      <trkpt lat="51.109897624701262" lon="2.647999366745353">
+        <ele>8.682935000000001</ele>
+        <time>2014-12-31T23:01:46Z</time>
+      </trkpt>
+      <trkpt lat="51.109695285558701" lon="2.647175509482622">
+        <ele>9.099752000000001</ele>
+        <time>2014-12-31T23:01:47Z</time>
+      </trkpt>
+      <trkpt lat="51.109876837581396" lon="2.646563965827227">
+        <ele>10.334129000000001</ele>
+        <time>2014-12-31T23:01:48Z</time>
+      </trkpt>
+      <trkpt lat="51.109862504526973" lon="2.645581858232617">
+        <ele>10.946726</ele>
+        <time>2014-12-31T23:01:49Z</time>
+      </trkpt>
+      <trkpt lat="51.110480921342969" lon="2.645558891817927">
+        <ele>10.240228</ele>
+        <time>2014-12-31T23:01:50Z</time>
+      </trkpt>
+      <trkpt lat="51.111274100840092" lon="2.644471088424325">
+        <ele>6.564799</ele>
+        <time>2014-12-31T23:01:51Z</time>
+      </trkpt>
+      <trkpt lat="51.111464370042086" lon="2.644463963806629">
+        <ele>6.654909</ele>
+        <time>2014-12-31T23:01:52Z</time>
+      </trkpt>
+      <trkpt lat="51.111561767756939" lon="2.64461156912148">
+        <ele>7.211191</ele>
+        <time>2014-12-31T23:01:53Z</time>
+      </trkpt>
+      <trkpt lat="51.111588170751929" lon="2.646424826234579">
+        <ele>19.387377000000001</ele>
+        <time>2014-12-31T23:01:54Z</time>
+      </trkpt>
+      <trkpt lat="51.111506195738912" lon="2.647335017099977">
+        <ele>24.420805000000001</ele>
+        <time>2014-12-31T23:01:55Z</time>
+      </trkpt>
+      <trkpt lat="51.111608035862446" lon="2.64778470620513">
+        <ele>24.748539000000001</ele>
+        <time>2014-12-31T23:01:56Z</time>
+      </trkpt>
+      <trkpt lat="51.111845830455422" lon="2.6477759052068">
+        <ele>25.318156999999999</ele>
+        <time>2014-12-31T23:01:57Z</time>
+      </trkpt>
+      <trkpt lat="51.112228631973267" lon="2.647912865504623">
+        <ele>25.496994000000001</ele>
+        <time>2014-12-31T23:01:58Z</time>
+      </trkpt>
+      <trkpt lat="51.112842606380582" lon="2.647587731480598">
+        <ele>26.056557000000002</ele>
+        <time>2014-12-31T23:01:59Z</time>
+      </trkpt>
+      <trkpt lat="51.112933298572898" lon="2.647281875833869">
+        <ele>24.861851000000001</ele>
+        <time>2014-12-31T23:02:00Z</time>
+      </trkpt>
+      <trkpt lat="51.11312247812748" lon="2.647199314087629">
+        <ele>23.582744999999999</ele>
+        <time>2014-12-31T23:02:01Z</time>
+      </trkpt>
+      <trkpt lat="51.113412324339151" lon="2.647490920498967">
+        <ele>22.403576000000001</ele>
+        <time>2014-12-31T23:02:02Z</time>
+      </trkpt>
+      <trkpt lat="51.113802837207913" lon="2.648156778886914">
+        <ele>20.166951999999998</ele>
+        <time>2014-12-31T23:02:03Z</time>
+      </trkpt>
+      <trkpt lat="51.114230901002884" lon="2.64814093708992">
+        <ele>19.452188</ele>
+        <time>2014-12-31T23:02:04Z</time>
+      </trkpt>
+      <trkpt lat="51.114399963989854" lon="2.649948913604021">
+        <ele>14.150632999999999</ele>
+        <time>2014-12-31T23:02:05Z</time>
+      </trkpt>
+      <trkpt lat="51.115689435973763" lon="2.653529830276966">
+        <ele>5.353717</ele>
+        <time>2014-12-31T23:02:06Z</time>
+      </trkpt>
+      <trkpt lat="51.115879705175757" lon="2.653522789478302">
+        <ele>4.798874</ele>
+        <time>2014-12-31T23:02:07Z</time>
+      </trkpt>
+      <trkpt lat="51.119696237146854" lon="2.654137518256903">
+        <ele>3.232612</ele>
+        <time>2014-12-31T23:02:08Z</time>
+      </trkpt>
+      <trkpt lat="51.120165288448334" lon="2.653666539117694">
+        <ele>4.969839</ele>
+        <time>2014-12-31T23:02:09Z</time>
+      </trkpt>
+      <trkpt lat="51.12068697810173" lon="2.656822660937905">
+        <ele>5.205369</ele>
+        <time>2014-12-31T23:02:10Z</time>
+      </trkpt>
+      <trkpt lat="51.120979422703385" lon="2.66059217043221">
+        <ele>5.810073</ele>
+        <time>2014-12-31T23:02:11Z</time>
+      </trkpt>
+      <trkpt lat="51.121407570317388" lon="2.660576412454248">
+        <ele>4.692152</ele>
+        <time>2014-12-31T23:02:12Z</time>
+      </trkpt>
+      <trkpt lat="51.122069237753749" lon="2.660249602049589">
+        <ele>3.930884</ele>
+        <time>2014-12-31T23:02:13Z</time>
+      </trkpt>
+      <trkpt lat="51.122544910758734" lon="2.660232000052929">
+        <ele>3.821672</ele>
+        <time>2014-12-31T23:02:14Z</time>
+      </trkpt>
+      <trkpt lat="51.123308166861534" lon="2.660355130210519">
+        <ele>4.042109</ele>
+        <time>2014-12-31T23:02:15Z</time>
+      </trkpt>
+      <trkpt lat="51.123545961454511" lon="2.660346329212189">
+        <ele>4.084459</ele>
+        <time>2014-12-31T23:02:16Z</time>
+      </trkpt>
+      <trkpt lat="51.12425297498703" lon="2.659866632893682">
+        <ele>3.319344</ele>
+        <time>2014-12-31T23:02:17Z</time>
+      </trkpt>
+      <trkpt lat="51.12435364164412" lon="2.660240884870291">
+        <ele>3.636351</ele>
+        <time>2014-12-31T23:02:18Z</time>
+      </trkpt>
+      <trkpt lat="51.12380487844348" lon="2.665100293233991">
+        <ele>9.390993999999999</ele>
+        <time>2014-12-31T23:02:19Z</time>
+      </trkpt>
+      <trkpt lat="51.12380932085216" lon="2.665402628481388">
+        <ele>8.094213</ele>
+        <time>2014-12-31T23:02:20Z</time>
+      </trkpt>
+      <trkpt lat="51.124544581398368" lon="2.666887817904353">
+        <ele>6.866731</ele>
+        <time>2014-12-31T23:02:21Z</time>
+      </trkpt>
+      <trkpt lat="51.12469713203609" lon="2.667562728747726">
+        <ele>6.958749</ele>
+        <time>2014-12-31T23:02:22Z</time>
+      </trkpt>
+      <trkpt lat="51.124857226386666" lon="2.668766705319285">
+        <ele>6.287214</ele>
+        <time>2014-12-31T23:02:23Z</time>
+      </trkpt>
+      <trkpt lat="51.124887485057116" lon="2.670882716774941">
+        <ele>6.427199</ele>
+        <time>2014-12-31T23:02:24Z</time>
+      </trkpt>
+      <trkpt lat="51.125304903835058" lon="2.673438275232911">
+        <ele>7.242826</ele>
+        <time>2014-12-31T23:02:25Z</time>
+      </trkpt>
+      <trkpt lat="51.125932037830353" lon="2.674020314589143">
+        <ele>7.477105</ele>
+        <time>2014-12-31T23:02:26Z</time>
+      </trkpt>
+      <trkpt lat="51.126366639509797" lon="2.674458017572761">
+        <ele>7.713113</ele>
+        <time>2014-12-31T23:02:27Z</time>
+      </trkpt>
+      <trkpt lat="51.12651583738625" lon="2.674906281754375">
+        <ele>6.840001</ele>
+        <time>2014-12-31T23:02:28Z</time>
+      </trkpt>
+      <trkpt lat="51.126569900661707" lon="2.675357982516289">
+        <ele>5.612704</ele>
+        <time>2014-12-31T23:02:29Z</time>
+      </trkpt>
+      <trkpt lat="51.127135260030627" lon="2.674959171563387">
+        <ele>6.576271</ele>
+        <time>2014-12-31T23:02:30Z</time>
+      </trkpt>
+      <trkpt lat="51.127387220039964" lon="2.675933064892888">
+        <ele>5.562707</ele>
+        <time>2014-12-31T23:02:31Z</time>
+      </trkpt>
+      <trkpt lat="51.127720233052969" lon="2.675920911133289">
+        <ele>6.230383</ele>
+        <time>2014-12-31T23:02:32Z</time>
+      </trkpt>
+      <trkpt lat="51.128150476142764" lon="2.676056362688541">
+        <ele>6.974913</ele>
+        <time>2014-12-31T23:02:33Z</time>
+      </trkpt>
+      <trkpt lat="51.128686834126711" lon="2.676944173872471">
+        <ele>6.139825</ele>
+        <time>2014-12-31T23:02:34Z</time>
+      </trkpt>
+      <trkpt lat="51.129082376137376" lon="2.677988391369581">
+        <ele>5.60767</ele>
+        <time>2014-12-31T23:02:35Z</time>
+      </trkpt>
+      <trkpt lat="51.129186227917671" lon="2.678589625284076">
+        <ele>5.198048</ele>
+        <time>2014-12-31T23:02:36Z</time>
+      </trkpt>
+      <trkpt lat="51.129947304725647" lon="2.678561797365546">
+        <ele>7.871001</ele>
+        <time>2014-12-31T23:02:37Z</time>
+      </trkpt>
+      <trkpt lat="51.130302026867867" lon="2.67673403955996">
+        <ele>10.485657</ele>
+        <time>2014-12-31T23:02:38Z</time>
+      </trkpt>
+      <trkpt lat="51.13010086119175" lon="2.675985116511583">
+        <ele>9.726191999999999</ele>
+        <time>2014-12-31T23:02:39Z</time>
+      </trkpt>
+      <trkpt lat="51.129495436325669" lon="2.673587389290333">
+        <ele>14.897240999999999</ele>
+        <time>2014-12-31T23:02:40Z</time>
+      </trkpt>
+      <trkpt lat="51.13269992172718" lon="2.671352522447705">
+        <ele>10.370951</ele>
+        <time>2014-12-31T23:02:41Z</time>
+      </trkpt>
+      <trkpt lat="51.13389459438622" lon="2.675014492124319">
+        <ele>15.079753999999999</ele>
+        <time>2014-12-31T23:02:42Z</time>
+      </trkpt>
+      <trkpt lat="51.134082684293389" lon="2.674856325611472">
+        <ele>12.279028</ele>
+        <time>2014-12-31T23:02:43Z</time>
+      </trkpt>
+      <trkpt lat="51.134878462180495" lon="2.677247431129217">
+        <ele>19.185030000000001</ele>
+        <time>2014-12-31T23:02:44Z</time>
+      </trkpt>
+      <trkpt lat="51.135074095800519" lon="2.67761841416359">
+        <ele>18.115290000000002</ele>
+        <time>2014-12-31T23:02:45Z</time>
+      </trkpt>
+      <trkpt lat="51.13566979765892" lon="2.679336117580533">
+        <ele>11.775541</ele>
+        <time>2014-12-31T23:02:46Z</time>
+      </trkpt>
+      <trkpt lat="51.13567516207695" lon="2.67971414141357">
+        <ele>11.762527</ele>
+        <time>2014-12-31T23:02:47Z</time>
+      </trkpt>
+      <trkpt lat="51.136772437021136" lon="2.683228841051459">
+        <ele>11.0124</ele>
+        <time>2014-12-31T23:02:48Z</time>
+      </trkpt>
+      <trkpt lat="51.137067480012774" lon="2.683898722752929">
+        <ele>10.254443999999999</ele>
+        <time>2014-12-31T23:02:49Z</time>
+      </trkpt>
+      <trkpt lat="51.137121459469199" lon="2.684350591152906">
+        <ele>10.273129000000001</ele>
+        <time>2014-12-31T23:02:50Z</time>
+      </trkpt>
+      <trkpt lat="51.137279290705919" lon="2.685403693467379">
+        <ele>8.185905</ele>
+        <time>2014-12-31T23:02:51Z</time>
+      </trkpt>
+      <trkpt lat="51.137287924066186" lon="2.686008531600237">
+        <ele>5.073511</ele>
+        <time>2014-12-31T23:02:52Z</time>
+      </trkpt>
+      <trkpt lat="51.13876330666244" lon="2.689358359202743">
+        <ele>11.776134000000001</ele>
+        <time>2014-12-31T23:02:53Z</time>
+      </trkpt>
+      <trkpt lat="51.13895139656961" lon="2.689200276508927">
+        <ele>10.30917</ele>
+        <time>2014-12-31T23:02:54Z</time>
+      </trkpt>
+      <trkpt lat="51.139148203656077" lon="2.68964703194797">
+        <ele>10.215505</ele>
+        <time>2014-12-31T23:02:55Z</time>
+      </trkpt>
+      <trkpt lat="51.139450706541538" lon="2.690846230834723">
+        <ele>8.638661000000001</ele>
+        <time>2014-12-31T23:02:56Z</time>
+      </trkpt>
+      <trkpt lat="51.139795538038015" lon="2.691665729507804">
+        <ele>7.257527</ele>
+        <time>2014-12-31T23:02:57Z</time>
+      </trkpt>
+      <trkpt lat="51.139802997931838" lon="2.692194879055023">
+        <ele>8.385612</ele>
+        <time>2014-12-31T23:02:58Z</time>
+      </trkpt>
+      <trkpt lat="51.139951106160879" lon="2.692567789927125">
+        <ele>8.361814000000001</ele>
+        <time>2014-12-31T23:02:59Z</time>
+      </trkpt>
+      <trkpt lat="51.139861335977912" lon="2.69294916652143">
+        <ele>9.666089</ele>
+        <time>2014-12-31T23:03:00Z</time>
+      </trkpt>
+      <trkpt lat="51.139961834996939" lon="2.693323837593198">
+        <ele>9.980843999999999</ele>
+        <time>2014-12-31T23:03:01Z</time>
+      </trkpt>
+      <trkpt lat="51.140158474445343" lon="2.693770509213209">
+        <ele>11.363235</ele>
+        <time>2014-12-31T23:03:02Z</time>
+      </trkpt>
+      <trkpt lat="51.140642696991563" lon="2.694358080625534">
+        <ele>11.937457</ele>
+        <time>2014-12-31T23:03:03Z</time>
+      </trkpt>
+      <trkpt lat="51.141733098775148" lon="2.697419906035066">
+        <ele>11.940547</ele>
+        <time>2014-12-31T23:03:04Z</time>
+      </trkpt>
+      <trkpt lat="51.141499495133758" lon="2.69773087464273">
+        <ele>11.708423</ele>
+        <time>2014-12-31T23:03:05Z</time>
+      </trkpt>
+      <trkpt lat="51.141745923087001" lon="2.698327079415321">
+        <ele>11.181236</ele>
+        <time>2014-12-31T23:03:06Z</time>
+      </trkpt>
+      <trkpt lat="51.144217075780034" lon="2.704819031059742">
+        <ele>12.444331999999999</ele>
+        <time>2014-12-31T23:03:07Z</time>
+      </trkpt>
+      <trkpt lat="51.151099121198058" lon="2.720459327101708">
+        <ele>11.817734</ele>
+        <time>2014-12-31T23:03:08Z</time>
+      </trkpt>
+      <trkpt lat="51.151826335117221" lon="2.721416875720024">
+        <ele>11.592024</ele>
+        <time>2014-12-31T23:03:09Z</time>
+      </trkpt>
+      <trkpt lat="51.152464700862765" lon="2.72283174097538">
+        <ele>7.883317</ele>
+        <time>2014-12-31T23:03:10Z</time>
+      </trkpt>
+      <trkpt lat="51.150698969140649" lon="2.725920723751187">
+        <ele>7.412625</ele>
+        <time>2014-12-31T23:03:11Z</time>
+      </trkpt>
+    </trkseg>
+  </trk>
+
+</gpx>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<gpx
+ version="1.0"
+ creator="OziExplorer Version 3964a - http://www.oziexplorer.com"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns="http://www.topografix.com/GPX/1/0"
+ xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
+<time>2010-08-26T10:09:38Z</time>
+<bounds minlat="51.138256" minlon="4.859658" maxlat="51.147021" maxlon="4.885083"/>
+<wpt lat="51.1442295" lon="4.8596584">
+ <ele>0.000000</ele>
+ <time>2010-08-26T12:01:53.227Z</time>
+ <name>START</name>
+ <cmt>Start Pottenpad</cmt>
+ <desc>Start Pottenpad</desc>
+ <sym>Trail Head</sym>
+</wpt>
+<trk>
+ <name>w-belgie-potenpad</name>
+ <desc>Pottenpad</desc>
+<trkseg>
+<trkpt lat="51.1441819" lon="4.8596578">
+<ele>24.655804</ele>
+<time>2009-12-31T22:00:01.000Z</time>
+</trkpt>
+<trkpt lat="51.1442244" lon="4.8608685">
+<ele>24.247948</ele>
+<time>2009-12-31T22:00:02.000Z</time>
+</trkpt>
+<trkpt lat="51.1444059" lon="4.8629883">
+<ele>23.258038</ele>
+<time>2009-12-31T22:00:03.000Z</time>
+</trkpt>
+<trkpt lat="51.1445895" lon="4.8645786">
+<ele>23.985487</ele>
+<time>2009-12-31T22:00:04.000Z</time>
+</trkpt>
+<trkpt lat="51.1458044" lon="4.8698107">
+<ele>25.656059</ele>
+<time>2009-12-31T22:00:05.000Z</time>
+</trkpt>
+<trkpt lat="51.1460860" lon="4.8707214">
+<ele>28.825502</ele>
+<time>2009-12-31T22:00:06.000Z</time>
+</trkpt>
+<trkpt lat="51.1464178" lon="4.8710276">
+<ele>30.733665</ele>
+<time>2009-12-31T22:00:07.000Z</time>
+</trkpt>
+<trkpt lat="51.1463676" lon="4.8716322">
+<ele>32.282261</ele>
+<time>2009-12-31T22:00:08.000Z</time>
+</trkpt>
+<trkpt lat="51.1470207" lon="4.8746649">
+<ele>29.646893</ele>
+<time>2009-12-31T22:00:09.000Z</time>
+</trkpt>
+<trkpt lat="51.1452147" lon="4.8850834">
+<ele>25.725187</ele>
+<time>2009-12-31T22:00:10.000Z</time>
+</trkpt>
+<trkpt lat="51.1428000" lon="4.8823336">
+<ele>35.060787</ele>
+<time>2009-12-31T22:00:11.000Z</time>
+</trkpt>
+<trkpt lat="51.1418510" lon="4.8817181">
+<ele>30.847630</ele>
+<time>2009-12-31T22:00:12.000Z</time>
+</trkpt>
+<trkpt lat="51.1410937" lon="4.8808021">
+<ele>27.743456</ele>
+<time>2009-12-31T22:00:13.000Z</time>
+</trkpt>
+<trkpt lat="51.1402329" lon="4.8817758">
+<ele>28.179571</ele>
+<time>2009-12-31T22:00:14.000Z</time>
+</trkpt>
+<trkpt lat="51.1390880" lon="4.8824438">
+<ele>23.799728</ele>
+<time>2009-12-31T22:00:15.000Z</time>
+</trkpt>
+<trkpt lat="51.1387140" lon="4.8809271">
+<ele>24.483831</ele>
+<time>2009-12-31T22:00:16.000Z</time>
+</trkpt>
+<trkpt lat="51.1382556" lon="4.8769138">
+<ele>25.431976</ele>
+<time>2009-12-31T22:00:17.000Z</time>
+</trkpt>
+<trkpt lat="51.1387422" lon="4.8744234">
+<ele>23.234049</ele>
+<time>2009-12-31T22:00:18.000Z</time>
+</trkpt>
+<trkpt lat="51.1395100" lon="4.8729192">
+<ele>23.918949</ele>
+<time>2009-12-31T22:00:19.000Z</time>
+</trkpt>
+<trkpt lat="51.1405724" lon="4.8693004">
+<ele>29.917362</ele>
+<time>2009-12-31T22:00:20.000Z</time>
+</trkpt>
+<trkpt lat="51.1411948" lon="4.8683996">
+<ele>23.599321</ele>
+<time>2009-12-31T22:00:21.000Z</time>
+</trkpt>
+<trkpt lat="51.1415812" lon="4.8670423">
+<ele>23.618692</ele>
+<time>2009-12-31T22:00:22.000Z</time>
+</trkpt>
+<trkpt lat="51.1422104" lon="4.8645532">
+<ele>24.265837</ele>
+<time>2009-12-31T22:00:23.000Z</time>
+</trkpt>
+<trkpt lat="51.1428845" lon="4.8626695">
+<ele>24.889841</ele>
+<time>2009-12-31T22:00:24.000Z</time>
+</trkpt>
+<trkpt lat="51.1433629" lon="4.8620695">
+<ele>24.882235</ele>
+<time>2009-12-31T22:00:25.000Z</time>
+</trkpt>
+<trkpt lat="51.1435088" lon="4.8613147">
+<ele>24.045599</ele>
+<time>2009-12-31T22:00:26.000Z</time>
+</trkpt>
+<trkpt lat="51.1433711" lon="4.8601031">
+<ele>22.515244</ele>
+<time>2009-12-31T22:00:27.000Z</time>
+</trkpt>
+<trkpt lat="51.1439421" lon="4.8601091">
+<ele>23.678501</ele>
+<time>2009-12-31T22:00:28.000Z</time>
+</trkpt>
+</trkseg>
+</trk>
+</gpx>
