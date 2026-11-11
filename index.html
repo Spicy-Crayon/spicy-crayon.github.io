@@ -13827,7 +13827,7 @@ const HELP_CONTENT = {
     <section>
       <h3>🌿 Leuke wandelingen: bezienswaardigheden &amp; evenementen</h3>
       <p>Bij <b>Wandelen</b> toont de pop-up "Leuke wandelingen" bovenaan een plaatskiezer, een rij met evenementen van vandaag en een rij bezienswaardigheden. De plaatskiezer staat standaard op <b>In mijn buurt</b> (je huidige positie); tik erop om een andere plaats te zoeken, bv. waar je morgen heen gaat. Recente plaatsen blijven bewaard.</p>
-      <p><b>Bezienswaardig in de buurt:</b> de acht bekendste plekken binnen ongeveer 3 km (zijn er weinig, dan tot 8 km), met foto, afstand en soort. "Alle" opent de volledige lijst met filters en sortering op afstand of bekendheid; een tik op een plek toont uitleg uit Wikipedia, een minikaart, een knop Beluister en een knop om vanaf je locatie te navigeren. De plaatsen komen uit OpenStreetMap, de gratis servers daarvan zijn soms druk: de app probeert dan automatisch een andere server en, als dat niet lukt, één keer een lichtere zoekopdracht (kerken en kapellen ontbreken dan misschien, dat staat erbij). Lukt niets, dan staat er kort waarom en kun je opnieuw proberen.</p>
+      <p><b>Bezienswaardig in de buurt:</b> de acht bekendste plekken binnen ongeveer 3 km (zijn er weinig, dan tot 8 km), met foto, afstand en soort. "Alle" opent de volledige lijst met filters en sortering op afstand of bekendheid; een tik op een plek toont uitleg uit Wikipedia, een minikaart, een knop Beluister en een knop om vanaf je locatie te navigeren. De plaatsen komen uit OpenStreetMap, de gratis servers daarvan zijn soms druk: de app probeert dan automatisch een andere server en, als dat niet lukt, één keer een lichtere zoekopdracht (kerken en kapellen ontbreken dan misschien, dat staat erbij). Antwoordt geen enkele server, dan zoekt de app Wikipedia-artikelen met coördinaten rond de plaats: dat is snel en de uitleg zit er meteen bij, maar het is minder volledig en minder precies (soms komt er een dorp of heuvel bij; de app filtert dat zo goed mogelijk weg) en dat staat erbij. Lukt niets, dan staat er kort waarom en kun je opnieuw proberen.</p>
       <p><b>Vandaag in de buurt:</b> evenementen van vandaag uit Wattedoen.be, met een schuif van 1 tot 50 km (standaard 20) en filters; een tik op een evenement opent de pagina op Wattedoen. Dit werkt alleen voor België (voor een plaats in het buitenland krijg je een melding). De afstand telt vanaf de gemeente, niet vanaf je exacte positie. Het kan zijn dat een evenement ontbreekt of een onduidelijke datum heeft: de site is niet van ons en kan veranderen.</p>
     </section>
     <section>
@@ -14018,7 +14018,7 @@ const HELP_CONTENT = {
     <section>
       <h3>🌿 Nice walks: sights &amp; events</h3>
       <p>For <b>Walking</b>, the "Nice walks" pop-up shows a place picker at the top, a row with today's events and a row with sights. The place picker starts on <b>Around me</b> (your current position); tap it to search another place, e.g. where you are going tomorrow. Recent places are remembered.</p>
-      <p><b>Sights nearby:</b> the eight best-known places within about 3 km (8 km when there are few), with photo, distance and type. "All" opens the full list with filters and sorting by distance or fame; tapping a place shows an explanation from Wikipedia, a small map, a Listen button and a button to navigate from your location. The places come from OpenStreetMap, whose free servers are sometimes busy: the app then automatically tries another server and, if that fails, one lighter search (churches and chapels may then be missing, which is shown). If nothing works, a short reason is shown and you can try again.</p>
+      <p><b>Sights nearby:</b> the eight best-known places within about 3 km (8 km when there are few), with photo, distance and type. "All" opens the full list with filters and sorting by distance or fame; tapping a place shows an explanation from Wikipedia, a small map, a Listen button and a button to navigate from your location. The places come from OpenStreetMap, whose free servers are sometimes busy: the app then automatically tries another server and, if that fails, one lighter search (churches and chapels may then be missing, which is shown). If no server answers at all, the app searches Wikipedia articles with coordinates around the place: that is fast and comes with the explanation, but it is less complete and less precise (a village or hill may slip in; the app filters those out as well as it can), and this is shown. If nothing works, a short reason is shown and you can try again.</p>
       <p><b>Today nearby:</b> today's events from Wattedoen.be, with a slider from 1 to 50 km (default 20) and filters; tapping an event opens its page on Wattedoen. This only works for Belgium (for a place abroad you get a notice). The distance counts from the municipality, not from your exact position. An event may be missing or have an unclear date: the site is not ours and can change.</p>
     </section>
     <section>
@@ -15674,6 +15674,7 @@ const DEV_NOTES_CONTENT = {
       <p><b>Oorzaak.</b> De zoekvraag voor bezienswaardigheden (<code>nrSgQuery()</code>) bevatte <code>["amenity"="place_of_worship"]</code>. Een exacte waarde die zo vaak voorkomt, laat Overpass een trage zoekmethode kiezen: op <code>overpass.openstreetmap.fr</code> liep de vraag tegen de time-out, terwijl dezelfde vraag met <code>["amenity"~"^place_of_worship$"]</code> in ongeveer 2 s antwoordde (getest met 26 resultaten rond Traben-Trarbach op 3 km, 98 op 8 km, 71 rond Trier). De selector staat nu in de regex-vorm. Dezelfde afweging geldt voor andere veelvoorkomende exacte waarden.</p>
       <p><b>Servers.</b> <code>OVERPASS_ENDPOINTS</code> begint nu met <code>overpass.openstreetmap.fr</code>, dan <code>overpass.private.coffee</code>, <code>overpass-api.de</code>, <code>overpass.kumi.systems</code>, <code>overpass.openstreetmap.ru</code>. Bij metingen gaf overpass-api.de 502 of 34 s op een triviale vraag, antwoordde private.coffee niet, stuurde kumi door naar private.coffee en faalde .ru na 21 s. De laatst werkende server blijft voorrang krijgen (<code>osmWalkLastGoodEndpoint</code>).</p>
       <p><b>Vangnet.</b> Mislukt de volledige vraag op alle servers, dan probeert <code>nrSgFetch()</code> één keer <code>nrSgQuery(ll, r, true)</code> zonder de kerken-selector (max. 300 resultaten); het resultaat krijgt een korte opmerking (<code>sg.light</code>, klasse <code>.nr-sglight</code>). Faalt ook die, dan blijft de oorspronkelijke fout. Faalt in <code>nrSgLoad()</code> enkel de ruimere ronde (8 km), dan blijft het resultaat van de eerste ronde behouden in plaats van een foutmelding.</p>
+      <p><b>Vangnet 2: Wikipedia.</b> Na een mislukte volledige vraag start <code>nrSgFetch()</code> tegelijk de lichte vraag en <code>nrSgWikiFallback()</code>: Wikipedia <code>generator=geosearch</code> (straal max. 10 km, 60 artikelen, <code>prop=coordinates|description|pageprops</code>) in de taal van de app, plus Duits binnen Duitsland. Wikipedia antwoordt snel; de lichte vraag krijgt daarna nog hooguit 8 s om te winnen en wordt anders afgebroken. Een artikel blijft over als de korte Wikidata-omschrijving een bezienswaardigheid noemt (<code>NR_SG_WIKI_KEEP</code>: kasteel, kerk, museum, toren, ruïne, monument, brug, uitkijkpunt...) en niets als dorp, gemeente, rivier, straat of station (<code>NR_SG_WIKI_DROP</code>); dubbelen volgens <code>wikibase_item</code> vallen weg. <code>nrSgWikiTags()</code> zet de omschrijving om naar OpenStreetMap-labels, zodat <code>nrSgParse()</code>, soort, filters en de verrijking ongewijzigd werken. Na één val op Wikipedia slaat de ruimere ronde Overpass over (<code>sg.wikiOnly</code>). Het resultaat krijgt een opmerking (<code>sg.wiki</code>). Beperking: Wikipedia kent veel minder plekken dan OpenStreetMap en omschrijvingen ontbreken soms.</p>
       <p><b>Foutreden.</b> De foutkaart toont onder de zin de echte reden in kleine letters (<code>nrSgWhyHtml()</code>, uit <code>sg.err</code>, max. 170 tekens), bv. de server met "time-out" of "HTTP 502".</p>
       <p><b>Opmaak.</b> De ster (<code>.nr-star</code>, 44 px, rechts) raakte de tekst omdat een latere regel <code>#nearbyRoutesCard .nr-item</code> de <code>padding-right</code> weer op 0 zette; nu zet <code>#nearbyRoutesCard .nr-rw &gt; .nr-item</code> 48 px. De plaatspil is lager (34 px zichtbaar, tikvlak via <code>::after</code> ruim 44 px) en heeft ruimte erboven en eronder.</p>
       <p><b>Naam.</b> De plaatsknop heet "In mijn buurt" (Engels "Around me") in plaats van "Bij mij". <b>Help en vertalingen:</b> nieuwe Help-sectie "Leuke wandelingen: bezienswaardigheden &amp; evenementen" in NL en EN; alle nieuwe teksten bestaan in beide talen. <b>Tests:</b> nieuw bestand <code>test_round188_sights_fix.js</code>; tests 129, 138 en 170 gebruiken de nieuwe servervolgorde (.fr eerst). Versie 2.522 / versionCode 141.</p>
@@ -17477,6 +17478,7 @@ const DEV_NOTES_CONTENT = {
       <p><b>Cause.</b> The sights query (<code>nrSgQuery()</code>) contained <code>["amenity"="place_of_worship"]</code>. An exact value that common makes Overpass pick a slow search method: on <code>overpass.openstreetmap.fr</code> the query hit the timeout, while the same query with <code>["amenity"~"^place_of_worship$"]</code> answered in about 2 s (tested: 26 results around Traben-Trarbach at 3 km, 98 at 8 km, 71 around Trier). The selector now uses the regex form. The same consideration applies to other very common exact values.</p>
       <p><b>Servers.</b> <code>OVERPASS_ENDPOINTS</code> now starts with <code>overpass.openstreetmap.fr</code>, then <code>overpass.private.coffee</code>, <code>overpass-api.de</code>, <code>overpass.kumi.systems</code>, <code>overpass.openstreetmap.ru</code>. In measurements overpass-api.de gave 502 or 34 s on a trivial query, private.coffee did not answer, kumi redirected to private.coffee and .ru failed after 21 s. The last working server still gets priority (<code>osmWalkLastGoodEndpoint</code>).</p>
       <p><b>Safety net.</b> If the full query fails on all servers, <code>nrSgFetch()</code> tries <code>nrSgQuery(ll, r, true)</code> once, without the churches selector (max. 300 results); the result gets a short note (<code>sg.light</code>, class <code>.nr-sglight</code>). If that fails too, the original error stays. If in <code>nrSgLoad()</code> only the wider round (8 km) fails, the result of the first round is kept instead of showing an error.</p>
+      <p><b>Safety net 2: Wikipedia.</b> After a failed full query, <code>nrSgFetch()</code> starts the light query and <code>nrSgWikiFallback()</code> at the same time: Wikipedia <code>generator=geosearch</code> (radius max. 10 km, 60 articles, <code>prop=coordinates|description|pageprops</code>) in the app language, plus German inside Germany. Wikipedia answers fast; the light query then gets at most 8 more seconds to win and is aborted otherwise. An article is kept when its short Wikidata description names a sight (<code>NR_SG_WIKI_KEEP</code>: castle, church, museum, tower, ruins, monument, bridge, viewpoint...) and nothing like village, municipality, river, street or station (<code>NR_SG_WIKI_DROP</code>); duplicates by <code>wikibase_item</code> are dropped. <code>nrSgWikiTags()</code> converts the description to OpenStreetMap tags, so <code>nrSgParse()</code>, kind, filters and enrichment work unchanged. After one fall back to Wikipedia the wider round skips Overpass (<code>sg.wikiOnly</code>). The result gets a note (<code>sg.wiki</code>). Limitation: Wikipedia knows far fewer places than OpenStreetMap and descriptions are sometimes missing.</p>
       <p><b>Error reason.</b> The error card shows the actual reason in small text under the sentence (<code>nrSgWhyHtml()</code>, from <code>sg.err</code>, max. 170 characters), e.g. the server with "time-out" or "HTTP 502".</p>
       <p><b>Layout.</b> The star (<code>.nr-star</code>, 44 px, right) touched the text because a later rule on <code>#nearbyRoutesCard .nr-item</code> reset <code>padding-right</code> to 0; now <code>#nearbyRoutesCard .nr-rw &gt; .nr-item</code> sets 48 px. The place pill is lower (34 px visible, tap area about 44 px through <code>::after</code>) with space above and below.</p>
       <p><b>Name.</b> The place button is called "Around me" (Dutch "In mijn buurt") instead of "Near me". <b>Help and translations:</b> new Help section "Nice walks: sights &amp; events" in NL and EN; all new texts exist in both languages. <b>Tests:</b> new file <code>test_round188_sights_fix.js</code>; tests 129, 138 and 170 use the new server order (.fr first). Version 2.522 / versionCode 141.</p>
@@ -43425,20 +43427,82 @@ const nrSgName = (s) => s.label || s.name;
 const nrSgWalkMin = (km) => Math.max(1, Math.round(km * 1.3 / 4.5 * 60 / 5) * 5);   // hemelsbreed + 30% omweg, 4,5 km/u
 const nrSgWalkText = (km) => { const m = nrSgWalkMin(km); return m < 60 ? m + ' min' : Math.floor(m / 60) + nrT('u', 'h') + String(m % 60).padStart(2, '0'); };
 const nrSgCache = new Map();
+// Ronde 188 (vangnet 2): antwoordt GEEN enkele Overpass-server, dan zoeken we in Wikipedia (geosearch: artikelen met coördinaten rond de plek).
+// Daar zit veel meer ruis in dan in OpenStreetMap (dorpen, straten, rivieren), dus we houden enkel artikelen over wat een bezienswaardigheid kan zijn
+// (de korte Wikidata-omschrijving moet een kasteel, kerk, museum, toren, ruïne, monument, brug, uitkijkpunt... noemen). Het resultaat krijgt dezelfde vorm
+// als een Overpass-antwoord, zodat nrSgParse() en de verrijking (Wikidata-label, foto) ongewijzigd werken.
+const NR_SG_WIKI_KEEP = /kasteel|kastelen|burcht|slot\b|fort\b|vesting|stadspoort|poort|toren|ruïne|ruine|romein|thermen|amfitheater|kerk|kathedraal|basiliek|kapel|abdij|klooster|museum|monument|gedenk|standbeeld|brug|watervallen?|uitkijk|belvedère|molen|dierentuin|attractie|sehensw|schloss|burg\b|turm|stadttor|römisch|kirche|dom\b|kloster|kapelle|denkmal|brücke|wasserfall|aussicht|mühle|castle|tower|ruins?|roman|church|cathedral|chapel|abbey|monastery|monument|memorial|statue|bridge|waterfall|viewpoint|windmill|museum|gate|palace|palais|château|fortress/i;
+const NR_SG_WIKI_DROP = /gemeente|stadsdeel|dorp\b|plaats in|deelgemeente|rivier|beek\b|straat|ortsteil|stadtteil|gemeinde|ortsgemeinde|fluss|bach\b|straße|village|municipality|river|street|district|neighbourhood|railway station|station\b|bahnhof|spoorwegstation/i;
+function nrSgWikiTags(desc){
+  const d = String(desc || '').toLowerCase();
+  if (/kathedraal|cathedral|\bdom\b/.test(d)) return { building:'cathedral' };
+  if (/basiliek|basilica/.test(d)) return { building:'basilica' };
+  if (/kapel|chapel|kapelle/.test(d)) return { building:'chapel' };
+  if (/abdij|klooster|abbey|monastery|kloster/.test(d)) return { building:'monastery' };
+  if (/kerk|kirche|church/.test(d)) return { building:'church' };
+  if (/stadspoort|stadttor|city gate|poort|gate/.test(d)) return { historic:'city_gate' };
+  if (/kasteel|burcht|slot\b|schloss|burg\b|castle|château|palace|palais|fortress|vesting/.test(d)) return { historic:'castle' };
+  if (/\bfort\b/.test(d)) return { historic:'fort' };
+  if (/toren|turm|tower/.test(d)) return { historic:'tower' };
+  if (/ruïne|ruine|ruins?|romein|römisch|roman|thermen|amfitheater/.test(d)) return { historic:'ruins' };
+  if (/monument|gedenk|denkmal|memorial|standbeeld|statue/.test(d)) return { historic:'monument' };
+  if (/museum/.test(d)) return { tourism:'museum' };
+  if (/uitkijk|aussicht|viewpoint|belvedère/.test(d)) return { tourism:'viewpoint' };
+  return { tourism:'attraction' };
+}
+async function nrSgWikiFallback(ll, r, tok){
+  const en = curLang() === 'en', inDE = ll.lat > 47.2 && ll.lat < 55.1 && ll.lon > 5.8 && ll.lon < 15.1;
+  const langs = [en ? 'en' : 'nl'].concat(inDE ? ['de'] : []);
+  const rad = Math.max(500, Math.min(10000, r));
+  const seen = new Set(), elements = [];
+  const rows = await Promise.all(langs.map(async (lang) => {
+    try{
+      const url = `https://${lang}.wikipedia.org/w/api.php?action=query&format=json&origin=*&generator=geosearch&ggscoord=${ll.lat.toFixed(5)}%7C${ll.lon.toFixed(5)}&ggsradius=${rad}&ggslimit=60&ggsnamespace=0&prop=coordinates%7Cdescription%7Cpageprops&ppprop=wikibase_item&colimit=60`;
+      const res = await fetchWithTimeout(url, {}, 12000);
+      if (!res.ok) return [];
+      const j = await res.json();
+      return Object.values((j.query && j.query.pages) || {}).map(pg => ({ lang, pg }));
+    }catch(e){ return []; }
+  }));
+  if (tok !== nrState.sg.tok) { const e = new Error('gestopt'); e.nrStopped = true; throw e; }
+  rows.forEach(list => list.forEach(({ lang, pg }) => {
+    const c = pg.coordinates && pg.coordinates[0], desc = pg.description || '';
+    if (!c || !desc || !NR_SG_WIKI_KEEP.test(desc) || NR_SG_WIKI_DROP.test(desc)) return;
+    const q = (pg.pageprops && pg.pageprops.wikibase_item) || '';
+    if (q && seen.has(q)) return; if (q) seen.add(q);
+    const tags = Object.assign({ name: pg.title, wikipedia: lang + ':' + pg.title }, /^Q\d+$/.test(q) ? { wikidata: q } : {}, nrSgWikiTags(desc));
+    elements.push({ type:'node', id:pg.pageid, lat:c.lat, lon:c.lon, tags });
+  }));
+  return { elements };
+}
 async function nrSgFetch(ll, r, tok){
+  const sg = nrState.sg;
   const ck = [r, ll.lat.toFixed(3), ll.lon.toFixed(3)].join('|'), hit = nrSgCache.get(ck);
-  if (hit && Date.now() - hit.t < 10 * 60 * 1000){ nrState.sg.light = !!hit.light; return hit.data; }
-  const stop = () => tok !== nrState.sg.tok;
-  let data, light = false;
-  try{ data = await assistantOverpass(nrSgQuery(ll, r), null, stop); }
+  if (hit && Date.now() - hit.t < 10 * 60 * 1000){ sg.light = !!hit.light; sg.wiki = !!hit.wiki; return hit.data; }
+  let abandon = false;
+  const stop = () => tok !== sg.tok || abandon;
+  let data, light = false, wiki = false;
+  // Is Overpass al voor deze zoekactie als onbereikbaar gebleken (de eerste ronde viel terug op Wikipedia), dan niet opnieuw een minuut wachten.
+  if (sg.wikiOnly){ data = await nrSgWikiFallback(ll, r, tok); wiki = true; }
+  else try{ data = await assistantOverpass(nrSgQuery(ll, r), null, stop); }
   catch(e){
-    // Ronde 188 (vangnet): mislukt de volledige vraag, probeer dan één keer de lichte vorm; lukt ook die niet, dan blijft de oorspronkelijke fout de melding.
+    // Ronde 188 (vangnet): mislukt de volledige vraag, probeer dan de lichte vorm (zonder kerken-selector) en, tegelijk, Wikipedia. Wikipedia antwoordt snel;
+    // de lichte vorm krijgt daarna nog maximaal 8 s om te winnen (hij geeft meer en betere resultaten), anders wordt ze afgebroken.
     if (!e || e.nrStopped || stop()) throw e;
-    console.info('[bezienswaardigheden] volledige vraag mislukt, lichte vorm proberen:', String(e.message || ''));
-    try{ data = await assistantOverpass(nrSgQuery(ll, r, true), null, stop); light = true; }catch(e2){ throw (e2 && e2.nrStopped) ? e2 : e; }
+    console.info('[bezienswaardigheden] volledige vraag mislukt, vangnet starten:', String(e.message || ''));
+    const lightP = assistantOverpass(nrSgQuery(ll, r, true), null, stop).then(d => ({ d }), x => ({ x }));
+    const wikiP = nrSgWikiFallback(ll, r, tok).then(d => ({ d }), x => ({ x }));
+    const w = await wikiP;
+    if (w.x && w.x.nrStopped) throw w.x;
+    const grace = new Promise(res => setTimeout(() => res(null), w.d && w.d.elements.length ? 8000 : 60000));
+    const l = await Promise.race([lightP, grace]);
+    abandon = true;
+    if (l && l.d){ data = l.d; light = true; }
+    else if (w.d && w.d.elements.length){ data = w.d; wiki = true; sg.wikiOnly = true; }
+    else throw (l && l.x && l.x.nrStopped) ? l.x : e;
   }
-  nrState.sg.light = light;
-  nrSgCache.set(ck, { t:Date.now(), data, light }); if (nrSgCache.size > 8) nrSgCache.delete(nrSgCache.keys().next().value);
+  sg.light = light; sg.wiki = wiki;
+  nrSgCache.set(ck, { t:Date.now(), data, light, wiki }); if (nrSgCache.size > 8) nrSgCache.delete(nrSgCache.keys().next().value);
   return data;
 }
 async function nrSgLoad(force){
@@ -43449,7 +43513,7 @@ async function nrSgLoad(force){
   const key = ll.lat.toFixed(3) + ',' + ll.lon.toFixed(3);
   if (!force && sg.key === key && (sg.status === 'ok' || sg.status === 'loading')) return;
   const tok = ++sg.tok;
-  sg.key = key; sg.status = 'loading'; sg.items = []; sg.err = ''; sg.light = false; nrRenderSights(); nrSgRenderList();
+  sg.key = key; sg.status = 'loading'; sg.items = []; sg.err = ''; sg.light = false; sg.wiki = false; sg.wikiOnly = false; nrRenderSights(); nrSgRenderList();
   try{
     let radius = NR_SG_R, items = nrSgParse((await nrSgFetch(ll, radius, tok)).elements, ll);
     if (tok !== sg.tok) return;
@@ -43586,7 +43650,7 @@ function nrSightsHtml(){
   if (sg.status === 'loading') body = `<div class="nr-sgmsg"><span class="nr-dots" aria-hidden="true"><i></i><i></i><i></i></span> ${nrT('Bezienswaardigheden zoeken…', 'Looking for sights…')}</div>`;
   else if (sg.status === 'error') body = `<div class="nr-sgmsg">${nrT('Zoeken in OpenStreetMap is niet gelukt. De gratis servers zijn soms druk of je verbinding is zwak.', 'Searching OpenStreetMap did not work. The free servers are sometimes busy, or your connection is weak.')}${nrSgWhyHtml()} <button type="button" class="nr-sgretry" data-act="retry">${nrT('Opnieuw proberen', 'Try again')}</button></div>`;
   else if (sg.status === 'none') body = `<div class="nr-sgmsg">${(nrState.sg.place ? nrT('Geen bezienswaardigheden gevonden rond ' + nrSgPlaceName() + '. Kies een andere plaats.', 'No sights found around ' + nrSgPlaceName() + '. Pick another place.') : nrT('Geen bezienswaardigheden gevonden bij jou in de buurt. Kies een andere plaats.', 'No sights found near you. Pick another place.'))}</div>`;
-  else body = `<div class="nr-sgrow">${nrSgTop(sg.items, NR_SG_CARDS).map(nrSgCardHtml).join('')}</div>` + (sg.light ? `<p class="nr-sglight">${nrT('Beperkte zoekopdracht (de servers waren druk): kerken en kapellen ontbreken misschien. Probeer later opnieuw.', 'Reduced search (the servers were busy): churches and chapels may be missing. Try again later.')}</p>` : '');
+  else body = `<div class="nr-sgrow">${nrSgTop(sg.items, NR_SG_CARDS).map(nrSgCardHtml).join('')}</div>` + (sg.wiki ? `<p class="nr-sglight">${nrT('De kaartservers waren onbereikbaar: dit lijstje komt uit Wikipedia en is minder volledig. Probeer later opnieuw.', 'The map servers were unreachable: this list comes from Wikipedia and is less complete. Try again later.')}</p>` : '') + (sg.light ? `<p class="nr-sglight">${nrT('Beperkte zoekopdracht (de servers waren druk): kerken en kapellen ontbreken misschien. Probeer later opnieuw.', 'Reduced search (the servers were busy): churches and chapels may be missing. Try again later.')}</p>` : '');
   return `<div class="nr-sgsec">${nrSgPillHtml()}${nrEvRowHtml()}${head}${body}</div>`;
 }
 function nrRenderSights(){ const el = $('nrSights'); if (el) el.innerHTML = nrSightsHtml(); }
