@@ -10384,6 +10384,7 @@ function applyActiveGpxTrack(pts){
   routeSteps = buildStepsFromLine(routeLine.getLatLngs());
   navTrackRequestReset(); // nieuwe track = nieuw anker: de instructies hierboven staan in het domein van DEZE lijn
   traveledRouteLine.setLatLngs([]); NAVTRACK.greyKey = '';
+  renderRoute(); // Ronde 191: routelijst meteen gelijk met de herbouwde wegpunten (voorheen pas na de routeberekening; zie updateNodeTimesUI)
 }
 // Projectie op een willekeurige punten-array (eerste plek wint bij nagenoeg gelijke afstand): voor het herstarten van een lus.
 function lineProjectFirst(pts, lat, lon){
@@ -13770,7 +13771,7 @@ const HELP_CONTENT = {
       <b>💧🍎 Eet- &amp; drinkherinneringen</b> (optioneel, elk apart) — een melding + trilling op een zelfgekozen interval.<br>
       <b>🏆 Persoonlijk record per routestuk</b> — de app onthoudt de tijd tussen elk paar opeenvolgende punten uit je rit-geschiedenis, en meldt het als je een stuk sneller aflegt dan ooit.<br>
       <b>↩️ Terug naar startpunt</b> — één tik tijdens navigatie om terug te gaan naar het punt waar je op Start drukte, met of zonder geladen route of GPX. Je kiest: 🧭 de kortste weg naar je startpunt (een nieuwe route van hier naar de start, de rest van je oude route verdwijnt), of 👣 dezelfde weg terug langs je eigen grijze spoor (in omgekeerde richting). Het startpunt blijft hetzelfde, ook als je daarna opnieuw op Start drukt. Wat je tot dan toe aflegde wordt als wandeling/rit bewaard; tik daarna op Start om terug te gaan.<br>
-      <b>⚠️ Je wijkt af van de route</b> — tik op de rode melding voor keuzes: 🔄 naar het volgende punt (de gewone herberekening), ⏭️ dit punt overslaan en naar het daaropvolgende gaan (handig als je bewust een korter pad nam; niet bij een GPX-route), of ↩️ terug naar start.<br>
+      <b>⚠️ Je wijkt af van de route</b> — tik op de rode melding voor keuzes: 🔄 naar het volgende punt (de gewone herberekening), ⏭️ dit punt overslaan en naar het daaropvolgende gaan (handig als je bewust een korter pad nam; niet bij een GPX-route), of ↩️ terug naar start. Loop je langs een later punt terwijl je een eerder punt hebt laten liggen (en heb je minstens 300 m gelopen), dan vraagt de app één keer of de overgeslagen punten mogen vallen.<br>
       <b>🌙 Aankomst in het donker</b> — extra duidelijke melding + trilling als je na zonsondergang (of voor zonsopgang) aankomt.<br>
       <b>📖 Historische audio-fragmenten</b> (optioneel) — leest via Wikipedia automatisch een kort fragment voor zodra je een gekend punt (kasteel, monument, bezienswaardigheid) passeert. De melding met de naam (onderlijnd, met ⓘ) kun je aantikken: dan opent een venster met het Wikipedia-artikel in de taal van de app (Nederlands of Engels), met een sluitknop bovenaan. Hetzelfde geldt voor een 🦉 Natuurspotter-melding: tik op de soortnaam voor het artikel. Soortnamen na een foto- of geluidsherkenning staan ook in de taal van de app.</p>
       <p><b>🔍 Zoekbalk &amp; tegelrij inklapbaar</b> — de zoekbalk bovenaan en de rij tegelknoppen eronder (kaart/dashboard/kompas/weer/locatie/noorden/Spotify) klappen automatisch in zodra je op "Start" tikt, zodat de navigatiebalk hoger op het scherm kan beginnen. Tik op het pijltje bovenaan de tegelrij (▲) om ze zelf in te klappen, of op de kleine balk bovenin (🔍 / ▼) om ze weer tevoorschijn te halen — een veeg naar boven (inklappen) of naar beneden (uitklappen) werkt ook. Bij "Stop" klapt alles automatisch weer volledig open.</p>
@@ -13963,7 +13964,7 @@ const HELP_CONTENT = {
       <b>💧🍎 Eat &amp; drink reminders</b> (optional, each separate) — a notification + vibration at your own chosen interval.<br>
       <b>🏆 Personal record per route segment</b> — the app remembers the time between each pair of consecutive points from your ride history, and notifies you if you beat it.<br>
       <b>↩️ Back to starting point</b> — one tap during navigation to go back to the point where you pressed Start, with or without a loaded route or GPX. You choose: 🧭 the shortest way to your starting point (a new route from here to the start; the rest of your old route is dropped), or 👣 the same way back along your own grey track (in reverse). The starting point stays the same, even if you press Start again afterwards. What you covered so far is saved as a walk/ride; then tap Start to head back.<br>
-      <b>⚠️ You are straying from the route</b> — tap the red message for choices: 🔄 to the next point (the normal recalculation), ⏭️ skip this point and go to the one after (handy when you deliberately took a shorter path; not for a GPX route), or ↩️ back to start.<br>
+      <b>⚠️ You are straying from the route</b> — tap the red message for choices: 🔄 to the next point (the normal recalculation), ⏭️ skip this point and go to the one after (handy when you deliberately took a shorter path; not for a GPX route), or ↩️ back to start. If you walk past a later point after leaving an earlier one behind (and have walked at least 300 m), the app asks once whether the skipped points can be dropped.<br>
       <b>🌙 Dark arrival</b> — an extra clear notification + vibration if you arrive after sunset (or before sunrise).<br>
       <b>📖 Historical audio snippets</b> (optional) — automatically reads out a short Wikipedia snippet when you pass a known point (castle, monument, landmark). You can tap the notice with the name (underlined, with ⓘ): a window opens with the Wikipedia article in the app language (Dutch or English), with a close button at the top. The same goes for a 🦉 Nature spotter notice: tap the species name for the article. Species names after a photo or sound recognition are also in the app language.</p>
       <p><b>🔍 Collapsible search bar &amp; button row</b> — the search bar at the top and the row of tile buttons below it (map/dashboard/compass/weather/locate/north/Spotify) automatically collapse as soon as you tap "Start", so the navigation bar can start higher up the screen. Tap the arrow at the top of the button row (▲) to collapse them yourself, or the small bar at the top (🔍 / ▼) to bring them back — swiping up (collapse) or down (expand) also works. On "Stop" everything automatically expands again.</p>
@@ -15712,6 +15713,14 @@ const DEV_NOTES_CONTENT = {
       <p><b>Filters:</b> gegevens komen uit Overpass (<code>osmWalkOverpass()</code>) en worden 30 dagen bewaard (<code>nearby_tags_v1</code>). Speeltuin (<code>leisure=playground</code>, 300 m) en halte (<code>highway=bus_stop</code>, <code>railway=station|halt|tram_stop</code>, 500 m) in 1 vraag per 20 routes; de eerste 60 volgens de sortering. Ondergrond: per route (de eerste 20) monsterpunten om de ~250 m (6 tot 14), per punt de dichtstbijzijnde weg binnen 15 m (<code>out tags geom</code>) en zijn klasse uit <code>surface</code>, anders <code>tracktype</code> of <code>highway</code>; een pad of voetpad zonder <code>surface</code> telt niet mee. Minstens 5 bekende punten en 60% van de punten bekend, anders geen uitspraak; "bij regen" = minstens 70% verhard. Een route die enkel een link is, heeft geen spoor en krijgt geen ondergrondlabel. Mislukt een vraag, dan staat er een melding en wordt niets bewaard.</p>
       <p><b>Eigen plekken:</b> <code>plekken/index.json</code> (<code>regions[].places[]</code> met naam, tekst, lat, lon, foto, fotoBron, mode, gecontroleerd) wordt bij het opstarten geladen; <code>nrPlacesNear()</code> houdt plekken van deze soort binnen 40 km; de pop-up toont de drie dichtstbijzijnde. Zonder filter en zonder lengtegroep staan ze als "📍 Eigen tips" boven de lijst; een tik opent de plek in Google Maps. Het bestand bevat als startlijst tien plekken in Limburg (zonder datum bij <code>gecontroleerd</code>, dus als "nog niet zelf gecontroleerd" getoond, met een Maps-zoektekst in <code>maps</code>); de rest komt van jou, de app verzint niets.</p>
       <p><b>Teksten en test:</b> alle nieuwe teksten bestaan in NL en EN, Help en <code>plekken/README.md</code> zijn aangevuld. <b>Testsuite:</b> nieuw bestand <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> is een kiezer aangepast aan de nieuwe rijopbouw. Versie 2.497 / versionCode 116.</p>
+    </section>
+    <section>
+      <h3>🛠️ Ronde 191: ster in het detail, vastlopende positie na een lus-herstart, overgeslagen pinnen</h3>
+      <p><b>Ster.</b> De ster in het detailscherm van "Leuke wandelingen" bewaarde de route in het lijstje (<code>nrFavToggle()</code>), maar de rij in de lijst eronder werd niet bijgewerkt: die bleef leeg tot de lijst opnieuw werd opgebouwd. <code>nrBackToList()</code> zet nu de sterren van alle rijen gelijk met het lijstje (<code>nrSyncStars()</code>) en ververst de teller "Lijst (n)". Staat het filter "Lijst" of "Mijn lijstje" aan, dan wordt de lijst opnieuw getekend, zodat een weggehaalde route verdwijnt.</p>
+      <p><b>Routelijst na een lus-herstart.</b> Bij Start midden op een GPX-lus (en bij richting omkeren) bouwt <code>applyActiveGpxTrack()</code> de wegpunten opnieuw op. De lijst op het scherm werd pas ververst als de routeberekening klaar was. Had de lijst meer regels dan de nieuwe route (bijvoorbeeld door een zelf toegevoegde speld, die bij het herbouwen vervalt), dan gooide <code>nodeTimeLabel()</code> in <code>updateNodeTimesUI()</code> een fout in elke <code>renderPosition()</code>-aanroep tot de berekening klaar was: geen kaartbeweging, geen afstand, geen aankomst. <code>applyActiveGpxTrack()</code> roept nu meteen <code>renderRoute()</code> aan en <code>updateNodeTimesUI()</code> slaat regels voorbij het einde van de route over.</p>
+      <p><b>Overgeslagen pinnen.</b> Bij een route uit losse punten telt in <code>renderPosition()</code> enkel <code>route[navTargetIndex]</code>. Liet je een punt liggen en liep je langs een later punt, dan bleef <code>rerouteFromCurrentPosition()</code> naar het overgeslagen punt terugleiden en telden de latere punten nooit mee. <code>offerSkipWaypoints()</code> vraagt nu eenmalig (per combinatie huidig doel/later punt, <code>navSkipAsked</code>) of de overgeslagen punten mogen vallen, als je dichter dan 30 m bij een later punt bent, verder dan 60 m van het huidige doel, minstens 300 m echt gelopen hebt (<code>NAVGPS.m - NAVGPS.doneBase</code>; anders telt een eindpunt dat bij het begin ligt meteen mee) en geen venster openstaat. Bij ja wordt dat punt het doel met <code>navForceArrive</code>, zodat het meteen als bereikt telt zonder de Ronde-120-controle op werkelijk gelopen route (die zou hier wachten op 70% van een getekende lijn die langs de overgeslagen punten loopt). Niet voor GPX-routes en niet in vrije modus.</p>
+      <p><b>Gecontroleerd, niet gewijzigd.</b> De GPX-functies (<code>computeGpxElevationStats()</code>, import, lus-herstart, foute-richting-detectie) kennen geen verschil tussen wandelen en fietsen; een proef met een lus en een zelf toegevoegde speld gaf in beide modi hetzelfde resultaat. De foute-richting-vraag bestaat alleen voor routes uit een GPX (<code>routeIsFromGpx</code>); een route uit losse punten (zoals een met de lus-generator gemaakte route) volgt altijd de volgorde van de punten en herberekent naar het eerstvolgende punt.</p>
+      <p><b>Testsuite:</b> nieuw bestand <code>test_round191_star_sync_nodetimes.js</code> (11 tests). Versie 2.526 / versionCode 145.</p>
     </section>
     <section>
       <h3>🛠️ Ronde 190: GPX-lijst online lezen en automatisch bijwerken</h3>
@@ -17534,6 +17543,14 @@ const DEV_NOTES_CONTENT = {
       <p><b>Filters:</b> data comes from Overpass (<code>osmWalkOverpass()</code>) and is kept for 30 days (<code>nearby_tags_v1</code>). Playground (<code>leisure=playground</code>, 300 m) and stop (<code>highway=bus_stop</code>, <code>railway=station|halt|tram_stop</code>, 500 m) in 1 request per 20 routes; the first 60 in the sorting. Surface: per route (the first 20) sample points about every 250 m (6 to 14), per point the nearest way within 15 m (<code>out tags geom</code>) and its class from <code>surface</code>, otherwise <code>tracktype</code> or <code>highway</code>; a path or footway without <code>surface</code> does not count. At least 5 known points and 60% of the points known, otherwise no statement; "in rain" = at least 70% paved. A route that is only a link has no track and gets no surface label. If a request fails a message appears and nothing is saved.</p>
       <p><b>Own places:</b> <code>plekken/index.json</code> (<code>regions[].places[]</code> with name, text, lat, lon, foto, fotoBron, mode, gecontroleerd) is loaded at startup; <code>nrPlacesNear()</code> keeps places of this activity within 40 km; the pop-up shows the three nearest. Without a filter and without a length group they show as "📍 Own tips" above the list; a tap opens the place in Google Maps. The file holds ten places in Limburg as a starter list (no date in <code>gecontroleerd</code>, so shown as "not checked yourself yet", with a Maps search text in <code>maps</code>); the rest comes from you, the app invents nothing.</p>
       <p><b>Texts and test:</b> all new texts exist in NL and EN, Help and <code>plekken/README.md</code> are extended. <b>Test suite:</b> new file <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> one selector is adjusted to the new row structure. Version 2.497 / versionCode 116.</p>
+    </section>
+    <section>
+      <h3>🛠️ Round 191: star in the detail view, position updates stalling after a loop restart, skipped pins</h3>
+      <p><b>Star.</b> The star in the detail view of "Nice walks" saved the route to the list (<code>nrFavToggle()</code>), but the row in the list underneath was not updated: it stayed empty until the list was rebuilt. <code>nrBackToList()</code> now syncs the stars of all rows with the saved list (<code>nrSyncStars()</code>) and refreshes the "List (n)" counter. If the "List" filter or "My list" is on, the list is redrawn so a removed route disappears.</p>
+      <p><b>Route list after a loop restart.</b> When you press Start in the middle of a GPX loop (and when reversing direction), <code>applyActiveGpxTrack()</code> rebuilds the waypoints. The list on screen was only refreshed once the route calculation had finished. If the list had more rows than the new route (for example because of a pin you added yourself, which is dropped by the rebuild), <code>nodeTimeLabel()</code> in <code>updateNodeTimesUI()</code> threw an error in every <code>renderPosition()</code> call until the calculation finished: no map movement, no distance, no arrival. <code>applyActiveGpxTrack()</code> now calls <code>renderRoute()</code> straight away and <code>updateNodeTimesUI()</code> skips rows beyond the end of the route.</p>
+      <p><b>Skipped pins.</b> For a route made of loose points, <code>renderPosition()</code> only counts <code>route[navTargetIndex]</code>. If you left a point behind and walked past a later one, <code>rerouteFromCurrentPosition()</code> kept leading you back to the skipped point and the later points never counted. <code>offerSkipWaypoints()</code> now asks once (per combination of current target and later point, <code>navSkipAsked</code>) whether the skipped points can be dropped, if you are within 30 m of a later point, more than 60 m from the current target, have really walked at least 300 m (<code>NAVGPS.m - NAVGPS.doneBase</code>; otherwise an end point next to the start would count at once) and no dialog is open. On yes that point becomes the target with <code>navForceArrive</code>, so it counts as reached at once without the Round 120 check on really walked route (which would wait for 70% of a drawn line that runs past the skipped points). Not for GPX routes and not in free mode.</p>
+      <p><b>Checked, not changed.</b> The GPX functions (<code>computeGpxElevationStats()</code>, import, loop restart, wrong-direction detection) make no difference between walking and cycling; a test with a loop and a self-added pin gave the same result in both modes. The wrong-direction question exists only for routes that come from a GPX (<code>routeIsFromGpx</code>); a route made of loose points (such as one made with the loop generator) always follows the order of its points and recalculates towards the next point.</p>
+      <p><b>Test suite:</b> new file <code>test_round191_star_sync_nodetimes.js</code> (11 tests). Version 2.526 / versionCode 145.</p>
     </section>
     <section>
       <h3>🛠️ Round 190: reading the GPX list online and updating it automatically</h3>
@@ -26451,7 +26468,7 @@ ${GARMIN_MENU_BTN_JS}
 </body>
 </html>`;
 }
-const APP_VERSION_TEXT = 'v2.525 · 11 nov';
+const APP_VERSION_TEXT = 'v2.526 · 12 nov';
 $('homeVersionFooter').textContent = APP_VERSION_TEXT;
 function buildGarminHubHtml(){
   // Dit is Gemini's keuzescherm.html, ongewijzigd qua opbouw/stijl — enkel: (1) een derde grote tegel
@@ -30158,6 +30175,7 @@ function updateNodeTimesUI(){
   items.forEach((li, i) => {
     const el = li.querySelector('.li-time');
     if (!el) return;
+    if (i >= route.length) return; // Ronde 191: de lijst op het scherm kan even langer zijn dan de route (route net herbouwd, lijst nog niet vernieuwd) -- dat liet renderPosition() bij elke GPS-tik crashen
     const t = nodeTimeLabel(i);
     el.textContent = t.text;
     el.classList.toggle('actual', t.actual);
@@ -34611,7 +34629,7 @@ function startNav(){
       : '🧊 Lichte 3D-kanteling staat aan tijdens navigatie — zet uit bij ⚙️ Instellingen → "Onderweg & navigatie" als je liever plat kijkt.', 4500);
   }
   updateRoutePointMarkersDraggable();
-  navTargetIndex = 0;
+  navTargetIndex = 0; navForceArrive = -1;
   lastPosForSpeed = null;
   mainSpeedKalman.reset();
   navWakeLockToastShownThisSession = false;
@@ -35460,7 +35478,8 @@ function renderPosition(){
   $('navProgressLabel').textContent = `${navTargetIndex}/${route.length} · ~${etaMin} min`;
 
   if (!gpxTracked) navLegTouch(lat, lon, navTargetIndex); // Ronde 120: beginpunt van dit routestuk vastleggen (zie navArrivalNeedsMoreWalking)
-  if (gpxTracked ? gpxReached : (dist < 30 && !navArrivalNeedsMoreWalking(lat, lon, navTargetIndex))){
+  if (gpxTracked ? gpxReached : (navForceArrive === navTargetIndex || (dist < 30 && !navArrivalNeedsMoreWalking(lat, lon, navTargetIndex)))){
+    navForceArrive = -1;
     console.info(`[aankomst] punt ${navTargetIndex + 1}/${route.length} bereikt (afstand ${Math.round(dist)} m)`);
     if (navigator.vibrate) navigator.vibrate([120,60,120]);
     arrivalActual[navTargetIndex] = Date.now();
@@ -35484,6 +35503,39 @@ function renderPosition(){
       toast(curLang()==='en' ? `${pointLabel(target)} reached → heading to ${route[navTargetIndex].ref}` : `${pointLabel(target)} bereikt → op naar ${route[navTargetIndex].ref}`);
       highlightTarget();
     }
+  } else if (!gpxTracked && !routeIsFromGpx && !navFreeMode) offerSkipWaypoints(lat, lon, dist);
+}
+
+// Ronde 191: bij een route uit losse punten telt enkel het eerstvolgende punt. Liet je een punt links liggen en liep je langs een LATER punt, dan bleef de app naar het overgeslagen punt
+// terugleiden (elke keer "herberekend naar punt 1") en telden de latere punten nooit mee. Nu vraagt de app één keer of je het (de) overgeslagen punt(en) wil laten vallen.
+// Voorwaarden: je bent ver van het huidige doel (ook als je op de getekende lijn loopt, bv. een lus in de andere richting), minstens 300 m echt gelopen (anders telt een eindpunt dat bij het begin ligt meteen mee) en dichtbij een later punt.
+const navSkipAsked = {};
+let navSkipBusy = false;
+let navForceArrive = -1; // punt dat na "overgeslagen punten laten vallen" meteen als bereikt telt (de Ronde-120-controle op echt gelopen route hoeft dan niet)
+async function offerSkipWaypoints(lat, lon, distToTarget){
+  if (navSkipBusy || !navActive || navPausedForDetour) return;
+  if (!(distToTarget > 60) || NAVGPS.m - NAVGPS.doneBase < 300) return;
+  if (document.querySelector('.modal.show, [id$="Modal"].show')) return;
+  const from = navTargetIndex;
+  for (let j = from + 1; j < route.length; j++){
+    const r = route[j]; if (!r || r.isVia) continue;
+    if (haversine(lat, lon, r.lat, r.lon) >= 30) continue;
+    const key = from + '>' + j + ':' + route.length; if (navSkipAsked[key]) return;
+    navSkipAsked[key] = true;
+    navSkipBusy = true;
+    const names = route.slice(from, j).filter(q => !q.isVia).map(q => pointLabel(q));
+    const msg = curLang()==='en'
+      ? `You are at ${pointLabel(r)}, but ${names.length > 1 ? names.length + ' points before it were skipped' : '"' + (names[0] || '') + '" was skipped'}. Drop ${names.length > 1 ? 'them' : 'it'} and continue after ${pointLabel(r)}?`
+      : `Je bent bij ${pointLabel(r)}, maar ${names.length > 1 ? names.length + ' punten ervoor zijn overgeslagen' : '"' + (names[0] || '') + '" is overgeslagen'}. Laten vallen en verder na ${pointLabel(r)}?`;
+    let ok = false;
+    try{ ok = await customConfirm(msg, { okText: curLang()==='en' ? 'Yes, drop' : 'Ja, laten vallen', cancelText: curLang()==='en' ? 'No, keep' : 'Nee, houden' }); }catch(e){ ok = false; }
+    navSkipBusy = false;
+    if (ok && navActive && navTargetIndex === from && route[j] === r){
+      navTargetIndex = j; navForceArrive = j;   // het volgende renderPosition()-tikje telt punt j als bereikt en gaat naar j + 1
+      updateProgressUI(); highlightTarget();
+      toast(curLang()==='en' ? 'Skipped points dropped.' : 'Overgeslagen punten laten vallen.', 3000);
+    }
+    return;
   }
 }
 
@@ -46203,9 +46255,20 @@ function nrShowDetail(c){
   $('nrDBody').scrollTop = 0;
   nrDetailLoad(c, dt);
 }
+// Ronde 191: de ster in het detailscherm bewaart de route, maar de rij in de lijst eronder bleef leeg tot je de lijst opnieuw laadde. Zet alle sterren in de lijst gelijk met het lijstje.
+function nrSyncStars(){
+  document.querySelectorAll('#nrList .nr-star').forEach(st => {
+    const c = nrState.view && nrState.view[parseInt(st.dataset.idx, 10)]; if (!c) return;
+    const on = nrFavHas(c);
+    st.classList.toggle('on', on); st.textContent = on ? '★' : '☆'; st.setAttribute('aria-pressed', String(on));
+    st.setAttribute('aria-label', on ? nrT('Uit je lijstje halen', 'Remove from your list') : nrT('Bewaar in je lijstje', 'Save to your list'));
+  });
+}
 function nrBackToList(){
   $('nearbyRoutesCard').classList.remove('detail');
   nrState.detail = null; nrState.dtoken++;
+  if (nrState.favAll || nrState.flt.fav) nrRender(true);   // je bekijkt het lijstje zelf: een weggehaalde route moet verdwijnen
+  else { nrRenderFilters(); nrSyncStars(); }                // anders: teller van "Lijst (n)" en sterren bijwerken
   $('nrListWrap').scrollTop = nrState.listScroll || 0;
 }
 function nrClose(){ $('nearbyRoutesOverlay').classList.remove('show'); $('nearbyRoutesCard').classList.remove('detail', 'loading', 'chat', 'sgv'); nrState.sg.tok++; nrState.ev.tok++; nrSgListenStop(); $('nrPlaceSheet').classList.remove('show'); nrState.load = null; nrState.loadMsg = null; nrState.detail = null; nrState.dtoken++; nrState.token++; clearTimeout(nrState.pendT); nrState.pend = []; if (nrState.io){ try{ nrState.io.disconnect(); }catch(e){} nrState.io = null; } }
