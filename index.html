@@ -2568,6 +2568,24 @@
   #nearbyRoutesCard .nr-sgpill{ display:inline-flex; align-items:center; gap:8px; border:none; background:#f1f5f9; color:#0f172a; border-radius:99px; padding:0 12px; min-height:34px; margin:10px 0 12px; position:relative; font:inherit; font-size:13px; font-weight:600; max-width:100%; }
   #nearbyRoutesCard .nr-sgpill::after{ content:''; position:absolute; left:-4px; right:-4px; top:-5px; bottom:-5px; }   /* Ronde 188: de pil zelf is lager, het tikvlak blijft ruim (44 px) */
   #nearbyRoutesCard .nr-sgpill span{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  /* Ronde 192: plaatschip + afstandschip op één rij, en het blad "Zoekafstand" */
+  #nearbyRoutesCard .nr-sgpills{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  #nearbyRoutesCard .nr-sgpills .nr-sgpill{ margin:10px 0 12px; }
+  #nearbyRoutesCard .nr-sgpill.rad{ background:#ecfdf5; color:#047857; box-shadow:inset 0 0 0 1.5px #a7f3d0; }
+  #nearbyRoutesCard .nr-radrow{ margin:14px 0 4px; }
+  #nearbyRoutesCard .nr-radtop{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; font-size:14px; font-weight:700; color:#0f172a; }
+  #nearbyRoutesCard .nr-radtop output{ color:#047857; font-weight:800; }
+  #nearbyRoutesCard .nr-radrow input[type=range]{ width:100%; min-height:44px; margin:4px 0 0; accent-color:#047857; }
+  #nearbyRoutesCard .nr-radtk{ position:relative; height:14px; font-size:11px; color:#64748b; margin:-6px 12px 0; }
+  #nearbyRoutesCard .nr-radtk span{ position:absolute; top:0; transform:translateX(-50%); white-space:nowrap; }
+  #nearbyRoutesCard .nr-radnote{ margin:6px 0 0; font-size:12px; line-height:1.4; color:#64748b; }
+  #nearbyRoutesCard .nr-radbtns{ display:flex; gap:10px; margin-top:14px; }
+  #nearbyRoutesCard .nr-radbtns button{ flex:1; min-height:44px; border:none; border-radius:99px; font:inherit; font-size:14px; font-weight:700; }
+  #nearbyRoutesCard .nr-radbtns .go{ background:#047857; color:#fff; }
+  #nearbyRoutesCard .nr-radbtns .rs{ background:#f1f5f9; color:#334155; }
+  #nearbyRoutesCard .nr-sgtag{ display:inline-block; margin-left:6px; padding:1px 7px; border-radius:99px; font-size:10.5px; font-weight:800; vertical-align:middle; background:#fef3c7; color:#92400e; }
+  #nearbyRoutesCard .nr-sgtag.c{ background:#dbeafe; color:#1d4ed8; }
+  #nearbyRoutesCard .nr-sgtag.l{ background:#fee2e2; color:#b91c1c; }
   #nearbyRoutesCard .nr-sgpill svg{ width:16px; height:16px; flex:0 0 auto; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
   #nearbyRoutesCard .nr-sgmapbtn{ display:inline-flex; align-items:center; gap:6px; border:none; background:#b45309; color:#fff; border-radius:99px; padding:0 14px; min-height:44px; font:inherit; font-size:13px; font-weight:700; white-space:nowrap; flex:0 0 auto; }
   #nearbyRoutesCard .nr-sgchips{ flex:0 0 auto; display:flex; gap:8px; overflow-x:auto; padding:0 16px 6px; -webkit-overflow-scrolling:touch; }
@@ -2605,9 +2623,10 @@
   #nearbyRoutesCard .nr-evfoot button{ flex:0 0 auto; border:none; background:#4f46e5; color:#fff; border-radius:99px; padding:0 14px; min-height:44px; font:inherit; font-size:13px; font-weight:700; }
 
   /* Ronde 189: eigen GPX toevoegen (op dit toestel) */
-  #nearbyRoutesCard .nr-rthd{ display:flex; align-items:center; justify-content:space-between; gap:10px; border-top:1px solid #f1f5f9; margin-top:6px; }
+  #nearbyRoutesCard .nr-rthd{ display:flex; align-items:center; justify-content:space-between; gap:10px; border-top:1px solid #f1f5f9; margin-top:6px; padding:6px 0; }   /* Ronde 192: ruimte boven en onder, de knop is lager (zie .nr-ownbtn) */
   #nearbyRoutesCard .nr-rthd .nr-sec{ margin:0; }
-  #nearbyRoutesCard .nr-ownbtn{ display:inline-flex; align-items:center; gap:6px; border:none; background:#ecfdf5; color:#047857; border-radius:99px; padding:0 12px 0 10px; min-height:44px; box-sizing:border-box; font:inherit; font-size:13px; font-weight:700; margin-right:-4px; }
+  #nearbyRoutesCard .nr-ownbtn{ display:inline-flex; align-items:center; gap:6px; border:none; background:#ecfdf5; color:#047857; border-radius:99px; padding:0 12px 0 10px; min-height:32px; box-sizing:border-box; font:inherit; font-size:13px; font-weight:700; margin-right:-4px; position:relative; }
+  #nearbyRoutesCard .nr-ownbtn::after{ content:''; position:absolute; left:-4px; right:-4px; top:-6px; bottom:-6px; }   /* Ronde 192: het tikvlak blijft 44 px hoog */
   #nearbyRoutesCard .nr-ownbtn svg{ width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
   #nearbyRoutesCard .nr-rw.own > .nr-item{ padding-right:92px; }
   #nearbyRoutesCard .nr-more{ position:absolute; right:44px; top:50%; transform:translateY(-50%); width:44px; height:44px; border:none; background:none; padding:0; color:#64748b; display:flex; align-items:center; justify-content:center; }
@@ -5700,6 +5719,7 @@
         <button type="button" class="nr-sgclose" data-act="close" id="nrPlaceClose"></button>
       </div>
     </div>
+    <div id="nrRadSheet" class="nr-psheet" role="dialog" aria-modal="true" aria-labelledby="nrRadTitle"><div class="nr-ppanel" id="nrRadPanel"></div></div>
     <div id="nrOwnSheet" class="nr-psheet" role="dialog" aria-modal="true" aria-labelledby="nrOwnTitle"><div class="nr-ppanel" id="nrOwnPanel"></div></div>
     <input type="file" id="nrOwnFile" accept=".gpx,application/gpx+xml,text/xml,application/xml,application/octet-stream" style="display:none">
   </div>
@@ -13871,6 +13891,7 @@ const HELP_CONTENT = {
       <p><b>Bezienswaardig in de buurt:</b> de acht bekendste plekken binnen ongeveer 3 km (zijn er weinig, dan tot 8 km), met foto, afstand en soort. "Alle" opent de volledige lijst met filters en sortering op afstand of bekendheid; een tik op een plek toont uitleg uit Wikipedia, een minikaart, een knop Beluister en een knop om vanaf je locatie te navigeren. De plaatsen komen uit OpenStreetMap, de gratis servers daarvan zijn soms druk: de app probeert dan automatisch een andere server en, als dat niet lukt, één keer een lichtere zoekopdracht (kerken en kapellen ontbreken dan misschien, dat staat erbij). Antwoordt geen enkele server, dan zoekt de app Wikipedia-artikelen met coördinaten rond de plaats: dat is snel en de uitleg zit er meteen bij, maar het is minder volledig en minder precies (soms komt er een dorp of heuvel bij; de app filtert dat zo goed mogelijk weg) en dat staat erbij. Lukt niets, dan staat er kort waarom en kun je opnieuw proberen.</p>
       <p><b>Vandaag in de buurt:</b> evenementen van vandaag uit Wattedoen.be, met een schuif van 1 tot 50 km (standaard 20) en filters; een tik op een evenement opent de pagina op Wattedoen. Dit werkt alleen voor België (voor een plaats in het buitenland krijg je een melding). De afstand telt vanaf de gemeente, niet vanaf je exacte positie. Het kan zijn dat een evenement ontbreekt of een onduidelijke datum heeft: de site is niet van ons en kan veranderen.</p>
       <p><b>Eigen GPX:</b> bij de kop "Wandelroutes" (bij Fietsen "Fietsroutes") staat de knop <b>+ Eigen GPX</b>. Stap 1: kies een .gpx-bestand van je toestel of plak een directe link naar een .gpx. Stap 2: de app leest de naam, lengte, stijging en het beginpunt; je kunt de naam aanpassen en tikt op "Toevoegen aan de lijst". De route krijgt het label "Jouw GPX" en staat daarna altijd in de lijst, ook ver weg en ook zonder internet. Het ⋯-menu bij zo'n route laat je de naam wijzigen of de route verwijderen. Je eigen routes staan <b>alleen op dit toestel</b> (niet op andere toestellen en niet in de website) en verdwijnen als je de app-gegevens wist. Links van Komoot, Wikiloc en dergelijke werken meestal niet, omdat die sites geen directe download toelaten: download het bestand dan eerst en kies het als bestand.</p>
+      <p><b>Afstand en plaatskiezer:</b> naast de plaatskiezer staat de chip <b>↔ Afstand</b>. Een tik opent <b>Zoekafstand</b> met twee schuivers: <b>Wandelroutes</b> (5 tot 100 km, standaard 12) voor de routes uit de GPX-lijst, en <b>Bezienswaardigheden</b> (2 tot 25 km, standaard 3 km en ruimer als er weinig zijn). Boven 8 km toont de app bij bezienswaardigheden alleen de bekende plekken (met een Wikipedia- of Wikidata-pagina) en routes van OpenStreetMap zoekt hij hoogstens tot 15 km, omdat grotere vragen op de gratis kaartservers vaak mislukken. De keuze wordt onthouden, ook voor <b>In mijn buurt</b>; <b>Standaard</b> zet alles terug. In de zoekresultaten van de plaatskiezer staan steden en dorpen vóór landen en regio's, met een label (Hoofdstad, Stad, Dorp, Land). Kies je een heel land, dan zoekt de app vanuit het midden van dat land en krijg je een melding om liever een stad of dorp te kiezen.</p>
       <p><b>Online lijst:</b> de routes uit de meegeleverde GPX-lijst haalt de Android-app online op, zodat nieuwe routes er zonder nieuwe versie bij komen. De laatst opgehaalde lijst en routes worden op je toestel bewaard; zonder verbinding gebruikt de app die kopie, en daarna de lijst die in de app zelf zit. De routes die je zelf met "Eigen GPX" toevoegde, hebben hier geen last van.</p>
     </section>
     <section>
@@ -14064,6 +14085,7 @@ const HELP_CONTENT = {
       <p><b>Sights nearby:</b> the eight best-known places within about 3 km (8 km when there are few), with photo, distance and type. "All" opens the full list with filters and sorting by distance or fame; tapping a place shows an explanation from Wikipedia, a small map, a Listen button and a button to navigate from your location. The places come from OpenStreetMap, whose free servers are sometimes busy: the app then automatically tries another server and, if that fails, one lighter search (churches and chapels may then be missing, which is shown). If no server answers at all, the app searches Wikipedia articles with coordinates around the place: that is fast and comes with the explanation, but it is less complete and less precise (a village or hill may slip in; the app filters those out as well as it can), and this is shown. If nothing works, a short reason is shown and you can try again.</p>
       <p><b>Today nearby:</b> today's events from Wattedoen.be, with a slider from 1 to 50 km (default 20) and filters; tapping an event opens its page on Wattedoen. This only works for Belgium (for a place abroad you get a notice). The distance counts from the municipality, not from your exact position. An event may be missing or have an unclear date: the site is not ours and can change.</p>
       <p><b>Own GPX:</b> next to the heading "Walking routes" (for Cycling "Cycling routes") you find the button <b>+ Own GPX</b>. Step 1: pick a .gpx file from your device or paste a direct link to a .gpx. Step 2: the app reads the name, length, climb and start point; you can change the name and tap "Add to the list". The route gets the label "Your GPX" and then always appears in the list, even far away and even offline. The ⋯ menu on such a route lets you rename or delete it. Your own routes live <b>only on this device</b> (not on other devices and not in the website) and disappear if you clear the app data. Links from Komoot, Wikiloc and similar sites usually do not work, because those sites do not allow a direct download: download the file first and pick it as a file.</p>
+      <p><b>Distance and place picker:</b> next to the place picker is the chip <b>↔ Distance</b>. A tap opens <b>Search distance</b> with two sliders: <b>Walking routes</b> (5 to 100 km, default 12) for the routes from the GPX list, and <b>Sights</b> (2 to 25 km, default 3 km and wider when there are few). Above 8 km the app only shows well-known places for sights (with a Wikipedia or Wikidata page), and it searches OpenStreetMap routes up to 15 km at most, because larger queries often fail on the free map servers. The choice is remembered, also for <b>Around me</b>; <b>Default</b> resets everything. In the place picker's results, cities and villages come before countries and regions, with a label (Capital, City, Village, Country). If you pick a whole country, the app searches from the middle of that country and shows a note to pick a city or village instead.</p>
       <p><b>Online list:</b> the Android app fetches the routes of the bundled GPX list online, so new routes appear without a new version. The last fetched list and routes are kept on your device; without a connection the app uses that copy, and then the list built into the app. The routes you added yourself with "Own GPX" are not affected.</p>
     </section>
     <section>
@@ -15713,6 +15735,15 @@ const DEV_NOTES_CONTENT = {
       <p><b>Filters:</b> gegevens komen uit Overpass (<code>osmWalkOverpass()</code>) en worden 30 dagen bewaard (<code>nearby_tags_v1</code>). Speeltuin (<code>leisure=playground</code>, 300 m) en halte (<code>highway=bus_stop</code>, <code>railway=station|halt|tram_stop</code>, 500 m) in 1 vraag per 20 routes; de eerste 60 volgens de sortering. Ondergrond: per route (de eerste 20) monsterpunten om de ~250 m (6 tot 14), per punt de dichtstbijzijnde weg binnen 15 m (<code>out tags geom</code>) en zijn klasse uit <code>surface</code>, anders <code>tracktype</code> of <code>highway</code>; een pad of voetpad zonder <code>surface</code> telt niet mee. Minstens 5 bekende punten en 60% van de punten bekend, anders geen uitspraak; "bij regen" = minstens 70% verhard. Een route die enkel een link is, heeft geen spoor en krijgt geen ondergrondlabel. Mislukt een vraag, dan staat er een melding en wordt niets bewaard.</p>
       <p><b>Eigen plekken:</b> <code>plekken/index.json</code> (<code>regions[].places[]</code> met naam, tekst, lat, lon, foto, fotoBron, mode, gecontroleerd) wordt bij het opstarten geladen; <code>nrPlacesNear()</code> houdt plekken van deze soort binnen 40 km; de pop-up toont de drie dichtstbijzijnde. Zonder filter en zonder lengtegroep staan ze als "📍 Eigen tips" boven de lijst; een tik opent de plek in Google Maps. Het bestand bevat als startlijst tien plekken in Limburg (zonder datum bij <code>gecontroleerd</code>, dus als "nog niet zelf gecontroleerd" getoond, met een Maps-zoektekst in <code>maps</code>); de rest komt van jou, de app verzint niets.</p>
       <p><b>Teksten en test:</b> alle nieuwe teksten bestaan in NL en EN, Help en <code>plekken/README.md</code> zijn aangevuld. <b>Testsuite:</b> nieuw bestand <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> is een kiezer aangepast aan de nieuwe rijopbouw. Versie 2.497 / versionCode 116.</p>
+    </section>
+    <section>
+      <h3>🛠️ Ronde 192: zoekafstand, plaatskiezer met labels, kleinere knop Eigen GPX</h3>
+      <p><b>Waarom Beaufort en de Mullerthal-routes ontbraken.</b> De zoekdienst (Open-Meteo, <code>nrGeocodeMany()</code>) geeft bij "Luxemburg" eerst het land terug (feature_code <code>PCLI</code>, punt midden in het land) en pas daarna de stad. Beide stonden als "Luxemburg" in de lijst. De bezienswaardigheden (3, daarna 8 km) en de GPX-lijst (12 km) werden dus vanuit het landmidden gezocht, en een kasteel en routes op 13 tot 15 km vielen erbuiten. Er was geen fout in de gegevens of in de mapnaam: de zoekfunctie werkt met coördinaten, nooit met de provincienaam.</p>
+      <p><b>Zoekafstand.</b> De chip <code>nrSgRadChipHtml()</code> naast de plaatskiezer opent het onderblad <code>#nrRadSheet</code> met twee schuivers. <code>nrState.rad</code> = <code>{ gpx, sg }</code> (<code>null</code> = standaard), bewaard onder <code>nr_radius_v1</code> (<code>nrRadLoad()</code>). GPX-lijst: <code>nrRadGpxKm(mode)</code> vervangt <code>cfg.gpxKm</code> in <code>nrManifestCandidates()</code>; het is een klein bestand dat de app zelf op afstand filtert, dus 100 km kost niets (alleen wandelen; fietsen houdt zijn vaste 30 km). OpenStreetMap-routes: <code>nrRadOsmM()</code>, hoogstens 15 km, ook in de cachesleutel van <code>nrFetchOsm()</code>. Bezienswaardigheden: kiest de gebruiker een afstand, dan zoekt <code>nrSgLoad()</code> precies die (geen automatische 3 -> 8 km) tot 25 km; boven 8 km (<code>NR_RAD_SG_WIDE_M</code>) vraagt <code>nrSgQuery()</code> ook bij de toerisme-selector om een Wikidata-label, en blijven bij meer dan 80 plekken de bekendste over (<code>fame</code>), daarna weer op afstand gesorteerd. Een wijziging herlaadt de lijst via <code>nrRadApply()</code> (zelfde pad als een nieuwe plaats): <code>nrChatEnsureRoutes()</code> heeft <code>nrRadKey()</code> in zijn sleutel, zodat een andere afstand de lijst niet hergebruikt.</p>
+      <p><b>Plaatskiezer.</b> <code>nrGeoKind()</code> leidt uit <code>feature_code</code> en bevolking het soort af (hoofdstad, stad, dorp, land, regio). Steden en dorpen komen vóór landen en regio's (stabiele sortering), met een label in <code>nrGeocodeMany()</code>; tot 6 resultaten (voorheen 5). Kiest de gebruiker een land, dan komt er een toast in <code>nrSgSetPlace()</code>. <code>kind</code> wordt ook in "Recent bezocht" bewaard.</p>
+      <p><b>Knop Eigen GPX.</b> <code>.nr-rthd</code> heeft 6 px padding boven en onder, de knop is 32 px hoog (was 44 px, zodat hij tegen de lijn erboven plakte); een <code>::after</code> houdt het tikvlak 44 px hoog.</p>
+      <p><b>Beperking.</b> De chip staat bij het blok bezienswaardigheden en dus alleen bij Wandelen en zolang er geen filter of lengtegroep actief is, zoals de plaatskiezer zelf. De afstand geldt ook voor de routes die de assistent zoekt. Het Wikipedia-vangnet blijft op 10 km staan.</p>
+      <p><b>Testsuite:</b> nieuw bestand <code>test_round192_radius_places.js</code>. Versie 2.527 / versionCode 146.</p>
     </section>
     <section>
       <h3>🛠️ Ronde 191: ster in het detail, vastlopende positie na een lus-herstart, overgeslagen pinnen</h3>
@@ -17543,6 +17574,15 @@ const DEV_NOTES_CONTENT = {
       <p><b>Filters:</b> data comes from Overpass (<code>osmWalkOverpass()</code>) and is kept for 30 days (<code>nearby_tags_v1</code>). Playground (<code>leisure=playground</code>, 300 m) and stop (<code>highway=bus_stop</code>, <code>railway=station|halt|tram_stop</code>, 500 m) in 1 request per 20 routes; the first 60 in the sorting. Surface: per route (the first 20) sample points about every 250 m (6 to 14), per point the nearest way within 15 m (<code>out tags geom</code>) and its class from <code>surface</code>, otherwise <code>tracktype</code> or <code>highway</code>; a path or footway without <code>surface</code> does not count. At least 5 known points and 60% of the points known, otherwise no statement; "in rain" = at least 70% paved. A route that is only a link has no track and gets no surface label. If a request fails a message appears and nothing is saved.</p>
       <p><b>Own places:</b> <code>plekken/index.json</code> (<code>regions[].places[]</code> with name, text, lat, lon, foto, fotoBron, mode, gecontroleerd) is loaded at startup; <code>nrPlacesNear()</code> keeps places of this activity within 40 km; the pop-up shows the three nearest. Without a filter and without a length group they show as "📍 Own tips" above the list; a tap opens the place in Google Maps. The file holds ten places in Limburg as a starter list (no date in <code>gecontroleerd</code>, so shown as "not checked yourself yet", with a Maps search text in <code>maps</code>); the rest comes from you, the app invents nothing.</p>
       <p><b>Texts and test:</b> all new texts exist in NL and EN, Help and <code>plekken/README.md</code> are extended. <b>Test suite:</b> new file <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> one selector is adjusted to the new row structure. Version 2.497 / versionCode 116.</p>
+    </section>
+    <section>
+      <h3>🛠️ Round 192: search distance, place picker with labels, smaller Own GPX button</h3>
+      <p><b>Why Beaufort and the Mullerthal routes were missing.</b> The geocoder (Open-Meteo, <code>nrGeocodeMany()</code>) returns the country first for "Luxemburg" (feature_code <code>PCLI</code>, a point in the middle of the country) and the city second. Both showed as "Luxemburg" in the list. Sights (3, then 8 km) and the GPX list (12 km) were therefore searched from the middle of the country, and a castle and routes 13 to 15 km away fell outside. There was no error in the data or in the folder name: the search works with coordinates, never with the province name.</p>
+      <p><b>Search distance.</b> The chip <code>nrSgRadChipHtml()</code> next to the place picker opens the bottom sheet <code>#nrRadSheet</code> with two sliders. <code>nrState.rad</code> = <code>{ gpx, sg }</code> (<code>null</code> = default), stored under <code>nr_radius_v1</code> (<code>nrRadLoad()</code>). GPX list: <code>nrRadGpxKm(mode)</code> replaces <code>cfg.gpxKm</code> in <code>nrManifestCandidates()</code>; it is a small file the app filters by distance itself, so 100 km costs nothing (walking only; cycling keeps its fixed 30 km). OpenStreetMap routes: <code>nrRadOsmM()</code>, 15 km at most, also in the cache key of <code>nrFetchOsm()</code>. Sights: when the user picks a distance, <code>nrSgLoad()</code> searches exactly that (no automatic 3 -> 8 km) up to 25 km; above 8 km (<code>NR_RAD_SG_WIDE_M</code>) <code>nrSgQuery()</code> also asks for a Wikidata tag on the tourism selector, and with more than 80 places the best-known remain (<code>fame</code>), re-sorted by distance afterwards. A change reloads the list through <code>nrRadApply()</code> (same path as a new place): <code>nrChatEnsureRoutes()</code> has <code>nrRadKey()</code> in its key, so another distance does not reuse the list.</p>
+      <p><b>Place picker.</b> <code>nrGeoKind()</code> derives the kind (capital, city, village, country, region) from <code>feature_code</code> and population. Cities and villages come before countries and regions (stable sort), with a label in <code>nrGeocodeMany()</code>; up to 6 results (was 5). If the user picks a country, <code>nrSgSetPlace()</code> shows a toast. <code>kind</code> is also kept in "Recently visited".</p>
+      <p><b>Own GPX button.</b> <code>.nr-rthd</code> has 6 px padding above and below, the button is 32 px high (was 44 px, so it touched the line above); an <code>::after</code> keeps the tap area 44 px high.</p>
+      <p><b>Limitation.</b> The chip sits with the sights block, so only in Walking and while no filter or length group is active, like the place picker itself. The distance also applies to the routes the assistant looks up. The Wikipedia safety net stays at 10 km.</p>
+      <p><b>Test suite:</b> new file <code>test_round192_radius_places.js</code>. Version 2.527 / versionCode 146.</p>
     </section>
     <section>
       <h3>🛠️ Round 191: star in the detail view, position updates stalling after a loop restart, skipped pins</h3>
@@ -26468,7 +26508,7 @@ ${GARMIN_MENU_BTN_JS}
 </body>
 </html>`;
 }
-const APP_VERSION_TEXT = 'v2.526 · 12 nov';
+const APP_VERSION_TEXT = 'v2.527 · 13 nov';
 $('homeVersionFooter').textContent = APP_VERSION_TEXT;
 function buildGarminHubHtml(){
   // Dit is Gemini's keuzescherm.html, ongewijzigd qua opbouw/stijl — enkel: (1) een derde grote tegel
@@ -43007,7 +43047,7 @@ const NR_MAX = 30;                                        // Ronde 154: de lijst
 const NR_BINS = { wandel:[2, 4, 6], fiets:[10, 15, 20] }; // lengtegroepen in km: Alle | ≤a | a–b | b–c | boven c
 const NR_SORTS = ['kort', 'dicht', 'leuk'];               // kortste eerst (dan dichtstbij) | dichtstbij start | leukste (score)
 const nrT = (nl, en) => curLang()==='en' ? en : nl;
-const nrState = { token:0, mode:null, userLL:null, gpx:[], osm:[], osmPending:false, bin:0, sort:'kort', thumbs:{}, kms:{}, tried:{}, ranked:[], view:[], wired:false, io:null, pend:[], pendT:0, detail:null, dtoken:0, listScroll:0, geo:{}, photos:{}, species:{} };
+const nrState = { token:0, mode:null, userLL:null, gpx:[], osm:[], osmPending:false, bin:0, sort:'kort', thumbs:{}, kms:{}, tried:{}, ranked:[], view:[], wired:false, io:null, pend:[], pendT:0, detail:null, dtoken:0, listScroll:0, geo:{}, photos:{}, species:{}, rad:{ gpx:null, sg:null } };
 const NR_SPECIES_KEY = 'nearby_species_v2', NR_SPECIES_TTL_MS = 30 * 24 * 3600 * 1000, NR_SPECIES_MAX = 8;   // soortenlijst per route, 30 dagen bewaard
 const NR_PHOTO_KEY = 'nearby_photos_v1', NR_PHOTO_TTL_MS = 7 * 24 * 3600 * 1000;   // gevonden foto's per route, 7 dagen bewaard
 function nrNormName(s){ return String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); }
@@ -43068,7 +43108,7 @@ function nrManifestCandidates(manifest, mode, userLL, doneKeys){
       const hasUrl = typeof w.url === 'string' && /^https?:\/\//i.test(w.url);
       if (!w.file && !hasUrl) return;
       const distKm = haversine(userLL.lat, userLL.lon, lat, lon) / 1000;
-      if (distKm > cfg.gpxKm) return;
+      if (distKm > nrRadGpxKm(mode)) return;
       const key = String(w.file || w.url || w.name);
       const km = parseFloat(w.km);
       out.push({ kind: w.file ? 'gpx' : 'link', key, name: String(w.name), km: km > 0 ? km : null, lat, lon, distKm,
@@ -43099,20 +43139,21 @@ function nrOsmCandidates(elements, mode, userLL){
     const lat = parseFloat(el.center.lat), lon = parseFloat(el.center.lon);
     if (!isFinite(lat) || !isFinite(lon)) return;
     const distKm = haversine(userLL.lat, userLL.lon, lat, lon) / 1000;
-    if (distKm > cfg.osmM / 1000 * 1.25) return;
+    if (distKm > nrRadOsmM(mode) / 1000 * 1.25) return;
     out.push({ kind:'osm', key:'osm:' + el.id, osmId:el.id, name:n.name, km:n.distanceKm, lat, lon, distKm, colorKey:n.colorKey, network:n.network,
       operator:n.operator, website:n.website, done:false });
   });
   return out;
 }
 async function nrFetchOsm(mode, userLL){
-  const key = mode + '|' + userLL.lat.toFixed(2) + '|' + userLL.lon.toFixed(2);
+  const osmM = nrRadOsmM(mode);
+  const key = mode + '|' + userLL.lat.toFixed(2) + '|' + userLL.lon.toFixed(2) + (osmM !== NR_CFG[mode].osmM ? '|' + osmM : '');
   let cache = {};
   try{ const v = await storageGet(NR_OSM_KEY); cache = v ? JSON.parse(v) : {}; }catch(e){ cache = {}; }
   const hit = cache[key];
   if (hit && (Date.now() - hit.t) < NR_OSM_TTL_MS) return nrOsmCandidates(hit.elements, mode, userLL);
   try{
-    const data = await osmWalkOverpass(nrBuildOsmQuery(mode, userLL.lat, userLL.lon, NR_CFG[mode].osmM));
+    const data = await osmWalkOverpass(nrBuildOsmQuery(mode, userLL.lat, userLL.lon, osmM));
     const elements = (data.elements || []).filter(e => e && e.type === 'relation' && e.tags && e.tags.name && e.center)
       .map(e => ({ type:'relation', id:e.id, tags:{ name:e.tags.name, ref:e.tags.ref, colour:e.tags.colour, 'osmc:symbol':e.tags['osmc:symbol'], network:e.tags.network,
         operator:e.tags.operator, website:e.tags.website, url:e.tags.url, distance:e.tags.distance }, center:e.center }));
@@ -43126,6 +43167,7 @@ async function nrFetchOsm(mode, userLL){
   }
 }
 async function nrFetchGpx(mode, userLL){
+  await nrRadLoad();
   // Ronde 189: de eigen GPX's van dit toestel horen er altijd bij, ook als de meegeleverde lijst niet laadt.
   await nrOwnLoad();
   const doneKeys = await getGpxRoutesDoneKeys();
@@ -43557,6 +43599,7 @@ function nrPlacesHtml(){
 // ===== Ronde 186: bezienswaardigheden in "Leuke wandelingen" =====
 // Carrousel boven de routes (enkel Wandelen), volledige lijst met filters, info (Wikipedia) met minikaart, grote kaart en navigeren vanaf je huidige locatie, en een plaatskiezer ("In mijn buurt" of een andere plaats).
 // Bron: OpenStreetMap (Overpass) voor plaats, naam en soort; Wikidata voor de Wikipedia-titels en de naam in je taal; Wikipedia voor foto en inleiding. Alles is een schatting: niet elke bezienswaardigheid staat in OpenStreetMap.
+const NR_RAD_SG_WIDE_M = 8000;   // Ronde 192: boven deze straal (m) alleen bekende plekken
 const NR_SG_R = 3000, NR_SG_R_WIDE = 8000, NR_SG_MIN = 6, NR_SG_MAX = 80, NR_SG_CARDS = 8;
 const NR_SG_ENR_KEY = 'nr_sight_enrich_v1', NR_SG_RECENT_KEY = 'nr_recent_places_v1', NR_SG_ENR_TTL_MS = 30 * 24 * 3600 * 1000;
 nrState.sg = { key:'', items:[], status:'idle', radius:0, place:null, me:null, cat:'all', sort:'dist', from:'card', cur:null, tok:0, err:'', mapMode:'one', recent:null };
@@ -43591,6 +43634,7 @@ function nrSgQuery(ll, r, light){
     '["amenity"~"^place_of_worship$"]["name"]["wikidata"]'
   ];
   // Ronde 188 (vangnet): de lichte vorm laat de kerken/kapellen-selector (het zwaarste deel) weg; ze wordt enkel gebruikt als de volledige vraag op alle servers mislukt.
+  if (r > NR_RAD_SG_WIDE_M) sel[0] = '["tourism"~"^(attraction|museum|viewpoint)$"]["name"]["wikidata"]';   // Ronde 192: bij een grote straal alleen bekende plekken (met Wikidata)
   const use = light ? sel.slice(0, 3) : sel;
   return `[out:json][timeout:${assistantServerLimitSec()}];(${use.map(f => `node${f}${a};way${f}${a};`).join('')});out center tags ${light ? 300 : 500};`;
 }
@@ -43701,20 +43745,26 @@ async function nrSgLoad(force){
   if (nrState.mode !== 'wandel'){ sg.status = 'idle'; nrRenderSights(); return; }
   const ll = nrSgCenter();
   if (!ll){ sg.status = 'idle'; nrRenderSights(); return; }
-  const key = ll.lat.toFixed(3) + ',' + ll.lon.toFixed(3);
+  await nrRadLoad();
+  const key = ll.lat.toFixed(3) + ',' + ll.lon.toFixed(3) + '|' + (nrState.rad.sg || '');
   if (!force && sg.key === key && (sg.status === 'ok' || sg.status === 'loading')) return;
   const tok = ++sg.tok;
   sg.key = key; sg.status = 'loading'; sg.items = []; sg.err = ''; sg.light = false; sg.wiki = false; sg.wikiOnly = false; nrRenderSights(); nrSgRenderList();
   try{
-    let radius = NR_SG_R, items = nrSgParse((await nrSgFetch(ll, radius, tok)).elements, ll);
+    // Ronde 192: heeft de gebruiker zelf een afstand gekozen, dan zoeken we precies die en niet de automatische 3 -> 8 km.
+    const fixedKm = nrState.rad.sg;
+    let radius = fixedKm ? fixedKm * 1000 : NR_SG_R, items = nrSgParse((await nrSgFetch(ll, radius, tok)).elements, ll);
     if (tok !== sg.tok) return;
-    if (items.length < NR_SG_MIN){
+    if (!fixedKm && items.length < NR_SG_MIN){
       // Ronde 188: mislukt de ruimere zoekronde, dan houden we wat de eerste ronde al vond (vroeger ging dat verloren en kwam er een foutmelding).
       try{ const wide = nrSgParse((await nrSgFetch(ll, NR_SG_R_WIDE, tok)).elements, ll); radius = NR_SG_R_WIDE; items = wide; }
       catch(e2){ if (tok !== sg.tok || (e2 && e2.nrStopped)) return; if (!items.length) throw e2; console.info('[bezienswaardigheden] ruimere ronde mislukt, eerste resultaat behouden:', String((e2 && e2.message) || '')); }
     }
     if (tok !== sg.tok) return;
-    sg.radius = radius; sg.items = items.filter(s => s.distKm * 1000 <= radius).slice(0, NR_SG_MAX);
+    sg.radius = radius; sg.items = items.filter(s => s.distKm * 1000 <= radius);
+    if (sg.items.length > NR_SG_MAX){   // bij een grote straal blijven de bekendste over (daarna weer op afstand)
+      sg.items = radius > NR_RAD_SG_WIDE_M ? sg.items.sort((a, b) => (b.fame - a.fame) || (a.distKm - b.distKm)).slice(0, NR_SG_MAX).sort((a, b) => a.distKm - b.distKm) : sg.items.slice(0, NR_SG_MAX);
+    }
     sg.status = sg.items.length ? 'ok' : 'none';
   }catch(e){
     if (tok !== sg.tok || (e && e.nrStopped)) return;
@@ -43842,7 +43892,7 @@ function nrSightsHtml(){
   else if (sg.status === 'error') body = `<div class="nr-sgmsg">${nrT('Zoeken in OpenStreetMap is niet gelukt. De gratis servers zijn soms druk of je verbinding is zwak.', 'Searching OpenStreetMap did not work. The free servers are sometimes busy, or your connection is weak.')}${nrSgWhyHtml()} <button type="button" class="nr-sgretry" data-act="retry">${nrT('Opnieuw proberen', 'Try again')}</button></div>`;
   else if (sg.status === 'none') body = `<div class="nr-sgmsg">${(nrState.sg.place ? nrT('Geen bezienswaardigheden gevonden rond ' + nrSgPlaceName() + '. Kies een andere plaats.', 'No sights found around ' + nrSgPlaceName() + '. Pick another place.') : nrT('Geen bezienswaardigheden gevonden bij jou in de buurt. Kies een andere plaats.', 'No sights found near you. Pick another place.'))}</div>`;
   else body = `<div class="nr-sgrow">${nrSgTop(sg.items, NR_SG_CARDS).map(nrSgCardHtml).join('')}</div>` + (sg.wiki ? `<p class="nr-sglight">${nrT('De kaartservers waren onbereikbaar: dit lijstje komt uit Wikipedia en is minder volledig. Probeer later opnieuw.', 'The map servers were unreachable: this list comes from Wikipedia and is less complete. Try again later.')}</p>` : '') + (sg.light ? `<p class="nr-sglight">${nrT('Beperkte zoekopdracht (de servers waren druk): kerken en kapellen ontbreken misschien. Probeer later opnieuw.', 'Reduced search (the servers were busy): churches and chapels may be missing. Try again later.')}</p>` : '');
-  return `<div class="nr-sgsec">${nrSgPillHtml()}${nrEvRowHtml()}${head}${body}</div>`;
+  return `<div class="nr-sgsec"><div class="nr-sgpills">${nrSgPillHtml()}${nrSgRadChipHtml()}</div>${nrEvRowHtml()}${head}${body}</div>`;
 }
 function nrRenderSights(){ const el = $('nrSights'); if (el) el.innerHTML = nrSightsHtml(); }
 // ----- Volledige lijst (concept G) -----
@@ -44021,14 +44071,31 @@ async function nrSgRecentGet(){
 }
 async function nrSgRecentAdd(p){
   const list = (await nrSgRecentGet()).filter(x => x.name !== p.name);
-  list.unshift({ name:p.name, lat:p.lat, lon:p.lon }); nrState.sg.recent = list.slice(0, 5);
+  list.unshift({ name:p.name, lat:p.lat, lon:p.lon, kind:p.kind }); nrState.sg.recent = list.slice(0, 5);
   try{ await storageSet(NR_SG_RECENT_KEY, JSON.stringify(nrState.sg.recent)); }catch(e){}
 }
+// Ronde 192: soort resultaat uit de feature_code van de zoekdienst. Een land (PCLI) of regio (ADM*) komt na de steden en dorpen en krijgt een label:
+// de zoekdienst zet bij "Luxemburg" het hele land bovenaan, met een punt midden in het land, en dat zag er hetzelfde uit als de stad.
+function nrGeoKind(r){
+  const f = String(r.feature_code || '');
+  if (f === 'PCLI' || f === 'PCLD' || f === 'PCLS' || f === 'PCL') return 'land';
+  if (/^ADM/.test(f)) return 'regio';
+  if (f === 'PPLC') return 'hoofdstad';
+  if (f === 'PPLA' || f === 'PPLA2' || (r.population || 0) >= 20000) return 'stad';   // PPLA3 en PPLA4 zijn gemeentezetels: meestal dorpen
+  return 'dorp';
+}
+const NR_GEO_LABEL = { land:['Land', 'Country'], regio:['Regio', 'Region'], hoofdstad:['Hoofdstad', 'Capital'], stad:['Stad', 'City'], dorp:['Dorp', 'Village'] };
 async function nrGeocodeMany(q){
-  const res = await fetchWithTimeout(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=5&language=${curLang() === 'en' ? 'en' : 'nl'}&format=json`, {}, 8000);
+  const res = await fetchWithTimeout(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=8&language=${curLang() === 'en' ? 'en' : 'nl'}&format=json`, {}, 8000);
   if (!res.ok) return [];
   const j = await res.json();
-  return ((j && j.results) || []).filter(r => isFinite(r.latitude) && isFinite(r.longitude)).map(r => ({ name:String(r.name || q), lat:r.latitude, lon:r.longitude, sub:[r.admin1, r.country].filter(Boolean).join(', ') }));
+  const list = ((j && j.results) || []).filter(r => isFinite(r.latitude) && isFinite(r.longitude)).map(r => {
+    const kind = nrGeoKind(r);
+    return { name:String(r.name || q), lat:r.latitude, lon:r.longitude, kind,
+      sub: kind === 'land' ? nrT('Zoekt vanuit het midden van het land', 'Searches from the middle of the country') : [r.admin1, r.country].filter(Boolean).join(', ') };
+  });
+  const rank = (p) => (p.kind === 'land' || p.kind === 'regio') ? 1 : 0;
+  return list.map((p, i) => ({ p, i })).sort((a, b) => (rank(a.p) - rank(b.p)) || (a.i - b.i)).map(x => x.p).slice(0, 6);
 }
 async function nrSgOpenPlaceSheet(){
   nrSgLabels();
@@ -44054,15 +44121,16 @@ function nrSgSearchPlaces(q){
     try{ res = await nrGeocodeMany(q); }catch(e){ if (t === nrSgGeoTok) $('nrPlaceRes').innerHTML = `<p class="nr-empty">${nrT('Zoeken lukt niet. Controleer je verbinding.', 'Search failed. Check your connection.')}</p>`; return; }
     if (t !== nrSgGeoTok) return;
     nrState.sg.found = res;
-    $('nrPlaceRes').innerHTML = res.length ? `<p class="nr-sec">${nrT('Gevonden', 'Found')}</p>` + res.map((p, i) => `<button type="button" class="nr-sgpr" data-fi="${i}"><span class="nr-sgph s">📍</span><span class="nr-tx"><h4>${osmWalkEsc(p.name)}</h4><div class="nr-meta"><span>${osmWalkEsc(p.sub)}</span></div></span></button>`).join('') : `<p class="nr-empty">${nrT('Geen plaats gevonden met die naam.', 'No place found with that name.')}</p>`;
+    $('nrPlaceRes').innerHTML = res.length ? `<p class="nr-sec">${nrT('Gevonden', 'Found')}</p>` + res.map((p, i) => `<button type="button" class="nr-sgpr" data-fi="${i}"><span class="nr-sgph s">📍</span><span class="nr-tx"><h4>${osmWalkEsc(p.name)}${p.kind && NR_GEO_LABEL[p.kind] ? `<span class="nr-sgtag${p.kind === 'hoofdstad' ? ' c' : p.kind === 'land' ? ' l' : ''}">${osmWalkEsc(nrT(NR_GEO_LABEL[p.kind][0], NR_GEO_LABEL[p.kind][1]))}</span>` : ''}</h4><div class="nr-meta"><span>${osmWalkEsc(p.sub)}</span></div></span></button>`).join('') : `<p class="nr-empty">${nrT('Geen plaats gevonden met die naam.', 'No place found with that name.')}</p>`;
   }, 350);
 }
 // Een plaats kiezen (of null = bij mij): bezienswaardigheden en routes worden opnieuw rond dat punt gezocht.
 async function nrSgSetPlace(p){
   const sg = nrState.sg;
   $('nrPlaceSheet').classList.remove('show');
-  sg.place = p ? { name:p.name, lat:p.lat, lon:p.lon } : null; sg.cat = 'all'; nrEvReset(); if ($('nrSight').getAttribute('data-v') === 'ev') nrEvLoad(false);
+  sg.place = p ? { name:p.name, lat:p.lat, lon:p.lon, kind:p.kind } : null; sg.cat = 'all'; nrEvReset(); if ($('nrSight').getAttribute('data-v') === 'ev') nrEvLoad(false);
   if (p) nrSgRecentAdd(p);
+  if (p && p.kind === 'land') toast(nrT('Midden van het land. Kies een stad of dorp voor routes en plekken in de buurt.', 'Middle of the country. Pick a city or village for routes and places nearby.'), 4500);
   nrSgLoad(true);
   const token = nrState.token;
   nrState.stale = null;
@@ -44073,11 +44141,99 @@ async function nrSgSetPlace(p){
   }catch(e){ console.info('[bezienswaardigheden] routes rond de plaats:', e && e.message); }
   if (token === nrState.token){ nrRender(false); nrRenderSights(); }
 }
+// ----- Ronde 192: zoekafstand voor routes en bezienswaardigheden (chip naast de plaatskiezer) -----
+const NR_RAD_KEY = 'nr_radius_v1';
+const NR_RAD_GPX = [5, 8, 12, 15, 20, 25, 30, 40, 50, 75, 100];   // km, GPX-bibliotheek (een klein bestand dat de app zelf op afstand filtert: kost niets)
+const NR_RAD_SG = [2, 3, 5, 8, 10, 15, 20, 25];                    // km, bezienswaardigheden (live vraag aan OpenStreetMap: groter dan 25 km lukt niet betrouwbaar)
+const NR_RAD_OSM_MAX_M = 15000;                                    // OpenStreetMap-routes (live vraag): hoogstens 15 km
+let nrRadLoaded = false, nrRadDraft = null;
+async function nrRadLoad(){
+  if (nrRadLoaded) return; nrRadLoaded = true;
+  try{
+    const v = await storageGet(NR_RAD_KEY), o = v ? JSON.parse(v) : {};
+    nrState.rad = { gpx: NR_RAD_GPX.includes(o.gpx) ? o.gpx : null, sg: NR_RAD_SG.includes(o.sg) ? o.sg : null };
+  }catch(e){}
+}
+// Afstand voor de GPX-lijst (alleen wandelen; fietsen houdt zijn eigen vaste afstand) en voor de OpenStreetMap-routes.
+function nrRadGpxKm(mode){ return (mode === 'wandel' && nrState.rad && nrState.rad.gpx) || (NR_CFG[mode] || NR_CFG.wandel).gpxKm; }
+function nrRadOsmM(mode){
+  const cfg = NR_CFG[mode] || NR_CFG.wandel;
+  return (mode === 'wandel' && nrState.rad && nrState.rad.gpx) ? Math.min(NR_RAD_OSM_MAX_M, Math.max(cfg.osmM, nrState.rad.gpx * 1000)) : cfg.osmM;
+}
+function nrRadKey(){ const r = nrState.rad || {}; return (r.gpx || r.sg) ? '|g' + (r.gpx || '') + 's' + (r.sg || '') : ''; }
+function nrSgRadChipHtml(){
+  const r = nrState.rad || {}, custom = r.gpx || r.sg;
+  const txt = custom ? '↔ ' + nrRadGpxKm('wandel') + ' · ' + (r.sg ? r.sg : '3–8') + ' km' : nrT('↔ Afstand', '↔ Distance');
+  return `<button type="button" class="nr-sgpill rad" data-act="rad" aria-label="${osmWalkEsc(nrT('Zoekafstand voor routes en bezienswaardigheden', 'Search distance for routes and sights'))}"><span>${osmWalkEsc(txt)}</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>`;
+}
+// Streepjes-teksten onder de schuif, op de plaats van de stap (de stappen lopen niet lineair).
+function nrRadTicks(steps, marks, unit){ return marks.map((m, i) => `<span style="left:${(steps.indexOf(m) / (steps.length - 1) * 100).toFixed(1)}%">${m}${i === marks.length - 1 ? ' ' + unit : ''}</span>`).join(''); }
+function nrRadRender(){
+  const d = nrRadDraft || { gpx:null, sg:null }, panel = $('nrRadPanel'); if (!panel) return;
+  const gKm = d.gpx || NR_CFG.wandel.gpxKm, gi = Math.max(0, NR_RAD_GPX.indexOf(gKm));
+  const sKm = d.sg || 3, si = Math.max(0, NR_RAD_SG.indexOf(sKm));
+  const gTxt = gKm + ' km' + (d.gpx ? '' : nrT(' (standaard)', ' (default)'));
+  const sTxt = d.sg ? sKm + ' km' : nrT('standaard: 3 km, ruimer als er weinig zijn', 'default: 3 km, wider if there are few');
+  const sNote = d.sg && d.sg > NR_RAD_SG_WIDE_M / 1000 ? nrT('Boven 8 km tonen we alleen de bekende plekken (met een Wikipedia- of Wikidata-pagina). Alles laden is te zwaar voor de gratis kaartservers.', 'Above 8 km we only show well-known places (with a Wikipedia or Wikidata page). Loading everything is too heavy for the free map servers.') : nrT('Tot 25 km. Hoe groter, hoe langer het zoeken duurt.', 'Up to 25 km. The larger, the longer the search takes.');
+  panel.innerHTML = `<span class="nr-pgrip" aria-hidden="true"></span><h3 id="nrRadTitle">${nrT('Zoekafstand', 'Search distance')}</h3>`
+    + `<div class="nr-radrow"><div class="nr-radtop"><label for="nrRadG">🥾 ${nrT('Wandelroutes', 'Walking routes')}</label><output id="nrRadGo">${gTxt}</output></div>`
+    + `<input type="range" id="nrRadG" min="0" max="${NR_RAD_GPX.length - 1}" step="1" value="${gi}"><div class="nr-radtk">${nrRadTicks(NR_RAD_GPX, [5, 25, 50, 100], 'km')}</div>`
+    + `<p class="nr-radnote">${nrT('Routes uit de GPX-bibliotheek tot 100 km. Routes van OpenStreetMap zoeken we hoogstens tot 15 km.', 'Routes from the GPX library up to 100 km. Routes from OpenStreetMap are searched up to 15 km at most.')}</p></div>`
+    + `<div class="nr-radrow"><div class="nr-radtop"><label for="nrRadS">🏛️ ${nrT('Bezienswaardigheden', 'Sights')}</label><output id="nrRadSo">${sTxt}</output></div>`
+    + `<input type="range" id="nrRadS" min="0" max="${NR_RAD_SG.length - 1}" step="1" value="${si}"><div class="nr-radtk">${nrRadTicks(NR_RAD_SG, [2, 8, 15, 25], 'km')}</div>`
+    + `<p class="nr-radnote" id="nrRadSn">${sNote}</p></div>`
+    + `<div class="nr-radbtns"><button type="button" class="rs" data-act="radreset">${nrT('Standaard', 'Default')}</button><button type="button" class="go" data-act="radgo">${nrT('Toepassen', 'Apply')}</button></div>`;
+}
+async function nrRadOpen(){
+  await nrRadLoad();
+  nrRadDraft = { gpx:nrState.rad.gpx || null, sg:nrState.rad.sg || null };
+  nrRadRender(); $('nrRadSheet').classList.add('show');
+}
+function nrRadClose(){ $('nrRadSheet').classList.remove('show'); nrRadDraft = null; }
+async function nrRadApply(){
+  const d = nrRadDraft || { gpx:null, sg:null }; nrRadClose();
+  const same = (d.gpx || null) === (nrState.rad.gpx || null) && (d.sg || null) === (nrState.rad.sg || null);
+  if (same) return;
+  nrState.rad = { gpx:d.gpx || null, sg:d.sg || null };
+  try{ await storageSet(NR_RAD_KEY, JSON.stringify(nrState.rad)); }catch(e){}
+  const sg = nrState.sg, p = sg.place;
+  nrEvReset(); nrSgLoad(true);
+  const token = nrState.token;
+  nrState.stale = null;
+  try{
+    const r = await nrChatEnsureRoutes(null, token, p ? { lat:p.lat, lon:p.lon, name:p.name } : null);
+    if (token !== nrState.token) return;
+    if (r && r.ok === false && r.text) toast(r.text, 3500);
+  }catch(e){ console.info('[zoekafstand] routes opnieuw laden:', e && e.message); }
+  if (token === nrState.token){ nrRender(false); nrRenderSights(); }
+}
+function nrRadWire(){
+  if (nrState.radWired) return; nrState.radWired = true;
+  const sheet = $('nrRadSheet'); if (!sheet) return;
+  sheet.addEventListener('click', (e) => {
+    const b = e.target.closest && e.target.closest('button, .nr-psheet'); if (!b) return;
+    if (b === sheet){ nrRadClose(); return; }
+    if (b.dataset.act === 'radreset'){ nrRadDraft = { gpx:null, sg:null }; nrRadRender(); }
+    else if (b.dataset.act === 'radgo') nrRadApply();
+  });
+  sheet.addEventListener('input', (e) => {
+    const t = e.target; if (!t || !nrRadDraft) return;
+    if (t.id === 'nrRadG'){
+      const km = NR_RAD_GPX[+t.value]; nrRadDraft.gpx = km === NR_CFG.wandel.gpxKm ? null : km;
+      $('nrRadGo').textContent = km + ' km' + (nrRadDraft.gpx ? '' : nrT(' (standaard)', ' (default)'));
+    }else if (t.id === 'nrRadS'){
+      const km = NR_RAD_SG[+t.value]; nrRadDraft.sg = km;
+      $('nrRadSo').textContent = km + ' km';
+      $('nrRadSn').textContent = km > NR_RAD_SG_WIDE_M / 1000 ? nrT('Boven 8 km tonen we alleen de bekende plekken (met een Wikipedia- of Wikidata-pagina). Alles laden is te zwaar voor de gratis kaartservers.', 'Above 8 km we only show well-known places (with a Wikipedia or Wikidata page). Loading everything is too heavy for the free map servers.') : nrT('Tot 25 km. Hoe groter, hoe langer het zoeken duurt.', 'Up to 25 km. The larger, the longer the search takes.');
+    }
+  });
+}
 function nrSgWire(){
   if (nrState.sgWired) return; nrState.sgWired = true;
   $('nrSights').addEventListener('click', (e) => {
     const b = e.target.closest && e.target.closest('button'); if (!b) return;
     if (b.dataset.act === 'place') return nrSgOpenPlaceSheet();
+    if (b.dataset.act === 'rad') return nrRadOpen();
     if (b.dataset.act === 'ev') return nrEvOpen();
     if (b.dataset.act === 'all') return nrSgOpenList();
     if (b.dataset.act === 'retry') return nrSgLoad(true);
@@ -44115,7 +44271,7 @@ function nrSgReset(userLL){
   const sg = nrState.sg;
   sg.tok++; sg.place = null; sg.me = userLL ? { lat:userLL.lat, lon:userLL.lon } : null; sg.cat = 'all'; sg.sort = 'dist'; sg.key = ''; sg.items = []; sg.status = 'idle'; sg.cur = null;
   nrSgListenStop(); nrEvReset(); nrOwnReset();
-  nrSgWire(); nrEvWire(); nrOwnWire();
+  nrSgWire(); nrEvWire(); nrOwnWire(); nrRadWire();
 }
 
 // ===== Ronde 189: eigen GPX toevoegen (blijft op dit toestel) =====
@@ -45309,7 +45465,8 @@ function nrChatKnownLL(){
 // Ronde 184: placeLL = een door de gebruiker genoemde plaats ({lat, lon, name}); dan worden de routes rond die plaats gezocht i.p.v. rond de eigen positie.
 // De lijst onthoudt waar ze voor gemaakt is (listKey), zodat een volgende vraag over een andere plaats (of weer over de eigen buurt) opnieuw laadt.
 async function nrChatEnsureRoutes(mode, token, placeLL){
-  const key = placeLL ? 'p:' + placeLL.lat.toFixed(2) + ',' + placeLL.lon.toFixed(2) : 'me';
+  await nrRadLoad();
+  const key = (placeLL ? 'p:' + placeLL.lat.toFixed(2) + ',' + placeLL.lon.toFixed(2) : 'me') + nrRadKey();
   if (mode && mode !== nrState.mode && (mode === 'wandel' || mode === 'fiets')){
     nrState.mode = mode; nrState.gpx = []; nrState.osm = []; nrState.ranked = []; nrState.view = []; nrState.osmPending = false;
   }
@@ -45329,7 +45486,7 @@ async function nrChatEnsureRoutes(mode, token, placeLL){
   const [gpx, osm] = await Promise.all([nrFetchGpx(m, userLL).catch(() => []), nrFetchOsm(m, userLL).catch(() => null)]);
   if (token !== nrState.token) return { ok:false, aborted:true };
   nrState.userLL = userLL; nrState.gpx = gpx; nrState.osm = osm || []; nrState.osmPending = false; nrState.tried = {}; nrState.pend = [];
-  nrState.listKey = placeLL ? key : null; nrState.placeName = placeLL ? String(placeLL.name || '') : '';
+  nrState.listKey = (placeLL || nrRadKey()) ? key : null; nrState.placeName = placeLL ? String(placeLL.name || '') : '';
   nrState.bin = 0; nrState.sort = NR_SORTS.includes(appSettings.nearbyRoutesSort) ? appSettings.nearbyRoutesSort : 'kort';
   nrState.ranked = nrRank(nrBaseList(), m);
   if (!nrState.ranked.length) return { ok:false, text: osm === null ? nrT('Zoeken in OpenStreetMap is niet gelukt. Controleer je verbinding.', 'Searching OpenStreetMap did not work. Check your connection.') : nrT('Geen routes gevonden in de buurt.', 'No routes found nearby.') };
