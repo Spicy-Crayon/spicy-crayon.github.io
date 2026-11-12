@@ -115,13 +115,26 @@ def main():
             if not prov: prov = {'name': provname, 'walks': []}; s['provinces'].append(prov)
             prov.setdefault('walks', []).append(row)
         log['nieuw'].append((rel, row['name'], row['km']))
-    changed = any(log[k] for k in ('nieuw', 'weg', 'coord', 'pad'))
+    # --- lege provincies (bv. na het hernoemen van een map) weghalen: ze tonen anders "Geen routes in deze provincie"
+    def prune_empty(provs):
+        keep = []
+        for prov in provs:
+            has_list = any(isinstance(v, list) for v in prov.values())
+            if has_list and not any(v for v in prov.values() if isinstance(v, list)): log.setdefault('leeg', []).append(prov.get('name', '?')); continue
+            keep.append(prov)
+        provs[:] = keep
+    if isinstance(j.get('provinces'), list): prune_empty(j['provinces'])
+    for sec in ('wandelen', 'fietsen'):
+        s_ = j.get(sec)
+        if isinstance(s_, dict) and isinstance(s_.get('provinces'), list): prune_empty(s_['provinces'])
+    changed = any(log[k] for k in ('nieuw', 'weg', 'coord', 'pad')) or bool(log.get('leeg'))
     print('Nieuwe routes toegevoegd :', len(log['nieuw']))
     for r in log['nieuw']: print('   +', r[1], '(%s km)' % r[2], '<-', r[0])
     print('Rijen verwijderd (bestand weg):', len(log['weg']))
     for r in log['weg']: print('   -', r)
     print('Beginpunt aangevuld      :', len(log['coord']))
     print('Pad rechtgezet (hoofdletters):', len(log['pad']))
+    if log.get('leeg'): print('Lege provincies weggehaald:', log['leeg'])
     if log['geenpunt']: print('Zonder bruikbaar punt (niet toegevoegd):', log['geenpunt'])
     if log.get('overgeslagen'): print('Overgeslagen (niet in gpx/Wandelen|Fietsen/<Provincie>/):', log['overgeslagen'])
     if not changed: print('Niets te doen: index.json klopt al.'); return
