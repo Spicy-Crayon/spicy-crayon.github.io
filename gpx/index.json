@@ -11298,6 +11298,27 @@
           "lon": 7.113691
         }
       ]
+    },
+    {
+      "name": "Duitsland - Saarburg",
+      "wandelen": [
+        {
+          "name": "City Tour Saarburg",
+          "km": 5.1,
+          "categorie": "Natuur",
+          "file": "Wandelen/Duitsland - Saarburg/City Tour Saarburg.gpx",
+          "lat": 49.608153,
+          "lon": 6.548855
+        },
+        {
+          "name": "Uitzicht op de Saarschleife - Boomkroonpad Lockerbleiben vanuit Orscholz",
+          "km": 5.3,
+          "categorie": "Natuur",
+          "file": "Wandelen/Duitsland - Saarburg/Uitzicht op de Saarschleife - Boomkroonpad Lockerbleiben vanuit Orscholz.gpx",
+          "lat": 49.504258,
+          "lon": 6.532673
+        }
+      ]
     }
   ]
 }
