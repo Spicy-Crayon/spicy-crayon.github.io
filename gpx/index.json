@@ -11315,6 +11315,35 @@
           "lon": 6.532673
         }
       ]
+    },
+    {
+      "name": "Luxemburg - Berdorf - Mullerthal",
+      "wandelen": [
+        {
+          "name": "Lokale wandelroute - B2 4,3km",
+          "km": 4.3,
+          "categorie": "Natuur",
+          "file": "Wandelen/Luxemburg - Berdorf - Mullerthal/Lokale_wandelroute_-_B2  4,3km.gpx",
+          "lat": 49.826872,
+          "lon": 6.342714
+        },
+        {
+          "name": "Teufelspfad in der Teufelsschlucht 7.3km",
+          "km": 7.8,
+          "categorie": "Natuur",
+          "file": "Wandelen/Luxemburg - Berdorf - Mullerthal/Teufelspfad in der Teufelsschlucht 7.3km.gpx",
+          "lat": 49.844623,
+          "lon": 6.432844
+        },
+        {
+          "name": "Teufelspfad1 - 1.6km",
+          "km": 1.7,
+          "categorie": "Natuur",
+          "file": "Wandelen/Luxemburg - Berdorf - Mullerthal/teufelspfad1 - 1.6km.gpx",
+          "lat": 49.846764,
+          "lon": 6.435422
+        }
+      ]
     }
   ]
 }
