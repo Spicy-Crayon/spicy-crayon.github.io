@@ -7745,8 +7745,12 @@ function poiToastAllowed(){
     return true;
   }catch(e){ return false; }
 }
+// Ronde 195: de meldingen "geen plekken / erg veel plekken / laden mislukt" horen bij het AANVINKEN van een categorie,
+// niet bij elke kaartverschuiving (bij slepen kwam anders telkens "Geen interessante plekken gevonden").
+let poiToastUserTriggered = false, poiLayersSig = null;
 async function loadTogglePOIs(){
   if (typeof appSettings === 'undefined') return; // instellingen nog niet geladen bij de allereerste kaart-aanmaak
+  const poiUserTriggered = poiToastUserTriggered; poiToastUserTriggered = false;
   try{
   const activeKeys = Object.keys(POI_TOGGLE_CATEGORIES).filter(k => appSettings.poiLayers && appSettings.poiLayers[k]);
   poiToggleLayer.clearLayers();
@@ -7787,7 +7791,7 @@ async function loadTogglePOIs(){
       placed++;
     }
     console.info(`POI-laag (meegeleverd bestand): ${placed} plekken getoond${skipped ? ` (${skipped} extra verborgen, zoom verder in of vink minder categorieën aan)` : ''}.`);
-    if (skipped && poiToastAllowed()) toast(curLang()==='en' ? `Very many places here (${placed}+${skipped}) — zoom in further for a clearer overview.` : `Erg veel plekken hier (${placed}+${skipped}) — zoom verder in voor een duidelijker overzicht.`, 3500);
+    if (skipped && poiUserTriggered && poiToastAllowed()) toast(curLang()==='en' ? `Very many places here (${placed}+${skipped}) — zoom in further for a clearer overview.` : `Erg veel plekken hier (${placed}+${skipped}) — zoom verder in voor een duidelijker overzicht.`, 3500);
   }
 
   // Geen categorieën meer die live moeten aangevuld worden? Dan zijn we klaar.
@@ -7827,11 +7831,11 @@ async function loadTogglePOIs(){
       renderPoiMarker(el.lat, el.lon, catKey, tags.name || '', address, tags.opening_hours || '');
       livePlaced++;
     });
-    if (placed === 0 && livePlaced === 0 && poiToastAllowed()) toast(tr('toastNoPoiExactArea2'), 3500);
+    if (placed === 0 && livePlaced === 0 && poiUserTriggered && poiToastAllowed()) toast(tr('toastNoPoiExactArea2'), 3500);
   }catch(e){
     if (myToken === poiToggleRequestToken){
       console.warn('Kon interessante plekken niet laden:', e.message, '\nQuery was:', query);
-      if (poiToastAllowed()) toast(tr('toastPoiLoadFail'), 4000);
+      if (poiUserTriggered && poiToastAllowed()) toast(tr('toastPoiLoadFail'), 4000);
     }
   }
   } finally {
@@ -15836,6 +15840,12 @@ const DEV_NOTES_CONTENT = {
       <p><b>Teksten en test:</b> alle nieuwe teksten bestaan in NL en EN, Help en <code>plekken/README.md</code> zijn aangevuld. <b>Testsuite:</b> nieuw bestand <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> is een kiezer aangepast aan de nieuwe rijopbouw. Versie 2.497 / versionCode 116.</p>
     </section>
     <section>
+      <h3>🛠️ Ronde 195: POI-meldingen niet meer bij elke kaartverschuiving</h3>
+      <p><b>Oorzaak.</b> <code>loadTogglePOIs()</code> draait na elke kaartverschuiving of zoom (700 ms uitgesteld) en toonde telkens "Geen interessante plekken gevonden in dit exacte gebied" zodra er in het zichtbare deel niets stond. Bij slepen over een lege streek kwam de melding dus steeds terug.</p>
+      <p><b>Wijziging.</b> De drie meldingen (niets gevonden, erg veel plekken, laden mislukt) komen enkel nog na het aan- of uitvinken van een categorie: <code>applySettings()</code> vergelijkt <code>appSettings.poiLayers</code> met de vorige stand (<code>poiLayersSig</code>) en zet dan <code>poiToastUserTriggered</code>, dat <code>loadTogglePOIs()</code> eenmalig uitleest. De melding "zoom verder in" blijft 1 keer per uitzoomstand.</p>
+      <p><b>Testsuite:</b> nieuw bestand <code>test_round195_poi_toast_only_on_toggle.js</code>; versietests aangepast. Versie 2.530 / versionCode 149.</p>
+    </section>
+    <section>
       <h3>🛠️ Ronde 194: geen opstartmelding meer, 3 piepjes bij van-route-af, gladstrijken bij importeren</h3>
       <p><b>Opstartmelding.</b> De POI-laag (<code>loadTogglePOIs()</code>) draait ook achter het startscherm en achter de pop-up "Leuke wandelingen", waardoor meldingen over een kaart verschenen die je niet bekeek (bv. "Geen interessante plekken gevonden in dit exacte gebied"). De vier meldingen (te ver uitgezoomd, erg veel plekken, niets gevonden, laden mislukt) gaan nu via <code>poiToastAllowed()</code>: enkel als <code>appMode</code> gezet is en <code>#nearbyRoutesOverlay</code> niet open staat.</p>
       <p><b>Piepjes.</b> <code>setOffRoute()</code> roept <code>playOffRouteBeeps()</code> aan (3 sinustonen van 1175 Hz, 0,28 s tussenruimte, zelfde <code>kmBeepAudioCtx</code> als de kilometerpiep) naast de trilling en de melding. Niet bij stil herberekenen (de bestaande <code>silent</code>-vlag). Instelling <code>appSettings.offRouteBeep</code> (standaard aan, <code>!== false</code> gelezen), schakelaar <code>#settingOffRouteBeep</code>.</p>
@@ -17687,6 +17697,12 @@ const DEV_NOTES_CONTENT = {
       <p><b>Filters:</b> data comes from Overpass (<code>osmWalkOverpass()</code>) and is kept for 30 days (<code>nearby_tags_v1</code>). Playground (<code>leisure=playground</code>, 300 m) and stop (<code>highway=bus_stop</code>, <code>railway=station|halt|tram_stop</code>, 500 m) in 1 request per 20 routes; the first 60 in the sorting. Surface: per route (the first 20) sample points about every 250 m (6 to 14), per point the nearest way within 15 m (<code>out tags geom</code>) and its class from <code>surface</code>, otherwise <code>tracktype</code> or <code>highway</code>; a path or footway without <code>surface</code> does not count. At least 5 known points and 60% of the points known, otherwise no statement; "in rain" = at least 70% paved. A route that is only a link has no track and gets no surface label. If a request fails a message appears and nothing is saved.</p>
       <p><b>Own places:</b> <code>plekken/index.json</code> (<code>regions[].places[]</code> with name, text, lat, lon, foto, fotoBron, mode, gecontroleerd) is loaded at startup; <code>nrPlacesNear()</code> keeps places of this activity within 40 km; the pop-up shows the three nearest. Without a filter and without a length group they show as "📍 Own tips" above the list; a tap opens the place in Google Maps. The file holds ten places in Limburg as a starter list (no date in <code>gecontroleerd</code>, so shown as "not checked yourself yet", with a Maps search text in <code>maps</code>); the rest comes from you, the app invents nothing.</p>
       <p><b>Texts and test:</b> all new texts exist in NL and EN, Help and <code>plekken/README.md</code> are extended. <b>Test suite:</b> new file <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> one selector is adjusted to the new row structure. Version 2.497 / versionCode 116.</p>
+    </section>
+    <section>
+      <h3>🛠️ Round 195: POI notices no longer on every map drag</h3>
+      <p><b>Cause.</b> <code>loadTogglePOIs()</code> runs after every map pan or zoom (delayed 700 ms) and showed "No interesting places found in this exact area" every time the visible part had nothing. Dragging across an empty region made the notice come back again and again.</p>
+      <p><b>Change.</b> The three notices (nothing found, very many places, loading failed) now only appear after a category is switched on or off: <code>applySettings()</code> compares <code>appSettings.poiLayers</code> with the previous state (<code>poiLayersSig</code>) and then sets <code>poiToastUserTriggered</code>, which <code>loadTogglePOIs()</code> reads once. The "zoom in further" notice stays once per zoomed-out state.</p>
+      <p><b>Test suite:</b> new file <code>test_round195_poi_toast_only_on_toggle.js</code>; version tests adjusted. Version 2.530 / versionCode 149.</p>
     </section>
     <section>
       <h3>🛠️ Round 194: no startup notice, 3 beeps when off the route, smoothing on import</h3>
@@ -26635,7 +26651,7 @@ ${GARMIN_MENU_BTN_JS}
 </body>
 </html>`;
 }
-const APP_VERSION_TEXT = 'v2.529 · 13 nov';
+const APP_VERSION_TEXT = 'v2.530 · 13 nov';
 $('homeVersionFooter').textContent = APP_VERSION_TEXT;
 function buildGarminHubHtml(){
   // Dit is Gemini's keuzescherm.html, ongewijzigd qua opbouw/stijl — enkel: (1) een derde grote tegel
@@ -27876,6 +27892,9 @@ function applySettings(){
   document.documentElement.style.setProperty('--extra-bottom-inset', '0px');
   document.documentElement.style.setProperty('--extra-tab-gap', (appSettings.tabGapPx || 0) + 'px');
   clearTimeout(poiSettingsDebounceTimer);
+  const poiSig = JSON.stringify(appSettings.poiLayers || {});
+  if (poiLayersSig !== null && poiSig !== poiLayersSig) poiToastUserTriggered = true; // categorie aan/uit gezet
+  poiLayersSig = poiSig;
   poiSettingsDebounceTimer = setTimeout(loadTogglePOIs, 400);
   if (route.length >= 2) applyRouteColoring();
   if (appSettings.shakeToSurpriseOn) requestShakeMotionPermission();
