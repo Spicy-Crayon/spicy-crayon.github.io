@@ -4878,6 +4878,8 @@
       <div class="settings-subnote"><span data-i18n="settingsAutoRerouteSub">Zonder deze optie krijg je enkel de waarschuwing, en moet je zelf op "Weg hier afgesloten — herbereken" drukken.</span></div>
       <label class="settings-check" style="margin-top:10px;"><input type="checkbox" id="settingSilentReroute"> <span><span data-i18n="settingsSilentReroute">🤫 Stil herberekenen (geen melding, trilling of banner)</span></span></label>
       <div class="settings-subnote"><span data-i18n="settingsSilentRerouteSub">Werkt enkel samen met "Automatisch herberekenen" hierboven — de route past zich dan gewoon live aan zonder dat je er iets van merkt.</span></div>
+      <label class="settings-check" style="margin-top:10px;"><input type="checkbox" id="settingOffRouteBeep" checked> <span><span data-i18n="settingsOffRouteBeep">🔔 3 piepjes als ik van de route af ga</span></span></label>
+      <div class="settings-subnote"><span data-i18n="settingsOffRouteBeepSub">Een kort drievoudig piepje zodra de app merkt dat je van de route afwijkt, zodat je het hoort zonder naar je scherm te kijken. Niet bij "Stil herberekenen" (daar blijft alles onzichtbaar).</span></div>
     </div>
 
     <!-- NIEUW (Ronde 77 -- gemeld: "Was in bos, maar ik zie de huidige snelheid heel fel fluctueren", en
@@ -7732,6 +7734,17 @@ function getBundledPoiCoverage(){
   return bundledPoiCoverageCache;
 }
 
+// Ronde 194: de POI-laag werkt ook achter het startscherm (hub) en achter de "Leuke wandelingen"-popup; haar
+// meldingen (zoom in / te veel / niets gevonden / laden mislukt) horen daar niet te verschijnen, want ze gaan over
+// een kaart die je op dat moment niet bekijkt. Pas zodra je een tegel koos en de popup dicht is, mogen ze.
+function poiToastAllowed(){
+  try{
+    if (typeof appMode === 'undefined' || !appMode) return false;
+    const ov = $('nearbyRoutesOverlay');
+    if (ov && ov.classList.contains('show')) return false;
+    return true;
+  }catch(e){ return false; }
+}
 async function loadTogglePOIs(){
   if (typeof appSettings === 'undefined') return; // instellingen nog niet geladen bij de allereerste kaart-aanmaak
   try{
@@ -7740,7 +7753,7 @@ async function loadTogglePOIs(){
   lastPoiToggleGeo = []; // Ronde 97: reset vóór elke herberekening, zodat de 3D-laag nooit verouderde markers toont
   if (!activeKeys.length) return;
   if (map.getZoom() < 13){
-    if (!poiZoomWarningShown){
+    if (!poiZoomWarningShown && poiToastAllowed()){
       toast(tr('toastZoomForPoi'), 3500);
       poiZoomWarningShown = true;
     }
@@ -7774,7 +7787,7 @@ async function loadTogglePOIs(){
       placed++;
     }
     console.info(`POI-laag (meegeleverd bestand): ${placed} plekken getoond${skipped ? ` (${skipped} extra verborgen, zoom verder in of vink minder categorieën aan)` : ''}.`);
-    if (skipped) toast(curLang()==='en' ? `Very many places here (${placed}+${skipped}) — zoom in further for a clearer overview.` : `Erg veel plekken hier (${placed}+${skipped}) — zoom verder in voor een duidelijker overzicht.`, 3500);
+    if (skipped && poiToastAllowed()) toast(curLang()==='en' ? `Very many places here (${placed}+${skipped}) — zoom in further for a clearer overview.` : `Erg veel plekken hier (${placed}+${skipped}) — zoom verder in voor een duidelijker overzicht.`, 3500);
   }
 
   // Geen categorieën meer die live moeten aangevuld worden? Dan zijn we klaar.
@@ -7814,11 +7827,11 @@ async function loadTogglePOIs(){
       renderPoiMarker(el.lat, el.lon, catKey, tags.name || '', address, tags.opening_hours || '');
       livePlaced++;
     });
-    if (placed === 0 && livePlaced === 0) toast(tr('toastNoPoiExactArea2'), 3500);
+    if (placed === 0 && livePlaced === 0 && poiToastAllowed()) toast(tr('toastNoPoiExactArea2'), 3500);
   }catch(e){
     if (myToken === poiToggleRequestToken){
       console.warn('Kon interessante plekken niet laden:', e.message, '\nQuery was:', query);
-      toast(tr('toastPoiLoadFail'), 4000);
+      if (poiToastAllowed()) toast(tr('toastPoiLoadFail'), 4000);
     }
   }
   } finally {
@@ -10243,7 +10256,87 @@ function gpxDirPreviewSvg(pts, reversed){
     + `<circle cx="${X(arr[0].lon).toFixed(1)}" cy="${Y(arr[0].lat).toFixed(1)}" r="5" fill="#16a34a" stroke="#fff" stroke-width="1.6"/>`
     + youDot + `</svg>`;
 }
-function openGpxDirectionModal(){
+// ---------- Ronde 194: gladstrijken bij importeren ----------
+// Een opgenomen track (Komoot, telefoon...) wiebelt vaak enkele meters links/rechts van het echte pad. Dan loopt de
+// lijn zigzag, kruist zichzelf en voelt je positie als "springend" bij paden die dicht bij elkaar liggen. Bij het
+// importeren detecteren we dat (lengte van de ruwe track t.o.v. dezelfde track op 6 m vereenvoudigd) en bieden we aan
+// om te gladstrijken: dichte punten dunner, 2x driehoeksgemiddelde over 4 buren, daarna op 3 m vereenvoudigd.
+function gpxHavM(a, b){
+  const rad = Math.PI/180, dLa = (b.lat-a.lat)*rad, dLo = (b.lon-a.lon)*rad;
+  const x = Math.sin(dLa/2)**2 + Math.cos(a.lat*rad)*Math.cos(b.lat*rad)*Math.sin(dLo/2)**2;
+  return 2*6371000*Math.asin(Math.sqrt(x));
+}
+function gpxLenM(p){ let s = 0; for (let i = 1; i < p.length; i++) s += gpxHavM(p[i-1], p[i]); return s; }
+function gpxRdp(p, tol){
+  if (p.length < 3) return p.slice();
+  const lat0 = p[0].lat, mLat = 111320, mLon = 111320*Math.cos(lat0*Math.PI/180);
+  const X = q => [(q.lon-p[0].lon)*mLon, (q.lat-lat0)*mLat];
+  const keep = new Uint8Array(p.length); keep[0] = keep[p.length-1] = 1;
+  const st = [[0, p.length-1]];
+  while (st.length){
+    const [a, b] = st.pop(); const A = X(p[a]), B = X(p[b]);
+    const dx = B[0]-A[0], dy = B[1]-A[1], l2 = dx*dx + dy*dy;
+    let md = -1, mi = -1;
+    for (let i = a+1; i < b; i++){
+      const P = X(p[i]); let t = l2 > 0 ? ((P[0]-A[0])*dx + (P[1]-A[1])*dy)/l2 : 0;
+      t = Math.max(0, Math.min(1, t));
+      const d = Math.hypot(A[0]+dx*t-P[0], A[1]+dy*t-P[1]);
+      if (d > md){ md = d; mi = i; }
+    }
+    if (md > tol){ keep[mi] = 1; st.push([a, mi], [mi, b]); }
+  }
+  return p.filter((_, i) => keep[i]);
+}
+// Verhouding ruwe lengte / vereenvoudigde lengte (1.00 = al glad). Een schone route zit rond 1.0-1.1, een wiebelende opname ruim boven 1.25.
+function gpxNoiseRatio(pts){
+  if (!pts || pts.length < 100) return 1;
+  const raw = gpxLenM(pts), simp = gpxLenM(gpxRdp(pts, 6));
+  return simp > 0 ? raw / simp : 1;
+}
+function gpxSmoothPoints(pts){
+  const minStep = 2, k0 = 4, passes = 2, tol = 3;
+  let q = [pts[0]];
+  for (let i = 1; i < pts.length-1; i++){ if (gpxHavM(q[q.length-1], pts[i]) >= minStep) q.push(pts[i]); }
+  q.push(pts[pts.length-1]);
+  const hasEle = q.every(p => typeof p.ele === 'number' && !isNaN(p.ele));
+  for (let ps = 0; ps < passes; ps++){
+    const out = q.map(p => ({...p}));
+    for (let i = 1; i < q.length-1; i++){
+      const k = Math.min(k0, i, q.length-1-i); let sw = 0, sa = 0, so = 0, se = 0;
+      for (let j = -k; j <= k; j++){ const w = k+1-Math.abs(j); sw += w; sa += q[i+j].lat*w; so += q[i+j].lon*w; if (hasEle) se += q[i+j].ele*w; }
+      out[i].lat = sa/sw; out[i].lon = so/sw; if (hasEle) out[i].ele = se/sw;
+    }
+    q = out;
+  }
+  return gpxRdp(q, tol);
+}
+const gpxSmoothAsked = new WeakSet();
+async function openGpxDirectionModal(){
+  try{
+    const pts = pendingGpxPoints;
+    if (pts && pts.length >= 100 && !gpxSmoothAsked.has(pts)){
+      gpxSmoothAsked.add(pts);
+      const ratio = gpxNoiseRatio(pts);
+      if (ratio >= 1.25){
+        const en = curLang()==='en';
+        const smoothed = gpxSmoothPoints(pts);
+        const km0 = (gpxLenM(pts)/1000).toFixed(1), km1 = (gpxLenM(smoothed)/1000).toFixed(1);
+        const ok = await customConfirm(en
+          ? `This track looks zigzaggy (a recorded track with GPS noise): ${pts.length} points, ${km0} km. Smooth it? That gives ${smoothed.length} points, about ${km1} km, and your position will jump less between paths that lie close together.`
+          : `Deze track ziet er wiebelig uit (een opgenomen route met GPS-ruis): ${pts.length} punten, ${km0} km. Gladstrijken? Dan krijg je ${smoothed.length} punten, ongeveer ${km1} km, en springt je positie minder tussen paden die dicht bij elkaar liggen.`,
+          { okText: en ? 'Smooth' : 'Gladstrijken', cancelText: en ? 'Keep original' : 'Origineel houden' });
+        if (ok){
+          smoothed._smoothed = true;
+          gpxSmoothAsked.add(smoothed);
+          pendingGpxPoints = smoothed;
+          try{ toast(en ? `✨ Smoothed: ${pts.length} → ${smoothed.length} points` : `✨ Gladgestreken: ${pts.length} → ${smoothed.length} punten`, 3500); }catch(e){}
+        }
+      }
+    }
+  }catch(e){ console.warn('gladstrijken overgeslagen:', e.message); }
+  openGpxDirectionModalNow();
+}
+function openGpxDirectionModalNow(){
   const pts = pendingGpxPoints || [];
   try{
     $('gpxDirPrevFwd').innerHTML = gpxDirPreviewSvg(pts, false);
@@ -12446,7 +12539,7 @@ let appSettings = {
   theme:'default', showCompassBtn:true, compassNorthHaptic:true, compassRadarAltStyle:false, orsKey:'', graphhopperKey:'', geoapifyKey:'', plantnetKey:'', geminiKey:'', windyKey:'', locationIqKey:'', groqKey:'', otmKey:'', bikeType:'regular', mapStyle:'standard', mapStyleBike:'standard', mapStyleWalk:'standard', thunderforestKey:'', cartoKey:'', googleTtsKey:'', mapTilerKey:'',
   audioSrcWikipedia:true, audioSrcWikivoyage:true, audioSrcNature:true, audioSrcOtm:false, // Ronde 98: aparte aan/uit-schakelaars per audiobron (zie settingAudioSrc*-checkboxes)
   historyAudioRadiusM:150, // Ronde 99: instelbare aankomst-triggerafstand (zie historyAudioRadiusM() in de hoofd-JS)
-  dashTextSize:'normal', dashBold:true, largeNodesAccessibility:false, offRouteDist:35, autoReroute:false, silentReroute:false,
+  dashTextSize:'normal', dashBold:true, largeNodesAccessibility:false, offRouteDist:35, autoReroute:false, silentReroute:false, offRouteBeep:true,
   overlays:{ cycling:false, hiking:false, mtb:false, riding:false, slopes:false, radar:false, steep:false, stops:false, photos:false, webcams:false },
   poiLayers:{ cafe:false, restaurant:false, bakery:false, supermarket:false, pharmacy:false, bike:false, water:false, toilet:false, money:false, camping:false, charging:false, playground:false, parking:false, hotel:false }, showPoiDetails:false,
   showWindDirection:true, autoPause:false, redNavDot:false, topOffsetPx:0, tabGapPx:0, userName:'', bodyWeightKg:null, bodyHeightCm:null, bodyAge:null, bodyGender:'', spotifyClientId:'', stravaClientId:'', stravaClientSecret:'', voiceOnlyMode:false, routeColorMode:'off', showWindInNav:false, rainWatchOn:true, eatReminderOn:false, eatIntervalMin:45, drinkReminderOn:false, drinkIntervalMin:20, segmentPrOn:true, darkArrivalWarning:true, quietRoutingMode:false, historyAudioOn:false, audioGuideFullArticle:false, birdGeoFilterOn:true, shakeToSurpriseOn:false, shakeKm:30, vertrekFromGps:false, avoidBufferM:18, maxOverlapPct:8, lowerGpsAccuracy:false, disableMapRotation:false, posUpdateIntervalSec:1, mapRecenterDelaySec:6, overpassSurfaceTimeoutSec:15, assistantWaitSec:60, routingWeighting:'off', navType:'active', fallDetectionOn:false, fallSensitivity:3, sosContactNumber:'', sosContactName:'', autoPauseRunCoach:false, routePreference:'balanced', routeLineColor:'#e2a13c', language:'en', homeBgDim:35, map3dTiltOn:false, speedSmoothingSec:0,
@@ -13398,6 +13491,8 @@ const TRANSLATIONS = {
   settingsDevNormal: { nl:'⚖️ Normaal (35 m)', en:'⚖️ Normal (35 m)' },
   settingsDevRelaxed: { nl:'😌 Soepel (60 m)', en:'😌 Relaxed (60 m)' },
   settingsAutoReroute: { nl:'🔄 Automatisch herberekenen zodra ik afwijk', en:'🔄 Automatically recalculate when I stray' },
+  settingsOffRouteBeep: { nl:'🔔 3 piepjes als ik van de route af ga', en:'🔔 3 beeps when I leave the route' },
+  settingsOffRouteBeepSub: { nl:'Een kort drievoudig piepje zodra de app merkt dat je van de route afwijkt, zodat je het hoort zonder naar je scherm te kijken. Niet bij "Stil herberekenen" (daar blijft alles onzichtbaar).', en:'A short triple beep as soon as the app notices you have left the route, so you hear it without looking at the screen. Not used with "Silent recalculation" (everything stays invisible there).' },
   settingsSilentReroute: { nl:'🤫 Stil herberekenen (geen melding, trilling of banner)', en:'🤫 Silent recalculation (no notification, vibration or banner)' },
   settingsSilentRerouteSub: { nl:'Bepaalt of je er iets van MERKT wanneer dat automatisch herberekenen (hierboven) gebeurt. Uit (standaard): je krijgt een trilling, een banner en een geluidje bij elke automatische herberekening. Aan: dat gebeurt allemaal onzichtbaar op de achtergrond — je ziet gewoon je route plots aangepast, zonder melding. Heeft enkel effect als "Automatisch herberekenen" hierboven ook aanstaat.', en:'Determines whether you NOTICE it when that automatic recalculation (above) happens. Off (default): you get a vibration, a banner and a sound with every automatic recalculation. On: all of that happens invisibly in the background — you just see your route suddenly adjusted, without any notice. Only has an effect if "Automatically recalculate" above is also on.' },
   settingsSpeedSmoothing: { nl:'📶 Snelheidsweergave', en:'📶 Speed display' },
@@ -13782,6 +13877,8 @@ const HELP_CONTENT = {
       <p><b>Honingraat-knopjes links tijdens navigatie.</b> Ze zijn in twee groepen gebundeld om de kaart rustig te houden. Tik <b>🧰</b> (route-opties) om die groep te openen: 🚧 weg afgesloten, 🔢 knooppunten overzicht (alleen als je route echte genummerde knooppunten heeft), 🔄 richting omkeren (alleen bij een geïmporteerde GPX-route) en ↩️ terug naar startpunt. Tik <b>🍃</b> (onderweg): ☕ pauze zoeken (alleen met een route) en, bij wandelen, 🪑 rustpunten en 🦉 natuurspotter. Er staat steeds maar één groep open, en een groep zonder bruikbare knopjes verschijnt niet. Zonder geladen route (vrij wandelen of fietsen) blijven 🚧 en ☕ verborgen; ↩️ is er dan wel, bij wandelen en bij fietsen.</p>
       <p><b>Overige iconen.</b> 🔢 op de kaart is het knooppunten overzicht (de genummerde punten van je route); 🔢 op het wandel-opzetscherm is de knooppunten-invoer (typ een reeks nummers, de app bouwt de route). 🔎 zoekt bankjes, terrassen en hondenweides binnen ongeveer 900 m (OpenStreetMap, geen account nodig). 🗂️ opent de meegeleverde kant-en-klare wandelroutes per provincie of gemeente. In de muziekspeler is ⏸ pauze/hervatten (⏮ ⏭ vorig/volgend nummer), bij de weerradar pauzeert ⏸️ de animatie, in het RunCoach-sessiescherm vergroot of verkleint ⤢ de kaart, en 😄 😔 geven aan hoe het ging na een run.</p>
       <p>Wijk je te ver van de route af, dan verschijnt een waarschuwing. Met <b>"🚧 Weg hier afgesloten"</b> zoek je zelf een alternatief vanaf je huidige positie — of laat de app dat <b>automatisch</b> doen via Instellingen.</p>
+      <p><b>🔔 3 piepjes bij van-route-af</b> — zodra de app merkt dat je van de route af bent, hoor je 3 korte piepjes (naast de trilling en de banner). Uitzetten kan in Instellingen onder "3 piepjes als ik van de route af ga". Bij "Stil herberekenen" blijft het stil.</p>
+      <p><b>✨ Gladstrijken bij importeren</b> — een opgenomen route (bv. van Komoot of je telefoon) wiebelt vaak enkele meters links en rechts. Herkent de app dat bij het importeren van een GPX, dan vraagt ze of ze mag gladstrijken. Dat maakt de lijn rustiger, zodat je positie minder springt tussen paden die dicht bij elkaar liggen. De route wordt daardoor iets korter en heeft minder punten; kies "Origineel houden" om niets te veranderen. Het systematische verschil van je GPS (alles een paar meter opzij) verdwijnt hierdoor niet.</p>
       <p><b>Aankomst bij een punt.</b> Een routepunt telt als bereikt zodra je binnen 30 m bent. Is de getekende route naar dat punt veel langer dan de rechte afstand (bijvoorbeeld een eindpunt op een ander niveau vlak naast je start, of een omweg), dan geldt het pas als bereikt nadat je minstens 70% van die route echt gelopen hebt. Zo krijg je niet meteen "aangekomen" aan het begin. Sta je er al een poos zonder dat het telt, dan meldt de app dat; met Stop kun je altijd zelf beëindigen.</p>
       <p><b>🔴 Rode navigatiestip</b> (optioneel, via Instellingen) — een pulserende rode stip op je positie terwijl je rijdt/wandelt, vast rood zodra je stilstaat.</p>
       <p><b>🔋 Batterijbesparing</b> (optioneel) — het scherm verdonkert na een paar seconden stilte tijdens navigatie; spraaknavigatie blijft gewoon werken, tik ergens om weer op te lichten. Werkt het best op moderne (OLED/AMOLED-)schermen.<br>
@@ -13976,6 +14073,8 @@ const HELP_CONTENT = {
       <p><b>Honeycomb buttons on the left during navigation.</b> They are bundled in two groups to keep the map calm. Tap <b>🧰</b> (route options) to open that group: 🚧 road closed, 🔢 node overview (only if your route has real numbered nodes), 🔄 reverse direction (only for an imported GPX route) and ↩️ back to starting point. Tap <b>🍃</b> (along the way): ☕ find a break (only with a route) and, while walking, 🪑 rest points and 🦉 nature spotter. Only one group is open at a time, and a group with no usable buttons does not appear. Without a loaded route (free walking or cycling) 🚧 and ☕ stay hidden; ↩️ is there, for both walking and cycling.</p>
       <p><b>Other icons.</b> 🔢 on the map is the node overview (the numbered points of your route); 🔢 on the walking setup screen is node entry (type a series of numbers and the app builds the route). 🔎 finds benches, terraces and dog fields within about 900 m (OpenStreetMap, no account needed). 🗂️ opens the bundled ready-made walking routes per province or municipality. In the music player ⏸ is pause/resume (⏮ ⏭ previous/next track), on the weather radar ⏸️ pauses the animation, in the RunCoach session screen ⤢ enlarges or shrinks the map, and 😄 😔 say how it went after a run.</p>
       <p>Stray too far from the route and a warning appears. Use <b>"🚧 Road closed here"</b> to find an alternative yourself from your current position — or let the app do it <b>automatically</b> via Settings.</p>
+      <p><b>🔔 3 beeps when off the route</b> — as soon as the app notices you have left the route, you hear 3 short beeps (besides the vibration and the banner). Turn it off in Settings under "3 beeps when I leave the route". With "Silent recalculation" it stays silent.</p>
+      <p><b>✨ Smoothing on import</b> — a recorded route (e.g. from Komoot or your phone) often wobbles a few metres left and right. If the app recognises that when you import a GPX, it asks whether it may smooth it. That calms the line, so your position jumps less between paths that lie close together. The route becomes slightly shorter and has fewer points; choose "Keep original" to change nothing. A systematic GPS offset (everything a few metres to one side) does not disappear this way.</p>
       <p><b>Arriving at a point.</b> A route point counts as reached as soon as you are within 30 m. If the drawn route to that point is much longer than the straight distance (for example an end point on another level right beside your start, or a detour), it only counts as reached after you have actually walked at least 70% of that route. That way you do not get "arrived" right at the start. If you have been standing there a while without it counting, the app says so; you can always finish yourself with Stop.</p>
       <p><b>🔴 Red navigation dot</b> (optional, via Settings) — a pulsing red dot at your position while moving, solid red once you stop.</p>
       <p><b>🔋 Battery saver</b> (optional) — the screen dims after a few seconds of inactivity during navigation; voice navigation keeps working, just tap to light it back up. Works best on modern (OLED/AMOLED) screens.<br>
@@ -15735,6 +15834,14 @@ const DEV_NOTES_CONTENT = {
       <p><b>Filters:</b> gegevens komen uit Overpass (<code>osmWalkOverpass()</code>) en worden 30 dagen bewaard (<code>nearby_tags_v1</code>). Speeltuin (<code>leisure=playground</code>, 300 m) en halte (<code>highway=bus_stop</code>, <code>railway=station|halt|tram_stop</code>, 500 m) in 1 vraag per 20 routes; de eerste 60 volgens de sortering. Ondergrond: per route (de eerste 20) monsterpunten om de ~250 m (6 tot 14), per punt de dichtstbijzijnde weg binnen 15 m (<code>out tags geom</code>) en zijn klasse uit <code>surface</code>, anders <code>tracktype</code> of <code>highway</code>; een pad of voetpad zonder <code>surface</code> telt niet mee. Minstens 5 bekende punten en 60% van de punten bekend, anders geen uitspraak; "bij regen" = minstens 70% verhard. Een route die enkel een link is, heeft geen spoor en krijgt geen ondergrondlabel. Mislukt een vraag, dan staat er een melding en wordt niets bewaard.</p>
       <p><b>Eigen plekken:</b> <code>plekken/index.json</code> (<code>regions[].places[]</code> met naam, tekst, lat, lon, foto, fotoBron, mode, gecontroleerd) wordt bij het opstarten geladen; <code>nrPlacesNear()</code> houdt plekken van deze soort binnen 40 km; de pop-up toont de drie dichtstbijzijnde. Zonder filter en zonder lengtegroep staan ze als "📍 Eigen tips" boven de lijst; een tik opent de plek in Google Maps. Het bestand bevat als startlijst tien plekken in Limburg (zonder datum bij <code>gecontroleerd</code>, dus als "nog niet zelf gecontroleerd" getoond, met een Maps-zoektekst in <code>maps</code>); de rest komt van jou, de app verzint niets.</p>
       <p><b>Teksten en test:</b> alle nieuwe teksten bestaan in NL en EN, Help en <code>plekken/README.md</code> zijn aangevuld. <b>Testsuite:</b> nieuw bestand <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> is een kiezer aangepast aan de nieuwe rijopbouw. Versie 2.497 / versionCode 116.</p>
+    </section>
+    <section>
+      <h3>🛠️ Ronde 194: geen opstartmelding meer, 3 piepjes bij van-route-af, gladstrijken bij importeren</h3>
+      <p><b>Opstartmelding.</b> De POI-laag (<code>loadTogglePOIs()</code>) draait ook achter het startscherm en achter de pop-up "Leuke wandelingen", waardoor meldingen over een kaart verschenen die je niet bekeek (bv. "Geen interessante plekken gevonden in dit exacte gebied"). De vier meldingen (te ver uitgezoomd, erg veel plekken, niets gevonden, laden mislukt) gaan nu via <code>poiToastAllowed()</code>: enkel als <code>appMode</code> gezet is en <code>#nearbyRoutesOverlay</code> niet open staat.</p>
+      <p><b>Piepjes.</b> <code>setOffRoute()</code> roept <code>playOffRouteBeeps()</code> aan (3 sinustonen van 1175 Hz, 0,28 s tussenruimte, zelfde <code>kmBeepAudioCtx</code> als de kilometerpiep) naast de trilling en de melding. Niet bij stil herberekenen (de bestaande <code>silent</code>-vlag). Instelling <code>appSettings.offRouteBeep</code> (standaard aan, <code>!== false</code> gelezen), schakelaar <code>#settingOffRouteBeep</code>.</p>
+      <p><b>Gladstrijken.</b> <code>openGpxDirectionModal()</code> (het ene punt waar alle GPX-importen langskomen) is nu async: bij minstens 100 punten berekent <code>gpxNoiseRatio()</code> de lengte van de ruwe track gedeeld door dezelfde track op 6 m vereenvoudigd (Ramer-Douglas-Peucker). Vanaf 1,25 vraagt <code>customConfirm()</code> of <code>gpxSmoothPoints()</code> mag toegepast worden: punten dichter dan 2 m weg, 2 keer een driehoeksgemiddelde over 4 buren aan elke kant (begin en eind vast, hoogte mee), daarna vereenvoudigen op 3 m. Per puntenlijst wordt maar 1 keer gevraagd (<code>gpxSmoothAsked</code>). De drempel komt uit simulaties met kunstmatige ruis; echte tracks zijn niet gemeten.</p>
+      <p><b>Niet opgelost.</b> De volgfunctie zelf (<code>navTrackProject()</code>) blijft bij ruis van 8 m of meer en paden die ~5 m uit elkaar lopen soms op het verkeerde pad springen; gladstrijken vermindert dat, maar lost een systematische afwijking van de GPS niet op.</p>
+      <p><b>Testsuite:</b> nieuw bestand <code>test_round194_startup_beeps_smooth.js</code>; testen voor de versie in Ronde 187 tot 193 aangepast. Versie 2.529 / versionCode 148.</p>
     </section>
     <section>
       <h3>🛠️ Ronde 193: afstandschip met echte pijl, kortere tekst in het afstandsblad</h3>
@@ -17580,6 +17687,14 @@ const DEV_NOTES_CONTENT = {
       <p><b>Filters:</b> data comes from Overpass (<code>osmWalkOverpass()</code>) and is kept for 30 days (<code>nearby_tags_v1</code>). Playground (<code>leisure=playground</code>, 300 m) and stop (<code>highway=bus_stop</code>, <code>railway=station|halt|tram_stop</code>, 500 m) in 1 request per 20 routes; the first 60 in the sorting. Surface: per route (the first 20) sample points about every 250 m (6 to 14), per point the nearest way within 15 m (<code>out tags geom</code>) and its class from <code>surface</code>, otherwise <code>tracktype</code> or <code>highway</code>; a path or footway without <code>surface</code> does not count. At least 5 known points and 60% of the points known, otherwise no statement; "in rain" = at least 70% paved. A route that is only a link has no track and gets no surface label. If a request fails a message appears and nothing is saved.</p>
       <p><b>Own places:</b> <code>plekken/index.json</code> (<code>regions[].places[]</code> with name, text, lat, lon, foto, fotoBron, mode, gecontroleerd) is loaded at startup; <code>nrPlacesNear()</code> keeps places of this activity within 40 km; the pop-up shows the three nearest. Without a filter and without a length group they show as "📍 Own tips" above the list; a tap opens the place in Google Maps. The file holds ten places in Limburg as a starter list (no date in <code>gecontroleerd</code>, so shown as "not checked yourself yet", with a Maps search text in <code>maps</code>); the rest comes from you, the app invents nothing.</p>
       <p><b>Texts and test:</b> all new texts exist in NL and EN, Help and <code>plekken/README.md</code> are extended. <b>Test suite:</b> new file <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> one selector is adjusted to the new row structure. Version 2.497 / versionCode 116.</p>
+    </section>
+    <section>
+      <h3>🛠️ Round 194: no startup notice, 3 beeps when off the route, smoothing on import</h3>
+      <p><b>Startup notice.</b> The POI layer (<code>loadTogglePOIs()</code>) also runs behind the start screen and behind the "Nice walks" pop-up, so notices appeared about a map you were not looking at (e.g. "No interesting places found in this exact area"). The four notices (zoomed out too far, very many places, nothing found, loading failed) now go through <code>poiToastAllowed()</code>: only when <code>appMode</code> is set and <code>#nearbyRoutesOverlay</code> is not open.</p>
+      <p><b>Beeps.</b> <code>setOffRoute()</code> calls <code>playOffRouteBeeps()</code> (3 sine tones of 1175 Hz, 0.28 s apart, same <code>kmBeepAudioCtx</code> as the kilometre beep) next to the vibration and the notice. Not with silent recalculation (the existing <code>silent</code> flag). Setting <code>appSettings.offRouteBeep</code> (default on, read as <code>!== false</code>), switch <code>#settingOffRouteBeep</code>.</p>
+      <p><b>Smoothing.</b> <code>openGpxDirectionModal()</code> (the one place all GPX imports pass through) is now async: with at least 100 points, <code>gpxNoiseRatio()</code> computes the length of the raw track divided by the same track simplified at 6 m (Ramer-Douglas-Peucker). From 1.25 up, <code>customConfirm()</code> asks whether <code>gpxSmoothPoints()</code> may be applied: drop points closer than 2 m, 2 times a triangular average over 4 neighbours on each side (start and end fixed, elevation included), then simplify at 3 m. It asks only once per point list (<code>gpxSmoothAsked</code>). The threshold comes from simulations with artificial noise; real tracks were not measured.</p>
+      <p><b>Not solved.</b> The tracker itself (<code>navTrackProject()</code>) can still jump to the wrong path with noise of 8 m or more and paths ~5 m apart; smoothing reduces that but does not fix a systematic GPS offset.</p>
+      <p><b>Test suite:</b> new file <code>test_round194_startup_beeps_smooth.js</code>; the version tests of Rounds 187 to 193 were adjusted. Version 2.529 / versionCode 148.</p>
     </section>
     <section>
       <h3>🛠️ Round 193: distance chip with a real arrow, shorter text in the distance sheet</h3>
@@ -26520,7 +26635,7 @@ ${GARMIN_MENU_BTN_JS}
 </body>
 </html>`;
 }
-const APP_VERSION_TEXT = 'v2.528 · 13 nov';
+const APP_VERSION_TEXT = 'v2.529 · 13 nov';
 $('homeVersionFooter').textContent = APP_VERSION_TEXT;
 function buildGarminHubHtml(){
   // Dit is Gemini's keuzescherm.html, ongewijzigd qua opbouw/stijl — enkel: (1) een derde grote tegel
@@ -27836,6 +27951,7 @@ async function loadSettings(){
   $('settingDashBold').checked = appSettings.dashBold;
   $('settingAutoReroute').checked = appSettings.autoReroute;
   $('settingSilentReroute').checked = appSettings.silentReroute;
+  $('settingOffRouteBeep').checked = appSettings.offRouteBeep !== false;
   $('settingShowWind').checked = appSettings.showWindDirection;
   $('settingAutoPause').checked = appSettings.autoPause;
   $('settingRedNavDot').checked = !!appSettings.redNavDot;
@@ -28703,6 +28819,7 @@ $('settingLargeNodes').addEventListener('change', (e) => {
 });
 $('settingAutoReroute').addEventListener('change', (e) => { appSettings.autoReroute = e.target.checked; saveSettings(); });
 $('settingSilentReroute').addEventListener('change', (e) => { appSettings.silentReroute = e.target.checked; saveSettings(); });
+$('settingOffRouteBeep').addEventListener('change', (e) => { appSettings.offRouteBeep = e.target.checked; saveSettings(); });
 $('settingShowWind').addEventListener('change', (e) => { appSettings.showWindDirection = e.target.checked; saveSettings(); });
 $('settingAutoPause').addEventListener('change', (e) => { appSettings.autoPause = e.target.checked; if (!e.target.checked) resumeFromAutoPause(); saveSettings(); });
 $('settingRedNavDot').addEventListener('change', (e) => { appSettings.redNavDot = e.target.checked; saveSettings(); if (meMarker) renderPosition(); });
@@ -29208,7 +29325,7 @@ $('settingsResetBtn').addEventListener('click', () => {
   appSettings = {
     theme:resetTheme, showCompassBtn:true, compassNorthHaptic:true, compassRadarAltStyle:false, orsKey:'', graphhopperKey:'', geoapifyKey:'', plantnetKey:'', geminiKey:'', windyKey:'', locationIqKey:'', groqKey:'', otmKey:'', bikeType:'regular', mapStyle:'standard', mapStyleBike:'standard', mapStyleWalk:'standard', thunderforestKey:'', cartoKey:'', googleTtsKey:'', mapTilerKey:'',
     audioSrcWikipedia:true, audioSrcWikivoyage:true, audioSrcNature:true, audioSrcOtm:false, historyAudioRadiusM:150,
-    dashTextSize:'normal', dashBold:true, largeNodesAccessibility:false, offRouteDist:35, autoReroute:false, silentReroute:false,
+    dashTextSize:'normal', dashBold:true, largeNodesAccessibility:false, offRouteDist:35, autoReroute:false, silentReroute:false, offRouteBeep:true,
     overlays:{ cycling:false, hiking:false, mtb:false, riding:false, slopes:false, radar:false, steep:false, stops:false, photos:false, webcams:false },
     poiLayers:{ cafe:false, restaurant:false, bakery:false, supermarket:false, pharmacy:false, bike:false, water:false, toilet:false, money:false, camping:false, charging:false, playground:false, parking:false, hotel:false }, showPoiDetails:false,
     showWindDirection:true, autoPause:false, redNavDot:false, topOffsetPx:0, tabGapPx:0, userName:'', bodyWeightKg:null, bodyHeightCm:null, bodyAge:null, bodyGender:'', spotifyClientId:'', stravaClientId:'', stravaClientSecret:'', voiceOnlyMode:false, routeColorMode:'off', showWindInNav:false, rainWatchOn:true, eatReminderOn:false, eatIntervalMin:45, drinkReminderOn:false, drinkIntervalMin:20, segmentPrOn:true, darkArrivalWarning:true, quietRoutingMode:false, historyAudioOn:false, audioGuideFullArticle:false, birdGeoFilterOn:true, shakeToSurpriseOn:false, shakeKm:30, vertrekFromGps:false, avoidBufferM:18, maxOverlapPct:8, lowerGpsAccuracy:false, disableMapRotation:false, posUpdateIntervalSec:1, mapRecenterDelaySec:6, overpassSurfaceTimeoutSec:15, assistantWaitSec:60, routingWeighting:'off', navType:'active', fallDetectionOn:false, fallSensitivity:3, sosContactNumber:'', sosContactName:'', autoPauseRunCoach:false, routePreference:'balanced', routeLineColor:'#e2a13c', language:'en', homeBgDim:35, map3dTiltOn:false, speedSmoothingSec:0,
@@ -29235,6 +29352,7 @@ $('settingsResetBtn').addEventListener('click', () => {
   $('settingLargeNodes').checked = false;
   $('settingAutoReroute').checked = false;
   $('settingSilentReroute').checked = false;
+  $('settingOffRouteBeep').checked = true;
   $('settingShowWind').checked = true;
   $('settingAutoPause').checked = false;
   $('settingRedNavDot').checked = false;
@@ -32096,6 +32214,26 @@ function announceManeuver(maneuver){
 // AudioContext openen is op sommige toestellen traag/hapert); een context mag pas na een echte gebruikersactie
 // aangemaakt worden, maar dat is hier altijd het geval (navActive is alleen waar na een tik op "Start").
 let kmBeepAudioCtx = null;
+// Ronde 194: 3 korte piepjes bij van-route-af (zelfde toon/context als de km-beep; hoger en korter zodat je het verschil hoort).
+function playOffRouteBeeps(){
+  try{
+    if (!kmBeepAudioCtx) kmBeepAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const ctx = kmBeepAudioCtx;
+    if (ctx.state === 'suspended') ctx.resume();
+    for (let i = 0; i < 3; i++){
+      const t0 = ctx.currentTime + i * 0.28;
+      const osc = ctx.createOscillator(), gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = 1175; // D6
+      gain.gain.setValueAtTime(0.0001, t0);
+      gain.gain.exponentialRampToValueAtTime(0.4, t0 + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.17);
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.start(t0);
+      osc.stop(t0 + 0.2);
+    }
+  }catch(e){ /* geen Web Audio: trilling + banner blijven bestaan */ }
+}
 function playKmBeep(){
   try{
     if (!kmBeepAudioCtx) kmBeepAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -35026,6 +35164,7 @@ function setOffRoute(active){
     if (!silent){
       if (navigator.vibrate) navigator.vibrate([200,80,200]);
       toast(tr('toastOffRoute'), 3000);
+      if (appSettings.offRouteBeep !== false) playOffRouteBeeps();
     }
     if (appSettings.autoReroute){ rerouteRetriesLeft = 2; rerouteFromCurrentPosition(true); }
   }
