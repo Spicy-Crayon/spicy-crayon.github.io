@@ -9545,15 +9545,11 @@ function navGpsAccumulate(lat, lon, accuracy){
       S.lastG = G; S.lastOn = onLine;
     } else { S.lastG = null; S.lastOn = false; }
   }catch(e){ add = d; }
-<<<<<<< HEAD
   // Ronde 196: de snelheidstoets gold voor elke stap. Bij ruis (1 stap per seconde, een paar meter ruis, of meerdere fixen kort na elkaar na een vertraging) kwam een gewone stap
   // van 8-15 m boven 8 m/s uit; die werd weggegooid, terwijl de volgende stap wel vanaf de nieuwe plek begon -- die meters (en de voortgang langs de lijn) gingen dus voorgoed
   // verloren (replay van een echte wandeling van 4,26 km gaf 3,9 km). Een stap tot max(30 m, 2x nauwkeurigheid) kan nooit een echte GPS-sprong zijn; alleen grotere
   // stappen die ook te snel gaan worden nog genegeerd.
   if (d / dt <= maxV || d <= Math.max(30, 2 * (accuracy || 0))) S.m = Math.max(0, S.m + add); // onmogelijke sprongen (GPS-teleport) tellen niet mee
-=======
-  if (d / dt <= maxV) S.m = Math.max(0, S.m + add); // onmogelijke sprongen (GPS-teleport) tellen niet mee
->>>>>>> 1348ecdf3e1c054c67d229cf33c2d4c0b7d6035e
   S.last = { lat, lon }; S.t = now;
 }
 // Afslag-instructies uit de GEOMETRIE van de lijn zelf (GPX), zodat ze altijd overeenkomen met wat op de kaart
@@ -15868,7 +15864,6 @@ const DEV_NOTES_CONTENT = {
       <p><b>Teksten en test:</b> alle nieuwe teksten bestaan in NL en EN, Help en <code>plekken/README.md</code> zijn aangevuld. <b>Testsuite:</b> nieuw bestand <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> is een kiezer aangepast aan de nieuwe rijopbouw. Versie 2.497 / versionCode 116.</p>
     </section>
     <section>
-<<<<<<< HEAD
       <h3>🛠️ Ronde 197: dashboard-tegel in twee delen ('echt gelopen' en 'nog te gaan')</h3>
       <p><b>Waarom.</b> 'Afgelegd' is de teller <code>NAVGPS.m</code>: op de lijn telt het verschil in voortgang langs de lijn (ruis valt eruit), ernaast de GPS-stap. Een horloge telt de werkelijke weg, dus ook zijstappen naast het pad. Bij de wandeling van 14 nov gaf het horloge 5,18 km; het opgenomen spoor was 4,83 km plus ongeveer 0,35 km voor de Start-knop. De app kon die twee getallen niet naast elkaar tonen.</p>
       <p><b>Wijziging.</b> De rechtertegel van <code>#dashSummary</code> bestaat nu uit twee delen (<code>#dashSplitTile</code>): boven <code>#dashWalked</code> ('echt gelopen'), onder <code>#dashRemaining</code> ('nog te gaan', in vrije modus '–'). <code>navWalkedM</code> is de lopende lengte van <code>navTrack</code>: <code>recordNavTrackPoint()</code> telt elke toegevoegde stap erbij (punt per minstens 5 m, grotere stap bij slechte nauwkeurigheid, fixes boven 50 m worden genegeerd) en <code>startNav()</code> zet de teller op 0. De teller blijft kloppen als <code>navTrack</code> bij 8000 punten wordt uitgedund. Lettergroottes: 19 px (Garmin-stijl ook 19 px, 'tekst klein' 16 px), labels 9,5 px. <code>#dashDone</code> kreeg 22 px en <code>white-space: nowrap</code>, want '2.9 km' brak bij 360 px over twee regels. Nieuwe teksten <code>dashEchtGelopen</code> en <code>dashNogTeGaan</code> in NL en EN; Help aangevuld.</p>
@@ -15884,8 +15879,6 @@ const DEV_NOTES_CONTENT = {
       <p><b>Testsuite:</b> nieuw bestand <code>test_round196_distance_noise.js</code>; versietests aangepast. Versie 2.531 / versionCode 150.</p>
     </section>
     <section>
-=======
->>>>>>> 1348ecdf3e1c054c67d229cf33c2d4c0b7d6035e
       <h3>🛠️ Ronde 195: POI-meldingen niet meer bij elke kaartverschuiving</h3>
       <p><b>Oorzaak.</b> <code>loadTogglePOIs()</code> draait na elke kaartverschuiving of zoom (700 ms uitgesteld) en toonde telkens "Geen interessante plekken gevonden in dit exacte gebied" zodra er in het zichtbare deel niets stond. Bij slepen over een lege streek kwam de melding dus steeds terug.</p>
       <p><b>Wijziging.</b> De drie meldingen (niets gevonden, erg veel plekken, laden mislukt) komen enkel nog na het aan- of uitvinken van een categorie: <code>applySettings()</code> vergelijkt <code>appSettings.poiLayers</code> met de vorige stand (<code>poiLayersSig</code>) en zet dan <code>poiToastUserTriggered</code>, dat <code>loadTogglePOIs()</code> eenmalig uitleest. De melding "zoom verder in" blijft 1 keer per uitzoomstand.</p>
@@ -17745,7 +17738,6 @@ const DEV_NOTES_CONTENT = {
       <p><b>Texts and test:</b> all new texts exist in NL and EN, Help and <code>plekken/README.md</code> are extended. <b>Test suite:</b> new file <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> one selector is adjusted to the new row structure. Version 2.497 / versionCode 116.</p>
     </section>
     <section>
-<<<<<<< HEAD
       <h3>🛠️ Round 197: dashboard tile in two parts ('actually walked' and 'to go')</h3>
       <p><b>Why.</b> 'Travelled' is the counter <code>NAVGPS.m</code>: on the line it counts the difference in progress along the line (noise drops out), next to the line the GPS step. A watch counts the real path, side steps next to the path included. On the 14 Nov walk the watch gave 5.18 km; the recorded track was 4.83 km plus about 0.35 km before the Start button. The app could not show those two numbers side by side.</p>
       <p><b>Change.</b> The right-hand tile of <code>#dashSummary</code> now has two parts (<code>#dashSplitTile</code>): <code>#dashWalked</code> ('actually walked') on top, <code>#dashRemaining</code> ('to go', '–' in free mode) below. <code>navWalkedM</code> is the running length of <code>navTrack</code>: <code>recordNavTrackPoint()</code> adds every step it stores (a point per at least 5 m, a larger step with poor accuracy, fixes above 50 m are ignored) and <code>startNav()</code> resets it to 0. The counter stays correct when <code>navTrack</code> is thinned at 8000 points. Font sizes: 19 px (Garmin style also 19 px, 'small text' 16 px), labels 9.5 px. <code>#dashDone</code> got 22 px and <code>white-space: nowrap</code>, because '2.9 km' wrapped onto two lines at 360 px. New texts <code>dashEchtGelopen</code> and <code>dashNogTeGaan</code> in NL and EN; Help extended.</p>
@@ -17761,8 +17753,6 @@ const DEV_NOTES_CONTENT = {
       <p><b>Test suite:</b> new file <code>test_round196_distance_noise.js</code>; version tests adjusted. Version 2.531 / versionCode 150.</p>
     </section>
     <section>
-=======
->>>>>>> 1348ecdf3e1c054c67d229cf33c2d4c0b7d6035e
       <h3>🛠️ Round 195: POI notices no longer on every map drag</h3>
       <p><b>Cause.</b> <code>loadTogglePOIs()</code> runs after every map pan or zoom (delayed 700 ms) and showed "No interesting places found in this exact area" every time the visible part had nothing. Dragging across an empty region made the notice come back again and again.</p>
       <p><b>Change.</b> The three notices (nothing found, very many places, loading failed) now only appear after a category is switched on or off: <code>applySettings()</code> compares <code>appSettings.poiLayers</code> with the previous state (<code>poiLayersSig</code>) and then sets <code>poiToastUserTriggered</code>, which <code>loadTogglePOIs()</code> reads once. The "zoom in further" notice stays once per zoomed-out state.</p>
@@ -26715,11 +26705,7 @@ ${GARMIN_MENU_BTN_JS}
 </body>
 </html>`;
 }
-<<<<<<< HEAD
 const APP_VERSION_TEXT = 'v2.532 · 14 nov';
-=======
-const APP_VERSION_TEXT = 'v2.530 · 13 nov';
->>>>>>> 1348ecdf3e1c054c67d229cf33c2d4c0b7d6035e
 $('homeVersionFooter').textContent = APP_VERSION_TEXT;
 function buildGarminHubHtml(){
   // Dit is Gemini's keuzescherm.html, ongewijzigd qua opbouw/stijl — enkel: (1) een derde grote tegel
@@ -34930,10 +34916,7 @@ function startNav(){
     if (navOrigin && navOrigin.pending){ navOrigin.sig = sigNow; navOrigin.pending = false; }
     else if (!navOrigin || navOrigin.sig !== sigNow) navOrigin = { lat: navBreadcrumbs[0].lat, lon: navBreadcrumbs[0].lon, sig: sigNow, pending: false };
   }
-<<<<<<< HEAD
   navWalkedM = 0;
-=======
->>>>>>> 1348ecdf3e1c054c67d229cf33c2d4c0b7d6035e
   navTrack = navBreadcrumbs.length ? [{ lat: navBreadcrumbs[0].lat, lon: navBreadcrumbs[0].lon, t: navBreadcrumbs[0].t }] : [];
   lastRideChips = [];
   totalPausedMs = 0;
