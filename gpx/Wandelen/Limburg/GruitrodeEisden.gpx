@@ -1,0 +1,801 @@
+<?xml version="1.0"?>
+<gpx
+ version="1.0"
+ creator="GPSMapEdit 1.0.21.1 - http://www.geopainting.com"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns="http://www.topografix.com/GPX/1/0"
+ xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
+<time>2005-05-13T11:58:43Z</time>
+<bounds minlat="49.756248" minlon="5.588890" maxlat="51.089149" maxlon="7.349330"/>
+<wpt lat="51.089149" lon="5.588890">
+ <time>2002-12-04T21:13:10Z</time>
+ <name>GRUITR</name>
+</wpt>
+<wpt lat="51.084018" lon="5.594740">
+ <time>2002-12-04T21:13:06Z</time>
+ <name>002</name>
+</wpt>
+<wpt lat="51.077888" lon="5.606160">
+ <time>2002-12-04T21:13:06Z</time>
+ <name>003</name>
+</wpt>
+<wpt lat="51.063861" lon="5.613220">
+ <time>2002-12-04T21:13:10Z</time>
+ <name>OUDSBE</name>
+</wpt>
+<wpt lat="51.063850" lon="5.626050">
+ <time>2002-12-04T21:13:10Z</time>
+ <name>MARIAB</name>
+</wpt>
+<wpt lat="51.058231" lon="5.628520">
+ <time>2002-12-04T21:13:10Z</time>
+ <name>DEWOUD</name>
+</wpt>
+<wpt lat="51.059638" lon="5.636390">
+ <time>2002-12-04T21:13:06Z</time>
+ <name>004</name>
+</wpt>
+<wpt lat="51.056221" lon="5.637690">
+ <time>2002-12-04T21:13:06Z</time>
+ <name>005</name>
+</wpt>
+<wpt lat="51.049808" lon="5.644250">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>006</name>
+</wpt>
+<wpt lat="51.048671" lon="5.641580">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>007</name>
+</wpt>
+<wpt lat="51.046558" lon="5.640620">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>008</name>
+</wpt>
+<wpt lat="51.043121" lon="5.648950">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>009</name>
+</wpt>
+<wpt lat="51.038360" lon="5.643110">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>010</name>
+</wpt>
+<wpt lat="51.036468" lon="5.647360">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>011</name>
+</wpt>
+<wpt lat="51.030189" lon="5.656110">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>012</name>
+</wpt>
+<wpt lat="51.026969" lon="5.651280">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>013</name>
+</wpt>
+<wpt lat="51.026058" lon="5.652440">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>014</name>
+</wpt>
+<wpt lat="51.026691" lon="5.655190">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>015</name>
+</wpt>
+<wpt lat="51.028308" lon="5.659970">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>016</name>
+</wpt>
+<wpt lat="51.028171" lon="5.660940">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>017</name>
+</wpt>
+<wpt lat="51.025249" lon="5.660810">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>018</name>
+</wpt>
+<wpt lat="51.022468" lon="5.661280">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>019</name>
+</wpt>
+<wpt lat="51.020641" lon="5.661440">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>020</name>
+</wpt>
+<wpt lat="51.018360" lon="5.662530">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>022</name>
+</wpt>
+<wpt lat="51.012348" lon="5.663110">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>024</name>
+</wpt>
+<wpt lat="51.011280" lon="5.663160">
+ <time>2002-12-04T21:13:10Z</time>
+ <name>GROTE</name>
+</wpt>
+<wpt lat="51.011169" lon="5.662140">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>025</name>
+</wpt>
+<wpt lat="51.006690" lon="5.662860">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>026</name>
+</wpt>
+<wpt lat="51.005500" lon="5.663470">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>027</name>
+</wpt>
+<wpt lat="51.005828" lon="5.668360">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>028</name>
+</wpt>
+<wpt lat="51.003890" lon="5.668810">
+ <time>2002-12-04T21:13:09Z</time>
+ <name>029</name>
+</wpt>
+<wpt lat="51.000968" lon="5.665920">
+ <time>2002-12-04T21:13:09Z</time>
+ <name>030</name>
+</wpt>
+<wpt lat="51.000778" lon="5.663580">
+ <time>2002-12-04T21:13:09Z</time>
+ <name>031</name>
+</wpt>
+<wpt lat="51.000610" lon="5.659500">
+ <time>2002-12-04T21:13:09Z</time>
+ <name>032</name>
+</wpt>
+<wpt lat="50.999889" lon="5.658140">
+ <time>2002-12-04T21:13:09Z</time>
+ <name>033</name>
+</wpt>
+<wpt lat="50.996780" lon="5.658690">
+ <time>2002-12-04T21:13:09Z</time>
+ <name>034</name>
+</wpt>
+<wpt lat="50.996078" lon="5.661060">
+ <time>2002-12-04T21:13:09Z</time>
+ <name>035</name>
+</wpt>
+<wpt lat="50.995189" lon="5.662530">
+ <time>2002-12-04T21:13:09Z</time>
+ <name>036</name>
+</wpt>
+<wpt lat="50.994060" lon="5.664170">
+ <time>2002-12-04T21:13:09Z</time>
+ <name>037</name>
+</wpt>
+<wpt lat="50.992809" lon="5.668390">
+ <time>2002-12-04T21:13:09Z</time>
+ <name>038</name>
+</wpt>
+<wpt lat="50.992691" lon="5.669890">
+ <time>2002-12-04T21:13:09Z</time>
+ <name>039</name>
+</wpt>
+<wpt lat="50.990921" lon="5.674420">
+ <time>2002-12-04T21:13:10Z</time>
+ <name>040</name>
+</wpt>
+<wpt lat="50.990249" lon="5.675220">
+ <time>2002-12-04T21:13:10Z</time>
+ <name>041</name>
+</wpt>
+<wpt lat="50.988670" lon="5.676890">
+ <time>2002-12-04T21:13:10Z</time>
+ <name>STATIE</name>
+</wpt>
+<wpt lat="51.084018" lon="5.594740">
+ <time>2002-12-04T21:13:06Z</time>
+ <name>002</name>
+</wpt>
+<wpt lat="51.077888" lon="5.606160">
+ <time>2002-12-04T21:13:06Z</time>
+ <name>003</name>
+</wpt>
+<wpt lat="51.059638" lon="5.636390">
+ <ele>56.997600</ele>
+ <time>2002-12-04T21:13:06Z</time>
+ <name>004</name>
+</wpt>
+<wpt lat="51.056221" lon="5.637690">
+ <ele>63.093601</ele>
+ <time>2002-12-04T21:13:06Z</time>
+ <name>005</name>
+</wpt>
+<wpt lat="51.049808" lon="5.644250">
+ <ele>81.991195</ele>
+ <time>2002-12-04T21:13:07Z</time>
+ <name>006</name>
+</wpt>
+<wpt lat="51.048671" lon="5.641580">
+ <ele>71.018402</ele>
+ <time>2002-12-04T21:13:07Z</time>
+ <name>007</name>
+</wpt>
+<wpt lat="51.046558" lon="5.640620">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>008</name>
+</wpt>
+<wpt lat="51.043121" lon="5.648950">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>009</name>
+</wpt>
+<wpt lat="51.038360" lon="5.643110">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>010</name>
+</wpt>
+<wpt lat="51.036468" lon="5.647360">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>011</name>
+</wpt>
+<wpt lat="51.030189" lon="5.656110">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>012</name>
+</wpt>
+<wpt lat="51.026969" lon="5.651280">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>013</name>
+</wpt>
+<wpt lat="51.026058" lon="5.652440">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>014</name>
+</wpt>
+<wpt lat="51.026691" lon="5.655190">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>015</name>
+</wpt>
+<wpt lat="51.028308" lon="5.659970">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>016</name>
+</wpt>
+<wpt lat="51.028171" lon="5.660940">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>017</name>
+</wpt>
+<wpt lat="51.025249" lon="5.660810">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>018</name>
+</wpt>
+<wpt lat="51.022468" lon="5.661280">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>019</name>
+</wpt>
+<wpt lat="51.020641" lon="5.661440">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>020</name>
+</wpt>
+<wpt lat="51.018360" lon="5.662530">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>022</name>
+</wpt>
+<wpt lat="51.016330" lon="5.662750">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>023</name>
+</wpt>
+<wpt lat="51.012348" lon="5.663110">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>024</name>
+</wpt>
+<wpt lat="51.011169" lon="5.662140">
+ <ele>84.124801</ele>
+ <time>2002-12-04T21:13:08Z</time>
+ <name>025</name>
+</wpt>
+<wpt lat="51.006690" lon="5.662860">
+ <ele>78.028800</ele>
+ <time>2002-12-04T21:13:08Z</time>
+ <name>026</name>
+</wpt>
+<wpt lat="51.005500" lon="5.663470">
+ <ele>70.103996</ele>
+ <time>2002-12-04T21:13:08Z</time>
+ <name>027</name>
+</wpt>
+<wpt lat="51.005828" lon="5.668360">
+ <ele>74.980796</ele>
+ <time>2002-12-04T21:13:08Z</time>
+ <name>028</name>
+</wpt>
+<wpt lat="51.003890" lon="5.668810">
+ <ele>72.847198</ele>
+ <time>2002-12-04T21:13:09Z</time>
+ <name>029</name>
+</wpt>
+<wpt lat="51.000968" lon="5.665920">
+ <ele>48.767997</ele>
+ <time>2002-12-04T21:13:09Z</time>
+ <name>030</name>
+</wpt>
+<wpt lat="51.000778" lon="5.663580">
+ <ele>46.939201</ele>
+ <time>2002-12-04T21:13:09Z</time>
+ <name>031</name>
+</wpt>
+<wpt lat="51.000610" lon="5.659500">
+ <ele>70.103996</ele>
+ <time>2002-12-04T21:13:09Z</time>
+ <name>032</name>
+</wpt>
+<wpt lat="50.999889" lon="5.658140">
+ <ele>71.018402</ele>
+ <time>2002-12-04T21:13:09Z</time>
+ <name>033</name>
+</wpt>
+<wpt lat="50.996780" lon="5.658690">
+ <ele>46.939201</ele>
+ <time>2002-12-04T21:13:09Z</time>
+ <name>034</name>
+</wpt>
+<wpt lat="50.996078" lon="5.661060">
+ <ele>26.212799</ele>
+ <time>2002-12-04T21:13:09Z</time>
+ <name>035</name>
+</wpt>
+<wpt lat="50.995189" lon="5.662530">
+ <ele>24.993598</ele>
+ <time>2002-12-04T21:13:09Z</time>
+ <name>036</name>
+</wpt>
+<wpt lat="50.994060" lon="5.664170">
+ <ele>57.911998</ele>
+ <time>2002-12-04T21:13:09Z</time>
+ <name>037</name>
+</wpt>
+<wpt lat="50.992809" lon="5.668390">
+ <ele>55.778400</ele>
+ <time>2002-12-04T21:13:09Z</time>
+ <name>038</name>
+</wpt>
+<wpt lat="50.992691" lon="5.669890">
+ <ele>53.035198</ele>
+ <time>2002-12-04T21:13:09Z</time>
+ <name>039</name>
+</wpt>
+<wpt lat="50.990921" lon="5.674420">
+ <ele>47.853599</ele>
+ <time>2002-12-04T21:13:10Z</time>
+ <name>040</name>
+</wpt>
+<wpt lat="50.990249" lon="5.675220">
+ <ele>42.062400</ele>
+ <time>2002-12-04T21:13:10Z</time>
+ <name>041</name>
+</wpt>
+<wpt lat="51.058231" lon="5.628520">
+ <ele>66.751197</ele>
+ <time>2002-12-04T21:13:10Z</time>
+ <name>DEWOUD</name>
+</wpt>
+<wpt lat="51.034969" lon="5.666780">
+ <time>2002-12-04T21:13:10Z</time>
+ <name>DRIEPA</name>
+</wpt>
+<wpt lat="49.756248" lon="7.349330">
+ <ele>267.004791</ele>
+ <time>2002-12-04T21:13:10Z</time>
+ <name>GROEVE</name>
+</wpt>
+<wpt lat="51.011280" lon="5.663160">
+ <time>2002-12-04T21:13:10Z</time>
+ <name>GROTE</name>
+</wpt>
+<wpt lat="51.089149" lon="5.588890">
+ <time>2002-12-04T21:13:10Z</time>
+ <name>GRUITR</name>
+</wpt>
+<wpt lat="51.063850" lon="5.626050">
+ <ele>83.515197</ele>
+ <time>2002-12-04T21:13:10Z</time>
+ <name>MARIAB</name>
+</wpt>
+<wpt lat="51.063861" lon="5.613220">
+ <ele>84.124801</ele>
+ <time>2002-12-04T21:13:10Z</time>
+ <name>OUDSBE</name>
+</wpt>
+<wpt lat="50.988670" lon="5.676890">
+ <time>2002-12-04T21:13:10Z</time>
+ <name>STATIE</name>
+</wpt>
+<wpt lat="51.052051" lon="5.631380">
+ <ele>58.521598</ele>
+ <time>2002-12-04T21:13:11Z</time>
+ <name>W0UTER</name>
+</wpt>
+<wpt lat="51.084018" lon="5.594740">
+ <time>2002-12-04T21:13:06Z</time>
+ <name>002</name>
+</wpt>
+<wpt lat="51.077888" lon="5.606160">
+ <time>2002-12-04T21:13:06Z</time>
+ <name>003</name>
+</wpt>
+<wpt lat="51.059638" lon="5.636390">
+ <ele>56.997600</ele>
+ <time>2002-12-04T21:13:06Z</time>
+ <name>004</name>
+</wpt>
+<wpt lat="51.056221" lon="5.637690">
+ <ele>63.093601</ele>
+ <time>2002-12-04T21:13:06Z</time>
+ <name>005</name>
+</wpt>
+<wpt lat="51.049808" lon="5.644250">
+ <ele>81.991195</ele>
+ <time>2002-12-04T21:13:07Z</time>
+ <name>006</name>
+</wpt>
+<wpt lat="51.048671" lon="5.641580">
+ <ele>71.018402</ele>
+ <time>2002-12-04T21:13:07Z</time>
+ <name>007</name>
+</wpt>
+<wpt lat="51.046558" lon="5.640620">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>008</name>
+</wpt>
+<wpt lat="51.043121" lon="5.648950">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>009</name>
+</wpt>
+<wpt lat="51.038360" lon="5.643110">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>010</name>
+</wpt>
+<wpt lat="51.036468" lon="5.647360">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>011</name>
+</wpt>
+<wpt lat="51.030189" lon="5.656110">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>012</name>
+</wpt>
+<wpt lat="51.026969" lon="5.651280">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>013</name>
+</wpt>
+<wpt lat="51.026058" lon="5.652440">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>014</name>
+</wpt>
+<wpt lat="51.026691" lon="5.655190">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>015</name>
+</wpt>
+<wpt lat="51.028308" lon="5.659970">
+ <time>2002-12-04T21:13:07Z</time>
+ <name>016</name>
+</wpt>
+<wpt lat="51.028171" lon="5.660940">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>017</name>
+</wpt>
+<wpt lat="51.025249" lon="5.660810">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>018</name>
+</wpt>
+<wpt lat="51.022468" lon="5.661280">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>019</name>
+</wpt>
+<wpt lat="51.020641" lon="5.661440">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>020</name>
+</wpt>
+<wpt lat="51.018360" lon="5.662530">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>022</name>
+</wpt>
+<wpt lat="51.016330" lon="5.662750">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>023</name>
+</wpt>
+<wpt lat="51.012348" lon="5.663110">
+ <time>2002-12-04T21:13:08Z</time>
+ <name>024</name>
+</wpt>
+<wpt lat="51.011169" lon="5.662140">
+ <ele>84.124801</ele>
+ <time>2002-12-04T21:13:08Z</time>
+ <name>025</name>
+</wpt>
+<wpt lat="51.006690" lon="5.662860">
+ <ele>78.028800</ele>
+ <time>2002-12-04T21:13:08Z</time>
+ <name>026</name>
+</wpt>
+<wpt lat="51.005500" lon="5.663470">
+ <ele>70.103996</ele>
+ <time>2002-12-04T21:13:08Z</time>
+ <name>027</name>
+</wpt>
+<wpt lat="51.005828" lon="5.668360">
+ <ele>74.980796</ele>
+ <time>2002-12-04T21:13:08Z</time>
+ <name>028</name>
+</wpt>
+<wpt lat="51.003890" lon="5.668810">
+ <ele>72.847198</ele>
+ <time>2002-12-04T21:13:09Z</time>
+ <name>029</name>
+</wpt>
+<wpt lat="51.000968" lon="5.665920">
+ <ele>48.767997</ele>
+ <time>2002-12-04T21:13:09Z</time>
+ <name>030</name>
+</wpt>
+<wpt lat="51.000778" lon="5.663580">
+ <ele>46.939201</ele>
+ <time>2002-12-04T21:13:09Z</time>
+ <name>031</name>
+</wpt>
+<wpt lat="51.000610" lon="5.659500">
+ <ele>70.103996</ele>
+ <time>2002-12-04T21:13:09Z</time>
+ <name>032</name>
+</wpt>
+<wpt lat="50.999889" lon="5.658140">
+ <ele>71.018402</ele>
+ <time>2002-12-04T21:13:09Z</time>
+ <name>033</name>
+</wpt>
+<wpt lat="50.996780" lon="5.658690">
+ <ele>46.939201</ele>
+ <time>2002-12-04T21:13:09Z</time>
+ <name>034</name>
+</wpt>
+<wpt lat="50.996078" lon="5.661060">
+ <ele>26.212799</ele>
+ <time>2002-12-04T21:13:09Z</time>
+ <name>035</name>
+</wpt>
+<wpt lat="50.995189" lon="5.662530">
+ <ele>24.993598</ele>
+ <time>2002-12-04T21:13:09Z</time>
+ <name>036</name>
+</wpt>
+<wpt lat="50.994060" lon="5.664170">
+ <ele>57.911998</ele>
+ <time>2002-12-04T21:13:09Z</time>
+ <name>037</name>
+</wpt>
+<wpt lat="50.992809" lon="5.668390">
+ <ele>55.778400</ele>
+ <time>2002-12-04T21:13:09Z</time>
+ <name>038</name>
+</wpt>
+<wpt lat="50.992691" lon="5.669890">
+ <ele>53.035198</ele>
+ <time>2002-12-04T21:13:09Z</time>
+ <name>039</name>
+</wpt>
+<wpt lat="50.990921" lon="5.674420">
+ <ele>47.853599</ele>
+ <time>2002-12-04T21:13:10Z</time>
+ <name>040</name>
+</wpt>
+<wpt lat="50.990249" lon="5.675220">
+ <ele>42.062400</ele>
+ <time>2002-12-04T21:13:10Z</time>
+ <name>041</name>
+</wpt>
+<wpt lat="51.058231" lon="5.628520">
+ <ele>66.751197</ele>
+ <time>2002-12-04T21:13:10Z</time>
+ <name>DEWOUD</name>
+</wpt>
+<wpt lat="51.034969" lon="5.666780">
+ <time>2002-12-04T21:13:10Z</time>
+ <name>DRIEPA</name>
+</wpt>
+<wpt lat="49.756248" lon="7.349330">
+ <ele>267.004791</ele>
+ <time>2002-12-04T21:13:10Z</time>
+ <name>GROEVE</name>
+</wpt>
+<wpt lat="51.011280" lon="5.663160">
+ <time>2002-12-04T21:13:10Z</time>
+ <name>GROTE</name>
+</wpt>
+<wpt lat="51.089149" lon="5.588890">
+ <time>2002-12-04T21:13:10Z</time>
+ <name>GRUITR</name>
+</wpt>
+<wpt lat="51.063850" lon="5.626050">
+ <ele>83.515197</ele>
+ <time>2002-12-04T21:13:10Z</time>
+ <name>MARIAB</name>
+</wpt>
+<wpt lat="51.063861" lon="5.613220">
+ <ele>84.124801</ele>
+ <time>2002-12-04T21:13:10Z</time>
+ <name>OUDSBE</name>
+</wpt>
+<wpt lat="50.988670" lon="5.676890">
+ <time>2002-12-04T21:13:10Z</time>
+ <name>STATIE</name>
+</wpt>
+<wpt lat="51.052051" lon="5.631380">
+ <ele>58.521598</ele>
+ <time>2002-12-04T21:13:11Z</time>
+ <name>W0UTER</name>
+</wpt>
+<rte>
+ <name>GRUITRODE</name>
+ <rtept lat="51.089149" lon="5.588890">
+  <time>2002-12-04T21:13:10Z</time>
+  <name>GRUITR</name>
+ </rtept>
+ <rtept lat="51.084018" lon="5.594740">
+  <time>2002-12-04T21:13:06Z</time>
+  <name>002</name>
+ </rtept>
+ <rtept lat="51.077888" lon="5.606160">
+  <time>2002-12-04T21:13:06Z</time>
+  <name>003</name>
+ </rtept>
+ <rtept lat="51.063861" lon="5.613220">
+  <time>2002-12-04T21:13:10Z</time>
+  <name>OUDSBE</name>
+ </rtept>
+ <rtept lat="51.063850" lon="5.626050">
+  <time>2002-12-04T21:13:10Z</time>
+  <name>MARIAB</name>
+ </rtept>
+ <rtept lat="51.058231" lon="5.628520">
+  <time>2002-12-04T21:13:10Z</time>
+  <name>DEWOUD</name>
+ </rtept>
+ <rtept lat="51.059638" lon="5.636390">
+  <time>2002-12-04T21:13:06Z</time>
+  <name>004</name>
+ </rtept>
+ <rtept lat="51.056221" lon="5.637690">
+  <time>2002-12-04T21:13:06Z</time>
+  <name>005</name>
+ </rtept>
+ <rtept lat="51.049808" lon="5.644250">
+  <time>2002-12-04T21:13:07Z</time>
+  <name>006</name>
+ </rtept>
+ <rtept lat="51.048671" lon="5.641580">
+  <time>2002-12-04T21:13:07Z</time>
+  <name>007</name>
+ </rtept>
+ <rtept lat="51.046558" lon="5.640620">
+  <time>2002-12-04T21:13:07Z</time>
+  <name>008</name>
+ </rtept>
+ <rtept lat="51.043121" lon="5.648950">
+  <time>2002-12-04T21:13:07Z</time>
+  <name>009</name>
+ </rtept>
+ <rtept lat="51.038360" lon="5.643110">
+  <time>2002-12-04T21:13:07Z</time>
+  <name>010</name>
+ </rtept>
+ <rtept lat="51.036468" lon="5.647360">
+  <time>2002-12-04T21:13:07Z</time>
+  <name>011</name>
+ </rtept>
+ <rtept lat="51.030189" lon="5.656110">
+  <time>2002-12-04T21:13:07Z</time>
+  <name>012</name>
+ </rtept>
+ <rtept lat="51.026969" lon="5.651280">
+  <time>2002-12-04T21:13:07Z</time>
+  <name>013</name>
+ </rtept>
+ <rtept lat="51.026058" lon="5.652440">
+  <time>2002-12-04T21:13:07Z</time>
+  <name>014</name>
+ </rtept>
+ <rtept lat="51.026691" lon="5.655190">
+  <time>2002-12-04T21:13:07Z</time>
+  <name>015</name>
+ </rtept>
+ <rtept lat="51.028308" lon="5.659970">
+  <time>2002-12-04T21:13:07Z</time>
+  <name>016</name>
+ </rtept>
+ <rtept lat="51.028171" lon="5.660940">
+  <time>2002-12-04T21:13:08Z</time>
+  <name>017</name>
+ </rtept>
+ <rtept lat="51.025249" lon="5.660810">
+  <time>2002-12-04T21:13:08Z</time>
+  <name>018</name>
+ </rtept>
+ <rtept lat="51.022468" lon="5.661280">
+  <time>2002-12-04T21:13:08Z</time>
+  <name>019</name>
+ </rtept>
+ <rtept lat="51.020641" lon="5.661440">
+  <time>2002-12-04T21:13:08Z</time>
+  <name>020</name>
+ </rtept>
+ <rtept lat="51.018360" lon="5.662530">
+  <time>2002-12-04T21:13:08Z</time>
+  <name>022</name>
+ </rtept>
+ <rtept lat="51.012348" lon="5.663110">
+  <time>2002-12-04T21:13:08Z</time>
+  <name>024</name>
+ </rtept>
+ <rtept lat="51.011280" lon="5.663160">
+  <time>2002-12-04T21:13:10Z</time>
+  <name>GROTE</name>
+ </rtept>
+ <rtept lat="51.011169" lon="5.662140">
+  <time>2002-12-04T21:13:08Z</time>
+  <name>025</name>
+ </rtept>
+ <rtept lat="51.006690" lon="5.662860">
+  <time>2002-12-04T21:13:08Z</time>
+  <name>026</name>
+ </rtept>
+ <rtept lat="51.005500" lon="5.663470">
+  <time>2002-12-04T21:13:08Z</time>
+  <name>027</name>
+ </rtept>
+ <rtept lat="51.005828" lon="5.668360">
+  <time>2002-12-04T21:13:08Z</time>
+  <name>028</name>
+ </rtept>
+ <rtept lat="51.003890" lon="5.668810">
+  <time>2002-12-04T21:13:09Z</time>
+  <name>029</name>
+ </rtept>
+ <rtept lat="51.000968" lon="5.665920">
+  <time>2002-12-04T21:13:09Z</time>
+  <name>030</name>
+ </rtept>
+ <rtept lat="51.000778" lon="5.663580">
+  <time>2002-12-04T21:13:09Z</time>
+  <name>031</name>
+ </rtept>
+ <rtept lat="51.000610" lon="5.659500">
+  <time>2002-12-04T21:13:09Z</time>
+  <name>032</name>
+ </rtept>
+ <rtept lat="50.999889" lon="5.658140">
+  <time>2002-12-04T21:13:09Z</time>
+  <name>033</name>
+ </rtept>
+ <rtept lat="50.996780" lon="5.658690">
+  <time>2002-12-04T21:13:09Z</time>
+  <name>034</name>
+ </rtept>
+ <rtept lat="50.996078" lon="5.661060">
+  <time>2002-12-04T21:13:09Z</time>
+  <name>035</name>
+ </rtept>
+ <rtept lat="50.995189" lon="5.662530">
+  <time>2002-12-04T21:13:09Z</time>
+  <name>036</name>
+ </rtept>
+ <rtept lat="50.994060" lon="5.664170">
+  <time>2002-12-04T21:13:09Z</time>
+  <name>037</name>
+ </rtept>
+ <rtept lat="50.992809" lon="5.668390">
+  <time>2002-12-04T21:13:09Z</time>
+  <name>038</name>
+ </rtept>
+ <rtept lat="50.992691" lon="5.669890">
+  <time>2002-12-04T21:13:09Z</time>
+  <name>039</name>
+ </rtept>
+ <rtept lat="50.990921" lon="5.674420">
+  <time>2002-12-04T21:13:10Z</time>
+  <name>040</name>
+ </rtept>
+ <rtept lat="50.990249" lon="5.675220">
+  <time>2002-12-04T21:13:10Z</time>
+  <name>041</name>
+ </rtept>
+ <rtept lat="50.988670" lon="5.676890">
+  <time>2002-12-04T21:13:10Z</time>
+  <name>STATIE</name>
+ </rtept>
+</rte>
+</gpx>

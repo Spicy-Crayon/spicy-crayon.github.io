@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" creator="MapSource 6.16.3" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+
+  <metadata>
+    <link href="http://www.garmin.com">
+      <text>Garmin International</text>
+    </link>
+    <time>2011-11-09T09:30:59Z</time>
+    <bounds maxlat="50.004354519769549" maxlon="4.477987261489034" minlat="49.991518724709749" minlon="4.455411527305841"/>
+  </metadata>
+
+  <wpt lat="50.001225471496582" lon="4.474031925201416">
+    <ele>320</ele>
+    <time>2010-12-22T15:18:00Z</time>
+    <name>Chapelle-du-Maquis</name>
+    <cmt>Chapelle-du-Maquis</cmt>
+    <desc>Chapelle-du-Maquis</desc>
+    <sym>Church</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <wpt lat="50.001834332942963" lon="4.460131796076894">
+    <ele>328</ele>
+    <time>2010-12-22T15:06:45Z</time>
+    <name>START</name>
+    <cmt>Start Wandeling in Brûly-de-Peche</cmt>
+    <desc>Start Wandeling in Brûly-de-Peche</desc>
+    <sym>Trail Head</sym>
+    <extensions>
+      <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+        <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+      </gpxx:WaypointExtension>
+    </extensions>
+  </wpt>
+
+  <trk>
+    <name>Wandeling in Brûly-de-Peche</name>
+    <desc>Wandeling in Brûly-de-Peche</desc>
+    <trkseg>
+      <trkpt lat="50.001790663227439" lon="4.460060298442841">
+        <ele>332.69262700000002</ele>
+        <time>2010-12-31T23:00:01Z</time>
+      </trkpt>
+      <trkpt lat="50.001935167238116" lon="4.459509523585439">
+        <ele>337.11627199999998</ele>
+        <time>2010-12-31T23:00:02Z</time>
+      </trkpt>
+      <trkpt lat="50.002518463879824" lon="4.459534334018827">
+        <ele>331.60849000000002</ele>
+        <time>2010-12-31T23:00:03Z</time>
+      </trkpt>
+      <trkpt lat="50.002912497147918" lon="4.460108075290918">
+        <ele>328.22088600000001</ele>
+        <time>2010-12-31T23:00:04Z</time>
+      </trkpt>
+      <trkpt lat="50.0036352686584" lon="4.459860306233168">
+        <ele>317.959991</ele>
+        <time>2010-12-31T23:00:05Z</time>
+      </trkpt>
+      <trkpt lat="50.004354519769549" lon="4.45982133038342">
+        <ele>311.19357300000001</ele>
+        <time>2010-12-31T23:00:06Z</time>
+      </trkpt>
+      <trkpt lat="50.003803912550211" lon="4.455411527305841">
+        <ele>302.57931500000001</ele>
+        <time>2010-12-31T23:00:07Z</time>
+      </trkpt>
+      <trkpt lat="49.994825888425112" lon="4.460320891812444">
+        <ele>357.265106</ele>
+        <time>2010-12-31T23:00:08Z</time>
+      </trkpt>
+      <trkpt lat="49.995893994346261" lon="4.465936264023185">
+        <ele>358.35736100000003</ele>
+        <time>2010-12-31T23:00:09Z</time>
+      </trkpt>
+      <trkpt lat="49.995783269405365" lon="4.467115178704262">
+        <ele>361.721497</ele>
+        <time>2010-12-31T23:00:10Z</time>
+      </trkpt>
+      <trkpt lat="49.991518724709749" lon="4.469579374417663">
+        <ele>361.74661300000002</ele>
+        <time>2010-12-31T23:00:11Z</time>
+      </trkpt>
+      <trkpt lat="49.992690095677972" lon="4.474433418363333">
+        <ele>361.29397599999999</ele>
+        <time>2010-12-31T23:00:12Z</time>
+      </trkpt>
+      <trkpt lat="49.992761760950089" lon="4.477987261489034">
+        <ele>355.89550800000001</ele>
+        <time>2010-12-31T23:00:13Z</time>
+      </trkpt>
+      <trkpt lat="49.996115528047085" lon="4.476250112056732">
+        <ele>347.51831099999998</ele>
+        <time>2010-12-31T23:00:14Z</time>
+      </trkpt>
+      <trkpt lat="49.995367024093866" lon="4.472876312211156">
+        <ele>348.22918700000002</ele>
+        <time>2010-12-31T23:00:15Z</time>
+      </trkpt>
+      <trkpt lat="49.996019806712866" lon="4.471511570736766">
+        <ele>345.31991599999998</ele>
+        <time>2010-12-31T23:00:16Z</time>
+      </trkpt>
+      <trkpt lat="49.997167373076081" lon="4.470098298043013">
+        <ele>348.87692299999998</ele>
+        <time>2010-12-31T23:00:17Z</time>
+      </trkpt>
+      <trkpt lat="49.997918559238315" lon="4.468250423669815">
+        <ele>339.17898600000001</ele>
+        <time>2010-12-31T23:00:18Z</time>
+      </trkpt>
+      <trkpt lat="49.997942028567195" lon="4.466928597539663">
+        <ele>338.80819700000001</ele>
+        <time>2010-12-31T23:00:19Z</time>
+      </trkpt>
+      <trkpt lat="49.998749205842614" lon="4.464456522837281">
+        <ele>338.28259300000002</ele>
+        <time>2010-12-31T23:00:20Z</time>
+      </trkpt>
+      <trkpt lat="49.998979708179832" lon="4.464118061587215">
+        <ele>338.01168799999999</ele>
+        <time>2010-12-31T23:00:21Z</time>
+      </trkpt>
+      <trkpt lat="49.999339878559113" lon="4.464063830673695">
+        <ele>338.01077299999997</ele>
+        <time>2010-12-31T23:00:22Z</time>
+      </trkpt>
+      <trkpt lat="50.00040689483285" lon="4.464666321873665">
+        <ele>331</ele>
+        <time>2010-12-31T23:00:23Z</time>
+      </trkpt>
+      <trkpt lat="50.00075968913734" lon="4.465029425919056">
+        <ele>328.65408300000001</ele>
+        <time>2010-12-31T23:00:24Z</time>
+      </trkpt>
+      <trkpt lat="50.001748083159328" lon="4.46500176563859">
+        <ele>324.91751099999999</ele>
+        <time>2010-12-31T23:00:25Z</time>
+      </trkpt>
+      <trkpt lat="50.001426134258509" lon="4.462899416685104">
+        <ele>330.142944</ele>
+        <time>2010-12-31T23:00:26Z</time>
+      </trkpt>
+      <trkpt lat="50.000871084630489" lon="4.461274417117238">
+        <ele>332.60964999999999</ele>
+        <time>2010-12-31T23:00:27Z</time>
+      </trkpt>
+      <trkpt lat="50.00087846070528" lon="4.460856998339295">
+        <ele>331.695313</ele>
+        <time>2010-12-31T23:00:28Z</time>
+      </trkpt>
+      <trkpt lat="50.001325970515609" lon="4.46094567887485">
+        <ele>330.09130900000002</ele>
+        <time>2010-12-31T23:00:29Z</time>
+      </trkpt>
+      <trkpt lat="50.001648673787713" lon="4.460472017526627">
+        <ele>329.62329099999999</ele>
+        <time>2010-12-31T23:00:30Z</time>
+      </trkpt>
+    </trkseg>
+  </trk>
+
+</gpx>
