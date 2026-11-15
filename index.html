@@ -693,46 +693,15 @@
   #dashTurnText{ font-size:13px; font-weight:700; color:var(--cream); }
   #dashTurnText b{ color:var(--amber); }
 
-  #dashSummary{ display:flex; gap:10px; margin-bottom:10px; }
+  /* Ronde 200: dashboard met vier tabs onderaan (Live | Hoogte | Punten | Cijfers). Het paneel zelf scrolt niet meer; alleen #dashPane (de inhoud boven de tabbalk) kan scrollen,
+     en de Live-tab verdeelt de beschikbare hoogte over de rijen. */
   .dash-stat{
-    flex:1; min-width:0; background:rgba(255,255,255,0.06); border-radius:16px; padding:16px 8px; text-align:center;
+    flex:1; min-width:0; background:rgba(255,255,255,0.06); border-radius:16px; padding:10px 6px; text-align:center;
+    display:flex; flex-direction:column; justify-content:center; align-items:center;
   }
+  .dash-stat span{ display:block; font-size:24px; font-weight:800; color:var(--cream); white-space:nowrap; line-height:1.1; }
+  .dash-stat small{ font-size:10px; color:rgba(246,244,238,0.65); text-transform:uppercase; letter-spacing:.4px; overflow-wrap:break-word; word-break:break-word; }
   #dashHrTile{ border:1.5px solid transparent; transition:border-color .3s, background .3s; }
-  .dash-stat span{ display:block; font-size:27px; font-weight:800; color:var(--cream); }
-  /* Ronde 95 (GEMELD: "op dashboard is woord zonsondergang wat lang"): "zonsondergang" is 1 lang, los woord
-     zonder spatie -- in een flex-tegel van maar ~1/3 van de breedte (zie #dashSummary3 hieronder) had de
-     browser zonder expliciet break-point geen plek om het woord te breken, dus liep de tekst gewoon ongeclipt
-     over de rand van de tegel heen i.p.v. netjes te passen of af te breken. overflow-wrap zorgt dat een té
-     lang los woord nu desnoods over 2 regels verdeeld wordt i.p.v. over de tegelrand te lopen -- werkt voor
-     elk dashboard-label, ook toekomstige, in beide talen. */
-  .dash-stat small{ font-size:11.5px; color:rgba(246,244,238,0.65); text-transform:uppercase; letter-spacing:.4px; overflow-wrap:break-word; word-break:break-word; }
-
-  /* Ronde 197: "afgelegd" past in een smalle tegel (360 px) niet op 1 regel op 27 px; kleiner + nowrap. Het rechtervak is in 2 delen: boven de echt gelopen afstand
-     (het spoor, zoals een horloge), onder wat er nog te gaan is. */
-  #dashDone{ font-size:22px; white-space:nowrap; }
-  .dash-split{ display:flex; flex-direction:column; justify-content:center; padding:8px 6px; }
-  .dash-split .dash-part{ padding:4px 0; }
-  .dash-split .dash-part + .dash-part{ border-top:1px solid rgba(255,255,255,0.12); }
-  .dash-split span{ font-size:19px; line-height:1.15; white-space:nowrap; }
-  .dash-split small{ font-size:9.5px; letter-spacing:.3px; }
-  body.theme-garmin .dash-split{ padding:8px 6px; }
-  body.theme-garmin .dash-split span{ font-size:19px; letter-spacing:-0.3px; }
-  body.dash-text-small #dashDone{ font-size:18px; }
-  body.dash-text-small .dash-split span{ font-size:16px; }
-  body.dash-text-small .dash-split small{ font-size:8.5px; }
-
-  #dashSummary2{ display:flex; gap:10px; margin-bottom:10px; }
-  #dashSummary2 .dash-stat{ padding:13px 8px; }
-  #dashSummary2 .dash-stat span{ font-size:19px; }
-
-  #dashSummary3{ display:flex; gap:10px; margin-bottom:14px; }
-  #dashSummary3 .dash-stat{ padding:11px 8px; }
-  #dashSummary3 .dash-stat span{ font-size:17px; }
-
-  /* Instelbare tekstgrootte/vetgedrukt voor het dashboard (Instellingen) — maakt meteen ook de tegels compacter */
-  body.dash-text-small .dash-stat{ padding:11px 6px; }
-  body.dash-text-small #dashSummary2 .dash-stat{ padding:9px 6px; }
-  body.dash-text-small #dashSummary3 .dash-stat{ padding:8px 6px; }
 
   /* ---------- Garmin-stijl navigatiescherm (optioneel, via Instellingen) ---------- */
   #garminSpeedGauge{ display:none; }
@@ -744,19 +713,84 @@
   }
   body.theme-garmin .dash-stat span{ font-size:26px; font-weight:900; letter-spacing:-0.5px; color:#f0f5ee; }
   body.theme-garmin .dash-stat small{ color:rgba(230,240,225,0.5); font-weight:700; }
-  body.theme-garmin #dashSpeedTile{ display:flex; flex-direction:column; align-items:center; justify-content:center; }
-  body.theme-garmin #garminSpeedGauge{ display:block; width:64px; height:64px; margin-bottom:2px; }
-  body.theme-garmin #dashSpeedTile span{ font-size:22px; }
   body.theme-garmin #dashElevSection,
   body.theme-garmin #dashChartSection{
     background:linear-gradient(160deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
     border:1px solid rgba(255,255,255,0.08); border-radius:18px; padding:10px;
   }
-  body.dash-text-small .dash-stat span{ font-size:20px; }
-  body.dash-text-small #dashSummary2 .dash-stat span{ font-size:15px; }
-  body.dash-text-small #dashSummary3 .dash-stat span{ font-size:14px; }
-  body.dash-text-small .dash-stat small{ font-size:9.5px; }
   body.dash-not-bold .dash-stat span{ font-weight:500; }
+
+  /* ---- Ronde 200: tabs (Live | Hoogte | Punten | Cijfers) ---- */
+  #dashboardPanel{ overflow:hidden; padding:calc(env(safe-area-inset-top,0px) + var(--extra-top-inset) + 104px) 14px calc(env(safe-area-inset-bottom,0px) + var(--extra-bottom-inset) + 10px); gap:8px; }
+  #dashboardPanel #dashPane{ flex:1 1 auto; min-height:0; display:flex; flex-direction:column; overflow:hidden; }
+  #dashboardPanel .dpane{ display:none; flex:1 1 auto; min-height:0; flex-direction:column; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+  #dashboardPanel[data-dtab="live"] #dpLive, #dashboardPanel[data-dtab="elev"] #dpElev,
+  #dashboardPanel[data-dtab="points"] #dpPoints, #dashboardPanel[data-dtab="stats"] #dpStats{ display:flex; }
+  #dashboardPanel #dashTurnBanner{ flex:none; margin-bottom:8px; }
+  #dashboardPanel .dash-hd{ font-size:11px; letter-spacing:.6px; text-transform:uppercase; font-weight:800; color:rgba(246,244,238,.62); padding:2px 2px 6px; flex:none; }
+
+  /* tabbalk onderaan */
+  #dashboardPanel #dashTabs{ flex:none; display:flex; gap:6px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:5px; }
+  #dashboardPanel .dtab{ flex:1; min-width:0; border:none; background:transparent; border-radius:13px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; padding:7px 2px; color:rgba(246,244,238,.62); font-family:inherit; }
+  #dashboardPanel .dtab b{ font-size:18px; line-height:1; font-weight:400; }
+  #dashboardPanel .dtab span{ font-size:10.5px; font-weight:800; letter-spacing:.2px; white-space:nowrap; }
+  #dashboardPanel .dtab.active{ background:var(--amber); color:#1f2937; }
+
+  /* Live: een rij per gegeven, de rijen verdelen de hoogte */
+  #dashboardPanel #dpLive{ overflow:hidden; }
+  #dashboardPanel #dashRows{ flex:1 1 auto; min-height:0; display:flex; flex-direction:column; gap:6px; }
+  #dashboardPanel .dash-row{ flex:1 1 0; min-height:34px; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:0 14px; border-radius:14px;
+    background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.07); container-type:inline-size; }
+  #dashboardPanel .dash-row small{ font-size:11px; letter-spacing:.5px; text-transform:uppercase; font-weight:800; color:rgba(246,244,238,.62); white-space:nowrap; flex:0 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; }
+  #dashboardPanel .dash-row span{ font-size:clamp(20px, 3.6vh, 34px); font-weight:800; letter-spacing:-.4px; line-height:1.05; color:var(--cream); white-space:nowrap; text-align:right; display:block; }
+  #dashboardPanel .dash-u{ font-size:.5em; font-weight:700; font-style:normal; opacity:.75; letter-spacing:0; }
+  #dashboardPanel #dashSpeedTile{ position:relative; }
+  #dashboardPanel #dashSpeedTile small{ flex:1 1 auto; }
+  #dashboardPanel #dashSpeedTile .dash-u-fix{ font-size:clamp(11px, 1.9vh, 17px); margin-left:-4px; align-self:center; text-transform:none; color:var(--cream); }
+  #dashboardPanel .dash-hl{ background:rgba(245,158,11,.16); border-color:rgba(245,158,11,.5); }
+  #dashboardPanel .dash-hl small, #dashboardPanel .dash-hl span{ color:#fbbf24; }
+  #dashboardPanel .dash-pair{ flex:1 1 0; min-height:34px; display:flex; gap:6px; }
+  #dashboardPanel .dash-pair .dash-half{ flex:1 1 0; min-width:0; flex-direction:column; justify-content:center; align-items:center; gap:2px; padding:0 6px; }
+  #dashboardPanel .dash-pair .dash-half small{ font-size:10px; max-width:100%; }
+  #dashboardPanel .dash-pair .dash-half span{ font-size:clamp(17px, 3vh, 28px); text-align:center; max-width:100%; }
+  #dashboardPanel #dashHrTile{ cursor:pointer; }
+  #dashboardPanel #dashHrTile span{ font-size:clamp(17px, 3vh, 28px); }
+  body.theme-garmin #dashboardPanel .dash-row{ background:linear-gradient(160deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02)); border-color:rgba(255,255,255,.08); }
+  body.theme-garmin #dashboardPanel .dash-hl{ background:rgba(245,158,11,.16); border-color:rgba(245,158,11,.5); }
+  body.theme-garmin #dashboardPanel #garminSpeedGauge{ display:block; width:clamp(30px, 5vh, 46px); height:clamp(30px, 5vh, 46px); flex:none; }
+  body.dash-text-small #dashboardPanel .dash-row span{ font-size:clamp(17px, 3vh, 27px); }
+  body.dash-text-small #dashboardPanel .dash-row small{ font-size:10px; }
+
+  /* Hoogte */
+  #dashboardPanel #dpElev{ gap:8px; }
+  #dashboardPanel #dashElevSection{ flex:1 1 auto; min-height:150px; display:flex; flex-direction:column; margin:0; }
+  #dashboardPanel #dashElevHead{ flex:none; font-size:clamp(20px, 3.4vh, 30px); gap:22px; margin-bottom:8px; }
+  #dashboardPanel #dashElevWrap{ flex:1 1 auto; min-height:110px; height:auto; }
+  #dashboardPanel #climbProSection{ flex:none; margin:0; }
+  #dashboardPanel #climbProChartWrap{ height:clamp(64px, 14vh, 130px); }
+  #dashboardPanel #dashElevEmpty{ display:none; color:rgba(246,244,238,.6); font-size:13px; text-align:center; margin-top:14px; }
+  #dashboardPanel #dpElev.no-elev #dashElevEmpty{ display:block; }
+
+  /* Punten */
+  #dashboardPanel #dashList{ flex:none; overflow:visible; }
+  #dashboardPanel #dashList li{ padding:10px 12px; margin-bottom:6px; border-radius:14px; gap:10px; }
+  #dashboardPanel .dash-badge{ width:30px; height:30px; font-size:13px; }
+  #dashboardPanel .dash-name{ font-size:15px; }
+  #dashboardPanel .dash-time{ font-size:12px; }
+  #dashboardPanel #dashEmpty{ margin-top:18px; font-size:13px; }
+
+  /* Cijfers */
+  #dashboardPanel #lifetimeStats{ margin-top:0; padding:0 2px; }
+  #dashboardPanel #statsPeriodTabs{ margin-bottom:10px; }
+  #dashboardPanel .stats-tab{ padding:8px 4px; font-size:12px; }
+  #dashboardPanel #statsSummaryGrid{ gap:8px; margin-bottom:12px; }
+  #dashboardPanel #statsSummaryGrid .dash-stat{ padding:14px 4px; border-radius:14px; container-type:inline-size; }
+  #dashboardPanel #statsSummaryGrid .dash-stat span{ font-size:clamp(16px, 20cqw, 28px); font-weight:800; letter-spacing:-.3px; max-width:100%; }
+  #dashboardPanel #statsSummaryGrid .dash-stat small{ margin-top:3px; font-size:clamp(8.5px, 8cqw, 11px); }
+  #dashboardPanel #statsRecordsPanel{ margin-top:0; padding:2px 10px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.07); border-radius:14px; }
+  #dashboardPanel .stats-record{ font-size:13px; padding:10px 2px; gap:10px; }
+  #dashboardPanel .stats-record:last-child{ border-bottom:none; }
+  #dashboardPanel .stats-record b{ font-size:13.5px; text-align:right; }
   body.dash-not-bold #actions button{ font-weight:500; }
   /* Op verzoek: "Tekstgrootte & vetgedrukt" (Instellingen → Dashboard) gold voorheen enkel voor het
      kaart-dashboard zelf, niet voor de looppagina -- nu ook de statistiek-"kaartjes" en de knoppenrij daar. */
@@ -825,7 +859,6 @@
   .stats-tab{ flex:1; border:none; background:rgba(255,255,255,0.06); color:rgba(246,244,238,0.65); font-size:12px; font-weight:700; padding:8px 4px; border-radius:10px; }
   .stats-tab.active{ background:var(--amber); color:#0f3d29; }
   #statsSummaryGrid{ display:flex; gap:10px; margin-bottom:12px; }
-  #statsRecordsToggle{ width:100%; border:none; background:rgba(255,255,255,0.06); color:var(--cream); font-size:12.5px; font-weight:700; padding:10px; border-radius:10px; }
   #statsRecordsPanel{ margin-top:8px; padding:4px 6px; }
   .stats-record{ display:flex; justify-content:space-between; align-items:center; font-size:12.5px; color:rgba(246,244,238,0.85); padding:7px 2px; border-bottom:1px solid rgba(255,255,255,0.08); }
   .stats-record b{ color:var(--amber); font-size:13px; }
@@ -2178,8 +2211,11 @@
   .tsm-trio{ display:grid; grid-auto-flow:column; grid-auto-columns:1fr; margin-top:12px; }
   .tsm-trio > div{ padding:2px 6px; text-align:center; min-width:0; }
   .tsm-trio > div + div{ border-left:1px solid rgba(128,128,128,.2); }
-  .tsm-lab{ font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; font-weight:700; opacity:.6; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .tsm-lab{ font-size:9.5px; letter-spacing:.06em; text-transform:uppercase; font-weight:700; opacity:.6; line-height:1.15; min-height:2.3em; display:flex; align-items:flex-end; justify-content:center; text-align:center; overflow-wrap:anywhere; }
+  /* Ronde 203: labels mogen over twee regels ("GEM. / SNELHEID") i.p.v. afgekapt te worden met "…"; de min-height houdt de cijfers op één lijn. */
   .tsm-val{ font-size:18px; font-weight:800; margin-top:3px; }
+  /* Ronde 203: op een smal scherm (320 px) passen vier kolommen niet; dan twee bij twee. */
+  @media (max-width:360px){ .tsm-trio{ grid-auto-flow:row; grid-template-columns:1fr 1fr; row-gap:10px; } .tsm-trio > div + div{ border-left:0; } .tsm-trio > div:nth-child(even){ border-left:1px solid rgba(128,128,128,.2); } .tsm-lab{ min-height:0; } }
   .tsm-chips{ display:flex; gap:6px; flex-wrap:wrap; margin:12px 0 0; }
   .tsm-chips:empty{ display:none; }
   .tsm-chip{ background:rgba(245,158,11,.14); color:#d98a06; border-radius:999px; padding:5px 11px; font-size:12px; font-weight:700; }
@@ -2831,6 +2867,11 @@
   #nearbyRoutesCard .nr-dh{ flex:0 0 auto; display:flex; align-items:center; gap:10px; padding:14px 12px 8px; }
   #nearbyRoutesCard .nr-dh .nr-x{ position:static; flex:0 0 auto; display:flex; align-items:center; justify-content:center; padding:0; }
   #nearbyRoutesCard .nr-dt{ flex:1; min-width:0; }
+  /* Ronde 201: tik of houd ingedrukt op de (afgekapte) titel in het detailscherm: de volledige naam komt in een klein venster. */
+  #nearbyRoutesCard .nr-dt{ -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; cursor:pointer; }
+  #nearbyRoutesCard .nr-titletip{ position:absolute; z-index:5; left:12px; right:12px; top:62px; background:#0f172a; color:#fff; border-radius:14px; padding:11px 14px; box-shadow:0 12px 28px rgba(15,23,42,.4); pointer-events:none; }
+  #nearbyRoutesCard .nr-titletip b{ display:block; font-size:16px; font-weight:800; line-height:1.3; overflow-wrap:anywhere; }
+  #nearbyRoutesCard .nr-titletip span{ display:block; margin-top:3px; font-size:12.5px; color:#cbd5e1; overflow-wrap:anywhere; }
   #nearbyRoutesCard .nr-dt h3{ margin:0; font-size:17px; font-weight:800; color:#0f172a; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   #nearbyRoutesCard .nr-dt p{ margin:1px 0 0; font-size:12.5px; color:#64748b; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   #nearbyRoutesCard .nr-dbody{ flex:1 1 auto; min-height:0; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch; padding:4px 16px 8px; }
@@ -5014,6 +5055,16 @@
       <label class="settings-check" style="margin-top:12px;"><input type="checkbox" id="settingKeepScreenOnDuringNav"> <span><span data-i18n="settingsKeepScreenOnDuringNav">🔋📱 Scherm actief houden tijdens navigatie/lopen</span></span></label>
       <div class="settings-subnote" data-i18n="settingsKeepScreenOnDuringNavSub">Voorkomt gaten in de snelheids-/afstandsmeting doordat het scherm vergrendelt — geldt voor fietsen/wandelen ÉN voor een loopsessie (Vrije Run, AI Coach, EVY, Zombie Run, ...). Kost wel meer batterij omdat het scherm aan blijft (combineer eventueel met "sterk verdonkeren" hierboven om dat te beperken).</div>
 
+      <!-- Ronde 204: experiment voor de Android-app: webview wakker houden terwijl het scherm uit is -->
+      <label class="settings-check" id="settingBgKeepAliveRow" style="margin-top:12px;"><input type="checkbox" id="settingBgKeepAlive"> <span><span data-i18n="settingsBgKeepAlive">📵 Scherm uit: app wakker houden (experiment)</span></span></label>
+      <div class="settings-subnote" id="settingBgKeepAliveSub" data-i18n="settingsBgKeepAliveSub">Met het scherm uit zet Android het weergavedeel van de app stil: piepjes, spraak en kaart vallen dan stil terwijl de GPS-meting doorloopt. Deze optie vraagt Android om dat weergavedeel toch te laten draaien. Of dat lukt hangt van je telefoon af. Het kost iets meer batterij dan scherm uit zonder deze optie, maar veel minder dan scherm aan. Alleen in de Android-app.</div>
+
+      <label class="settings-check" id="settingNativeAlertsRow" style="margin-top:12px;"><input type="checkbox" id="settingNativeAlerts"> <span><span data-i18n="settingsNativeAlerts">🔔 Scherm uit: Android piept en spreekt zelf (experiment)</span></span></label>
+      <div class="settings-subnote" id="settingNativeAlertsSub" data-i18n="settingsNativeAlertsSub">Met het scherm uit geeft het Android-deel van de app zelf de piepjes en trilling bij van-de-route-af, een gesproken melding bij het verlaten en terugkeren, en de afslag-aankondigingen ("Over 100 meter, links"). Het doet dat alleen als de pagina niet meer reageert, dus niet dubbel met het scherm aan. Gebruikt de route die je navigeert. Alleen in de Android-app.</div>
+
+      <label class="settings-check" id="settingMapMatchRow" style="margin-top:12px;"><input type="checkbox" id="settingMapMatchCheck"> <span><span data-i18n="settingsMapMatch">📐 Afstand controleren via de paden op de kaart (experiment)</span></span></label>
+      <div class="settings-subnote" id="settingMapMatchSub" data-i18n="settingsMapMatchSub">Na een wandeling of rit legt de app je spoor op de echte paden en wegen van de kaart (via de gratis Valhalla-server) en toont in de samenvatting de afstand langs die paden naast de GPS-afstand. Handig om te zien of de GPS-afstand te hoog uitvalt door slingeren. Heeft internet nodig; bij een mislukte aanvraag verandert er niets.</div>
+
       <label class="settings-check" style="margin-top:12px;"><input type="checkbox" id="settingVoiceOnly"> <span><span data-i18n="settingsVoiceOnly">🔋 Scherm sterk verdonkeren tijdens navigatie</span></span></label>
       <div class="settings-subnote" data-i18n="settingsVoiceOnlySub">Enkel het scherm doven, spraaknavigatie blijft werken — tik gewoon op het scherm om het weer op te lichten. Werkt het best op moderne (OLED/AMOLED-)schermen.</div>
 
@@ -5743,73 +5794,87 @@
 <div id="toast"><i class="toast-eyes" aria-hidden="true"><b></b><b></b></i><svg class="toast-star t1" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 0 L12.2 7.8 L20 10 L12.2 12.2 L10 20 L7.8 12.2 L0 10 L7.8 7.8Z"/></svg><svg class="toast-star t2" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 0 L12.2 7.8 L20 10 L12.2 12.2 L10 20 L7.8 12.2 L0 10 L7.8 7.8Z"/></svg></div>
 
 <!-- ---------- Dashboard-paneel: levenslange statistieken, zichtbaar wanneer er geen actieve route is ---------- -->
-<div id="dashboardPanel">
-  <div id="dashTurnBanner">
-    <svg id="dashTurnArrow" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 21l8-5 8 5-8-19z" fill="#e2a13c" stroke="#0f3d29" stroke-width="1"/></svg>
-    <span id="dashTurnText">–</span>
-  </div>
-  <div id="dashSummary">
-    <div class="dash-stat" id="dashSpeedTile">
-      <svg id="garminSpeedGauge" viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="8"/><circle id="garminSpeedGaugeFill" cx="50" cy="50" r="42" fill="none" stroke="#c6e84f" stroke-width="8" stroke-linecap="round" stroke-dasharray="264" stroke-dashoffset="264" transform="rotate(-90 50 50)"/></svg>
-      <span id="dashSpeed">–</span><small data-i18n="dashKmu">km/u</small>
-    </div>
-    <div class="dash-stat"><span id="dashDone">0.0 km</span><small data-i18n="dashAfgelegd">afgelegd</small></div>
-    <div class="dash-stat dash-split" id="dashSplitTile">
-      <div class="dash-part"><span id="dashWalked">0.0 km</span><small data-i18n="dashEchtGelopen">echt gelopen</small></div>
-      <div class="dash-part"><span id="dashRemaining">0.0 km</span><small data-i18n="dashNogTeGaan">nog te gaan</small></div>
-    </div>
-  </div>
-  <div id="dashSummary2">
-    <div class="dash-stat"><span id="dashElapsed">–</span><small data-i18n="dashRijtijd">rijtijd</small></div>
-    <div class="dash-stat"><span id="dashAvgSpeed">–</span><small data-i18n="dashGemKmu">gem. km/u</small></div>
-    <div class="dash-stat"><span id="dashETA">–</span><small data-i18n="dashVerwAankomst">verw. aankomst</small></div>
-  </div>
-  <div id="dashSummary3">
-    <div class="dash-stat"><span id="dashWeather">–</span><small id="dashWeatherLabel" data-i18n="dashWeer">weer</small></div>
-    <div class="dash-stat"><span id="dashSunset">–</span><small data-i18n="dashZonsondergang">zonsondergang</small></div>
-    <div class="dash-stat" id="dashHrTile"><span id="dashHrValue">❤️ verbind</span><small data-i18n="dashHartslag">hartslag</small></div>
-  </div>
+<div id="dashboardPanel" data-dtab="live">
+  <div id="dashPane">
+    <!-- Ronde 200: vier tabs onderaan (Live | Hoogte | Punten | Cijfers). Alle oude id's blijven bestaan, zodat de bestaande code ze ongewijzigd vult. -->
+    <section class="dpane" id="dpLive" data-pane="live">
+      <div id="dashTurnBanner">
+        <svg id="dashTurnArrow" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 21l8-5 8 5-8-19z" fill="#e2a13c" stroke="#0f3d29" stroke-width="1"/></svg>
+        <span id="dashTurnText">–</span>
+      </div>
+      <div id="dashRows">
+        <div class="dash-row" id="dashSpeedTile">
+          <svg id="garminSpeedGauge" viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="8"/><circle id="garminSpeedGaugeFill" cx="50" cy="50" r="42" fill="none" stroke="#c6e84f" stroke-width="8" stroke-linecap="round" stroke-dasharray="264" stroke-dashoffset="264" transform="rotate(-90 50 50)"/></svg>
+          <small data-i18n="dashSnelheid">🚶 snelheid</small><span id="dashSpeed">–</span><i class="dash-u dash-u-fix" data-i18n="dashKmu">km/u</i>
+        </div>
+        <div class="dash-row"><small data-i18n="dashEchtGelopen">echt gelopen</small><span id="dashWalked">0.0 km</span></div>
+        <div class="dash-row"><small data-i18n="dashAfgelegd">afgelegd</small><span id="dashDone">0.0 km</span></div>
+        <div class="dash-row dash-hl" id="dashRemainingRow"><small data-i18n="dashNogTeGaan">nog te gaan</small><span id="dashRemaining">0.0 km</span></div>
+        <div class="dash-row"><small data-i18n="dashRijtijd">rijtijd</small><span id="dashElapsed">–</span></div>
+        <div class="dash-row"><small data-i18n="dashVerwAankomst">verw. aankomst</small><span id="dashETA">–</span></div>
+        <div class="dash-row"><small data-i18n="dashGemKmu">gem. km/u</small><span id="dashAvgSpeed">–</span></div>
+        <div class="dash-row" id="dashHrTile"><small data-i18n="dashHartslag">hartslag</small><span id="dashHrValue">❤️ verbind</span></div>
+        <div class="dash-pair">
+          <div class="dash-row dash-half"><small id="dashWeatherLabel" data-i18n="dashWeer">weer</small><span id="dashWeather">–</span></div>
+          <div class="dash-row dash-half"><small data-i18n="dashZonsondergang">zonsondergang</small><span id="dashSunset">–</span></div>
+        </div>
+      </div>
+    </section>
 
-  <div id="dashElevSection">
-    <div id="dashElevHead">
-      <span class="asc">▲ <b id="dashAscVal">0</b> m</span>
-      <span class="desc">▼ <b id="dashDescVal">0</b> m</span>
-    </div>
-    <div id="dashElevWrap"><svg id="dashElevationSvg" viewBox="0 0 100 40" preserveAspectRatio="none"></svg></div>
-  </div>
+    <section class="dpane" id="dpElev" data-pane="elev">
+      <div id="dashElevSection">
+        <div id="dashElevHead">
+          <span class="asc">▲ <b id="dashAscVal">0</b> m</span>
+          <span class="desc">▼ <b id="dashDescVal">0</b> m</span>
+        </div>
+        <div id="dashElevWrap"><svg id="dashElevationSvg" viewBox="0 0 100 40" preserveAspectRatio="none"></svg></div>
+      </div>
+      <div id="climbProSection" class="hidden">
+        <div id="climbProHead">
+          <span id="climbProTitle">🏔️ Klim 1/1</span>
+          <span id="climbProStats">–</span>
+        </div>
+        <div id="climbProChartWrap"><svg id="climbProSvg" viewBox="0 0 100 40" preserveAspectRatio="none"></svg></div>
+      </div>
+      <div id="dashElevEmpty" data-i18n="dashElevEmpty">Nog geen hoogteprofiel: stel eerst een route samen.</div>
+    </section>
 
-  <div id="climbProSection" class="hidden">
-    <div id="climbProHead">
-      <span id="climbProTitle">🏔️ Klim 1/1</span>
-      <span id="climbProStats">–</span>
-    </div>
-    <div id="climbProChartWrap"><svg id="climbProSvg" viewBox="0 0 100 40" preserveAspectRatio="none"></svg></div>
-  </div>
+    <section class="dpane" id="dpPoints" data-pane="points">
+      <div id="dashPointsHead" class="dash-hd"></div>
+      <ul id="dashList"></ul>
+      <div id="dashEmpty" data-i18n="dashEmptyRoute">Nog geen route samengesteld.</div>
+    </section>
 
-  <ul id="dashList"></ul>
-  <div id="dashEmpty" data-i18n="dashEmptyRoute">Nog geen route samengesteld.</div>
-
-  <div id="lifetimeStats">
-    <div class="weather-title" style="margin-bottom:10px;" data-i18n="statsTitle">Mijn statistieken</div>
-    <div id="statsPeriodTabs">
-      <button class="stats-tab active" data-period="week" data-i18n="statsWeek">Week</button>
-      <button class="stats-tab" data-period="month" data-i18n="statsMonth">Maand</button>
-      <button class="stats-tab" data-period="year" data-i18n="statsYear">Jaar</button>
-      <button class="stats-tab" data-period="all" data-i18n="statsAllTime">Ooit</button>
-    </div>
-    <div id="statsSummaryGrid">
-      <div class="dash-stat"><span id="statsKm">0.0 km</span><small data-i18n="statsDistance">afstand</small></div>
-      <div class="dash-stat"><span id="statsRides">0</span><small data-i18n="statsRideCount">ritten</small></div>
-      <div class="dash-stat"><span id="statsAscent">0 m</span><small data-i18n="statsAscentLabel">hoogtemeters</small></div>
-    </div>
-    <button id="statsRecordsToggle" data-i18n="statsShowRecords">🏆 Persoonlijke records tonen</button>
-    <div id="statsRecordsPanel" style="display:none;">
-      <div class="stats-record"><span data-i18n="statsRecordLongest">Langste rit</span><b id="statsLongest">–</b></div>
-      <div class="stats-record"><span data-i18n="statsRecordFastest">Hoogste gem. snelheid</span><b id="statsFastest">–</b></div>
-      <div class="stats-record"><span data-i18n="statsRecordAscent">Meeste hoogtemeters</span><b id="statsMostAscent">–</b></div>
-      <div class="stats-record"><span data-i18n="statsRecordCalories">Geschatte calorieën (deze periode)</span><b id="statsCalories">–</b></div>
-    </div>
+    <section class="dpane" id="dpStats" data-pane="stats">
+      <div id="lifetimeStats">
+        <div class="dash-hd" data-i18n="statsTitle">Mijn statistieken</div>
+        <div id="statsPeriodTabs">
+          <button class="stats-tab active" data-period="week" data-i18n="statsWeek">Week</button>
+          <button class="stats-tab" data-period="month" data-i18n="statsMonth">Maand</button>
+          <button class="stats-tab" data-period="year" data-i18n="statsYear">Jaar</button>
+          <button class="stats-tab" data-period="all" data-i18n="statsAllTime">Ooit</button>
+        </div>
+        <div id="statsSummaryGrid">
+          <div class="dash-stat"><span id="statsKm">0.0 km</span><small data-i18n="statsDistance">afstand</small></div>
+          <div class="dash-stat"><span id="statsRides">0</span><small data-i18n="statsRideCount">ritten</small></div>
+          <div class="dash-stat"><span id="statsAscent">0 m</span><small data-i18n="statsAscentLabel">hoogtemeters</small></div>
+        </div>
+        <div id="statsRecordsHead" class="dash-hd" data-i18n="statsRecordsTitle">🏆 Persoonlijke records</div>
+        <div id="statsRecordsPanel">
+          <div class="stats-record"><span data-i18n="statsRecordLongest">Langste rit</span><b id="statsLongest">–</b></div>
+          <div class="stats-record"><span data-i18n="statsRecordFastest">Hoogste gem. snelheid</span><b id="statsFastest">–</b></div>
+          <div class="stats-record"><span data-i18n="statsRecordAscent">Meeste hoogtemeters</span><b id="statsMostAscent">–</b></div>
+          <div class="stats-record"><span data-i18n="statsRecordCalories">Geschatte calorieën (deze periode)</span><b id="statsCalories">–</b></div>
+        </div>
+      </div>
+    </section>
   </div>
+  <nav id="dashTabs" role="tablist">
+    <button type="button" class="dtab active" data-dtab="live" role="tab"><b>📋</b><span data-i18n="dashTabLive">Live</span></button>
+    <button type="button" class="dtab" data-dtab="elev" role="tab"><b>⛰️</b><span data-i18n="dashTabElev">Hoogte</span></button>
+    <button type="button" class="dtab" data-dtab="points" role="tab"><b>📍</b><span data-i18n="dashTabPoints">Punten</span></button>
+    <button type="button" class="dtab" data-dtab="stats" role="tab"><b>📈</b><span data-i18n="dashTabStats">Cijfers</span></button>
+  </nav>
 </div>
 
 <!-- ---------- Kompas + Zon-paneel (Standaard-stijl) ---------- -->
@@ -9521,8 +9586,15 @@ function navTrackGpxTargetIndex(){
 }
 // Gemiddelde snelheid: werkelijk afgelegde GPS-afstand (met ruisfilter) / bewegingstijd -- niet langer afhankelijk
 // van de routevoortgang (die kon bij de start enorm springen).
-function navGpsAccumulate(lat, lon, accuracy){
-  const S = NAVGPS, now = Date.now();
+// Ronde 202: tijdstip van de GPS-fix zelf. Met het scherm uit staat de webview stil; de telefoon bewaart de posities en levert ze bij het ontwaken in een keer af. Het tijdstip
+// van VERWERKEN (Date.now()) was dan voor tientallen fixen bijna gelijk, terwijl ze over minuten verdeeld waren: het spoor kreeg een 'pauze' gevolgd door een 'sprint'. pos.timestamp
+// (de browser, of loc.time via native-bridge.js) is het echte tijdstip van de meting. Ontbreekt het of is het onwaarschijnlijk (toekomst, ouder dan 6 uur), dan geldt Date.now().
+function fixTimeMs(pos){
+  const t = pos && pos.timestamp, now = Date.now();
+  return (Number.isFinite(t) && t > 0 && t <= now + 5000 && now - t < 6 * 3600 * 1000) ? t : now;
+}
+function navGpsAccumulate(lat, lon, accuracy, fixT){
+  const S = NAVGPS, now = Number.isFinite(fixT) ? fixT : Date.now();
   if (!S.last){ S.last = { lat, lon }; S.t = now; return; }
   const d = haversine(S.last.lat, S.last.lon, lat, lon);
   const thr = Math.max(4, Math.min(15, (accuracy || 0) * 0.5));
@@ -11703,11 +11775,11 @@ async function saveRideToHistory(){
 }
 
 // ---------- Ronde 115: fijner spoor + GPX-export + medailles voor wandelen en fietsen ----------
-function recordNavTrackPoint(lat, lon, accuracy){
+function recordNavTrackPoint(lat, lon, accuracy, fixT){
   if (!navActive || !Number.isFinite(lat) || !Number.isFinite(lon)) return;
   if (accuracy != null && accuracy > 50) return; // onbetrouwbare fix, niet in het spoor
-  const t = Date.now();
   const last = navTrack[navTrack.length - 1];
+  const t = Math.max(Number.isFinite(fixT) ? fixT : Date.now(), last ? last.t : 0); // Ronde 202: tijd van de fix, nooit terug in de tijd
   if (!last){ navTrack.push({ lat, lon, t }); return; }
   const minM = Math.max(NAV_TRACK_MIN_M, Math.min(accuracy || 0, 25) * 0.6); // bij slechte nauwkeurigheid een grotere stap: geen ruis bij stilstaan
   if (haversine(last.lat, last.lon, lat, lon) < minM) return;
@@ -11719,7 +11791,7 @@ function navTrackPayload(){
   try{
     if (lastPosition && navTrack.length){
       const c = lastPosition.coords, last = navTrack[navTrack.length - 1];
-      if (Number.isFinite(c.latitude) && Number.isFinite(c.longitude) && haversine(last.lat, last.lon, c.latitude, c.longitude) >= 1) navTrack.push({ lat: c.latitude, lon: c.longitude, t: Date.now() });
+      if (Number.isFinite(c.latitude) && Number.isFinite(c.longitude) && haversine(last.lat, last.lon, c.latitude, c.longitude) >= 1) navTrack.push({ lat: c.latitude, lon: c.longitude, t: Math.max(fixTimeMs(lastPosition), last.t) });
     }
   }catch(e){}
   if (navTrack.length < 2) return {};
@@ -11930,6 +12002,7 @@ function showTripSummary(entry){
   const chipsEl = $('tripSummaryChips');
   chipsEl.innerHTML = '';
   (lastRideChips || []).forEach(t => { const c = document.createElement('span'); c.className = 'tsm-chip'; c.textContent = t; chipsEl.appendChild(c); });
+  try{ phTripMapMatch(entry); }catch(e){} // Ronde 205: experiment, alleen als de instelling aan staat
   $('tripSummaryGpxBtn').disabled = pts.length < 2;
   openModal('tripSummaryModal');
   if ((lastRideChips || []).some(t => t.startsWith('🏅') || t.startsWith('🎉') || t.startsWith('👟'))) { try{ fireConfetti(); }catch(e){} }
@@ -12565,7 +12638,7 @@ let appSettings = {
   theme:'default', showCompassBtn:true, compassNorthHaptic:true, compassRadarAltStyle:false, orsKey:'', graphhopperKey:'', geoapifyKey:'', plantnetKey:'', geminiKey:'', windyKey:'', locationIqKey:'', groqKey:'', otmKey:'', bikeType:'regular', mapStyle:'standard', mapStyleBike:'standard', mapStyleWalk:'standard', thunderforestKey:'', cartoKey:'', googleTtsKey:'', mapTilerKey:'',
   audioSrcWikipedia:true, audioSrcWikivoyage:true, audioSrcNature:true, audioSrcOtm:false, // Ronde 98: aparte aan/uit-schakelaars per audiobron (zie settingAudioSrc*-checkboxes)
   historyAudioRadiusM:150, // Ronde 99: instelbare aankomst-triggerafstand (zie historyAudioRadiusM() in de hoofd-JS)
-  dashTextSize:'normal', dashBold:true, largeNodesAccessibility:false, offRouteDist:35, autoReroute:false, silentReroute:false, offRouteBeep:true,
+  dashTextSize:'normal', dashBold:true, largeNodesAccessibility:false, offRouteDist:35, autoReroute:false, silentReroute:false, offRouteBeep:true, bgKeepAlive:false, nativeAlerts:false, mapMatchCheck:false,
   overlays:{ cycling:false, hiking:false, mtb:false, riding:false, slopes:false, radar:false, steep:false, stops:false, photos:false, webcams:false },
   poiLayers:{ cafe:false, restaurant:false, bakery:false, supermarket:false, pharmacy:false, bike:false, water:false, toilet:false, money:false, camping:false, charging:false, playground:false, parking:false, hotel:false }, showPoiDetails:false,
   showWindDirection:true, autoPause:false, redNavDot:false, topOffsetPx:0, tabGapPx:0, userName:'', bodyWeightKg:null, bodyHeightCm:null, bodyAge:null, bodyGender:'', spotifyClientId:'', stravaClientId:'', stravaClientSecret:'', voiceOnlyMode:false, routeColorMode:'off', showWindInNav:false, rainWatchOn:true, eatReminderOn:false, eatIntervalMin:45, drinkReminderOn:false, drinkIntervalMin:20, segmentPrOn:true, darkArrivalWarning:true, quietRoutingMode:false, historyAudioOn:false, audioGuideFullArticle:false, birdGeoFilterOn:true, shakeToSurpriseOn:false, shakeKm:30, vertrekFromGps:false, avoidBufferM:18, maxOverlapPct:8, lowerGpsAccuracy:false, disableMapRotation:false, posUpdateIntervalSec:1, mapRecenterDelaySec:6, overpassSurfaceTimeoutSec:15, assistantWaitSec:60, routingWeighting:'off', navType:'active', fallDetectionOn:false, fallSensitivity:3, sosContactNumber:'', sosContactName:'', autoPauseRunCoach:false, routePreference:'balanced', routeLineColor:'#e2a13c', language:'en', homeBgDim:35, map3dTiltOn:false, speedSmoothingSec:0,
@@ -12799,6 +12872,16 @@ const TRANSLATIONS = {
   genderFemale: { nl:'Vrouw', en:'Female' },
   screenOffGapNote: { nl:'⚠️ Belangrijk voor een goede meting: als je scherm zelf uitgaat/vergrendelt (niet via "sterk verdonkeren" hieronder, maar het toestel zelf), kan Android de browser na een tijdje volledig op pauze zetten — dan stopt ook de GPS-meting, en zie je nadien een rechte/groene lijn waar eigenlijk niets gemeten werd. Dat is een grens van wat een website/PWA kan (een "echte" app kan dit via een Foreground Service afdwingen, een website niet). Twee dingen helpen: (1) hieronder "Scherm actief houden" aanzetten, of (2) in je Android-instellingen zelf batterij-optimalisatie UITzetten voor je browser (Instellingen → Apps → [je browser] → Batterij).', en:'⚠️ Important for accurate tracking: if your screen itself turns off/locks (not via "dim strongly" below, but the device itself), Android can eventually fully suspend the browser — GPS tracking then stops too, leaving a straight/green line afterwards where nothing was actually measured. That is a limit of what a website/PWA can do (a native app can enforce this via a Foreground Service, a website cannot). Two things help: (1) turn on "Keep screen on" below, or (2) in your Android settings, turn OFF battery optimization for your browser (Settings → Apps → [your browser] → Battery).' },
   settingsKeepScreenOnDuringNav: { nl:'🔋📱 Scherm actief houden tijdens navigatie/lopen', en:'🔋📱 Keep screen on during navigation/running' },
+  settingsNativeAlerts: { nl:'🔔 Scherm uit: Android piept en spreekt zelf (experiment)', en:'🔔 Screen off: Android beeps and speaks by itself (experiment)' },
+  settingsNativeAlertsSub: { nl:'Met het scherm uit geeft het Android-deel van de app zelf de piepjes en trilling bij van-de-route-af, een gesproken melding bij het verlaten en terugkeren, en de afslag-aankondigingen ("Over 100 meter, links"). Het doet dat alleen als de pagina niet meer reageert, dus niet dubbel met het scherm aan. Gebruikt de route die je navigeert. Alleen in de Android-app.', en:'With the screen off, the Android part of the app itself gives the beeps and vibration when you leave the route, a spoken notice when leaving and returning, and the turn announcements ("In 100 metres, left"). It only does so when the page has stopped responding, so never twice with the screen on. Uses the route you are navigating. Android app only.' },
+  settingsMapMatch: { nl:'📐 Afstand controleren via de paden op de kaart (experiment)', en:'📐 Check distance along the paths on the map (experiment)' },
+  settingsMapMatchSub: { nl:'Na een wandeling of rit legt de app je spoor op de echte paden en wegen van de kaart (via de gratis Valhalla-server) en toont in de samenvatting de afstand langs die paden naast de GPS-afstand. Handig om te zien of de GPS-afstand te hoog uitvalt door slingeren. Heeft internet nodig; bij een mislukte aanvraag verandert er niets.', en:'After a walk or ride the app lays your track onto the real paths and roads of the map (via the free Valhalla server) and shows the distance along those paths next to the GPS distance in the summary. Useful to see whether the GPS distance is too high because of wobble. Needs internet; if the request fails nothing changes.' },
+  nativeBackOnRoute: { nl:'Je bent terug op de route', en:'You are back on the route' },
+  tripMapMatchBusy: { nl:'📐 Afstand via paden berekenen…', en:'📐 Calculating distance along paths…' },
+  tripMapMatchDone: { nl:'📐 Via paden {a} km (GPS {b} km)', en:'📐 Along paths {a} km (GPS {b} km)' },
+  tripMapMatchFail: { nl:'📐 Via paden: niet gelukt (geen verbinding of geen bekend pad)', en:'📐 Along paths: failed (no connection or no known path)' },
+  settingsBgKeepAlive: { nl:'📵 Scherm uit: app wakker houden (experiment)', en:'📵 Screen off: keep the app awake (experiment)' },
+  settingsBgKeepAliveSub: { nl:'Met het scherm uit zet Android het weergavedeel van de app stil: piepjes, spraak en kaart vallen dan stil terwijl de GPS-meting doorloopt. Deze optie vraagt Android om dat weergavedeel toch te laten draaien. Of dat lukt hangt van je telefoon af. Het kost iets meer batterij dan scherm uit zonder deze optie, maar veel minder dan scherm aan. Alleen in de Android-app.', en:'With the screen off, Android freezes the display part of the app: beeps, speech and map stop while the GPS measurement keeps running. This option asks Android to keep that part running anyway. Whether that works depends on your phone. It uses a bit more battery than screen off without this option, but far less than screen on. Android app only.' },
   settingsKeepScreenOnDuringNavSub: { nl:'Voorkomt gaten in de snelheids-/afstandsmeting doordat het scherm vergrendelt — geldt voor fietsen/wandelen ÉN voor een loopsessie (Vrije Run, AI Coach, EVY, Zombie Run, ...). Kost wel meer batterij omdat het scherm aan blijft (combineer eventueel met "sterk verdonkeren" hierboven om dat te beperken).', en:'Prevents gaps in speed/distance tracking caused by the screen locking — applies to cycling/walking AND to a running session (Free Run, AI Coach, EVY, Zombie Run, ...). Costs more battery since the screen stays on (optionally combine with "dim strongly" above to limit that).' },
   statsTitle: { nl:'Mijn statistieken', en:'My statistics' },
   statsWeek: { nl:'Week', en:'Week' },
@@ -13763,6 +13846,14 @@ const TRANSLATIONS = {
   gpxAnalysisMapsLink: { nl:'📍 Startpunt openen in Google Maps', en:'📍 Open start point in Google Maps' },
   distUnitToNode: { nl:'naar knooppunt', en:'to node' },
   dashEmptyRoute: { nl:'Nog geen route samengesteld.', en:'No route assembled yet.' },
+  dashTabLive: { nl:'Live', en:'Live' },
+  dashTabElev: { nl:'Hoogte', en:'Elevation' },
+  dashTabPoints: { nl:'Punten', en:'Points' },
+  dashTabStats: { nl:'Cijfers', en:'Stats' },
+  dashSnelheid: { nl:'snelheid', en:'speed' },
+  dashPointsDone: { nl:'{done} van {total} gedaan', en:'{done} of {total} done' },
+  dashElevEmpty: { nl:'Nog geen hoogteprofiel: stel eerst een route samen.', en:'No elevation profile yet: build a route first.' },
+  statsRecordsTitle: { nl:'🏆 Persoonlijke records', en:'🏆 Personal records' },
   compassSensorNote: { nl:'Kompas gebruikt de magnetische sensor van je toestel — kan een beetje afwijken van echt noorden.', en:"Compass uses your device's magnetic sensor — may deviate slightly from true north." },
   emptyMsgInitial: { nl:'Tik op een groen knooppunt op de kaart om je route samen te stellen.', en:'Tap a green node on the map to build your route.' },
   emptyMsgWithLoop: { nl:'Tik op een groen knooppunt op de kaart om je route samen te stellen. Tik het beginpunt nogmaals aan om een lus te sluiten.', en:'Tap a green node on the map to build your route. Tap the starting point again to close a loop.' },
@@ -13933,8 +14024,8 @@ const HELP_CONTENT = {
       <p><b>📍 Jij op de Analyse-pagina</b> — tijdens een navigatie staat op elk tabblad van Analyse een blauwe bol op de kaart: dat ben jij. Op Hoogte en Helling zit de rode bol in de grafiek op jouw plek en je kunt hem nog steeds zelf verslepen om een ander punt te bekijken (na 15 seconden zonder aanraking springt hij terug naar jou). Op Wegdek, Wind en Snelheid staat een stippellijn met een blauwe bol op de balk.</p>
       <p><b>✏️ Route bewerken tijdens navigatie</b> — naast 🚧 (weg afgesloten) staat nu een apart knopje ✏️. Daarmee pauzeer je de navigatie, kun je de punten van de route verslepen of toevoegen en tik je daarna op "Hervat". De route wordt dan opnieuw berekend vanaf waar je nu bent, enkel naar de punten die nog voor je liggen.</p>
       <p><b>💬 Meldingen</b> — het gele ballonnetje met oogjes en sterretjes is een melding van de app. Heeft het een ⓘ erachter, dan kun je het aantikken voor meer uitleg.</p>
-      <p><b>🌿 Leuke routes bij jou</b> — als je op Wandelen of Fietsen tikt, toont de app (standaard hooguit 1x per dag per soort) de routes in de buurt: eerst je eigen GPX-routes en links met coördinaten, dan bewegwijzerde routes uit OpenStreetMap. De pop-up gaat meteen open en laat met knipperende gele puntjes zien welke stap bezig is (je positie bepalen, eigen routes en links ophalen, routes uit OpenStreetMap zoeken); zodra er routes zijn komt de lijst ervoor in de plaats. Lukt het niet (geen toestemming voor locatie, je positie niet gevonden, geen verbinding) dan blijft de pop-up staan met een uitleg en een knop "Opnieuw proberen", en is er echt niets in de buurt, dan staat er "Geen routes gevonden in de buurt.". Lukt alleen een verse positie niet (bijvoorbeeld binnen zonder GPS-signaal) maar kent de app nog een eerdere positie van je, dan gebruikt ze die en staat er boven de lijst in oranje dat de positie niet vers is; zo'n lijst telt niet als getoond voor vandaag, zodat de volgende tik opnieuw een verse positie probeert. De uitleg bij een mislukking hangt van de oorzaak af (geen toestemming, Locatie staat uit, geen signaal op tijd) en noemt de foutcode van de telefoon. Bij elke route staat de lengte en de afstand tot het startpunt ("hiervandaan"; bij OpenStreetMap-routes bij benadering, met ≈). Bovenaan filter je op lengte (wandelen: ≤ 2, 2–4, 4–6 en 6+ km; fietsen: ≤ 10, 10–15, 15–20 en 20+ km) en sorteer je op "Kortste eerst" (bij gelijke lengte de dichtstbijzijnde start), "Dichtstbij start" of "Leukste". De pop-up heeft een vaste hoogte: komen er routes bij, dan scroll je erin. Tik een route voor het detailscherm: routekaartje (is een route enkel een link, dus zonder GPX, dan staat daar een eigen kaartje uit je index.json met de velden kaart, kaartBron en kaartUrl, en heb je dat niet, een van vijf tekeningen die per route afwisselen), lengte, tijd en hoogteverschil, en foto's (een eigen foto uit je index.json met de velden foto en fotoBron, anders foto's van Wikimedia Commons die langs de route zijn genomen, anders een foto van de omgeving uit Wikipedia; altijd met maker en licentie, tik een foto voor de bronpagina). In het detail staat ook "Dieren en planten", in twee rijen (Dieren, Planten): per rij de soortenlijst van de pagina van het Natuurpunt-gebied (enkel in de app), en staat daar niets voor die rij, dan de meest waargenomen soorten binnen 1 km van de start; telkens met foto, maker en licentie via iNaturalist. X is een rangschikking op signalen (eigen routes, dichtbij, passende lengte, "gedaan" telt lager), geen populariteitslijst. Sluiten kan met ✕, "Later" of naast de kaart tikken; uitzetten met de schakelaar "Toon bij openen" of in Instellingen. Wil je haar elke keer zien, zet dan in Instellingen (🧭 Onderweg &amp; navigatie) het vinkje "Elke keer tonen, niet maar 1x per dag" aan.</p>
-      <p><b>⭐ Mijn lijstje, filters en eigen tips</b> — bij elke route in "Leuke routes bij jou" staat rechts een ster: tik erop om de route in je lijstje te bewaren (nog een keer tikken haalt hem eruit; in het detailscherm staat dezelfde ster bovenaan). Je lijstje blijft op je telefoon en werkt ook zonder positie of verbinding. Op het keuzescherm opent de knop "⭐ Mijn lijstje" al je bewaarde routes, wandelen en fietsen samen, de laatst bewaarde eerst; de afstand zie je zodra de app je positie kent. In de pop-up zelf staat een tweede rij filters: "⭐ Lijst" toont enkel je bewaarde routes van deze soort (ook als ze verder weg liggen), "☔ Bij regen" routes die vooral over verharde ondergrond lopen, "👨‍👩‍👧 Kids" routes met een speeltuin op hooguit 300 m en "🚆 OV" routes met een halte op hooguit 500 m. Het zijn schattingen uit OpenStreetMap, geen zekerheid: een speeltuin of halte die daar niet op staat, ontbreekt ook hier. Bij elke route staat waarom hij past (bijvoorbeeld "≈ 85% verhard" of "speeltuin op 150 m bij de start"; bij een route uit OpenStreetMap geldt de plek bij het midden van de route). De ondergrond wordt gemeten op ongeveer elke 250 m langs het spoor; blijft er te weinig bekend over (paden zonder gegevens), dan krijgt de route geen label. Routes zonder gegevens vallen onder een actief filter weg, en onder de lijst staat hoeveel routes er gecontroleerd zijn (de eerste volgens je sortering, niet alle). Kiezen van een filter haalt de gegevens op; dat kan even duren en lukt het niet, dan staat er een melding. Bovenaan de lijst staan, zonder filter, "📍 Eigen tips": plekken die jijzelf kent en gecontroleerd hebt, met een foto en een zin, de drie dichtstbijzijnde binnen 40 km van je positie (ze staan in <code>plekken/index.json</code>, zie <code>plekken/README.md</code>). Onder de vier activiteiten op het keuzescherm staat een seizoenstip, elke dag een andere uit twee per maand (of je eigen tips uit <code>plekken/index.json</code>).</p>
+      <p><b>🌿 Leuke routes bij jou</b> — als je op Wandelen of Fietsen tikt, toont de app (standaard hooguit 1x per dag per soort) de routes in de buurt: eerst je eigen GPX-routes en links met coördinaten, dan bewegwijzerde routes uit OpenStreetMap. De pop-up gaat meteen open en laat met knipperende gele puntjes zien welke stap bezig is (je positie bepalen, eigen routes en links ophalen, routes uit OpenStreetMap zoeken); zodra er routes zijn komt de lijst ervoor in de plaats. Lukt het niet (geen toestemming voor locatie, je positie niet gevonden, geen verbinding) dan blijft de pop-up staan met een uitleg en een knop "Opnieuw proberen", en is er echt niets in de buurt, dan staat er "Geen routes gevonden in de buurt.". Lukt alleen een verse positie niet (bijvoorbeeld binnen zonder GPS-signaal) maar kent de app nog een eerdere positie van je, dan gebruikt ze die en staat er boven de lijst in oranje dat de positie niet vers is; zo'n lijst telt niet als getoond voor vandaag, zodat de volgende tik opnieuw een verse positie probeert. De uitleg bij een mislukking hangt van de oorzaak af (geen toestemming, Locatie staat uit, geen signaal op tijd) en noemt de foutcode van de telefoon. Bij elke route staat de lengte en de afstand tot het startpunt ("hiervandaan"; bij OpenStreetMap-routes bij benadering, met ≈). Bovenaan filter je op lengte (wandelen: ≤ 2, 2–4, 4–6 en 6+ km; fietsen: ≤ 10, 10–15, 15–20 en 20+ km) en sorteer je op "Kortste eerst" (bij gelijke lengte de dichtstbijzijnde start), "Dichtstbij start" of "Leukste". De pop-up heeft een vaste hoogte: komen er routes bij, dan scroll je erin. Tik een route voor het detailscherm (is de naam bovenaan afgekapt, tik er dan op of houd hem ingedrukt voor de volledige naam): routekaartje (is een route enkel een link, dus zonder GPX, dan staat daar een eigen kaartje uit je index.json met de velden kaart, kaartBron en kaartUrl, en heb je dat niet, een van vijf tekeningen die per route afwisselen), lengte, tijd en hoogteverschil, en foto's (een eigen foto uit je index.json met de velden foto en fotoBron, anders foto's van Wikimedia Commons die langs de route zijn genomen, anders een foto van de omgeving uit Wikipedia; altijd met maker en licentie, tik een foto voor de bronpagina). In het detail staat ook "Dieren en planten", in twee rijen (Dieren, Planten): per rij de soortenlijst van de pagina van het Natuurpunt-gebied (enkel in de app), en staat daar niets voor die rij, dan de meest waargenomen soorten binnen 1 km van de start; telkens met foto, maker en licentie via iNaturalist. X is een rangschikking op signalen (eigen routes, dichtbij, passende lengte, "gedaan" telt lager), geen populariteitslijst. Sluiten kan met ✕, "Later" of naast de kaart tikken; uitzetten met de schakelaar "Toon bij openen" of in Instellingen. Wil je haar elke keer zien, zet dan in Instellingen (🧭 Onderweg &amp; navigatie) het vinkje "Elke keer tonen, niet maar 1x per dag" aan.</p>
+      <p><b>⭐ Mijn lijstje, filters en eigen tips</b> — bij elke route in "Leuke routes bij jou" staat rechts een ster: tik erop om de route in je lijstje te bewaren (nog een keer tikken haalt hem eruit; in het detailscherm staat dezelfde ster bovenaan). Je lijstje blijft op je telefoon en werkt ook zonder positie of verbinding. Op het keuzescherm opent de knop "⭐ Mijn lijstje" al je bewaarde routes, wandelen en fietsen samen, de laatst bewaarde eerst; de afstand zie je zodra de app je positie kent. In de pop-up zelf staat een tweede rij filters: "⭐ Lijst" toont enkel je bewaarde routes van deze soort (ook als ze verder weg liggen), "☔ Bij regen" routes die vooral over verharde ondergrond lopen, "👨‍👩‍👧 Kids" routes met een speeltuin op hooguit 300 m en "🚆 OV" routes met een halte op hooguit 500 m. Het zijn schattingen uit OpenStreetMap, geen zekerheid: een speeltuin of halte die daar niet op staat, ontbreekt ook hier. Bij elke route staat waarom hij past (bijvoorbeeld "≈ 85% verhard" of "speeltuin op 150 m bij de start"; bij een route uit OpenStreetMap geldt de plek bij het midden van de route). De ondergrond wordt gemeten op ongeveer elke 250 m langs het spoor; blijft er te weinig bekend over (paden zonder gegevens), dan krijgt de route geen label. Routes zonder gegevens vallen onder een actief filter weg, en onder de lijst staat hoeveel routes er gecontroleerd zijn (de eerste volgens je sortering, niet alle). Kiezen van een filter haalt de gegevens op; dat kan even duren en lukt het niet, dan staat er een melding. Bovenaan de lijst staan, zonder filter, "📍 Eigen tips": plekken die jijzelf kent en gecontroleerd hebt, met een foto en een zin, de drie dichtstbijzijnde binnen 40 km van je positie (ze staan in <code>plekken/index.json</code>, zie <code>plekken/README.md</code>). Staat er bij een plek geen datum in het veld <code>gecontroleerd</code>, dan toont de app "📍 Tip, nog niet zelf gecontroleerd" (en weet de assistent dat ook). Heb je de plek zelf gezien, vul dan de maand in, bijvoorbeeld <code>"gecontroleerd": "2026-11"</code>: de app toont dan "✓ Eigen tip · 2026-11". Onder de vier activiteiten op het keuzescherm staat een seizoenstip, elke dag een andere uit twee per maand (of je eigen tips uit <code>plekken/index.json</code>).</p>
       <p><b>✨ Assistent</b> — tik op "✨ Assistent" op het keuzescherm (naast "Mijn lijstje") of op de rij "Vraag het aan de assistent" onderaan "Leuke routes bij jou", en typ een vraag in het tekstvak (op een computer verstuurt Enter, Shift+Enter is een nieuwe regel; op een telefoon verstuur je met ➤). Voorbeelden: "iets voor met de kinderen, het regent", "wat wordt het weer morgen?", "iets eten dat nu open is", "een apotheek in de buurt", "wat is er hier te doen?". De assistent zet zelf de filters (bij regen, kinderen, trein/bus), wacht op de controle en toont de gewone routerijen met ster en reden; met "Toon op de lijst" kom je op de lijst terug. Het weer komt van Open-Meteo (nu, komende uren, 3 dagen), plekken om te eten of te drinken, apotheken, winkels en fietsenmakers uit OpenStreetMap, met de openingsuren van dat moment: open, gesloten of onbekend. Openingsuren in OpenStreetMap ontbreken soms of zijn verouderd, en een apotheek van wacht kan hij niet opvragen. Tik op een plek om hem in Maps te zien. Onder elk antwoord staat de bron.</p>
       <p><b>Waar komen de antwoorden vandaan?</b> Kies dat in Instellingen onder je Gemini-sleutel. <i>Enkel mijn bronnen</i> is het strengst: routes bij jou, eigen tips, weer, openingsuren en brochures; staat het er niet in, dan zegt hij dat. <i>Ook Gemini's eigen kennis</i> (standaard) beantwoordt ook algemene vragen; wat niet uit de gecontroleerde bronnen komt, staat erbij als "niet gecontroleerd". <i>Zoeken op het web via Google</i> zoekt actuele info op en toont de gevonden pagina's als bron; dat werkt alleen met een betaalde sleutel (een Google Cloud-project met facturatie). Een gratis sleutel of een Gemini Plus/Pro-abonnement in de Gemini-app volstaat daarvoor niet; lukt het niet, dan antwoordt de assistent uit eigen kennis en zegt dat erbij. Hij gebruikt Gemini met je eigen sleutel (Instellingen → API-sleutels) en heeft internet nodig. Wat er weggaat: je vraag en de gevonden bronnen naar Google; je positie naar Open-Meteo (weer) en OpenStreetMap (plekken), afgerond op ongeveer 100 m; bij vragen over de buurt in de standen "eigen kennis" en "web" een ruwe positie (ongeveer 1 km) naar Gemini. Regen, speeltuinen, haltes en openingsuren blijven schattingen. Brochures (pdf of epub) zet je online in de map <code>kennis/bronnen</code> van je website; na enkele minuten kan de assistent ze gebruiken, zonder nieuwe APK. Uitleg staat in <code>kennis/README.md</code>.</p>
       <p><b>Zoeken en wachten:</b> duurt een vraag langer dan een paar seconden, dan verschijnt er een dunne voortgangsbalk met percentage, verstreken tijd en de lopende stap (begrijpen, positie, routes, weer, plekken, bronnen, antwoord); na het antwoord is ze weer weg. Het percentage is een schatting: de ene stap duurt langer dan de andere. Bij "Antwoord schrijven" wacht de app op Gemini; is dat model druk, dan probeert ze het volgende (de poging staat eronder). Mislukt er iets, dan staat er in welke stap, met welke technische reden, en een knop om dezelfde vraag opnieuw te stellen. Bij vragen over de buurt (weer, eten, apotheek) vraagt de app eerst een verse positie aan je telefoon; lukt dat niet, dan gebruikt ze een oudere en staat dat erbij. <b>Openingsuren</b> komen uit OpenStreetMap; bij veel zaken staan ze daar niet, en dan staat er "onbekend". In de webstand (betaalde sleutel) mag Gemini ze voor die ene zaak op het web opzoeken en zegt hij dat erbij, maar ook dat is geen garantie. Tik op het kaartje om de actuele uren in Maps te zien of te bellen. Welke apotheek van wacht is, weet de assistent niet.</p>
@@ -13943,8 +14034,8 @@ const HELP_CONTENT = {
     </section>
     <section>
       <h3>📊 Dashboard</h3>
-      <p>Tik bovenaan op het staafdiagram-icoon. Tijdens een actieve route: snelheid, afgelegde afstand, in het rechtervak <b>boven de echt gelopen afstand</b> (het opgenomen spoor, zoals een horloge dat telt, dus ook zijstappen naast het pad) en <b>onder wat er nog te gaan is</b> langs de route, rijtijd, gemiddelde snelheid, verwachte aankomsttijd, hoogteprofiel met live positiestip, en je volledige punten-lijst. "Afgelegd" volgt je voortgang langs de route en ruis wordt eruit gehaald, daarom kan het iets lager zijn dan "echt gelopen". Werkt ook tijdens <b>vrij wandelen/fietsen zonder geladen route</b> (gewoon op "Start" tikken) — enkel "verwachte aankomsttijd" blijft dan bewust "–", want er is geen vastgelegd eindpunt.</p>
-      <p><b>Geen actieve route?</b> Dan zie je in de plaats <b>Mijn statistieken</b>: totale afstand/aantal ritten/hoogtemeters per week, maand, jaar of ooit, plus een uitklapbaar 🏆 records-paneel (langste rit, hoogste snelheid, meeste hoogtemeters, geschatte calorieën — vul je gewicht in bij Instellingen voor die laatste). Na een voltooide rit kan je ook kleine prestatie-meldingen krijgen (persoonlijk record, kilometer-mijlpaal, enz.).</p>
+      <p>Tik bovenaan op het staafdiagram-icoon. Onderaan staan vier tabs: <b>Live</b>, <b>Hoogte</b>, <b>Punten</b> en <b>Cijfers</b>. <b>Live</b> is een lijst met één gegeven per regel, zo groot mogelijk: de afslag-melding, snelheid, <b>echt gelopen</b> (het opgenomen spoor, zoals een horloge dat telt, dus ook zijstappen naast het pad), afgelegd, <b>nog te gaan</b> langs de route (oranje gemarkeerd), rijtijd, verwachte aankomsttijd, gemiddelde snelheid, hartslag, weer en zonsondergang. <b>Hoogte</b> toont het grote hoogteprofiel met je live positiestip, de meters omhoog en omlaag en de klim-grafiek. <b>Punten</b> is je volledige punten-lijst (gedaan = doorgestreept) met bovenaan hoeveel er gedaan zijn. <b>Cijfers</b> zijn je statistieken en persoonlijke records (zie hieronder). "Afgelegd" volgt je voortgang langs de route en ruis wordt eruit gehaald, daarom kan het iets lager zijn dan "echt gelopen". Werkt ook tijdens <b>vrij wandelen/fietsen zonder geladen route</b> (gewoon op "Start" tikken) — enkel "verwachte aankomsttijd" blijft dan bewust "–", want er is geen vastgelegd eindpunt.</p>
+      <p><b>Cijfers.</b> Op de tab <b>Cijfers</b> staat, ook zonder actieve route, <b>Mijn statistieken</b>: totale afstand/aantal ritten/hoogtemeters per week, maand, jaar of ooit, plus het 🏆 records-paneel (altijd zichtbaar; langste rit, hoogste snelheid, meeste hoogtemeters, geschatte calorieën — vul je gewicht in bij Instellingen voor die laatste). Na een voltooide rit kan je ook kleine prestatie-meldingen krijgen (persoonlijk record, kilometer-mijlpaal, enz.).</p>
     </section>
     <section>
       <h3>🧭☀️ Kompas &amp; Zon</h3>
@@ -13980,7 +14071,7 @@ const HELP_CONTENT = {
       <b>📚 Opgeslagen links</b> — links die je eerder een naam gaf, met één tik opnieuw te laden.<br>
       <b>📚 Mijn ontdekkingen</b> — eigen lange tegel onderaan het wandel-opzetscherm: je opgeslagen wandelroutes, zowel herkend op een routebord met de 🪧 Wandelbord Scanner als bewaard met 💾 bij de wandelroutes op de kaart. Tik op 🔗 om er later een GPX aan te koppelen. In de fiets-app (Meer opties → 🚴 Mijn ontdekkingen) heb je een eigen, aparte lijst: bewaar daar met 📍 je huidige plek, spring er met 🎯 naartoe of open ze met 🧭 in Google Maps.<br>
       <b>📍 Pinpoints</b> — bewaarde locaties zoals thuis, met één tik naar terug navigeren.<br>
-      <b>📖 Mijn ritten</b> — elke volledig afgelegde route wordt hier automatisch bewaard, inclusief het volledige traject en gemiddelde snelheid (tik een rit open om uit te klappen).<br>
+      <b>📖 Mijn ritten</b> — elke volledig afgelegde route wordt hier automatisch bewaard, inclusief het volledige traject en gemiddelde snelheid (tik een rit open om uit te klappen). Gaat je scherm tijdens het lopen uit, dan bewaart de telefoon de posities en geeft ze later door; de app gebruikt daarvoor het tijdstip van de meting zelf, zodat tijden en snelheden in het spoor en in de GPX kloppen.<br>
       <b>🔗 Route delen via link</b> — stuurt je hele geplande route in de link zelf (geen account of server nodig) — opent iemand die link, dan wordt de route automatisch bij hen geladen.<br>
       <b>📅 Geplande routes</b> — voorstellen die je bewaarde vanuit de 🎲 Rondrit-generator, klaar om later te gebruiken.</p>
     </section>
@@ -14129,8 +14220,8 @@ const HELP_CONTENT = {
       <p><b>📍 You on the Analysis page</b> — during navigation every Analysis tab shows a blue dot on the map: that is you. On Elevation and Slope the red dot in the chart sits at your position and you can still drag it to inspect another point (after 15 seconds without touching it, it jumps back to you). On Surface, Wind and Speed a dashed line with a blue dot marks you on the bar.</p>
       <p><b>✏️ Edit the route during navigation</b> — next to 🚧 (road closed) there is now a separate ✏️ button. It pauses the navigation so you can drag or add route points, then tap "Resume". The route is recalculated from where you are now, only towards the points still ahead of you.</p>
       <p><b>💬 Notifications</b> — the yellow bubble with eyes and sparkles is a message from the app. If it has an ⓘ after it, you can tap it for more explanation.</p>
-      <p><b>🌿 Nice routes near you</b> — when you tap Walking or Cycling, the app shows (by default once a day per activity at most) the routes nearby: first your own GPX routes and links with coordinates, then waymarked routes from OpenStreetMap. The pop-up opens at once and shows with blinking yellow dots which step is busy (finding your position, fetching your own routes and links, searching routes in OpenStreetMap); as soon as there are routes the list takes its place. If it does not work (no permission for location, your position not found, no connection) the pop-up stays with an explanation and a "Try again" button, and if there is really nothing nearby it says "No routes found nearby.". If only a fresh position fails (for example indoors without a GPS signal) but the app knows an earlier position of yours, it uses that one and an orange line above the list says the position is not fresh; such a list does not count as shown for today, so the next tap tries a fresh position again. The explanation for a failure depends on the cause (no permission, Location is off, no signal in time) and names the error code of the phone. Each route shows its length and the distance to its start ("from here"; approximate for OpenStreetMap routes, marked ≈). At the top you filter by length (walking: ≤ 2, 2–4, 4–6 and 6+ km; cycling: ≤ 10, 10–15, 15–20 and 20+ km) and sort by "Shortest first" (for equal lengths the nearest start), "Nearest start" or "Nicest". The pop-up has a fixed height: when routes are added you scroll inside it. Tap a route for the detail screen: route map (if a route is only a link, so without GPX, it shows your own map image from your index.json with the fields kaart, kaartBron and kaartUrl, and without that one of five drawings that alternate per route), length, time and elevation, and photos (your own photo from your index.json with the fields foto and fotoBron, otherwise photos from Wikimedia Commons taken along the route, otherwise a photo of the surroundings from Wikipedia; always with author and licence, tap a photo for the source page). The detail also has "Animals and plants", in two rows (Animals, Plants): per row the species list from the page of the Natuurpunt area (app only), and if that has nothing for the row, the most observed species within 1 km of the start; each with a photo, author and licence via iNaturalist. From there you open the route on the map. "Nicest" is a ranking on signals (own routes, closeness, fitting length, "done" ranks lower), not a popularity list. Close with ✕, "Later" or by tapping outside the card; turn it off with the switch "Show when opening" or in Settings. To see it every time, turn on "Show every time, not just once a day" in Settings (🧭 On the road &amp; navigation).</p>
-      <p><b>⭐ My list, filters and own tips</b> — every route in "Nice routes near you" has a star on the right: tap it to save the route to your list (tap again to remove it; the detail screen has the same star at the top). Your list stays on your phone and also works without a position or connection. On the start screen the "⭐ My list" button opens all your saved routes, walking and cycling together, last saved first; you see the distance once the app knows your position. The pop-up itself has a second row of filters: "⭐ List" shows only your saved routes of this activity (even if they are further away), "☔ In rain" routes that mostly run on paved surface, "👨‍👩‍👧 Kids" routes with a playground within 300 m and "🚆 Transit" routes with a stop within 500 m. These are estimates from OpenStreetMap, not a guarantee: a playground or stop that is not on there is missing here too. Every route shows why it fits (for example "≈ 85% paved" or "playground 150 m away near the start"; for an OpenStreetMap route the spot near the middle of the route counts). The surface is measured at about every 250 m along the track; if too little is known (paths without data) the route gets no label. Routes without data drop out under an active filter, and below the list it says how many routes were checked (the first ones in your sorting, not all). Choosing a filter fetches the data; that can take a moment and if it fails a message appears. At the top of the list, without a filter, "📍 Own tips" shows places you know yourself and have checked, with a photo and a sentence, the three nearest within 40 km of your position (they live in <code>plekken/index.json</code>, see <code>plekken/README.md</code>). Below the four activities on the start screen is a seasonal tip, a different one each day out of two per month (or your own tips from <code>plekken/index.json</code>).</p>
+      <p><b>🌿 Nice routes near you</b> — when you tap Walking or Cycling, the app shows (by default once a day per activity at most) the routes nearby: first your own GPX routes and links with coordinates, then waymarked routes from OpenStreetMap. The pop-up opens at once and shows with blinking yellow dots which step is busy (finding your position, fetching your own routes and links, searching routes in OpenStreetMap); as soon as there are routes the list takes its place. If it does not work (no permission for location, your position not found, no connection) the pop-up stays with an explanation and a "Try again" button, and if there is really nothing nearby it says "No routes found nearby.". If only a fresh position fails (for example indoors without a GPS signal) but the app knows an earlier position of yours, it uses that one and an orange line above the list says the position is not fresh; such a list does not count as shown for today, so the next tap tries a fresh position again. The explanation for a failure depends on the cause (no permission, Location is off, no signal in time) and names the error code of the phone. Each route shows its length and the distance to its start ("from here"; approximate for OpenStreetMap routes, marked ≈). At the top you filter by length (walking: ≤ 2, 2–4, 4–6 and 6+ km; cycling: ≤ 10, 10–15, 15–20 and 20+ km) and sort by "Shortest first" (for equal lengths the nearest start), "Nearest start" or "Nicest". The pop-up has a fixed height: when routes are added you scroll inside it. Tap a route for the detail screen (if the name at the top is cut off, tap it or press and hold it to see the full name): route map (if a route is only a link, so without GPX, it shows your own map image from your index.json with the fields kaart, kaartBron and kaartUrl, and without that one of five drawings that alternate per route), length, time and elevation, and photos (your own photo from your index.json with the fields foto and fotoBron, otherwise photos from Wikimedia Commons taken along the route, otherwise a photo of the surroundings from Wikipedia; always with author and licence, tap a photo for the source page). The detail also has "Animals and plants", in two rows (Animals, Plants): per row the species list from the page of the Natuurpunt area (app only), and if that has nothing for the row, the most observed species within 1 km of the start; each with a photo, author and licence via iNaturalist. From there you open the route on the map. "Nicest" is a ranking on signals (own routes, closeness, fitting length, "done" ranks lower), not a popularity list. Close with ✕, "Later" or by tapping outside the card; turn it off with the switch "Show when opening" or in Settings. To see it every time, turn on "Show every time, not just once a day" in Settings (🧭 On the road &amp; navigation).</p>
+      <p><b>⭐ My list, filters and own tips</b> — every route in "Nice routes near you" has a star on the right: tap it to save the route to your list (tap again to remove it; the detail screen has the same star at the top). Your list stays on your phone and also works without a position or connection. On the start screen the "⭐ My list" button opens all your saved routes, walking and cycling together, last saved first; you see the distance once the app knows your position. The pop-up itself has a second row of filters: "⭐ List" shows only your saved routes of this activity (even if they are further away), "☔ In rain" routes that mostly run on paved surface, "👨‍👩‍👧 Kids" routes with a playground within 300 m and "🚆 Transit" routes with a stop within 500 m. These are estimates from OpenStreetMap, not a guarantee: a playground or stop that is not on there is missing here too. Every route shows why it fits (for example "≈ 85% paved" or "playground 150 m away near the start"; for an OpenStreetMap route the spot near the middle of the route counts). The surface is measured at about every 250 m along the track; if too little is known (paths without data) the route gets no label. Routes without data drop out under an active filter, and below the list it says how many routes were checked (the first ones in your sorting, not all). Choosing a filter fetches the data; that can take a moment and if it fails a message appears. At the top of the list, without a filter, "📍 Own tips" shows places you know yourself and have checked, with a photo and a sentence, the three nearest within 40 km of your position (they live in <code>plekken/index.json</code>, see <code>plekken/README.md</code>). If a place has no date in its <code>gecontroleerd</code> field, the app shows "📍 Tip, not checked yourself yet" (and the assistant knows that too). Once you have seen the place yourself, enter the month, for example <code>"gecontroleerd": "2026-11"</code>: the app then shows "✓ Own tip · 2026-11". Below the four activities on the start screen is a seasonal tip, a different one each day out of two per month (or your own tips from <code>plekken/index.json</code>).</p>
       <p><b>✨ Assistant</b> — tap "✨ Assistant" on the start screen (next to "My list") or the row "Ask the assistant" at the bottom of "Nice routes near you", and type a question in the text box (on a computer Enter sends and Shift+Enter starts a new line; on a phone you send with ➤). Examples: "something with the kids, it is raining", "what will the weather be tomorrow?", "something to eat that is open now", "a pharmacy nearby", "what is there to do here?". The assistant sets the filters itself (in rain, kids, train/bus), waits for the check and shows the usual route rows with star and reason; "Show on the list" takes you back to the list. The weather comes from Open-Meteo (now, coming hours, 3 days); places to eat or drink, pharmacies, shops and bike shops come from OpenStreetMap, with the opening hours at that moment: open, closed or unknown. Opening hours in OpenStreetMap are sometimes missing or outdated, and it cannot look up which pharmacy is on duty. Tap a place to see it in Maps. The source is shown under each answer.</p>
       <p><b>Where do the answers come from?</b> Choose that in Settings, below your Gemini key. <i>Only my sources</i> is the strictest: routes near you, own tips, weather, opening hours and brochures; if it is not in there, it says so. <i>Also Gemini's own knowledge</i> (default) also answers general questions; whatever does not come from the checked sources is marked "not checked". <i>Search the web via Google</i> looks up current information and shows the pages found as sources; that only works with a paid key (a Google Cloud project with billing). A free key or a Gemini Plus/Pro subscription in the Gemini app is not enough for it; if it fails, the assistant answers from its own knowledge and says so. It uses Gemini with your own key (Settings → API keys) and needs internet. What leaves your phone: your question and the sources found go to Google; your position goes to Open-Meteo (weather) and OpenStreetMap (places), rounded to about 100 m; for questions about your area in the "own knowledge" and "web" modes a rough position (about 1 km) goes to Gemini. Rain, playgrounds, stops and opening hours remain estimates. You put brochures (pdf or epub) online in the folder <code>kennis/bronnen</code> of your website; after a few minutes the assistant can use them, without a new APK. See <code>kennis/README.md</code>.</p>
       <p><b>Searching and waiting:</b> if a question takes longer than a few seconds, a thin progress bar appears with a percentage, the elapsed time and the current step (understanding, position, routes, weather, places, sources, answer); it is gone again after the answer. The percentage is an estimate: some steps take longer than others. During "Writing the answer" the app is waiting for Gemini; if that model is busy, it tries the next one (the attempt is shown below). If something fails, it says in which step, with which technical reason, and offers a button to ask the same question again. For questions about your area (weather, food, pharmacy) the app first asks your phone for a fresh position; if that fails it uses an older one and says so. <b>Opening hours</b> come from OpenStreetMap; many places do not have them there, and then it says "unknown". In the web mode (paid key) Gemini may look them up on the web for that one place and says so, but that is no guarantee either. Tap the card to see the current hours in Maps or to call. The assistant does not know which pharmacy is on duty.</p>
@@ -14139,8 +14230,8 @@ const HELP_CONTENT = {
     </section>
     <section>
       <h3>📊 Dashboard</h3>
-      <p>Tap the bar-chart icon at the top. During an active route: speed, distance covered, in the right-hand tile <b>the distance actually walked on top</b> (the recorded track, as a watch counts it, so side steps next to the path too) and <b>what is still to go below it</b> along the route, ride time, average speed, expected arrival time, elevation profile with a live position dot, and your full list of points. "Distance covered" follows your progress along the route with noise removed, so it can be a little lower than "actually walked". Also works during <b>free walking/cycling without a loaded route</b> (just tap "Start") — only "expected arrival time" deliberately stays "–" then, since there's no fixed destination.</p>
-      <p><b>No active route?</b> You'll see <b>My statistics</b> instead: total distance/ride count/elevation gain for this week, month, year or all time, plus an expandable 🏆 records panel (longest ride, highest speed, most elevation gain, estimated calories — set your weight in Settings for the last one). After a completed ride you may also get small achievement notifications (personal record, distance milestone, etc.).</p>
+      <p>Tap the bar-chart icon at the top. Four tabs sit at the bottom: <b>Live</b>, <b>Elevation</b>, <b>Points</b> and <b>Stats</b>. <b>Live</b> is a list with one value per line, as large as possible: the turn message, speed, <b>walked</b> (the recorded track, as a watch counts it, so side steps next to the path too), distance covered, <b>to go</b> along the route (highlighted in amber), ride time, expected arrival time, average speed, heart rate, weather and sunset. <b>Elevation</b> shows the large elevation profile with your live position dot, the metres up and down and the climb chart. <b>Points</b> is your full list of points (done = struck through) with how many are done at the top. <b>Stats</b> holds your statistics and personal records (see below). "Distance covered" follows your progress along the route with noise removed, so it can be a little lower than "actually walked". Also works during <b>free walking/cycling without a loaded route</b> (just tap "Start") — only "expected arrival time" deliberately stays "–" then, since there's no fixed destination.</p>
+      <p><b>Stats.</b> The <b>Stats</b> tab shows <b>My statistics</b>, also without an active route: total distance/ride count/elevation gain for this week, month, year or all time, plus the 🏆 records panel (always visible; longest ride, highest speed, most elevation gain, estimated calories — set your weight in Settings for the last one). After a completed ride you may also get small achievement notifications (personal record, distance milestone, etc.).</p>
     </section>
     <section>
       <h3>🧭☀️ Compass &amp; Sun</h3>
@@ -14176,7 +14267,7 @@ const HELP_CONTENT = {
       <b>📚 Saved links</b> — links you previously named, reload with one tap.<br>
       <b>📚 My discoveries</b> — its own long tile at the bottom of the walk setup screen: your saved walking routes, both recognised on a route board with the 🪧 Trail Board Scanner and saved with 💾 from the walking routes on the map. Tap 🔗 to attach a GPX to one later. The cycling app (More options → 🚴 My discoveries) has its own separate list: save your current spot there with 📍, jump to it with 🎯 or open it in Google Maps with 🧭.<br>
       <b>📍 Pinpoints</b> — saved locations like home, navigate back in one tap.<br>
-      <b>📖 My rides</b> — every fully completed route is saved here automatically, including the full node sequence and average speed (tap a ride to expand it).<br>
+      <b>📖 My rides</b> — every fully completed route is saved here automatically, including the full node sequence and average speed (tap a ride to expand it). If your screen turns off while walking, the phone keeps the positions and passes them on later; the app uses the time of the measurement itself, so the times and speeds in the track and in the GPX are right.<br>
       <b>🔗 Share route via link</b> — sends your whole planned route encoded in the link itself (no account or server needed) — anyone opening that link gets the route loaded automatically.<br>
       <b>📅 Planned routes</b> — suggestions you saved from the 🎲 Round-trip generator, ready to use later.</p>
     </section>
@@ -14287,6 +14378,10 @@ const DEV_NOTES_CONTENT = {
       <h3>🔋 Batterij</h3>
       <p>5 losse instellingen bij "Batterij": scherm actief houden, scherm verdonkeren, GPS-nauwkeurigheid verlagen, kaart niet laten meedraaien, en het interval waarop je positie ververst wordt. Staan allemaal standaard uit — op een moderne telefoon haal je met scherm aan doorgaans al 4-6+ uur navigatie zonder deze extra's.</p>
       <p><b>Scherm uit/vergrendeld = geen meting (grens van een PWA):</b> zodra het toestel zélf het scherm uitschakelt (niet via "sterk verdonkeren", dat blijft actief), kan Android de browser na verloop van tijd volledig pauzeren, wat GPS-metingen stopzet — nadien zie je dan een gat (rechte/groene lijn). Een native app kan dit afdwingen via een <i>Foreground Service</i>; een website/PWA heeft die toegang niet. Twee tegenmaatregelen: (1) "Scherm actief houden" gebruikt de Wake Lock API om het scherm effectief aan te houden zolang je navigeert; (2) los daarvan speelt de app tijdens navigatie altijd een onhoorbaar, stil audiofragment af op de achtergrond — een bekende techniek die browsers vaak (niet gegarandeerd) net iets soepeler laat omgaan met een pagina met een actieve audiosessie. Het meest betrouwbare blijft: batterij-optimalisatie voor je browser uitzetten in je Android-instellingen zelf (Instellingen → Apps → [je browser] → Batterij).</p>
+      <p><b>Android-app: "Scherm uit: app wakker houden (experiment)":</b> in de Android-app loopt de GPS-meting met het scherm uit gewoon door (aparte service), maar het weergavedeel van de app (piepjes bij van-de-route-af, spraak, kaart) wordt door Android stilgezet. Deze instelling (Instellingen → Batterij, standaard uit, alleen in de app) vraagt Android om dat weergavedeel toch te laten draaien. Of dat werkt hangt van het toestel af; werkt het niet, laat hem dan uit. "Scherm sterk verdonkeren" blijft het alternatief dat altijd werkt.</p>
+      <p><b>Android-app: "Scherm uit: Android piept en spreekt zelf (experiment)":</b> met deze instelling (Instellingen → Batterij, standaard uit, alleen in de app) neemt het Android-deel van de app de meldingen over zodra de pagina niet meer reageert, bijvoorbeeld omdat het scherm uit is. Het geeft 3 piepjes en een trilling als je van de route afwijkt, zegt "Je wijkt af van de route", herinnert je elke 30 seconden met piepjes zolang je er nog naast loopt, zegt "Je bent terug op de route" en kondigt afslagen aan ("Over 100 meter, links"). Bij scherm aan doet het niets (dan doet de pagina het zelf), dus je hoort nooit dubbel. Het gebruikt de route die je navigeert; zonder route (vrije modus) is er niets te melden. De afslagen zijn een vereenvoudigde versie van de afslagen op het scherm.</p>
+      <p><b>"Afstand controleren via de paden op de kaart (experiment)":</b> na een wandeling of rit stuurt de app je spoor naar de gratis Valhalla-server, die het op de echte paden en wegen van de kaart legt. In de samenvatting ("Wandeling voltooid!") verschijnt dan een regel "Via paden X km (GPS Y km)". Is de GPS-afstand duidelijk hoger dan de afstand via de paden, dan heeft het slingeren van de GPS kilometers toegevoegd; is hij ongeveer gelijk, dan klopt de GPS-meting. Heeft internet nodig; een mislukte aanvraag verandert niets aan je rit. Je spoor wordt hiervoor naar die server gestuurd; zet de optie uit als je dat niet wilt.</p>
+      <p><b>Zo test je de drie experimenten (scherm uit):</b> zet er één tegelijk aan, start een wandeling met een route (bijvoorbeeld een GPX uit de lijst), zet het scherm uit en loop een stuk. (1) "App wakker houden": kijk na het aanzetten van het scherm of onderweg piepjes of spraak kwamen en of de kaartpositie niet verspringt. (2) "Android piept en spreekt zelf": wijk bewust een eindje af van de route (meer dan de ingestelde van-de-route-af afstand), zodat je met het scherm uit de piepjes en de stem hoort, en loop daarna terug. (3) "Afstand via paden": zet hem aan, loop, beëindig de wandeling en lees de extra regel in de samenvatting. Zet de optie die niet werkt weer uit.</p>
       <p><b>Opgeloste bug (gemeld: rechte/groene lijn dwars door een looppiste op de momenten dat het scherm dimde/uitging):</b> deze 2 tegenmaatregelen (Wake Lock + stille achtergrond-audio) werden voorheen enkel aangevraagd bij fiets-/wandelnavigatie (de "Start"-knop op de kaart) — niet bij een loopsessie (Vrije Run, AI Coach, EVY, Zombie Run, eigen schema). De instelling zelf beloofde dit al voor alle modi, maar was voor lopen dus in de praktijk een dode letter. Nu vraagt ook het starten van een loopsessie beide aan, en laat het stoppen ervan ze weer los — exact dezelfde aanpak als bij navigeren.</p>
       <p><b>Diagnostische melding bij het starten (gemeld: "Kan ik dat testen zonder echt te lopen?" en "na enkele seconden is het scherm uit" ondanks het ingeschakelde vinkje):</b> er was voorheen geen enkele zichtbare bevestiging of "Scherm actief houden" écht lukte — de enige manier om dat te controleren was daadwerkelijk lopen/navigeren en afwachten of het scherm alsnog uitging. Bij het starten van navigatie of een loopsessie (met de instelling aan) verschijnt nu eenmalig een korte melding: "🔒📱 Scherm blijft actief" bij succes, of een duidelijke waarschuwing als het op dit toestel/deze browser niet lukt — zo is dit meteen te controleren, gewoon zittend aan tafel, zonder een volledige sessie te moeten lopen. Lukt het niet, dan is het meest betrouwbare alternatief nog steeds batterij-optimalisatie voor je browser zelf uitzetten in je Android-instellingen (zie hierboven): sommige toestellen/merken (agressieve batterijbesparing van bv. Xiaomi/Samsung/OnePlus e.d.) doden een achtergrond-Wake-Lock alsnog na een tijdje, ongeacht wat een website aanvraagt — dat is een grens van wat een PWA kan afdwingen, geen bug in deze app.</p>
     </section>
@@ -15864,6 +15959,59 @@ const DEV_NOTES_CONTENT = {
       <p><b>Teksten en test:</b> alle nieuwe teksten bestaan in NL en EN, Help en <code>plekken/README.md</code> zijn aangevuld. <b>Testsuite:</b> nieuw bestand <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> is een kiezer aangepast aan de nieuwe rijopbouw. Versie 2.497 / versionCode 116.</p>
     </section>
     <section>
+      <h3>🛠️ Ronde 205: twee extra experimenten (Android piept en spreekt zelf; afstand via paden)</h3>
+      <p><b>Android piept en spreekt zelf.</b> Nieuwe klassen <code>NavMonitor.java</code> (rekenlogica zonder Android-klassen) en <code>NativeAlerts.java</code> (Android-deel). De pagina geeft bij <code>navStart(json)</code> de routelijn (<code>routeLine</code>), de afslagen met coördinaat en uitgeschreven tekst (<code>phNavTurnPoints()</code>, gebaseerd op <code>routeSteps</code>, <code>isAnnounceableManeuver()</code> en <code>maneuverText()</code>, de afstand tot de afslag als <code>{m}</code>), de teksten voor van-de-route-af en terug, de drempels (<code>offRouteShowM()</code>, <code>offRouteHideM()</code>, <code>announceDistances().first</code>) en de voorkeuren voor piepjes en spraak. <code>phNativeTick()</code> roept elke seconde <code>PHNative.heartbeat()</code> aan en stuurt de gegevens opnieuw als de handtekening (aantal routepunten, eerste en laatste punt, aantal stappen, taal, drempel) verandert. Blijft het hartslagsignaal 6 s weg (webview bevroren), dan luistert <code>NativeAlerts</code> via <code>LocationManager</code> (GPS_PROVIDER, elke 2 s) mee; zolang de pagina leeft is het Android-deel stil en luistert het niet naar de GPS. <code>NavMonitor.onFix()</code> negeert metingen met een nauwkeurigheid boven 50 m, meldt "van de route af" na 3 opeenvolgende metingen buiten de drempel (herinnering elke 30 s), "terug" na 2 opeenvolgende metingen binnen de verlaagde drempel, en kondigt elke afslag eenmalig aan binnen de afstand. Geluid via <code>ToneGenerator</code> (3 piepjes, 170 ms, 280 ms ertussen), trilling via <code>Vibrator</code>, spraak via <code>TextToSpeech</code> (nl-BE, anders nl; en-GB voor Engels). Bij stille herberekening (<code>silentReroute</code>) wordt de drempel opgeschoven zodat er geen melding komt, net als in de pagina.</p>
+      <p><b>Afstand via paden.</b> <code>phMapMatchKm()</code> dunt het spoor uit (minstens 12 m tussen punten, hoogstens 1500) en stuurt het als <code>shape</code> naar <code>https://valhalla1.openstreetmap.de/trace_route</code> met <code>costing</code> pedestrian of bicycle, <code>shape_match: "map_snap"</code> en <code>trace_options</code> (<code>search_radius</code> 40, <code>gps_accuracy</code> 10). De lengte komt uit <code>trip.summary.length</code>. <code>phTripMapMatch()</code> toont in de samenvatting een chip met de afstand via paden naast de GPS-afstand; bij een fout of time-out (25 s) staat er een melding en verandert niets aan de rit.</p>
+      <p><b>Beperkingen.</b> Het Java-deel is hier niet gecompileerd met de echte Android-bibliotheken: <code>NavMonitor</code> is met <code>javac</code> gecompileerd en met 17 controles uitgevoerd, <code>NativeAlerts</code> alleen tegen zelfgemaakte stub-klassen van de gebruikte Android-API's. Of Android een app met scherm uit nog GPS-updates laat opvragen buiten de achtergrondplug-in, hangt van het toestel af. De afslagen zijn gebaseerd op de afstand tot een punt, niet op de voortgang langs de lijn zoals in de pagina; bij een lus die zichzelf kruist kan dat een afslag te vroeg melden.</p>
+      <p><b>Testsuite:</b> nieuw bestand <code>test_round205_native_alerts_mapmatch.js</code> (compileert en draait <code>tests/java/NavMonitorTest.java</code>; vakjes en doorgeven aan een nagebootste <code>PHNative</code>; payload met route, afslagen en teksten in NL en EN; heartbeat stopt bij <code>stopNav</code>; map matching met een nagebootste Valhalla-aanvraag, uitdunnen, fout en uitgeschakelde stand; Help; versie 2.540, versionCode 159).</p>
+    </section>
+    <section>
+      <h3>🛠️ Ronde 204: instelling "Scherm uit: app wakker houden" (experiment, Android-app)</h3>
+      <p><b>Oorzaak.</b> Met het scherm uit blijft de GPS-service van <code>@capacitor-community/background-geolocation</code> metingen leveren, maar de webview (JavaScript) wordt door Android en Chromium stilgezet. Daardoor stoppen <code>playOffRouteBeeps()</code>, de spraak, de dashboardweergave en de kaarttekening; de piepjes die al in de wachtrij staan van de audiocontext spelen nog even door. De batterij-instelling van het toestel ("Allow background power usage") speelt hierbij geen rol.</p>
+      <p><b>Wijziging.</b> Nieuwe instelling <code>appSettings.bgKeepAlive</code> (standaard uit, alleen actief in de Android-app). <code>MainActivity.java</code> biedt <code>window.PHNative.setKeepAlive(aan)</code> (<code>@JavascriptInterface</code>) en bewaart de stand in SharedPreferences. Staat het aan, dan roept <code>onPause()</code> en <code>onStop()</code> <code>kickWebView()</code> aan: <code>WebView.onResume()</code>, <code>resumeTimers()</code> en <code>setRendererPriorityPolicy(RENDERER_PRIORITY_IMPORTANT, false)</code>, direct en nogmaals na 400 ms en 2,5 s. De pagina geeft de stand door na het laden van de instellingen (<code>syncBgKeepAlive()</code>) en bij het aanzetten. In de browser bestaat <code>PHNative</code> niet; het vakje is dan uitgeschakeld.</p>
+      <p><b>Beperking.</b> Dit is een experiment: of Chromium de pagina daadwerkelijk blijft uitvoeren hangt van toestel en Android-versie af. Het Java-deel is hier niet gecompileerd of op een toestel geprobeerd; alleen de pagina kon in de browser getest worden. Als het niet werkt, is de volgende stap dat het Android-deel zelf de piepjes en spraak afspeelt.</p>
+      <p><b>Testsuite:</b> nieuw bestand <code>test_round204_bg_keepalive.js</code> (vakje uitgeschakeld in de browser; met een nagebootste <code>PHNative</code> wordt de stand bij het laden en bij het aan- en uitzetten doorgegeven; NL/EN-teksten; Java-bron bevat de aanroepen; Help; versie 2.539, versionCode 158).</p>
+    </section>
+    <section>
+      <h3>🛠️ Ronde 203: afgekapt label in de samenvatting na een wandeling</h3>
+      <p><b>Oorzaak.</b> In de pop-up "Wandeling voltooid!" staan de cijfers in een rij (<code>.tsm-trio</code>, vier kolommen op 340 px breed). Het label boven de cijfers (<code>.tsm-lab</code>) had <code>white-space:nowrap</code> met <code>text-overflow:ellipsis</code>; "GEM. SNELHEID" is breder dan één kolom en werd afgekapt tot "GEM. SNELH…".</p>
+      <p><b>Wijziging.</b> Een label mag nu over twee regels lopen (<code>line-height:1.15</code>, <code>min-height:2.3em</code>, onderaan uitgelijnd, letterafstand .06em in plaats van .08em), zodat "GEM. / SNELHEID" onder elkaar komt en de cijfers op dezelfde hoogte blijven. Op een smal scherm (tot 360 px) staan de vier cijfers twee bij twee in plaats van in één rij. De tekst zelf is niet veranderd; er is dus niets te vertalen.</p>
+      <p><b>Testsuite:</b> nieuw bestand <code>test_round203_summary_label.js</code> (geen afgekapte labels op 412 en 320 px, NL en EN; cijfers op één lijn; versie 2.538, versionCode 157). Test 115 (punt 5) slaagt hiermee weer.</p>
+    </section>
+    <section>
+      <h3>🛠️ Ronde 202: tijdstip van de GPS-meting in plaats van het tijdstip van verwerken</h3>
+      <p><b>Oorzaak.</b> <code>renderPosition()</code> gaf elk punt in <code>navTrack</code>, <code>navBreadcrumbs</code>, <code>navSpeedBreadcrumbs</code> en <code>navGpsAccumulate()</code> het tijdstip <code>Date.now()</code>, dus het moment van verwerken. Met het scherm uit staat de webview stil; de native GPS-service (<code>native-bridge.js</code>) blijft meten en levert de posities bij het ontwaken achter elkaar af. Tientallen fixen van enkele minuten kregen zo nagenoeg hetzelfde tijdstip. In het spoor zag dat eruit als een pauze (5 m in 433 s) gevolgd door een stuk met stappen van 5,5 m per 0,5 tot 1 s (tot 37 km/u). Een controle op een echt opgenomen spoor liet na elke lange pauze zo'n stuk zien; pauze plus stuk samen gaven 3,1 tot 5,1 km/u, het echte tempo.</p>
+      <p><b>Gevolgen.</b> De afstand zelf klopt, want de posities komen compleet binnen. Fout waren de tijdstippen in <code>trackDt</code> (GPX), de snelheden per stuk uit <code>navBreadcrumbs</code>, een gladgestreken snelheidsweergave (<code>speedSmoothingSec</code> hoger dan 0, venster op <code>Date.now()</code>) en de snelheidstoets in <code>navGpsAccumulate()</code> (<code>d / dt</code> met een bijna nul <code>dt</code>). Dat laatste was de wortel van de teveel weggegooide stappen die Ronde 196 achteraf opving met de grens van 30 m.</p>
+      <p><b>Wijziging.</b> Nieuwe functie <code>fixTimeMs(pos)</code> geeft <code>pos.timestamp</code> (de browser, of <code>loc.time</code> uit <code>native-bridge.js</code>) en valt terug op <code>Date.now()</code> als dat ontbreekt, in de toekomst ligt of ouder is dan 6 uur. <code>renderPosition()</code> geeft die tijd door aan <code>recordNavTrackPoint()</code> (nooit terug in de tijd), <code>navGpsAccumulate()</code>, het kruimelspoor van 12 s en het snelheidsvenster. Dat venster krijgt nu één punt per echte fix (de herhaling per seconde levert dezelfde fix opnieuw aan). Het eindpunt in <code>navTrackPayload()</code> gebruikt de tijd van de laatste fix. De snelheid op het scherm gebruikte al <code>pos.timestamp</code>. Help (NL en EN) noemt het bij Mijn ritten.</p>
+      <p><b>Beperking.</b> Wat de telefoon met het scherm uit precies doet, hangt van het merk af. De aanpassing herstelt de tijdstippen van posities die wel binnenkomen; ze houdt de meting niet in leven als de telefoon de app volledig stopzet.</p>
+      <p><b>Testsuite:</b> nieuw bestand <code>test_round202_fix_time.js</code> (een replay van 100 opgespaarde fixen krijgt de tijden van de metingen, dus ongeveer 5 km/u i.p.v. een sprint; de afstand blijft gelijk; terugval op <code>Date.now()</code>; geen tijd terug; snelheidsvenster; Help en notities).</p>
+
+      <h3>🛠️ Ronde 201: volledige naam in het detailscherm van een route</h3>
+      <p><b>Oorzaak.</b> De titel (<code>.nr-dt h3</code>) en de regel eronder staan op één regel met <code>text-overflow: ellipsis</code>, naast drie knoppen (terug, ster, sluiten). Een lange routenaam wordt daardoor afgekapt en was nergens volledig te lezen.</p>
+      <p><b>Wijziging.</b> Een tik of lang indrukken op <code>.nr-dt</code> roept <code>nrShowTitleTip()</code> aan. Is de titel of de regel eronder echt afgekapt (<code>scrollWidth &gt; clientWidth</code>), dan komt de volledige tekst in een klein donker venster (<code>#nrTitleTip</code>) onder de kop; past alles al, dan gebeurt er niets. Het venster sluit bij de volgende tik, na 6 seconden of bij het openen van een ander detail (<code>nrHideTitleTip()</code>). De tekst gaat via <code>textContent</code> erin. Bij lang indrukken zou Android tekst selecteren; daarom staan <code>user-select: none</code> en <code>-webkit-touch-callout: none</code> op de kop en wordt <code>contextmenu</code> onderdrukt. Help (NL en EN) noemt het.</p>
+      <p><b>Testsuite:</b> nieuw bestand <code>test_round201_title_tip.js</code> (afgekapte titel toont het venster met de volledige naam, korte titel niet, sluiten, lang indrukken, Help en notities).</p>
+
+      <h3>🛠️ Ronde 200: dashboard met vier tabs onderaan (Live | Hoogte | Punten | Cijfers)</h3>
+      <p><b>Waarom.</b> Op één scherm paste niet alles groot genoeg (snelheid, afstanden, tijden, weer, hartslag, hoogteprofiel, puntenlijst, statistieken). Nu heeft elke categorie een eigen scherm met ruimte voor grote cijfers, in de stijl van een sporthorloge.</p>
+      <p><b>Opbouw.</b> <code>#dashboardPanel</code> scrolt zelf niet meer: erin staat <code>#dashPane</code> (vier <code>.dpane</code>-secties: <code>#dpLive</code>, <code>#dpElev</code>, <code>#dpPoints</code>, <code>#dpStats</code>) en eronder de tabbalk <code>#dashTabs</code> met vier <code>.dtab</code>-knoppen (<code>data-dtab</code> = live, elev, points, stats). Welke sectie zichtbaar is volgt uit <code>data-dtab</code> op het paneel; <code>setDashTab(t)</code> zet dat en de actieve knop. De tab blijft onthouden zolang de app openstaat (variabele <code>dashTab</code>, niet bewaard).</p>
+      <p><b>Live.</b> <code>#dashRows</code> bevat één <code>.dash-row</code> per gegeven; de rijen delen de beschikbare hoogte (<code>flex:1 1 0</code>) en het cijfer schaalt mee met de schermhoogte (<code>clamp(20px, 3.6vh, 34px)</code>). Alle oude id's blijven bestaan (<code>dashSpeed</code>, <code>dashDone</code>, <code>dashWalked</code>, <code>dashRemaining</code>, <code>dashElapsed</code>, <code>dashETA</code>, <code>dashAvgSpeed</code>, <code>dashHrTile</code>, <code>dashWeather</code>, <code>dashSunset</code>, <code>garminSpeedGauge</code>), dus de bestaande code die ze vult is niet aangepast. 'Nog te gaan' heeft de klasse <code>.dash-hl</code> (amber). De eenheid staat klein achter het getal (<code>setDashValue()</code>, <code>.dash-u</code>).</p>
+      <p><b>Hoogte.</b> De grafiek heeft pas een breedte en hoogte als de tab zichtbaar is; daarom tekent <code>setDashTab('elev')</code> <code>renderElevationChart()</code>, <code>updateElevationDot()</code> en <code>updateClimbPro()</code> opnieuw. Zonder hoogteprofiel krijgt <code>#dpElev</code> de klasse <code>no-elev</code> en verschijnt <code>#dashElevEmpty</code>.</p>
+      <p><b>Punten en Cijfers.</b> <code>renderDashboard()</code> zet de kop boven de lijst ('Punten · 2 van 5 gedaan', sleutel <code>dashPointsDone</code>). <code>renderLifetimeStats()</code> draait zodra de tab Cijfers opent (en bij een wissel van periode). De knop 'records tonen' is vervallen: het records-paneel is altijd zichtbaar. De klasse <code>dash-idle</code> en de tegel-CSS van Ronde 197 tot 199 zijn vervangen door dit blok; <code>.dash-u</code> bleef.</p>
+      <p><b>Vertalingen.</b> Nieuwe sleutels: <code>dashTabLive</code>, <code>dashTabElev</code>, <code>dashTabPoints</code>, <code>dashTabStats</code>, <code>dashSnelheid</code>, <code>dashPointsDone</code>, <code>dashElevEmpty</code>, <code>statsRecordsTitle</code>, in NL en EN. Help bijgewerkt.</p>
+      <p><b>Testsuite:</b> nieuw bestand <code>test_round200_dash_tabs.js</code> (vier tabs en wisselen, alle gegevens aanwezig, geen overloop op 320/360/412 px, hoogtegrafiek tekent bij openen, EN-teksten, records altijd zichtbaar, Help en notities).</p>
+
+      <h3>🛠️ Ronde 199: dashboard schermvullend, lettergrootte volgt de tegelbreedte</h3>
+      <p><b>Oorzaak.</b> Ronde 198 gebruikte vaste lettergroottes van 15 tot 19 px en lage tegels. Daardoor paste alles, maar bleef op een schermhoogte van ongeveer 860 px circa 340 px ongebruikt en waren de cijfers kleiner dan de tegel toeliet.</p>
+      <p><b>Wijziging.</b> Elke tegel is een <code>container-type: inline-size</code>; de lettergroottes zijn <code>clamp(min, N cqw, max)</code>, dus ze volgen de breedte van de tegel zelf (ook bij een ander scherm of een andere lettergrootte van het toestel): getal rij 1 23 cqw (18 tot 32 px), snelheid 32 cqw, gesplitste tegel 20 cqw, rij 2 en 3 21 cqw (16 tot 26 px), Mijn statistieken 20 cqw, labels 8,6 cqw (8 tot 12 px). De eenheid staat klein achter het getal: <code>setDashValue(id, getal, eenheid)</code> zet het getal plus een <code>&lt;i class="dash-u"&gt;</code> (0,55 em); <code>textContent</code> blijft '1.2 km'. Zonder route zet <code>renderDashboard()</code> de klasse <code>dash-idle</code> op <code>#dashboardPanel</code>: de drie rijen verdelen de vrije hoogte (<code>flex</code> 1,5/1/1, bovengrens 27/15/15 vh), de snelheidsmeter schaalt mee (8,5 vh, 44 tot 76 px) en de lijst krijgt geen ruimte. Met een route blijft de compacte indeling. Zonder ondersteuning voor <code>cqw</code> (<code>@supports</code>) gelden de vaste waarden van Ronde 198. Op 412 px breed is '12.3 km' in rij 1 ongeveer 24 px; bij 320 px breed (tegel ongeveer 78 px) zakken de labels naar 8 px.</p>
+      <p><b>Testsuite:</b> nieuw bestand <code>test_round199_dash_fill.js</code> (eenheid klein, lettergroottes groter dan in Ronde 198, tegels vullen het scherm, tekst raakt de tegelrand niet bij '123.4 km' op 320/360/412 px); de lettergrens in <code>test_round198_dash_compact.js</code> is verruimd. Versie 2.534 / versionCode 153.</p>
+    </section>
+    <section>
+      <h3>🛠️ Ronde 198: dashboard compacter, alles op één scherm</h3>
+      <p><b>Oorzaak.</b> De Garmin-regel <code>body.theme-garmin .dash-stat span</code> (26 px, gewicht 900) heeft dezelfde specificiteit (0,2,2) als de regels voor de gedeelde tegel in Ronde 197, maar staat verderop in het CSS-blok en won dus. Getallen als '0.0 km' waren daardoor breder dan de tegel van ongeveer 119 px. De test van Ronde 197 mat de breedte van het <code>span</code>-element, dat een blokelement is en altijd zo breed als de tegel; de breedte van de tekst zelf werd niet gemeten. Los daarvan waren de tegels hoog (rij 1 ongeveer 172 px, rij 2 en 3 ongeveer 105 px, statistiekentegels met afgebroken labels als 'HOOGTEMET-ERS'), zodat het dashboard zonder route ongeveer 120 px te hoog was voor het scherm en scrolde.</p>
+      <p><b>Wijziging.</b> Eén blok aan het eind van het dashboard-CSS, met <code>#dashboardPanel</code> vooraan (een ID wint in beide stijlen en ook van <code>body.dash-text-small #dashSummary2 …</code>): getallen rij 1 19 px (snelheid 22 px), rij 2 en 3 15 px, Mijn statistieken 17 px, labels 9,5 px, gesplitste tegel 16 px met labels 8,5 px, snelheidsmeter 44 px in plaats van 64 px, tegelpadding 8 × 4 px, tussenruimte 8 px, tegels verticaal gecentreerd. 'Kleine tekst' geeft 16/13/15 px; onder 340 px breedte 16 px voor rij 1. Gemeten bij 412 px breed: de inhoud van het lege dashboard is 679 px hoog (was 863 px) en past dus in een scherm van 800 px. Alleen de lijst met persoonlijke records scrolt nog.</p>
+      <p><b>Testsuite:</b> nieuw bestand <code>test_round198_dash_compact.js</code> (tekstbreedte per tegel via <code>Range</code>, lettergroottes, geen scroll op 412 × 800 en 360 × 700 px); de tegeltesten uit Ronde 197 zijn daarheen verplaatst. Versie 2.533 / versionCode 152.</p>
+    </section>
+    <section>
       <h3>🛠️ Ronde 197: dashboard-tegel in twee delen ('echt gelopen' en 'nog te gaan')</h3>
       <p><b>Waarom.</b> 'Afgelegd' is de teller <code>NAVGPS.m</code>: op de lijn telt het verschil in voortgang langs de lijn (ruis valt eruit), ernaast de GPS-stap. Een horloge telt de werkelijke weg, dus ook zijstappen naast het pad. Bij de wandeling van 14 nov gaf het horloge 5,18 km; het opgenomen spoor was 4,83 km plus ongeveer 0,35 km voor de Start-knop. De app kon die twee getallen niet naast elkaar tonen.</p>
       <p><b>Wijziging.</b> De rechtertegel van <code>#dashSummary</code> bestaat nu uit twee delen (<code>#dashSplitTile</code>): boven <code>#dashWalked</code> ('echt gelopen'), onder <code>#dashRemaining</code> ('nog te gaan', in vrije modus '–'). <code>navWalkedM</code> is de lopende lengte van <code>navTrack</code>: <code>recordNavTrackPoint()</code> telt elke toegevoegde stap erbij (punt per minstens 5 m, grotere stap bij slechte nauwkeurigheid, fixes boven 50 m worden genegeerd) en <code>startNav()</code> zet de teller op 0. De teller blijft kloppen als <code>navTrack</code> bij 8000 punten wordt uitgedund. Lettergroottes: 19 px (Garmin-stijl ook 19 px, 'tekst klein' 16 px), labels 9,5 px. <code>#dashDone</code> kreeg 22 px en <code>white-space: nowrap</code>, want '2.9 km' brak bij 360 px over twee regels. Nieuwe teksten <code>dashEchtGelopen</code> en <code>dashNogTeGaan</code> in NL en EN; Help aangevuld.</p>
@@ -16161,6 +16309,10 @@ const DEV_NOTES_CONTENT = {
       <h3>🔋 Battery</h3>
       <p>5 separate settings under "Battery": keep the screen on, dim the screen, lower GPS accuracy, stop the map rotating, and the interval at which your position refreshes. All off by default — on a modern phone, you typically already get 4-6+ hours of navigation with the screen on without these extras.</p>
       <p><b>Screen off/locked = no tracking (a PWA limit):</b> once the device itself turns the screen off (not via "dim heavily", which stays active), Android can eventually fully suspend the browser, which stops GPS tracking — you'll then see a gap afterwards (a straight/green line). A native app can enforce continued tracking via a <i>Foreground Service</i>; a website/PWA doesn't have that access. Two mitigations: (1) "Keep screen on" uses the Wake Lock API to actually keep the screen on while navigating; (2) separately, the app always plays a silent, inaudible audio loop in the background during navigation — a known technique that often (not guaranteed) makes browsers a bit more lenient with a page that has an active audio session. The most reliable option remains: turning off battery optimization for your browser in your Android settings themselves (Settings → Apps → [your browser] → Battery).</p>
+      <p><b>Android app: "Screen off: keep the app awake (experiment)":</b> in the Android app the GPS measurement keeps running with the screen off (separate service), but the display part of the app (off-route beeps, speech, map) is frozen by Android. This setting (Settings → Battery, off by default, app only) asks Android to keep that part running anyway. Whether it works depends on the device; if it does not, leave it off. "Dim screen heavily" remains the alternative that always works.</p>
+      <p><b>Android app: "Screen off: Android beeps and speaks by itself (experiment)":</b> with this setting (Settings → Battery, off by default, app only) the Android part of the app takes over the notices as soon as the page stops responding, for example because the screen is off. It gives 3 beeps and a vibration when you leave the route, says "You are straying from the route", reminds you every 30 seconds with beeps while you are still off it, says "You are back on the route" and announces turns ("In 100 metres, left"). With the screen on it does nothing (the page does it itself), so you never hear it twice. It uses the route you are navigating; without a route (free mode) there is nothing to report. The turns are a simplified version of the on-screen turns.</p>
+      <p><b>"Check distance along the paths on the map (experiment)":</b> after a walk or ride the app sends your track to the free Valhalla server, which lays it onto the real paths and roads of the map. The summary ("Walk complete!") then shows a line "Along paths X km (GPS Y km)". If the GPS distance is clearly higher than the distance along the paths, GPS wobble has added kilometres; if it is about the same, the GPS measurement is fine. Needs internet; a failed request changes nothing about your ride. Your track is sent to that server for this; leave the option off if you do not want that.</p>
+      <p><b>How to test the three experiments (screen off):</b> turn one on at a time, start a walk with a route (for example a GPX from the list), turn the screen off and walk a while. (1) "Keep the app awake": after turning the screen on, check whether beeps or speech came on the way and whether the map position did not jump. (2) "Android beeps and speaks by itself": deliberately step off the route (further than the set off-route distance) so that you hear the beeps and the voice with the screen off, then walk back. (3) "Distance along paths": turn it on, walk, end the walk and read the extra line in the summary. Turn off the option that does not work.</p>
       <p><b>Fixed bug (reported: a straight/green line cutting across a running track at the exact moments the screen dimmed/turned off):</b> these 2 mitigations (Wake Lock + silent background audio) used to only be requested for cycling/walking navigation (the "Start" button on the map) — not for a running session (Free Run, AI Coach, EVY, Zombie Run, your own schedule). The setting itself already promised this for every mode, but for running it was in practice a dead letter. Starting a running session now requests both as well, and stopping it releases them again — exactly the same approach as navigating.</p>
       <p><b>Diagnostic toast on start (reported: "Can I test that without actually running?" and "after a few seconds the screen turns off" despite the setting being checked):</b> there used to be no visible confirmation at all of whether "Keep screen on" actually succeeded — the only way to check was to actually go run/navigate and wait to see if the screen turned off anyway. Starting navigation or a running session (with the setting on) now shows a one-time toast: "🔒📱 Screen will stay on" on success, or a clear warning if it fails on this device/browser — so this can be checked immediately, just sitting at a table, without needing to run a full session. If it fails, the most reliable fallback is still turning off battery optimization for your browser itself in your Android settings (see above): some devices/brands (aggressive battery saving on e.g. Xiaomi/Samsung/OnePlus) kill a background Wake Lock anyway after a while, regardless of what a website requests — that's a limit of what a PWA can enforce, not a bug in this app.</p>
     </section>
@@ -17736,6 +17888,59 @@ const DEV_NOTES_CONTENT = {
       <p><b>Filters:</b> data comes from Overpass (<code>osmWalkOverpass()</code>) and is kept for 30 days (<code>nearby_tags_v1</code>). Playground (<code>leisure=playground</code>, 300 m) and stop (<code>highway=bus_stop</code>, <code>railway=station|halt|tram_stop</code>, 500 m) in 1 request per 20 routes; the first 60 in the sorting. Surface: per route (the first 20) sample points about every 250 m (6 to 14), per point the nearest way within 15 m (<code>out tags geom</code>) and its class from <code>surface</code>, otherwise <code>tracktype</code> or <code>highway</code>; a path or footway without <code>surface</code> does not count. At least 5 known points and 60% of the points known, otherwise no statement; "in rain" = at least 70% paved. A route that is only a link has no track and gets no surface label. If a request fails a message appears and nothing is saved.</p>
       <p><b>Own places:</b> <code>plekken/index.json</code> (<code>regions[].places[]</code> with name, text, lat, lon, foto, fotoBron, mode, gecontroleerd) is loaded at startup; <code>nrPlacesNear()</code> keeps places of this activity within 40 km; the pop-up shows the three nearest. Without a filter and without a length group they show as "📍 Own tips" above the list; a tap opens the place in Google Maps. The file holds ten places in Limburg as a starter list (no date in <code>gecontroleerd</code>, so shown as "not checked yourself yet", with a Maps search text in <code>maps</code>); the rest comes from you, the app invents nothing.</p>
       <p><b>Texts and test:</b> all new texts exist in NL and EN, Help and <code>plekken/README.md</code> are extended. <b>Test suite:</b> new file <code>test_round166_home_list_filters.js</code>; in <code>test_round154_nearby_routes_filter_sort.js</code> one selector is adjusted to the new row structure. Version 2.497 / versionCode 116.</p>
+    </section>
+    <section>
+      <h3>🛠️ Round 205: two more experiments (Android beeps and speaks by itself; distance along paths)</h3>
+      <p><b>Android beeps and speaks by itself.</b> New classes <code>NavMonitor.java</code> (calculation logic without Android classes) and <code>NativeAlerts.java</code> (Android part). With <code>navStart(json)</code> the page passes the route line (<code>routeLine</code>), the turns with coordinate and spoken text (<code>phNavTurnPoints()</code>, based on <code>routeSteps</code>, <code>isAnnounceableManeuver()</code> and <code>maneuverText()</code>, the distance to the turn as <code>{m}</code>), the off-route and back texts, the thresholds (<code>offRouteShowM()</code>, <code>offRouteHideM()</code>, <code>announceDistances().first</code>) and the beep and speech preferences. <code>phNativeTick()</code> calls <code>PHNative.heartbeat()</code> every second and resends the data when the signature (number of route points, first and last point, number of steps, language, threshold) changes. If the heartbeat is missing for 6 s (webview frozen), <code>NativeAlerts</code> listens via <code>LocationManager</code> (GPS_PROVIDER, every 2 s); while the page is alive the Android part is silent and does not listen to GPS. <code>NavMonitor.onFix()</code> ignores fixes with an accuracy above 50 m, reports "off route" after 3 consecutive fixes beyond the threshold (reminder every 30 s), "back" after 2 consecutive fixes within the lowered threshold, and announces each turn once within the distance. Sound via <code>ToneGenerator</code> (3 beeps, 170 ms, 280 ms apart), vibration via <code>Vibrator</code>, speech via <code>TextToSpeech</code> (nl-BE, else nl; en-GB for English). With silent rerouting (<code>silentReroute</code>) the threshold is raised so there is no notice, as in the page.</p>
+      <p><b>Distance along paths.</b> <code>phMapMatchKm()</code> thins the track (at least 12 m between points, at most 1500) and sends it as <code>shape</code> to <code>https://valhalla1.openstreetmap.de/trace_route</code> with <code>costing</code> pedestrian or bicycle, <code>shape_match: "map_snap"</code> and <code>trace_options</code> (<code>search_radius</code> 40, <code>gps_accuracy</code> 10). The length comes from <code>trip.summary.length</code>. <code>phTripMapMatch()</code> shows a chip in the summary with the distance along paths next to the GPS distance; on an error or timeout (25 s) it shows a notice and nothing about the ride changes.</p>
+      <p><b>Limitations.</b> The Java part was not compiled here with the real Android libraries: <code>NavMonitor</code> was compiled with <code>javac</code> and run with 17 checks, <code>NativeAlerts</code> only against hand-made stub classes of the Android APIs used. Whether Android lets an app with the screen off still request GPS updates outside the background plug-in depends on the device. The turns are based on the distance to a point, not on progress along the line as in the page; on a loop that crosses itself that can announce a turn too early.</p>
+      <p><b>Test suite:</b> new file <code>test_round205_native_alerts_mapmatch.js</code> (compiles and runs <code>tests/java/NavMonitorTest.java</code>; checkboxes and passing to a mocked <code>PHNative</code>; payload with route, turns and texts in NL and EN; heartbeat stops on <code>stopNav</code>; map matching with a mocked Valhalla request, thinning, error and disabled state; Help; version 2.540, versionCode 159).</p>
+    </section>
+    <section>
+      <h3>🛠️ Round 204: setting "Screen off: keep the app awake" (experiment, Android app)</h3>
+      <p><b>Cause.</b> With the screen off the GPS service of <code>@capacitor-community/background-geolocation</code> keeps delivering fixes, but the webview (JavaScript) is frozen by Android and Chromium. As a result <code>playOffRouteBeeps()</code>, speech, the dashboard and map drawing stop; beeps already queued in the audio context still play for a moment. The device's battery setting ("Allow background power usage") plays no part in this.</p>
+      <p><b>Change.</b> New setting <code>appSettings.bgKeepAlive</code> (off by default, only active in the Android app). <code>MainActivity.java</code> exposes <code>window.PHNative.setKeepAlive(on)</code> (<code>@JavascriptInterface</code>) and stores the value in SharedPreferences. When on, <code>onPause()</code> and <code>onStop()</code> call <code>kickWebView()</code>: <code>WebView.onResume()</code>, <code>resumeTimers()</code> and <code>setRendererPriorityPolicy(RENDERER_PRIORITY_IMPORTANT, false)</code>, immediately and again after 400 ms and 2.5 s. The page passes the value after settings load (<code>syncBgKeepAlive()</code>) and when toggled. In the browser <code>PHNative</code> does not exist; the checkbox is then disabled.</p>
+      <p><b>Limitation.</b> This is an experiment: whether Chromium actually keeps executing the page depends on device and Android version. The Java part was not compiled or tried on a device here; only the page could be tested in a browser. If it does not work, the next step is to let the Android side play the beeps and speech itself.</p>
+      <p><b>Test suite:</b> new file <code>test_round204_bg_keepalive.js</code> (checkbox disabled in the browser; with a mocked <code>PHNative</code> the value is passed on load and on toggling; NL/EN texts; Java source contains the calls; Help; version 2.539, versionCode 158).</p>
+    </section>
+    <section>
+      <h3>🛠️ Round 203: truncated label in the summary after a walk</h3>
+      <p><b>Cause.</b> In the "Walk complete!" popup the numbers sit in one row (<code>.tsm-trio</code>, four columns in 340 px). The label above the numbers (<code>.tsm-lab</code>) had <code>white-space:nowrap</code> with <code>text-overflow:ellipsis</code>; "AVG SPEED" / "GEM. SNELHEID" is wider than one column and was cut off with an ellipsis.</p>
+      <p><b>Change.</b> A label may now wrap onto two lines (<code>line-height:1.15</code>, <code>min-height:2.3em</code>, bottom-aligned, letter-spacing .06em instead of .08em), so "AVG / SPEED" stacks and the numbers stay level. On a narrow screen (up to 360 px) the four numbers sit two by two instead of in one row. The text itself is unchanged, so there is nothing to translate.</p>
+      <p><b>Test suite:</b> new file <code>test_round203_summary_label.js</code> (no truncated labels at 412 and 320 px, NL and EN; numbers level; version 2.538, versionCode 157). Test 115 (point 5) passes again.</p>
+    </section>
+    <section>
+      <h3>🛠️ Round 202: time of the GPS measurement instead of the time of processing</h3>
+      <p><b>Cause.</b> <code>renderPosition()</code> gave every point in <code>navTrack</code>, <code>navBreadcrumbs</code>, <code>navSpeedBreadcrumbs</code> and <code>navGpsAccumulate()</code> the time <code>Date.now()</code>, i.e. the moment of processing. With the screen off the webview is paused; the native GPS service (<code>native-bridge.js</code>) keeps measuring and hands the positions over one after the other when it wakes. Dozens of fixes spread over several minutes got almost the same time. In the track that looked like a pause (5 m in 433 s) followed by a stretch with steps of 5.5 m per 0.5 to 1 s (up to 37 km/h). A check on a really recorded track showed such a stretch after every long pause; pause plus stretch together gave 3.1 to 5.1 km/h, the real pace.</p>
+      <p><b>Consequences.</b> The distance itself is right, because the positions arrive complete. Wrong were the times in <code>trackDt</code> (GPX), the speeds per section from <code>navBreadcrumbs</code>, a smoothed speed display (<code>speedSmoothingSec</code> above 0, window on <code>Date.now()</code>) and the speed test in <code>navGpsAccumulate()</code> (<code>d / dt</code> with a near-zero <code>dt</code>). The latter was the root of the steps that were thrown away too often, which Round 196 caught afterwards with the 30 m limit.</p>
+      <p><b>Change.</b> New function <code>fixTimeMs(pos)</code> returns <code>pos.timestamp</code> (the browser, or <code>loc.time</code> from <code>native-bridge.js</code>) and falls back to <code>Date.now()</code> when it is missing, in the future or older than 6 hours. <code>renderPosition()</code> passes that time to <code>recordNavTrackPoint()</code> (never going back in time), <code>navGpsAccumulate()</code>, the 12 s breadcrumb trail and the speed window. That window now gets one point per real fix (the once-per-second redraw hands over the same fix again). The end point in <code>navTrackPayload()</code> uses the time of the last fix. The speed on screen already used <code>pos.timestamp</code>. Help (NL and EN) mentions it under My rides.</p>
+      <p><b>Limitation.</b> What the phone does exactly with the screen off depends on the make. The change repairs the times of positions that do arrive; it does not keep measuring alive when the phone stops the app completely.</p>
+      <p><b>Test suite:</b> new file <code>test_round202_fix_time.js</code> (a replay of 100 queued fixes gets the times of the measurements, so about 5 km/h instead of a sprint; the distance stays the same; fallback to <code>Date.now()</code>; no going back in time; speed window; Help and notes).</p>
+
+      <h3>🛠️ Round 201: full name in the route detail screen</h3>
+      <p><b>Cause.</b> The title (<code>.nr-dt h3</code>) and the line below it are on one line with <code>text-overflow: ellipsis</code>, next to three buttons (back, star, close). A long route name was therefore cut off and could not be read in full anywhere.</p>
+      <p><b>Change.</b> A tap or long press on <code>.nr-dt</code> calls <code>nrShowTitleTip()</code>. If the title or the line below is really cut off (<code>scrollWidth &gt; clientWidth</code>), the full text appears in a small dark box (<code>#nrTitleTip</code>) under the header; if everything already fits, nothing happens. The box closes on the next tap, after 6 seconds, or when another detail opens (<code>nrHideTitleTip()</code>). The text is inserted via <code>textContent</code>. A long press would make Android select text; therefore <code>user-select: none</code> and <code>-webkit-touch-callout: none</code> are set on the header and <code>contextmenu</code> is suppressed. Help (NL and EN) mentions it.</p>
+      <p><b>Test suite:</b> new file <code>test_round201_title_tip.js</code> (a cut-off title shows the box with the full name, a short title does not, closing, long press, Help and notes).</p>
+
+      <h3>🛠️ Round 200: dashboard with four tabs at the bottom (Live | Elevation | Points | Stats)</h3>
+      <p><b>Why.</b> Everything did not fit large enough on one screen (speed, distances, times, weather, heart rate, elevation profile, list of points, statistics). Each category now has its own screen with room for large numbers, in the style of a sports watch.</p>
+      <p><b>Structure.</b> <code>#dashboardPanel</code> no longer scrolls itself: it contains <code>#dashPane</code> (four <code>.dpane</code> sections: <code>#dpLive</code>, <code>#dpElev</code>, <code>#dpPoints</code>, <code>#dpStats</code>) and below it the tab bar <code>#dashTabs</code> with four <code>.dtab</code> buttons (<code>data-dtab</code> = live, elev, points, stats). Which section shows follows <code>data-dtab</code> on the panel; <code>setDashTab(t)</code> sets it and the active button. The tab is remembered while the app stays open (variable <code>dashTab</code>, not saved).</p>
+      <p><b>Live.</b> <code>#dashRows</code> holds one <code>.dash-row</code> per value; the rows share the available height (<code>flex:1 1 0</code>) and the number scales with the screen height (<code>clamp(20px, 3.6vh, 34px)</code>). All old ids still exist (<code>dashSpeed</code>, <code>dashDone</code>, <code>dashWalked</code>, <code>dashRemaining</code>, <code>dashElapsed</code>, <code>dashETA</code>, <code>dashAvgSpeed</code>, <code>dashHrTile</code>, <code>dashWeather</code>, <code>dashSunset</code>, <code>garminSpeedGauge</code>), so the existing code that fills them was not changed. 'To go' has the class <code>.dash-hl</code> (amber). The unit is small behind the number (<code>setDashValue()</code>, <code>.dash-u</code>).</p>
+      <p><b>Elevation.</b> The chart only has a width and height once its tab is visible; therefore <code>setDashTab('elev')</code> redraws <code>renderElevationChart()</code>, <code>updateElevationDot()</code> and <code>updateClimbPro()</code>. Without an elevation profile <code>#dpElev</code> gets the class <code>no-elev</code> and <code>#dashElevEmpty</code> shows.</p>
+      <p><b>Points and Stats.</b> <code>renderDashboard()</code> sets the heading above the list ('Points · 2 of 5 done', key <code>dashPointsDone</code>). <code>renderLifetimeStats()</code> runs when the Stats tab opens (and when the period changes). The 'show records' button is gone: the records panel is always visible. The <code>dash-idle</code> class and the tile CSS of Rounds 197 to 199 were replaced by this block; <code>.dash-u</code> stayed.</p>
+      <p><b>Translations.</b> New keys: <code>dashTabLive</code>, <code>dashTabElev</code>, <code>dashTabPoints</code>, <code>dashTabStats</code>, <code>dashSnelheid</code>, <code>dashPointsDone</code>, <code>dashElevEmpty</code>, <code>statsRecordsTitle</code>, in NL and EN. Help updated.</p>
+      <p><b>Test suite:</b> new file <code>test_round200_dash_tabs.js</code> (four tabs and switching, all values present, no overflow at 320/360/412 px, elevation chart draws on open, EN texts, records always visible, Help and notes).</p>
+
+      <h3>🛠️ Round 199: dashboard fills the screen, font size follows the tile width</h3>
+      <p><b>Cause.</b> Round 198 used fixed font sizes of 15 to 19 px and low tiles. Everything fitted, but at a screen height of about 860 px roughly 340 px stayed unused and the numbers were smaller than the tile allowed.</p>
+      <p><b>Change.</b> Every tile is a <code>container-type: inline-size</code>; the font sizes are <code>clamp(min, N cqw, max)</code>, so they follow the width of the tile itself (also on another screen or a different system font size): row 1 number 23 cqw (18 to 32 px), speed 32 cqw, split tile 20 cqw, rows 2 and 3 21 cqw (16 to 26 px), My statistics 20 cqw, labels 8.6 cqw (8 to 12 px). The unit is small after the number: <code>setDashValue(id, number, unit)</code> sets the number plus an <code>&lt;i class="dash-u"&gt;</code> (0.55 em); <code>textContent</code> stays '1.2 km'. Without a route <code>renderDashboard()</code> puts the class <code>dash-idle</code> on <code>#dashboardPanel</code>: the three rows share the free height (<code>flex</code> 1.5/1/1, caps 27/15/15 vh), the speed gauge scales along (8.5 vh, 44 to 76 px) and the list gets no space. With a route the compact layout stays. Without <code>cqw</code> support (<code>@supports</code>) the fixed values of Round 198 apply. At 412 px wide '12.3 km' in row 1 is about 24 px; at 320 px wide (tile about 78 px) the labels drop to 8 px.</p>
+      <p><b>Test suite:</b> new file <code>test_round199_dash_fill.js</code> (small unit, font sizes larger than in Round 198, tiles fill the screen, text does not touch the tile edge with '123.4 km' at 320/360/412 px); the font limit in <code>test_round198_dash_compact.js</code> is widened. Version 2.534 / versionCode 153.</p>
+    </section>
+    <section>
+      <h3>🛠️ Round 198: compact dashboard, everything on one screen</h3>
+      <p><b>Cause.</b> The Garmin rule <code>body.theme-garmin .dash-stat span</code> (26 px, weight 900) has the same specificity (0,2,2) as the shared-tile rules from Round 197, but sits further down the CSS block and therefore won. Numbers such as '0.0 km' were wider than the tile of about 119 px. The Round 197 test measured the width of the <code>span</code> element, which is a block element and always as wide as the tile, not the width of the text itself. Apart from that the tiles were tall (row 1 about 172 px, rows 2 and 3 about 105 px, statistics tiles with broken labels such as 'HOOGTEMET-ERS'), so the dashboard without a route was about 120 px too tall for the screen and scrolled.</p>
+      <p><b>Change.</b> One block at the end of the dashboard CSS, prefixed with <code>#dashboardPanel</code> (an ID wins in both styles and also over <code>body.dash-text-small #dashSummary2 …</code>): numbers in row 1 19 px (speed 22 px), rows 2 and 3 15 px, My statistics 17 px, labels 9.5 px, split tile 16 px with labels 8.5 px, speed gauge 44 px instead of 64 px, tile padding 8 × 4 px, gap 8 px, tiles vertically centred. 'Small text' gives 16/13/15 px; below 340 px width 16 px for row 1. Measured at 412 px wide: the content of the empty dashboard is 679 px high (was 863 px) and fits a 800 px screen. Only the list of personal records still scrolls.</p>
+      <p><b>Test suite:</b> new file <code>test_round198_dash_compact.js</code> (text width per tile via <code>Range</code>, font sizes, no scroll at 412 × 800 and 360 × 700 px); the tile tests from Round 197 moved there. Version 2.533 / versionCode 152.</p>
     </section>
     <section>
       <h3>🛠️ Round 197: dashboard tile in two parts ('actually walked' and 'to go')</h3>
@@ -26705,7 +26910,7 @@ ${GARMIN_MENU_BTN_JS}
 </body>
 </html>`;
 }
-const APP_VERSION_TEXT = 'v2.532 · 14 nov';
+const APP_VERSION_TEXT = 'v2.540 · 15 nov';
 $('homeVersionFooter').textContent = APP_VERSION_TEXT;
 function buildGarminHubHtml(){
   // Dit is Gemini's keuzescherm.html, ongewijzigd qua opbouw/stijl — enkel: (1) een derde grote tegel
@@ -28039,6 +28244,11 @@ async function loadSettings(){
   $('homeBgDimVal').textContent = (appSettings.homeBgDim != null ? appSettings.homeBgDim : 35) + '%';
   $('settingVoiceOnly').checked = !!appSettings.voiceOnlyMode;
   $('settingKeepScreenOnDuringNav').checked = !!appSettings.keepScreenOnDuringNav;
+  $('settingBgKeepAlive').checked = !!appSettings.bgKeepAlive;
+  $('settingNativeAlerts').checked = !!appSettings.nativeAlerts;
+  { const nat2 = nativeAlertsAvailable(); $('settingNativeAlerts').disabled = !nat2; $('settingNativeAlertsRow').style.opacity = nat2 ? '' : '.5'; }
+  $('settingMapMatchCheck').checked = !!appSettings.mapMatchCheck;
+  { const nat = bgKeepAliveAvailable(); $('settingBgKeepAlive').disabled = !nat; $('settingBgKeepAliveRow').style.opacity = nat ? '' : '.5'; }
   $('settingLowerGpsAccuracy').checked = !!appSettings.lowerGpsAccuracy;
   $('settingDisableMapRotation').checked = !!appSettings.disableMapRotation;
   $('settingPosUpdateInterval').value = appSettings.posUpdateIntervalSec || 1;
@@ -28908,6 +29118,9 @@ $('settingKeepScreenOnDuringNav').addEventListener('change', (e) => {
   saveSettings();
   if (navActive){ if (e.target.checked) acquireNavWakeLock(); else releaseNavWakeLock(); }
 });
+$('settingNativeAlerts').addEventListener('change', (e) => { appSettings.nativeAlerts = e.target.checked; saveSettings(); if (navActive){ if (e.target.checked) phNativeStart(); else phNativeStop(); } });
+$('settingMapMatchCheck').addEventListener('change', (e) => { appSettings.mapMatchCheck = e.target.checked; saveSettings(); });
+$('settingBgKeepAlive').addEventListener('change', (e) => { appSettings.bgKeepAlive = e.target.checked; saveSettings(); syncBgKeepAlive(); });
 $('settingLowerGpsAccuracy').addEventListener('change', (e) => { appSettings.lowerGpsAccuracy = e.target.checked; saveSettings(); });
 $('settingDisableMapRotation').addEventListener('change', (e) => {
   appSettings.disableMapRotation = e.target.checked;
@@ -29398,7 +29611,7 @@ $('settingsResetBtn').addEventListener('click', () => {
   appSettings = {
     theme:resetTheme, showCompassBtn:true, compassNorthHaptic:true, compassRadarAltStyle:false, orsKey:'', graphhopperKey:'', geoapifyKey:'', plantnetKey:'', geminiKey:'', windyKey:'', locationIqKey:'', groqKey:'', otmKey:'', bikeType:'regular', mapStyle:'standard', mapStyleBike:'standard', mapStyleWalk:'standard', thunderforestKey:'', cartoKey:'', googleTtsKey:'', mapTilerKey:'',
     audioSrcWikipedia:true, audioSrcWikivoyage:true, audioSrcNature:true, audioSrcOtm:false, historyAudioRadiusM:150,
-    dashTextSize:'normal', dashBold:true, largeNodesAccessibility:false, offRouteDist:35, autoReroute:false, silentReroute:false, offRouteBeep:true,
+    dashTextSize:'normal', dashBold:true, largeNodesAccessibility:false, offRouteDist:35, autoReroute:false, silentReroute:false, offRouteBeep:true, bgKeepAlive:false, nativeAlerts:false, mapMatchCheck:false,
     overlays:{ cycling:false, hiking:false, mtb:false, riding:false, slopes:false, radar:false, steep:false, stops:false, photos:false, webcams:false },
     poiLayers:{ cafe:false, restaurant:false, bakery:false, supermarket:false, pharmacy:false, bike:false, water:false, toilet:false, money:false, camping:false, charging:false, playground:false, parking:false, hotel:false }, showPoiDetails:false,
     showWindDirection:true, autoPause:false, redNavDot:false, topOffsetPx:0, tabGapPx:0, userName:'', bodyWeightKg:null, bodyHeightCm:null, bodyAge:null, bodyGender:'', spotifyClientId:'', stravaClientId:'', stravaClientSecret:'', voiceOnlyMode:false, routeColorMode:'off', showWindInNav:false, rainWatchOn:true, eatReminderOn:false, eatIntervalMin:45, drinkReminderOn:false, drinkIntervalMin:20, segmentPrOn:true, darkArrivalWarning:true, quietRoutingMode:false, historyAudioOn:false, audioGuideFullArticle:false, birdGeoFilterOn:true, shakeToSurpriseOn:false, shakeKm:30, vertrekFromGps:false, avoidBufferM:18, maxOverlapPct:8, lowerGpsAccuracy:false, disableMapRotation:false, posUpdateIntervalSec:1, mapRecenterDelaySec:6, overpassSurfaceTimeoutSec:15, assistantWaitSec:60, routingWeighting:'off', navType:'active', fallDetectionOn:false, fallSensitivity:3, sosContactNumber:'', sosContactName:'', autoPauseRunCoach:false, routePreference:'balanced', routeLineColor:'#e2a13c', language:'en', homeBgDim:35, map3dTiltOn:false, speedSmoothingSec:0,
@@ -29506,6 +29719,7 @@ $('settingsResetBtn').addEventListener('click', () => {
   toast(tr('toastDefaultsRestored'), 2500);
 });
 loadSettings().then(() => {
+  syncBgKeepAlive(); // Ronde 204: stand van de instelling doorgeven aan de Android-app
   try{ window.__bootMark && window.__bootMark('instellingen-klaar'); }catch(e){}
   if (!appSettings.userName){ openModal('welcomeNameModal'); }
   populateAllVoicePickersInSettings();
@@ -34685,6 +34899,73 @@ let navWakeLock = null;
 // Xiaomi/Samsung/OnePlus e.d.) doden een achtergrond-Wake-Lock alsnog, ongeacht wat de website aanvraagt --
 // dan helpt enkel batterij-optimalisatie voor de browser zelf UITzetten in de Android-instellingen.
 let navWakeLockToastShownThisSession = false;
+// Ronde 205: experiment "Android piept en spreekt zelf bij scherm uit". De pagina geeft de route, de afslagen en de teksten door aan het Android-deel
+// (NativeAlerts.java) en meldt elke seconde dat ze nog leeft (heartbeat). Zonder heartbeat (webview bevroren) neemt het Android-deel de meldingen over.
+let phNativeTimer = null, phNativeSig = '';
+function nativeAlertsAvailable(){ try { return !!(window.PHNative && typeof window.PHNative.navStart === 'function'); } catch (e) { return false; } }
+function phNavTurnPoints(pts){
+  const out = []; if (!routeSteps || routeSteps.length < 2 || pts.length < 2) return out;
+  const cum = [0]; for (let i = 1; i < pts.length; i++) cum.push(cum[i-1] + haversine(pts[i-1].lat, pts[i-1].lng, pts[i].lat, pts[i].lng));
+  const total = cum[cum.length-1], stepsTotal = routeSteps[routeSteps.length-1].startDistM, scale = stepsTotal > 0 ? total / stepsTotal : 1;
+  const at = (m) => { if (m <= 0) return pts[0]; if (m >= total) return pts[pts.length-1]; let a = 1; while (a < cum.length - 1 && cum[a] < m) a++; const seg = cum[a] - cum[a-1], f = seg > 0 ? (m - cum[a-1]) / seg : 0; return { lat: pts[a-1].lat + (pts[a].lat - pts[a-1].lat) * f, lng: pts[a-1].lng + (pts[a].lng - pts[a-1].lng) * f }; };
+  const en = curLang() === 'en'; let prevStep = null;
+  for (const step of routeSteps){
+    if (routeIsFromGpx && step.type === 'arrive' && step !== routeSteps[routeSteps.length - 1]){ prevStep = step; continue; }
+    if (step.type !== 'depart' && isAnnounceableManeuver(step, prevStep)){
+      const pt = at(step.startDistM * scale);
+      out.push({ lat: +pt.lat.toFixed(6), lon: +pt.lng.toFixed(6), text: (en ? 'In {m} metres, ' : 'Over {m} meter, ') + stripEmojiForSpeech(maneuverText(step, isFinalArrivalStep(step))) + '.' });
+    }
+    prevStep = step;
+  }
+  return out;
+}
+function phNativePayload(){
+  const pts = (typeof routeLine !== 'undefined' && routeLine && !navFreeMode) ? routeLine.getLatLngs() : [];
+  const silent = !!(appSettings.autoReroute && appSettings.silentReroute);
+  const flat = []; pts.forEach(p => { flat.push(+p.lat.toFixed(6), +p.lng.toFixed(6)); });
+  return { lang: curLang(), beep: appSettings.offRouteBeep !== false, voice: !!voiceEnabled, showM: silent ? 100000 : offRouteShowM(), hideM: offRouteHideM(), announceM: announceDistances().first,
+    offText: stripEmojiForSpeech(tr('toastOffRoute')), backText: tr('nativeBackOnRoute'), route: flat, turns: pts.length > 1 ? phNavTurnPoints(pts) : [] };
+}
+function phNativeTick(){
+  try {
+    if (!navActive || !appSettings.nativeAlerts || !nativeAlertsAvailable()) return;
+    window.PHNative.heartbeat();
+    const pts = (typeof routeLine !== 'undefined' && routeLine) ? routeLine.getLatLngs() : [];
+    const sig = [pts.length, pts.length ? pts[0].lat : 0, pts.length ? pts[pts.length-1].lat : 0, routeSteps ? routeSteps.length : 0, curLang(), !!voiceEnabled, offRouteShowM(), !!navFreeMode, navRouteReady].join('|');
+    if (sig !== phNativeSig){ phNativeSig = sig; window.PHNative.navStart(JSON.stringify(phNativePayload())); }
+  } catch (e) { /* experiment: nooit de navigatie storen */ }
+}
+function phNativeStart(){ phNativeStop(); phNativeSig = ''; if (!nativeAlertsAvailable() || !appSettings.nativeAlerts) return; phNativeTick(); phNativeTimer = setInterval(phNativeTick, 1000); }
+function phNativeStop(){ if (phNativeTimer){ clearInterval(phNativeTimer); phNativeTimer = null; try { if (nativeAlertsAvailable()) window.PHNative.navStop(); } catch (e) {} } }
+// Ronde 205: experiment "afstand via de paden": het spoor (uitgedund) naar Valhalla trace_route (map_snap) en de lengte van het gematchte pad terug.
+async function phMapMatchKm(track, mode){
+  const pts = []; let last = null;
+  for (const p of (track || [])){ if (!last || haversine(last[0], last[1], p[0], p[1]) >= 12){ pts.push({ lat: +(+p[0]).toFixed(6), lon: +(+p[1]).toFixed(6) }); last = p; } }
+  if (pts.length < 2) return null;
+  const step = pts.length > 1500 ? Math.ceil(pts.length / 1500) : 1, shape = pts.filter((_, i) => i % step === 0 || i === pts.length - 1);
+  const body = { shape, costing: mode === 'fiets' ? 'bicycle' : 'pedestrian', shape_match: 'map_snap', trace_options: { search_radius: 40, gps_accuracy: 10 }, units: 'kilometers' };
+  const ctl = (typeof AbortController !== 'undefined') ? new AbortController() : null, to = ctl ? setTimeout(() => ctl.abort(), 25000) : null;
+  try {
+    const res = await fetch('https://valhalla1.openstreetmap.de/trace_route', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: ctl ? ctl.signal : undefined });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const j = await res.json();
+    const km = j && j.trip && j.trip.summary && j.trip.summary.length;
+    return Number.isFinite(km) ? km : null;
+  } finally { if (to) clearTimeout(to); }
+}
+async function phTripMapMatch(entry){
+  if (!appSettings.mapMatchCheck || !entry || !entry.track || entry.track.length < 2) return;
+  const chipsEl = $('tripSummaryChips'); if (!chipsEl) return;
+  const c = document.createElement('span'); c.className = 'tsm-chip tsm-chip-mm'; c.textContent = tr('tripMapMatchBusy'); chipsEl.appendChild(c);
+  try {
+    const km = await phMapMatchKm(entry.track, appMode);
+    if (km == null) throw new Error('geen resultaat');
+    c.textContent = tr('tripMapMatchDone').replace('{a}', km.toFixed(2)).replace('{b}', (+entry.km).toFixed(2));
+  } catch (e) { c.textContent = tr('tripMapMatchFail'); }
+}
+// Ronde 204: de Android-app (MainActivity.java) biedt window.PHNative.setKeepAlive(aan); in de browser bestaat dit niet.
+function bgKeepAliveAvailable(){ try { return !!(window.PHNative && typeof window.PHNative.setKeepAlive === 'function'); } catch (e) { return false; } }
+function syncBgKeepAlive(){ try { if (bgKeepAliveAvailable()) window.PHNative.setKeepAlive(!!appSettings.bgKeepAlive); } catch (e) {} }
 async function acquireNavWakeLock(){
   if (!appSettings.keepScreenOnDuringNav) return;
   try{
@@ -34999,6 +35280,7 @@ function startNav(){
   // trager of onregelmatiger vuurt. Interval instelbaar in Instellingen (standaard 1 seconde).
   clearInterval(renderLoopId);
   renderLoopId = setInterval(renderPosition, (appSettings.posUpdateIntervalSec || 1) * 1000);
+  phNativeStart(); // Ronde 205: experiment (Android piept en spreekt zelf bij scherm uit)
 
   if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === 'function'){
     DeviceOrientationEvent.requestPermission().then(state => {
@@ -35037,6 +35319,7 @@ function stopVoiceOnlyDim(){
 document.addEventListener('click', () => { if (navActive && appSettings.voiceOnlyMode) resetVoiceOnlyDimTimer(); }, { passive:true });
 
 function stopNav(){
+  phNativeStop(); // Ronde 205
   console.info(`[nav] stop: doelindex=${typeof navTargetIndex !== 'undefined' ? navTargetIndex : '-'}/${route.length}`);
   cancelManualDetourPinMode();
   navPausedForDetour = false;
@@ -35362,14 +35645,15 @@ function renderPosition(){
 
   // Kruimelspoor voor de post-rit-analyse (snelheid per stuk) — om de ~12s een punt bijhouden, dat is
   // ruim voldoende voor een zinvolle snelheids-heatmap achteraf, zonder de opslag te laten opzwellen.
+  const fixT = fixTimeMs(pos); // Ronde 202: tijdstip van de meting zelf, niet van het verwerken
   if (navActive){
-    const now = Date.now();
+    const now = fixT;
     if (!lastBreadcrumbTime || now - lastBreadcrumbTime >= 12000){
       navBreadcrumbs.push({ lat, lon, t: now });
       lastBreadcrumbTime = now;
     }
-    recordNavTrackPoint(lat, lon, accuracy);
-    navGpsAccumulate(lat, lon, accuracy); // Ronde 107: echte GPS-afstand voor de gemiddelde snelheid
+    recordNavTrackPoint(lat, lon, accuracy, fixT);
+    navGpsAccumulate(lat, lon, accuracy, fixT); // Ronde 107: echte GPS-afstand voor de gemiddelde snelheid
   }
 
   // Richting waarin je echt fietst/wandelt: bij voorkeur koers-over-grond van de GPS zelf (enkel betrouwbaar
@@ -35471,8 +35755,9 @@ function renderPosition(){
   // zelf, die bewust de rauwe/snel-reagerende Kalman-waarde blijven gebruiken (zie de toelichting bij
   // hun declaratie hierboven).
   if (lat != null && lon != null) {
-    navSpeedBreadcrumbs.push({ lat, lon, t: Date.now() });
-    const cutoffT = Date.now() - 20000;
+    const lastSb = navSpeedBreadcrumbs[navSpeedBreadcrumbs.length - 1];
+    if (!lastSb || fixT > lastSb.t) navSpeedBreadcrumbs.push({ lat, lon, t: fixT }); // Ronde 202: per echte fix een punt (de 1-seconde-herteken levert dezelfde fix opnieuw aan)
+    const cutoffT = fixT - 20000;
     while (navSpeedBreadcrumbs.length && navSpeedBreadcrumbs[0].t < cutoffT) navSpeedBreadcrumbs.shift();
   }
   lastDisplaySpeedKmh = (appSettings.speedSmoothingSec > 0)
@@ -35963,13 +36248,7 @@ document.querySelectorAll('.stats-tab').forEach(btn => {
     renderLifetimeStats(currentStatsPeriod);
   });
 });
-const statsRecordsToggleBtn = document.getElementById('statsRecordsToggle');
-if (statsRecordsToggleBtn) statsRecordsToggleBtn.addEventListener('click', () => {
-  const panel = $('statsRecordsPanel');
-  const nowShown = panel.style.display !== 'none';
-  panel.style.display = nowShown ? 'none' : 'block';
-  statsRecordsToggleBtn.textContent = tr(nowShown ? 'statsShowRecords' : 'statsHideRecords');
-});
+// Ronde 200: de persoonlijke records staan altijd zichtbaar op de tab Cijfers (de knop "records tonen" is vervallen).
 
 // ---------- Snelheidsafhankelijke MET (Ronde 72) ----------
 // GEVRAAGD DOOR DE GEBRUIKER: "voor calorieën mss snelheid mee nemen? is dat niet nuttig voor alle type
@@ -36859,9 +37138,9 @@ async function renderLifetimeStats(period){
 
   const totalKm = filtered.reduce((s, r) => s + (r.km || 0), 0);
   const totalAscent = filtered.reduce((s, r) => s + (r.ascent || 0), 0);
-  $('statsKm').textContent = totalKm.toFixed(1) + ' km';
+  setDashValue('statsKm', totalKm.toFixed(1), 'km');
   $('statsRides').textContent = filtered.length;
-  $('statsAscent').textContent = Math.round(totalAscent) + ' m';
+  setDashValue('statsAscent', Math.round(totalAscent), 'm');
 
   if (!filtered.length){
     $('statsLongest').textContent = tr(appMode === 'wandel' ? 'statsNoDataWalk' : 'statsNoData'); // Ronde 99
@@ -36898,14 +37177,24 @@ async function renderLifetimeStats(period){
   }
 }
 
+// Ronde 199: getal groot, eenheid ('km', 'm') klein ernaast, zodat het getal in een smalle tegel groter kan. De tekst blijft '1.2 km' (textContent), enkel de opmaak verschilt.
+function setDashValue(id, num, unit){
+  const el = $(id); if (!el) return;
+  const txt = String(num);
+  if (el.dataset.dv === txt + '|' + unit) return;
+  el.dataset.dv = txt + '|' + unit;
+  el.textContent = '';
+  el.appendChild(document.createTextNode(txt));
+  if (unit){ const u = document.createElement('i'); u.className = 'dash-u'; u.textContent = ' ' + unit; el.appendChild(u); }
+}
 function renderDashboard(){
   const prog = computeProgressKm();
   $('dashSpeed').textContent = (navActive && lastDisplaySpeedKmh != null) ? Math.round(lastDisplaySpeedKmh) : '–';
   updateGarminSpeedGauge(lastDisplaySpeedKmh);
-  $('dashDone').textContent = prog.done.toFixed(1) + ' km';
+  setDashValue('dashDone', prog.done.toFixed(1), 'km');
   // Ronde 197: echt gelopen = lengte van het opgenomen spoor (navTrack, punt per >= 5 m of meer bij slechte nauwkeurigheid), dus ook zijstappen naast het pad; rest = langs de lijn.
-  $('dashWalked').textContent = (navActive ? navWalkedM / 1000 : 0).toFixed(1) + ' km';
-  $('dashRemaining').textContent = (navActive && navFreeMode) ? '–' : prog.remaining.toFixed(1) + ' km';
+  setDashValue('dashWalked', (navActive ? navWalkedM / 1000 : 0).toFixed(1), 'km');
+  if (navActive && navFreeMode) setDashValue('dashRemaining', '–', ''); else setDashValue('dashRemaining', prog.remaining.toFixed(1), 'km');
 
   $('dashElapsed').textContent = (navActive && navStartTime) ? formatElapsed(effectiveElapsedMs()) : '–';
   const elapsedH = (navActive && navStartTime) ? effectiveElapsedMs() / 3600000 : 0;
@@ -36918,8 +37207,10 @@ function renderDashboard(){
   list.innerHTML = '';
   const hasRoute = route.length > 0;
   $('dashEmpty').style.display = hasRoute ? 'none' : 'block';
-  $('lifetimeStats').style.display = hasRoute ? 'none' : 'block';
-  if (!hasRoute) renderLifetimeStats(currentStatsPeriod);
+  // Ronde 200: kop boven de puntenlijst ("Punten · 2 van 5 gedaan"); de statistieken staan op hun eigen tab en worden getekend zodra die tab opent.
+  const doneCount = route.filter((r, i) => navActive && i < navTargetIndex).length;
+  $('dashPointsHead').textContent = hasRoute ? tr('dashTabPoints') + ' · ' + tr('dashPointsDone').replace('{done}', doneCount).replace('{total}', route.length) : '';
+  if (dashTab === 'stats') renderLifetimeStats(currentStatsPeriod);
   route.forEach((r, i) => {
     const li = document.createElement('li');
     const isDone = navActive && i < navTargetIndex;
@@ -38285,20 +38576,44 @@ async function setActiveTab(tab){
   try{
     const profile = await ensureElevationProfile();
     if (profile){
+      $('dpElev').classList.remove('no-elev');
       $('dashElevSection').classList.remove('hidden');
       $('dashAscVal').textContent = Math.round(profile.ascent);
       $('dashDescVal').textContent = Math.round(profile.descent);
       renderElevationChart(profile, 'dashElevationSvg', 'dashElevWrap');
       updateClimbPro();
     } else {
+      $('dpElev').classList.add('no-elev');
       $('dashElevSection').classList.add('hidden');
       $('climbProSection').classList.add('hidden');
     }
   }catch(err){
+    $('dpElev').classList.add('no-elev');
     $('dashElevSection').classList.add('hidden'); // hoogtedata niet beschikbaar, sla de sectie gewoon over
     $('climbProSection').classList.add('hidden');
   }
 }
+
+// Ronde 200: tabs onderaan het dashboard (Live | Hoogte | Punten | Cijfers). Elke tab is een eigen scherm; de tab blijft onthouden zolang de app openstaat.
+var dashTab = 'live';
+function setDashTab(t){
+  if (!['live','elev','points','stats'].includes(t)) t = 'live';
+  dashTab = t;
+  $('dashboardPanel').dataset.dtab = t;
+  document.querySelectorAll('#dashTabs .dtab').forEach(b => {
+    const on = b.dataset.dtab === t;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+  // een grafiek in een verborgen tab heeft geen breedte/hoogte; daarom pas tekenen als de tab zichtbaar is
+  if (t === 'elev' && typeof lastElevationProfile !== 'undefined' && lastElevationProfile && !$('dashElevSection').classList.contains('hidden')){
+    renderElevationChart(lastElevationProfile, 'dashElevationSvg', 'dashElevWrap');
+    updateElevationDot('dashElevationSvg');
+    updateClimbPro();
+  }
+  if (t === 'stats') renderLifetimeStats(currentStatsPeriod);
+}
+document.querySelectorAll('#dashTabs .dtab').forEach(b => b.addEventListener('click', () => setDashTab(b.dataset.dtab)));
 $('tabMapBtn').addEventListener('click', () => setActiveTab('map'));
 $('tabDashBtn').addEventListener('click', () => setActiveTab('dash'));
 $('tabSunBtn').addEventListener('click', () => {
@@ -46142,7 +46457,11 @@ function nrWire(){
     const b = e.target.closest && e.target.closest('.nr-item'); if (!b) return;
     const c = nrState.view[parseInt(b.dataset.idx, 10)]; if (c){ if (c.mode) nrState.mode = c.mode; nrShowDetail(c); }
   });
+  // Ronde 201: de titel en de regel eronder zijn in het detailscherm op 1 regel afgekapt (…); tik of houd ingedrukt toont de volledige tekst, tot de volgende tik of na 6 seconden.
+  $('nrDetail').addEventListener('contextmenu', (e) => { if (e.target.closest && e.target.closest('.nr-dt')) e.preventDefault(); });
   $('nrDetail').addEventListener('click', (e) => {
+    const dt = e.target.closest && e.target.closest('.nr-dt');
+    if (dt){ nrShowTitleTip(dt); return; }
     const t = e.target.closest && e.target.closest('button'); if (!t) return;
     const c = nrState.detail;
     if (t.id === 'nrDBack') nrBackToList();
@@ -46631,7 +46950,27 @@ async function nrDetailLoad(c, dt){
   if (!alive()) return;
   $('nrDPhotos').innerHTML = nrPhotosHtml(res, c);
 }
+let nrTitleTipTimer = null;
+function nrHideTitleTip(){
+  clearTimeout(nrTitleTipTimer); nrTitleTipTimer = null;
+  const old = document.getElementById('nrTitleTip'); if (old) old.remove();
+  document.removeEventListener('click', nrHideTitleTip, true);
+}
+function nrShowTitleTip(dt){
+  const h = dt.querySelector('h3'), p = dt.querySelector('p');
+  const cut = (el) => !!el && el.scrollWidth > el.clientWidth + 1;
+  nrHideTitleTip();
+  if (!cut(h) && !cut(p)) return;                       // past alles al: niets te tonen
+  const tip = document.createElement('div'); tip.id = 'nrTitleTip'; tip.className = 'nr-titletip'; tip.setAttribute('role', 'status');
+  const b = document.createElement('b'); b.textContent = h ? h.textContent : '';
+  tip.appendChild(b);
+  if (p && p.textContent){ const sp = document.createElement('span'); sp.textContent = p.textContent; tip.appendChild(sp); }
+  $('nearbyRoutesCard').appendChild(tip);
+  nrTitleTipTimer = setTimeout(nrHideTitleTip, 6000);
+  setTimeout(() => document.addEventListener('click', nrHideTitleTip, true), 0);   // volgende tik (waar dan ook) sluit het venster
+}
 function nrShowDetail(c){
+  nrHideTitleTip();
   nrState.listScroll = $('nrListWrap').scrollTop;
   nrState.detail = c;
   const dt = ++nrState.dtoken;
