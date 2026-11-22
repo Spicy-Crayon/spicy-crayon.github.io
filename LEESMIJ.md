@@ -10,3 +10,6 @@ Zet deze bestanden in de hoofdmap van je website-repo (`spicy-crayon.github.io`)
 Gebruik de voorbeelden om te zien hoe het werkt: vraag de assistent bijvoorbeeld "Welke wandelingen zijn er in Nationaal Park Hoge Kempen?" of "Welke Wallonië-brochures zijn er?". Staat de assistent op "enkel mijn bronnen" of "eigen kennis", dan zie je bij het antwoord de bronnaam met een link.
 
 Wil je later een echte pagina of pdf toevoegen: sla de pagina op als `.html` (in je browser: Pagina opslaan als) of download de pdf, zet het bestand in `kennis/bronnen/` en geef zo nodig een regel in `_info.json` (titel, taal, url, licentie).
+
+## Map image / PDF (v2.543)
+Publish the `libs/` folder (pdf.min.js, pdf.worker.min.js, pdfjs-LICENSE.txt) next to index.html. Without it, PDF selection in "Route from map image" will show an error (photos/screenshots still work). / Zet de map `libs/` mee online naast index.html; zonder die map werkt PDF kiezen niet (foto/screenshot wel).
